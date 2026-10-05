@@ -1,0 +1,146 @@
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #E2E8F0; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+.form-card {
+    background: #ffffff;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    transform: translateY(-24px) scale(0.85);
+    color: #7B68B2;
+    font-weight: 600;
+}
+.input-group input:focus {
+    border-bottom-color: #7B68B2;
+}
+.scene-container {
+    perspective: 1200px;
+    overflow: hidden;
+}
+.float-element {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 40px rgba(123, 104, 178, 0.15),
+                inset 0 1px 1px rgba(255, 255, 255, 1);
+    border-radius: 16px;
+}
+
+@keyframes drift-1 {
+    0% { transform: translate3d(0, 0, -100px) rotateX(10deg) rotateY(-15deg) rotateZ(-5deg); }
+    50% { transform: translate3d(40px, -40px, 50px) rotateX(-5deg) rotateY(10deg) rotateZ(5deg); }
+    100% { transform: translate3d(0, 0, -100px) rotateX(10deg) rotateY(-15deg) rotateZ(-5deg); }
+}
+@keyframes drift-2 {
+    0% { transform: translate3d(0, 0, 50px) rotateX(-10deg) rotateY(15deg) rotateZ(8deg); }
+    50% { transform: translate3d(-50px, 30px, -80px) rotateX(5deg) rotateY(-10deg) rotateZ(-4deg); }
+    100% { transform: translate3d(0, 0, 50px) rotateX(-10deg) rotateY(15deg) rotateZ(8deg); }
+}
+@keyframes drift-3 {
+    0% { transform: translate3d(0, 0, -50px) rotateX(5deg) rotateY(-5deg) rotateZ(-10deg); }
+    50% { transform: translate3d(30px, 50px, 80px) rotateX(-15deg) rotateY(15deg) rotateZ(5deg); }
+    100% { transform: translate3d(0, 0, -50px) rotateX(5deg) rotateY(-5deg) rotateZ(-10deg); }
+}
+@keyframes drift-4 {
+    0% { transform: translate3d(0, 0, 0px) rotateX(-5deg) rotateY(5deg) rotateZ(12deg); }
+    50% { transform: translate3d(-40px, -30px, -60px) rotateX(10deg) rotateY(-15deg) rotateZ(-6deg); }
+    100% { transform: translate3d(0, 0, 0px) rotateX(-5deg) rotateY(5deg) rotateZ(12deg); }
+}
+
+.animate-drift-1 { animation: drift-1 18s ease-in-out infinite; }
+.animate-drift-2 { animation: drift-2 22s ease-in-out infinite; }
+.animate-drift-3 { animation: drift-3 20s ease-in-out infinite; }
+.animate-drift-4 { animation: drift-4 25s ease-in-out infinite; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   DARK MODE OVERRIDES FOR SIGN2
+   ============================================ */
+
+/* 1. Dark Scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #1e1e1e; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #3d3d3d; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: #4d4d4d; }
+
+/* 2. Dark Form Card */
+[data-theme="dark"] .form-card {
+    background: #1e1e1e;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* 3. Dark Floating Cards */
+[data-theme="dark"] .float-element {
+    background: rgba(30, 30, 30, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+/* 4. Force text inside floating cards to be visible */
+[data-theme="dark"] .float-element .text-slate-700,
+[data-theme="dark"] .float-element .text-slate-500,
+[data-theme="dark"] .float-element .text-slate-400 {
+    color: #cbd5e1 !important;
+}
+
+/* 5. Fake content bars inside the invoice card */
+[data-theme="dark"] .float-element .bg-slate-200 {
+    background-color: #3d3d3d !important;
+}
+
+/* 6. Border lines inside the floating cards */
+[data-theme="dark"] .float-element .border-slate-100 {
+    border-color: #2d2d2d !important;
+}
+
+/* 7. Input focus color (lighter purple for dark mode) */
+[data-theme="dark"] .input-group input:focus ~ label,
+[data-theme="dark"] .input-group input:not(:placeholder-shown) ~ label {
+    color: #a78bfa;
+}
+[data-theme="dark"] .input-group input:focus {
+    border-bottom-color: #a78bfa;
+}
+
+/* 8. Dark Inputs */
+[data-theme="dark"] .input-group input {
+    color: #f9fafb;
+    border-bottom-color: #3d3d3d;
+}
+
+/* 9. Dark background for the entire page overlay gradient */
+[data-theme="dark"] .scene-container .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, #0a0a0a, #121212, #1a1520) !important;
+}
+
+[data-theme="dark"] .scene-container .bg-white\/40 {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+[data-theme="dark"] .scene-container .bg-brand-purple\/10 {
+    background-color: rgba(123, 104, 178, 0.15) !important;
+}
+
+body { height: auto !important; overflow-y: auto !important; }
