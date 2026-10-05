@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Apexbooks - Financial Clarity for Every Role')</title>
+    <title>@yield('title', 'LedgeInvo - Financial Clarity for Every Role')</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
 
     <script>
     (function() {
-        var t = localStorage.getItem('apexbooks-theme');
+        var t = localStorage.getItem('ledgeinvo-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
     })();
     </script>
@@ -38,7 +38,7 @@
                         <path d="M12 13V22" stroke="#7E6BB5" stroke-opacity="0.4" stroke-width="0.5" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                Apexbooks
+                LedeInvo
             </div>
             <div class="nav-links">
                 <a href="/">Home</a>
@@ -111,7 +111,7 @@
                         <path d="M21 7.5V16.5L12 22V13L21 7.5Z" fill="#FFFFFF" fill-opacity="0.85"/>
                     </svg>
                 </div>
-                <span>Apexbooks</span>
+                <span>LedgeInvo</span>
             </div>
 
             <p class="footer-desc">
@@ -121,7 +121,7 @@
             <ul class="footer-contact">
                 <li>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
-                    <span>support@apexbooks.com</span>
+                    <span>support@ledgeinvo.com</span>
                 </li>
                 <li>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -169,7 +169,7 @@
     <div class="footer-bottom">
         <div class="footer-container footer-bottom-inner">
             <div class="footer-copy">
-                &copy; {{ date('Y') }} Apexbooks. All rights reserved.
+                &copy; {{ date('Y') }} LedgeInvo. All rights reserved.
             </div>
 
             <div class="footer-legal">
