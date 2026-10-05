@@ -1,0 +1,127 @@
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES FOR SIGN1
+   ============================================ */
+
+/* 1. Dark Scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-track { 
+    background: #1e1e1e; 
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb { 
+    background: #3d3d3d; 
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { 
+    background: #4d4d4d; 
+}
+
+/* 2. Dark Glass Panel (the floating UI cards on the left) */
+[data-theme="dark"] .glass-panel {
+    background: rgba(30, 30, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* 3. Text inside the glass panel needs to be visible */
+[data-theme="dark"] .glass-panel .text-slate-800,
+[data-theme="dark"] .glass-panel .text-slate-500,
+[data-theme="dark"] .glass-panel .text-slate-600 {
+    color: #e2e8f0 !important;
+}
+
+/* 4. The "Ledger" tag inside the glass panel */
+[data-theme="dark"] .glass-panel .bg-slate-100 {
+    background-color: #2d2d2d !important;
+    color: #cbd5e1 !important;
+}
+
+
+
+/* ============================================
+   RIGHT PANEL DARK MODE (Bypasses Tailwind)
+   ============================================ */
+
+/* Light mode default */
+.right-panel-bg {
+    background-color: #f8fafc; /* This is bg-slate-50 */
+    color: #0f172a; /* This is text-slate-900 */
+}
+
+/* Dark mode override */
+[data-theme="dark"] .right-panel-bg {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+}
+
+/* Force all text inside the right panel to be white in dark mode */
+[data-theme="dark"] .right-panel-bg h1,
+[data-theme="dark"] .right-panel-bg h2,
+[data-theme="dark"] .right-panel-bg h3,
+[data-theme="dark"] .right-panel-bg p,
+[data-theme="dark"] .right-panel-bg span,
+[data-theme="dark"] .right-panel-bg label,
+[data-theme="dark"] .right-panel-bg a {
+    color: #ffffff;
+}
+
+/* Keep the muted text (like "Enter your credentials") a soft gray */
+[data-theme="dark"] .right-panel-bg p,
+[data-theme="dark"] .right-panel-bg .text-slate-500,
+[data-theme="dark"] .right-panel-bg .text-slate-600 {
+    color: #9ca3af !important;
+}
+
+/* Dark divider line for "Or continue with" */
+[data-theme="dark"] .right-panel-bg .border-slate-200 {
+    border-color: #2d2d2d !important;
+}
+
+/* Dark background for the divider text */
+[data-theme="dark"] .right-panel-bg .bg-slate-50 {
+    background-color: #121212 !important;
+}
+
+/* Dark buttons for Google/Microsoft */
+[data-theme="dark"] .right-panel-bg .bg-white {
+    background-color: #1e1e1e !important;
+    border-color: #2d2d2d !important;
+}
+
+/* Keep button text visible */
+[data-theme="dark"] .right-panel-bg .bg-white span,
+[data-theme="dark"] .right-panel-bg .bg-white i:not(.text-red-500):not(.text-blue-500) {
+    color: #e5e7eb !important;
+}
+
+
+[data-theme="dark"] button:has(.fa-google), [data-theme="dark"] button:has(.fa-microsoft) { color: #f9fafb !important; }
+
+
+body { height: auto !important; overflow-y: auto !important; }
+
+.animate-float-delayed { animation-delay: -1.5s !important; }
