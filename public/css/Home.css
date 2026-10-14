@@ -1,0 +1,211 @@
+/* =========================================================
+   Home Page Styles
+   ========================================================= */
+
+/* ---------- Hero Container ---------- */
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* ---------- Hero Text ---------- */
+.hero-text h1 {
+    font-size: 52px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+}
+
+.hero-text h1 span {
+    color: var(--primary);
+}
+
+.hero-text p {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 90%;
+}
+
+/* ---------- Buttons ---------- */
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-large {
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #f1f5f9;
+}
+
+/* ---------- Dashboard Mockup ---------- */
+.dashboard-mockup {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboard-mockup::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    bottom: -20px;
+    left: -20px;
+    background: linear-gradient(135deg, var(--primary), #c4b5fd);
+    filter: blur(30px);
+    opacity: 0.15;
+    border-radius: 40px;
+    z-index: -1;
+}
+
+.mockup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+}
+
+.mockup-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.mockup-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.mockup-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #E2E8F0;
+}
+
+.mockup-dots span:nth-child(1) { background-color: #FCA5A5; }
+.mockup-dots span:nth-child(2) { background-color: #FCD34D; }
+.mockup-dots span:nth-child(3) { background-color: #6EE7B7; }
+
+/* ---------- Chart ---------- */
+.mockup-chart {
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.bar {
+    flex: 1;
+    background-color: var(--primary-light);
+    border-radius: 6px 6px 0 0;
+}
+
+.bar:nth-child(1) { height: 40%; }
+.bar:nth-child(2) { height: 70%; background-color: var(--primary); }
+.bar:nth-child(3) { height: 50%; }
+.bar:nth-child(4) { height: 90%; background-color: var(--primary); }
+.bar:nth-child(5) { height: 60%; }
+.bar:nth-child(6) { height: 80%; background-color: var(--primary); }
+
+/* ---------- Stats ---------- */
+.mockup-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.stat-card {
+    background-color: #F8F9FC;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.stat-trend {
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 992px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .hero-text p {
+        margin: 0 auto 40px auto;
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+    .dashboard-mockup {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-text h1 {
+        font-size: 36px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+    }
+    .mockup-stats {
+        grid-template-columns: 1fr;
+    }
+}
