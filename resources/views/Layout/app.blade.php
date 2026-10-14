@@ -90,7 +90,6 @@
             </div>
         </div>
     </nav>
-
     <!-- ====== MAIN CONTENT ====== -->
     <main style="flex-grow: 1;">
         @yield('content')

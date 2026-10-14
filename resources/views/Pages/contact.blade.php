@@ -12,4 +12,6 @@
     @include('component.c6')
     @include('component.c7')
     @include('component.c8')
+        @include('Component.contacthero')
+
 @endsection
