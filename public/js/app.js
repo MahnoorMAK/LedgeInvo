@@ -1,4 +1,3 @@
-// app.js
 (function () {
     const dropdown = document.getElementById('signinDropdown');
     const toggle = document.getElementById('signinToggle');
