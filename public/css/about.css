@@ -1,0 +1,132 @@
+/* ============================================
+   GLOBAL
+   ============================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #faf7f0;
+    color: #2a1f14;
+    line-height: 1.6;
+}
+
+/* ============================================
+   1. HERO SECTION
+   ============================================ */
+.ap-hero {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+}
+
+.ap-hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #1a1a1a;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.ap-hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: #8b7355;
+}
+
+.ap-hero-text {
+    font-size: 1.15rem;
+    color: #4a3d2e;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ============================================
+   2. ABOUT OUR COMPANY
+   ============================================ */
+.ap-company {
+    width: 100%;
+    padding: 4rem 2rem 6rem;
+    background: #faf7f0;
+}
+
+.ap-company-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+/* ---------- Image ---------- */
+.ap-company-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    display: block;
+    box-shadow: 0 25px 50px -15px rgba(80, 50, 20, 0.25);
+    transition: transform 0.6s ease;
+}
+
+.ap-company-image img:hover {
+    transform: translateY(-6px) scale(1.02);
+}
+
+/* ---------- Content ---------- */
+.ap-company-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.ap-label {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: #8b7355;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.ap-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.ap-text {
+    font-size: 1.02rem;
+    color: #4a3d2e;
+    line-height: 1.75;
+    margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .ap-hero-title { font-size: 2.5rem; }
+    .ap-company-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    .ap-title { font-size: 2rem; }
+}
+
+@media (max-width: 600px) {
+    .ap-hero { padding: 4rem 1.25rem 3rem; }
+    .ap-hero-title { font-size: 1.85rem; }
+    .ap-hero-text { font-size: 1rem; }
+    .ap-company { padding: 3rem 1.25rem 4rem; }
+    .ap-title { font-size: 1.65rem; }
+    .ap-text { font-size: 0.95rem; }
+}
