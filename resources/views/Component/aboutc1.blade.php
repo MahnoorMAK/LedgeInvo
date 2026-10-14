@@ -1,26 +1,9 @@
-{{-- resources/views/component/hero.blade.php --}}
 
 <section class="hero">
     {{-- Background image + light overlay --}}
     <div class="hero__bg"></div>
 
-    {{-- Navbar --}}
-    <nav class="hero__nav">
-        <a href="/" class="hero__logo">
-            
-            LedgeInvo
-        </a>
-
-        <ul class="hero__menu">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/pages">Pages ▾</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul>
-
-        <a href="/contact" class="hero__cta">Let's talk <span>→</span></a>
-    </nav>
+>
 
     {{-- Hero content --}}
     <div class="hero__content">
