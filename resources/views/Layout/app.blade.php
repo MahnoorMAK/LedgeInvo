@@ -43,9 +43,9 @@
             <div class="nav-links">
                 <a href="/">Home</a>
 
-                <a href="/Service">Services</a>
-                <a href="/Contact">Contact Us</a>
-                <a href="/About">About Us</a>
+                <a href="/Service">Service</a>
+                <a href="/contact">Contact Us</a>
+                <a href="/about">About Us</a>
 
                 {{-- THEME TOGGLE --}}
                 <button id="theme-toggle" class="nav-theme-toggle" aria-label="Toggle theme">
