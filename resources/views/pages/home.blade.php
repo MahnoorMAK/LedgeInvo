@@ -11,7 +11,6 @@
 @include('Component.ModulesTabs')
 @include('Component.TopClients')
 @include('Component.Slider3D')
-@include('components.faq')
 
 @endsection
 
