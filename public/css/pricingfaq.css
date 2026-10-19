@@ -1,0 +1,252 @@
+/* ============================================
+   PRICING FAQ — 3D SHADE (VIOLET THEME)
+   ============================================ */
+.pf-section {
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, #FBF9FE 0%, #F0EDF7 100%);
+    perspective: 1400px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.pf-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+.pf-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.pf-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: #7E6BB5;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.pf-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.pf-title em {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(135deg, #7C3AED 0%, #A855F7 50%, #E879F9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---------- List ---------- */
+.pf-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transform-style: preserve-3d;
+}
+
+/* ---------- 3D Item ---------- */
+.pf-item {
+    position: relative;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+        -6px -6px 16px rgba(255, 255, 255, 0.95),
+        10px 10px 24px rgba(109, 40, 217, 0.12),
+        18px 22px 40px rgba(109, 40, 217, 0.08),
+        inset 0 2px 0 rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(109, 40, 217, 0.06);
+    border: 1px solid rgba(168, 85, 247, 0.15);
+    transition: box-shadow 0.5s ease, background 0.5s ease;
+}
+
+/* Violet top line */
+.pf-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, #A855F7 20%, #7C3AED 80%, transparent 100%);
+    border-radius: 0 0 4px 4px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Violet glow */
+.pf-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 12px;
+    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.5) 0%, transparent 70%);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.pf-item:hover::after { opacity: 1; }
+
+.pf-item:hover {
+    background: #FBF9FE;
+    box-shadow:
+        -8px -8px 20px rgba(255, 255, 255, 1),
+        14px 14px 32px rgba(109, 40, 217, 0.18),
+        24px 30px 55px rgba(109, 40, 217, 0.12),
+        inset 0 2px 0 rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(109, 40, 217, 0.08);
+}
+
+.pf-item.active {
+    background: #FBF9FE;
+    box-shadow:
+        -8px -8px 22px rgba(255, 255, 255, 1),
+        16px 16px 36px rgba(109, 40, 217, 0.2),
+        26px 32px 60px rgba(109, 40, 217, 0.15),
+        inset 0 2px 0 rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(109, 40, 217, 0.1),
+        0 0 40px rgba(168, 85, 247, 0.15);
+}
+
+.pf-item.active::after { opacity: 1; }
+
+/* ---------- Question ---------- */
+.pf-question {
+    width: 100%;
+    padding: 1.65rem 1.9rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: left;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+.pf-question:hover {
+    color: #6A589D;
+    padding-left: 2.2rem;
+}
+
+/* ---------- Icon (3D Circle - Violet) ---------- */
+.pf-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #7C3AED;
+    flex-shrink: 0;
+    line-height: 1;
+
+    background: linear-gradient(145deg, #ffffff 0%, #F0EDF7 100%);
+    box-shadow:
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        4px 4px 10px rgba(109, 40, 217, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -1px 2px rgba(109, 40, 217, 0.08);
+
+    transition: transform 0.4s ease,
+                background 0.4s ease,
+                box-shadow 0.4s ease,
+                color 0.4s ease;
+}
+
+.pf-question:hover .pf-icon {
+    background: linear-gradient(145deg, #A855F7 0%, #6D28D9 100%);
+    color: #ffffff;
+    box-shadow:
+        -3px -3px 8px rgba(255, 255, 255, 0.9),
+        4px 4px 12px rgba(109, 40, 217, 0.5),
+        0 0 20px rgba(168, 85, 247, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.pf-item.active .pf-icon {
+    transform: rotate(45deg);
+    background: linear-gradient(145deg, #A855F7 0%, #6D28D9 100%);
+    color: #ffffff;
+    box-shadow:
+        -3px -3px 8px rgba(255, 255, 255, 0.9),
+        4px 4px 12px rgba(109, 40, 217, 0.6),
+        0 0 24px rgba(168, 85, 247, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Answer ---------- */
+.pf-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    z-index: 3;
+}
+
+.pf-answer p {
+    padding: 0 1.9rem 1.75rem;
+    margin: 0;
+    font-size: 0.98rem;
+    color: #4a3d2e;
+    line-height: 1.75;
+    border-top: 1px dashed rgba(168, 85, 247, 0.3);
+    padding-top: 1.25rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+    .pf-section {
+        padding: 4rem 1.25rem;
+        perspective: 900px;
+    }
+
+    .pf-list { gap: 1.1rem; }
+    .pf-title { font-size: 1.75rem; }
+    .pf-label { font-size: 0.7rem; }
+
+    .pf-question {
+        padding: 1.35rem 1.25rem;
+        font-size: 0.98rem;
+    }
+
+    .pf-question:hover { padding-left: 1.5rem; }
+
+    .pf-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+
+    .pf-answer p {
+        padding: 1rem 1.25rem 1.35rem;
+        font-size: 0.92rem;
+    }
+}

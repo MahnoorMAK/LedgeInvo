@@ -10,3 +10,4 @@ Route::get('/Slider3D', function () {return view('Pages.Slider3D');})->name('Sli
 Route::get('/contact', function () {return view('Pages.contact');})->name('contact');
 Route::get('/about', function () {return view('Pages.about');})->name('about');
 Route::get('/Service', function () {return view('Pages.Service');})->name('Service');
+Route::view('/pricingfaq', 'pages.pricingfaq')->name('pricingfaq');
