@@ -1,9 +1,0 @@
-@extends('layout.app')
-@section('content')
-@include('component.c1')
-@include('component.c3')
-@include('component.aboutc1')
-@include('component.aboutc2')
-@include('component.aboutc3')
-@include('component.aboutc4')
-@endsection

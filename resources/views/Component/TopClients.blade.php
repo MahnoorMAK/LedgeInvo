@@ -7,7 +7,7 @@
     <div class="top-clients-header">
         <h2 class="top-clients-title">Trusted by top teams</h2>
         <p class="top-clients-subtitle">
-            Thousands of businesses rely on Apexbooks to keep their finances
+            Thousands of businesses rely on LedgeInvo to keep their finances
             accurate, compliant, and always up to date.
         </p>
     </div>

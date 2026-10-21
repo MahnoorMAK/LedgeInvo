@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* app.css */
 :root {
     --primary: #7E6BB5; 
@@ -16,10 +15,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    
 }
 
 body {
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-main);
     min-height: 100vh;
@@ -581,177 +581,118 @@ nav {
 nav.is-hidden {
     transform: translateY(-100%);
 }
-=======
-/* =========================================================
-   THEME VARIABLES — light theme (default)
-   ========================================================= */
-:root {
-    --bg:              #ffffff;
-    --bg-soft:         #f5f9ff;
-    --bg-elevated:     #ffffff;
-    --text:            #0f2547;
-    --text-strong:     #0b1f3d;
-    --text-muted:      #52678a;
-    --border:          #e4ecf8;
-    --border-strong:   #dbe6f7;
-    --accent:          #3a7bf0;
-    --accent-dark:     #1f4a8c;
-    --accent-soft:     #eaf1ff;
-    --shadow:          rgba(31, 74, 140, 0.25);
-    --navbar-bg:       #4b73cf;
-    --navbar-text:     #ffffff;
-}
 
-/* =========================================================
-   THEME VARIABLES — dark theme
-   ========================================================= */
-[data-theme="dark"] {
-    --bg:              #0b1220;
-    --bg-soft:         #0e1729;
-    --bg-elevated:     #131e35;
-    --text:            #d6e3ff;
-    --text-strong:     #ffffff;
-    --text-muted:      #8ea3c2;
-    --border:          #1f2c46;
-    --border-strong:   #26344f;
-    --accent:          #6aa8ff;
-    --accent-dark:     #3a7bf0;
-    --accent-soft:     #1a2942;
-    --shadow:          rgba(0, 0, 0, 0.55);
-    --navbar-bg:       #060b16;
-    --navbar-text:     #ffffff;
-}
-
-/* =========================================================
-   APPLY THEME
-   ========================================================= */
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-/* =========================================================
-   NAVBAR — adapt to theme
-   ========================================================= */
-.navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+/* ============================================================================
+   FOOTER — Social icons (soft light-gray container)
+   ============================================================================ */
+.site-footer .footer-socials {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: var(--navbar-bg);
-    color: var(--navbar-text);
-    padding: 14px 24px;
-    width: 100%;
-    transition: background 0.3s ease;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
 }
 
-.navbar .nav-links {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-}
-
-.navbar .nav-links a {
-    color: var(--navbar-text);
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.2s ease;
-}
-
-.navbar .nav-links a:hover {
-    color: #38bdf8;
-}
-
-.navbar .brand {
-    color: var(--navbar-text);
-    font-size: 26px;
-    font-weight: bold;
-}
-
-/* =========================================================
-   THEME TOGGLE BUTTON
-   ========================================================= */
-#theme-toggle {
-    background: rgba(255, 255, 255, 0.10);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: var(--navbar-text);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
+.site-footer .footer-social {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s ease, transform 0.2s ease;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    /* Light gray — visible without being an eyesore */
+  background: #D0CADD;       /* soft warm gray with violet tint */
+border: 1px solid #B0A8C5;             /* slightly darker gray edge */
+    text-decoration: none;
+    flex-shrink: 0;
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.3s ease;
 }
 
-#theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.18);
-    transform: scale(1.05);
+.site-footer .footer-social svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
-/* =========================================================
-   SECTIONS — override any hard-coded white backgrounds
-   ========================================================= */
-.prac3-hero,
-.acc-features,
-.why-us,
-.acc-footer,
-.acc-page {
-    background: var(--bg) !important;
-    color: var(--text);
-    transition: background 0.3s ease, color 0.3s ease;
+.site-footer .footer-social:hover {
+    transform: translateY(-3px);
+    background: #E4E4E7;                     /* lightens on hover */
+    border-color: #D4D4D8;
 }
 
-/* Section headings */
-.prac3-hero h1,
-.prac3-hero h2,
-.acc-features h2,
-.why-us h2,
-.why-us h3,
-.acc-feature-card h3 {
-    color: var(--text-strong);
+.site-footer .footer-social:hover svg {
+    transform: scale(1.1);
 }
 
-/* Body text inside sections */
-.prac3-hero p,
-.acc-features p,
-.why-us p,
-.acc-footer p {
-    color: var(--text-muted);
+/* Brand-tinted glow on hover */
+.site-footer .footer-social--twitter:hover {
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(0, 0, 0, 0.25);
 }
 
-/* Divider lines */
-.prac3-hero-stats,
-.acc-footer__bottom {
-    border-color: var(--border) !important;
+.site-footer .footer-social--linkedin:hover {
+    box-shadow: 0 8px 18px rgba(10, 102, 194, 0.4), 0 0 14px rgba(10, 102, 194, 0.35);
 }
 
-/* =========================================================
-   BUTTONS — keep the accent gradients but adapt the rest
-   ========================================================= */
-.acc-btn--secondary,
-.prac3-btn-secondary {
-    background: var(--bg-elevated);
-    color: var(--accent-dark);
-    border-color: var(--border-strong);
+.site-footer .footer-social--facebook:hover {
+    box-shadow: 0 8px 18px rgba(24, 119, 242, 0.4), 0 0 14px rgba(24, 119, 242, 0.35);
 }
 
-.acc-btn--secondary:hover,
-.prac3-btn-secondary:hover {
-    background: var(--bg-soft);
+.site-footer .footer-social--instagram:hover {
+    box-shadow: 0 8px 18px rgba(221, 42, 123, 0.4), 0 0 14px rgba(221, 42, 123, 0.35);
 }
->>>>>>> 171477cfcc445e3171d14a14ed47a1e1f0603343
+
+.site-footer .footer-social--youtube:hover {
+    box-shadow: 0 8px 18px rgba(255, 0, 0, 0.4), 0 0 14px rgba(255, 0, 0, 0.35);
+}
+
+/* ============================================================================
+   FOOTER — Responsive
+   ============================================================================ */
+@media (max-width: 900px) {
+    .site-footer .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        padding: 48px 24px 32px;
+    }
+
+    .site-footer .footer-brand,
+    .site-footer .footer-newsletter {
+        grid-column: 1 / -1;
+    }
+
+    .site-footer .footer-bottom-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+    }
+
+    .site-footer .footer-legal {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .site-footer .footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .site-footer .footer-social {
+        width: 34px;
+        height: 34px;
+    }
+
+    .site-footer .footer-social svg {
+        width: 15px;
+        height: 15px;
+    }
+}

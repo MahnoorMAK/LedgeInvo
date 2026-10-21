@@ -1,3 +1,4 @@
+// app.js
 (function () {
     const dropdown = document.getElementById('signinDropdown');
     const toggle = document.getElementById('signinToggle');
@@ -95,41 +96,19 @@
     });
 })();
 
-/* ============================================================
-   NAVBAR — slides up slowly and smoothly on scroll down
-   ============================================================ */
+/* Navbar hide/show on scroll */
 (function () {
-    'use strict';
-
+    let lastY = 0;
     const nav = document.querySelector('nav');
     if (!nav) return;
 
-    let lastY = window.scrollY;
-    let ticking = false;
-    let hidden = false;
-    const HIDE_AFTER = 120;   // scroll past this to start hiding
-    const MIN_DELTA  = 4;     // must scroll at least this much
-
-    function update() {
-        const y = window.scrollY;
-        const delta = y - lastY;
-
-        if (y > HIDE_AFTER && delta > MIN_DELTA && !hidden) {
-            nav.classList.add('is-hidden');
-            hidden = true;
-        } else if ((delta < -MIN_DELTA || y < 60) && hidden) {
-            nav.classList.remove('is-hidden');
-            hidden = false;
-        }
-
-        lastY = y;
-        ticking = false;
-    }
-
     window.addEventListener('scroll', function () {
-        if (!ticking) {
-            requestAnimationFrame(update);
-            ticking = true;
+        const y = window.scrollY;
+        if (y > 200 && y > lastY) {
+            nav.classList.add('is-hidden');
+        } else {
+            nav.classList.remove('is-hidden');
         }
+        lastY = y;
     }, { passive: true });
 })();
