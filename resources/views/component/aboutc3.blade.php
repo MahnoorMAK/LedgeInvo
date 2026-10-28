@@ -12,7 +12,7 @@
 
         .wdu {
             width: 100%;
-            background: #f5efe6;
+            background: #f8fafc;                 /* slate-50 */
             padding: 6rem 2rem;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             color: #1a120e;

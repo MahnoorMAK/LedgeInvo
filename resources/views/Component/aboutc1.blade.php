@@ -1,13 +1,15 @@
 {{-- resources/views/component/hero.blade.php --}}
 
 <section class="hero">
-    {{-- Background image + light overlay --}}
+    {{-- Background image + dark overlay --}}
     <div class="hero__bg"></div>
 
     {{-- Navbar --}}
     <nav class="hero__nav">
         <a href="/" class="hero__logo">
-            
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 4h18L3 20h18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             LedgeInvo
         </a>
 
