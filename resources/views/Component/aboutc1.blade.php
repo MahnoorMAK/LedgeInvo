@@ -56,10 +56,10 @@
     overflow: hidden;
     font-family: 'Inter', system-ui, sans-serif;
     color: #ffffff;
-    background: #0f172a; /* slate-900 fallback */
+    background: #2a1f1c; /* warm brown fallback from original */
 }
 
-/* Background image — accounting themed */
+/* Background image — accounting / bookkeeping themed */
 .hero__bg {
     position: absolute;
     inset: 0;
@@ -67,20 +67,19 @@
     background-size: cover;
     background-position: center;
     z-index: 0;
-    filter: saturate(0.9) brightness(1.05);
 }
 
-/* Light indigo gradient overlay — matches the light professional palette */
+/* Warm brown gradient overlay — matches original contact.blade.php */
 .hero__bg::after {
     content: '';
     position: absolute;
     inset: 0;
     background:
         linear-gradient(180deg,
-            rgba(15, 23, 42, 0.55) 0%,
-            rgba(30, 41, 59, 0.35) 35%,
-            rgba(30, 41, 59, 0.5) 65%,
-            rgba(15, 23, 42, 0.82) 100%
+            rgba(20, 10, 5, 0.55) 0%,
+            rgba(20, 10, 5, 0.35) 35%,
+            rgba(20, 10, 5, 0.55) 65%,
+            rgba(20, 10, 5, 0.85) 100%
         );
 }
 
@@ -120,17 +119,14 @@
     font-size: 0.92rem;
     font-weight: 500;
     opacity: 0.92;
-    transition: opacity 0.2s, color 0.2s;
+    transition: opacity 0.2s;
 }
 
-.hero__menu a:hover {
-    opacity: 1;
-    color: #c7d2fe;
-}
+.hero__menu a:hover { opacity: 1; }
 
 .hero__cta {
     background: #ffffff;
-    color: #4f46e5;
+    color: #1a120e;
     padding: 0.7rem 1.4rem;
     border-radius: 999px;
     text-decoration: none;
@@ -139,13 +135,12 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .hero__cta:hover {
     transform: translateY(-1px);
-    background: #eef2ff;
-    box-shadow: 0 10px 24px -10px rgba(79, 70, 229, 0.55);
+    box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.6);
 }
 
 /* Hero content */
@@ -165,8 +160,8 @@
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #c7d2fe;
-    opacity: 0.95;
+    color: #ffffff;
+    opacity: 0.9;
     margin-bottom: 1.5rem;
 }
 
@@ -177,7 +172,7 @@
     line-height: 1.08;
     letter-spacing: -0.5px;
     color: #ffffff;
-    text-shadow: 0 4px 30px rgba(15, 23, 42, 0.55);
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
 }
 
 /* Bottom badge */
@@ -189,12 +184,6 @@
     gap: 0.9rem;
     padding: 1.5rem 3rem 2rem;
     font-size: 0.95rem;
-    color: #e2e8f0;
-}
-
-.hero__badge strong {
-    color: #ffffff;
-    font-weight: 700;
 }
 
 .hero__avatars { display: flex; }
@@ -206,7 +195,6 @@
     border: 2px solid #ffffff;
     object-fit: cover;
     margin-left: -10px;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
 }
 
 .hero__avatars img:first-child { margin-left: 0; }
