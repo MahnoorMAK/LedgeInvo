@@ -30,15 +30,8 @@
                     <input type="text" placeholder="Search anything...">
                 </div>
 
-                <div class="topbar-actions">
-                    <button class="icon-btn">🔔</button>
-                    <button class="icon-btn">✉️</button>
-                    <div class="user-profile">
-                        <div class="avatar">R</div>
-                        <div class="user-info">
-                            <span class="user-name">Roman</span>
-                            <span class="user-role">Admin</span>
-                        </div>
+                
+                
                     </div>
                 </div>
             </header>
