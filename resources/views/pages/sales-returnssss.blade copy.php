@@ -435,7 +435,8 @@
             }
 
             // Dropdown change hone par pagination update karega
-           
+            if (perPageSelect) {
+                perPageSelect.addEventListener("change", updatePagination);
             }
 
             // Page load hote hi pagination apply karega
@@ -485,10 +486,7 @@
                     e.preventDefault();
 
                     // Values uthao
-                    const customerVal = newCustomerName.value.trim() || "Unknown";
-                    const warehouseVal = newWarehouse.value;
-                    const dateVal = newReturnDate.value || "2026-01-01";
-                    const amountVal = newTotalAmount.value || "0.00";
+                    
 
                     // Naya Return Number
                     const randomNum = Math.floor(Math.random() * 1000);
