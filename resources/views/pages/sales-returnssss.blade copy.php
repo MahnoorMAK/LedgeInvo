@@ -524,11 +524,13 @@
                     tableBody.insertAdjacentHTML('afterbegin', newRow);
 
                     // Form clear & Modal band
-                   
+                    newCustomerName.value = "";
+                    newReturnDate.value = "";
+                    newTotalAmount.value = "";
+                    modal.classList.remove("show");
 
                     // Pagination update
-                    updatePagination();
-                });
+                   
             }
         });
     </script>
