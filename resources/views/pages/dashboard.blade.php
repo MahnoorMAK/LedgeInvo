@@ -43,9 +43,16 @@
                 </div>
             </header>
 
-           
+            <!-- DASHBOARD CONTENT -->
+            <div class="dashboard-body">
+                
+                <div class="page-header">
+                    <h1>Welcome back, Roman 👋</h1>
+                    <p>Here's what's happening with your business today.</p>
+                </div>
+
                 <!-- STATS CARDS -->
-                <div class="stats-grid">
+              
                     
                     <!-- Card 1 -->
                     <div class="stat-card">
