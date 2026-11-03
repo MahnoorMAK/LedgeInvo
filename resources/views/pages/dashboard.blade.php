@@ -84,23 +84,10 @@
                         </div>
                     </div>
 
-                    <!-- Card 4 -->
-                    <div class="stat-card">
-                        <div class="stat-icon icon-purple">👥</div>
-                        <div class="stat-details">
-                            <h3>Total Clients</h3>
-                            <h2>345</h2>
-                            <span class="stat-trend up">↑ 15 new this month</span>
-                        </div>
-                    </div>
-
-                </div>
+                  
 
                 <!-- Recent Activity Table (Placeholder) -->
-                <div class="recent-section">
-                    <h2>Recent Transactions</h2>
-                    <p style="color: #64748b; margin-top: 10px;">Yahan aapki recent invoices ki table aayegi.</p>
-                </div>
+                
 
             </div>
         </main>
