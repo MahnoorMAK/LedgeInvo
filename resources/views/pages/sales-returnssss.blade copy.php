@@ -394,10 +394,7 @@
             }
 
             // 3. Delete Row
-            window.deleteRow = function(button) {
-                if (confirm("Kya aap waqai ye return delete karna chahte hain?")) {
-                    button.closest('tr').remove();
-                    updatePagination(); // Delete ke baad pagination update karega
+           
                 }
             };
 
