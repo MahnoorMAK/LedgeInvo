@@ -21,7 +21,7 @@
         @include('components.sidebar')
 
         <!-- 2. MAIN DASHBOARD AREA -->
-        <main class="main-content">
+       
             
             <!-- TOPBAR -->
             <header class="topbar">
