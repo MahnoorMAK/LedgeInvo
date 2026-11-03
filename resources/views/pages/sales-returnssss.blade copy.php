@@ -489,9 +489,7 @@
                     
 
                     // Naya Return Number
-                    const randomNum = Math.floor(Math.random() * 1000);
-                    const invoiceNo = `SR-2026-${randomNum.toString().padStart(3, '0')}`;
-                    const firstLetter = customerVal.charAt(0).toUpperCase();
+                  
 
                     // Naya Row
                     const newRow = `
