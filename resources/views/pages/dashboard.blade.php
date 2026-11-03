@@ -75,15 +75,7 @@
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="stat-card">
-                        <div class="stat-icon icon-orange">⏳</div>
-                        <div class="stat-details">
-                            <h3>Pending Invoices</h3>
-                            <h2>18</h2>
-                            <span class="stat-trend down">↓ 2% from last month</span>
-                        </div>
-                    </div>
-
+                    <
                   
 
                 <!-- Recent Activity Table (Placeholder) -->
