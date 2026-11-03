@@ -93,7 +93,6 @@
         </main>
     </div>
 
-    <!-- Sidebar JS -->
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+   
 </body>
 </html>
