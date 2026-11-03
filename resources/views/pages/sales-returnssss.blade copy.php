@@ -394,7 +394,10 @@
             }
 
             // 3. Delete Row
-           
+            window.deleteRow = function(button) {
+                if (confirm("Kya aap waqai ye return delete karna chahte hain?")) {
+                    button.closest('tr').remove();
+                    updatePagination(); // Delete ke baad pagination update karega
                 }
             };
 
@@ -432,8 +435,7 @@
             }
 
             // Dropdown change hone par pagination update karega
-            if (perPageSelect) {
-                perPageSelect.addEventListener("change", updatePagination);
+           
             }
 
             // Page load hote hi pagination apply karega
