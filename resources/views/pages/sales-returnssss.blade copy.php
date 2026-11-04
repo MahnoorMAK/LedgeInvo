@@ -461,9 +461,7 @@
             // =========================================
             
 
-            if (saveBtn) {
-                saveBtn.addEventListener("click", function(e) {
-                    e.preventDefault();
+           
 
                     // Values uthao
                     
