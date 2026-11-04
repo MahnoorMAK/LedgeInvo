@@ -441,10 +441,7 @@
             // =========================================
             // 6. SEARCH FUNCTIONALITY
             // =========================================
-            const searchInput = document.getElementById("searchInput");
-            const searchBtn = document.getElementById("searchBtn");
-            const clearSearchBtn = document.getElementById("clearSearchBtn");
-
+          
             function filterTable() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
                 const currentRows = document.querySelectorAll("#tableBody tr");
