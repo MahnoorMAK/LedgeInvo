@@ -479,20 +479,7 @@
                     // Naya Return Number
                   
 
-                    // Naya Row
-                    const newRow = `
-                        <tr>
-                            <td><span class="badge">${invoiceNo}</span></td>
-                            <td>
-                                <div class="cust-info">
-                                    <div class="c-avatar bg-blue">${firstLetter}</div>
-                                    <div>
-                                        <span class="c-name">${customerVal}</span>
-                                        <span class="c-email">${customerVal.toLowerCase().replace(/\s/g, '')}@client.com</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="warehouse-badge wh-purple">${warehouseVal}</span></td>
+                   
                             <td>📅 ${dateVal}</td>
                             <td><strong>$${parseFloat(amountVal).toFixed(2)}</strong></td>
                             <td>Return Item <span class="item-qty">×1</span></td>
