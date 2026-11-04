@@ -15,10 +15,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    
 }
 
 body {
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-main);
     min-height: 100vh;
@@ -579,4 +580,119 @@ nav {
 /* Hidden state — slides up and out slowly */
 nav.is-hidden {
     transform: translateY(-100%);
+}
+
+/* ============================================================================
+   FOOTER — Social icons (soft light-gray container)
+   ============================================================================ */
+.site-footer .footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+.site-footer .footer-social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    /* Light gray — visible without being an eyesore */
+  background: #D0CADD;       /* soft warm gray with violet tint */
+border: 1px solid #B0A8C5;             /* slightly darker gray edge */
+    text-decoration: none;
+    flex-shrink: 0;
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.3s ease;
+}
+
+.site-footer .footer-social svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.site-footer .footer-social:hover {
+    transform: translateY(-3px);
+    background: #E4E4E7;                     /* lightens on hover */
+    border-color: #D4D4D8;
+}
+
+.site-footer .footer-social:hover svg {
+    transform: scale(1.1);
+}
+
+/* Brand-tinted glow on hover */
+.site-footer .footer-social--twitter:hover {
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(0, 0, 0, 0.25);
+}
+
+.site-footer .footer-social--linkedin:hover {
+    box-shadow: 0 8px 18px rgba(10, 102, 194, 0.4), 0 0 14px rgba(10, 102, 194, 0.35);
+}
+
+.site-footer .footer-social--facebook:hover {
+    box-shadow: 0 8px 18px rgba(24, 119, 242, 0.4), 0 0 14px rgba(24, 119, 242, 0.35);
+}
+
+.site-footer .footer-social--instagram:hover {
+    box-shadow: 0 8px 18px rgba(221, 42, 123, 0.4), 0 0 14px rgba(221, 42, 123, 0.35);
+}
+
+.site-footer .footer-social--youtube:hover {
+    box-shadow: 0 8px 18px rgba(255, 0, 0, 0.4), 0 0 14px rgba(255, 0, 0, 0.35);
+}
+
+/* ============================================================================
+   FOOTER — Responsive
+   ============================================================================ */
+@media (max-width: 900px) {
+    .site-footer .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        padding: 48px 24px 32px;
+    }
+
+    .site-footer .footer-brand,
+    .site-footer .footer-newsletter {
+        grid-column: 1 / -1;
+    }
+
+    .site-footer .footer-bottom-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+    }
+
+    .site-footer .footer-legal {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .site-footer .footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .site-footer .footer-social {
+        width: 34px;
+        height: 34px;
+    }
+
+    .site-footer .footer-social svg {
+        width: 15px;
+        height: 15px;
+    }
 }

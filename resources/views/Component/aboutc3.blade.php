@@ -15,7 +15,7 @@
             background: #f8fafc;                 /* slate-50 */
             padding: 6rem 2rem;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            color: #0f172a;                      /* slate-900 */
+            color: #1a120e;
             overflow: hidden;
         }
 
