@@ -418,11 +418,7 @@
             // =========================================
             // 5. PAGINATION LOGIC (WORKING)
             // =========================================
-            const perPageSelect = document.getElementById("perPageSelect");
-            
-            function updatePagination() {
-                let rowsPerPage = parseInt(perPageSelect.value) || 10;
-                const currentRows = document.querySelectorAll("#tableBody tr");
+          
                 
                 currentRows.forEach((row, index) => {
                     // Agar row ka number limit se kam hai toh dikhao, warna chupao
