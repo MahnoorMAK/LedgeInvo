@@ -467,12 +467,7 @@
             // =========================================
             // 7. CREATE / SAVE NEW RETURN
             // =========================================
-            const saveBtn = document.getElementById("saveReturnBtn");
-            const newCustomerName = document.getElementById("newCustomerName");
-            const newWarehouse = document.getElementById("newWarehouse");
-            const newReturnDate = document.getElementById("newReturnDate");
-            const newTotalAmount = document.getElementById("newTotalAmount");
-            const tableBody = document.getElementById("tableBody");
+            
 
             if (saveBtn) {
                 saveBtn.addEventListener("click", function(e) {
