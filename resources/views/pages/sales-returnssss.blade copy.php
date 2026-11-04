@@ -442,15 +442,7 @@
             // 6. SEARCH FUNCTIONALITY
             // =========================================
           
-            function filterTable() {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const currentRows = document.querySelectorAll("#tableBody tr");
-                
-                currentRows.forEach(function(row) {
-                    const rowText = row.textContent.toLowerCase();
-                    if (rowText.includes(searchTerm)) {
-                        row.style.display = "";
-                    } else {
+           
                         row.style.display = "none";
                     }
                 });
