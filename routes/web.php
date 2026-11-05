@@ -33,3 +33,7 @@ Route::get('/balance-sheet', function () {
 Route::get('/vendors/create', function () {
     return view('pages.vendors.create');
 })->name('vendors.create');
+// Revenues Page
+Route::get('/revenues', function () {
+    return view('pages.revenues.index');
+})->name('revenues.index');
