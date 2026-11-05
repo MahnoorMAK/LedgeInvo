@@ -45,3 +45,7 @@ Route::get('/expenses', function () {
 Route::get('/customer-payments/create', function () {
     return view('pages.customer-payments.create');
 })->name('customer-payments.create');
+// Create Vendor Payment Page
+Route::get('/vendor-payments/create', function () {
+    return view('pages.vendor-payments.create');
+})->name('vendor-payments.create');
