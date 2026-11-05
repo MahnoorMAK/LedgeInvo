@@ -41,3 +41,7 @@ Route::get('/revenues', function () {
 Route::get('/expenses', function () {
     return view('pages.expenses.index');
 })->name('expenses.index');
+// Create Customer Payment Page
+Route::get('/customer-payments/create', function () {
+    return view('pages.customer-payments.create');
+})->name('customer-payments.create');
