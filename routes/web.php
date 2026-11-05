@@ -37,3 +37,7 @@ Route::get('/vendors/create', function () {
 Route::get('/revenues', function () {
     return view('pages.revenues.index');
 })->name('revenues.index');
+// Expenses Page
+Route::get('/expenses', function () {
+    return view('pages.expenses.index');
+})->name('expenses.index');
