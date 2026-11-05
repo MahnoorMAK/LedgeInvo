@@ -1,0 +1,99 @@
+/* public/css/vendor-payments.css */
+
+:root {
+    --ag-green: #10b981;
+    --ag-green-hover: #059669;
+    --ag-bg: #f8fafc;
+    --ag-border: #e2e8f0;
+    --ag-text-main: #0f172a;
+    --ag-text-muted: #64748b;
+}
+
+.ag-page-wrapper {
+    background-color: var(--ag-bg);
+    padding: 24px 32px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ag-text-main);
+    min-height: 100vh;
+}
+
+/* Header Area */
+.ag-top-header {
+    display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px;
+}
+.ag-breadcrumb { color: var(--ag-text-muted); font-size: 13px; margin-bottom: 8px; }
+.ag-title { margin: 0; font-size: 24px; font-weight: 600; }
+.ag-subtitle { margin: 6px 0 0 0; color: var(--ag-text-muted); font-size: 14px; }
+
+.ag-btn-outline {
+    background: #fff; border: 1px solid #cbd5e1; color: #475569; padding: 10px 20px;
+    border-radius: 6px; font-weight: 500; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px; font-size: 14px;
+}
+.ag-btn-outline:hover { background: #f1f5f9; }
+
+/* Cards */
+.ag-card {
+    background: #ffffff; border: 1px solid var(--ag-border); border-radius: 10px;
+    padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.ag-card-header {
+    display: flex; align-items: flex-start; gap: 16px;
+    border-bottom: 1px solid var(--ag-border); padding-bottom: 20px; margin-bottom: 24px;
+}
+
+.ag-icon-box {
+    width: 44px; height: 44px; background: #ecfdf5; color: var(--ag-green);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.ag-icon-box svg { width: 22px; height: 22px; }
+
+.ag-card-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+.ag-card-title { margin: 0; font-size: 18px; font-weight: 600; color: var(--ag-text-main); }
+.ag-card-desc { margin: 0; font-size: 14px; color: var(--ag-text-muted); }
+
+/* Forms */
+.ag-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.ag-label { display: block; margin-bottom: 8px; color: #334155; font-size: 14px; font-weight: 600; }
+.ag-label span { color: #ef4444; }
+
+.ag-input-wrapper { position: relative; }
+
+.ag-input {
+    width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px;
+    outline: none; font-size: 14px; color: #334155; transition: border 0.2s; background: #fff; box-sizing: border-box;
+    appearance: none; /* For selects */
+}
+.ag-input:focus { border-color: var(--ag-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+.ag-input::placeholder { color: #94a3b8; }
+
+/* Custom Select Arrow */
+.ag-select-arrow {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; color: #94a3b8;
+}
+
+.ag-input-icon-left { padding-left: 36px; }
+.ag-input-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    color: #94a3b8; pointer-events: none;
+}
+
+/* Empty State (Select a Vendor) */
+.ag-empty-state {
+    background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 10px;
+    padding: 60px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+.ag-empty-icon {
+    width: 64px; height: 64px; background: #f8fafc; color: #94a3b8;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+}
+.ag-empty-icon svg { width: 32px; height: 32px; }
+
+.ag-empty-title { margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: var(--ag-text-main); }
+.ag-empty-text { margin: 0; font-size: 14px; color: var(--ag-text-muted); max-width: 400px; }
