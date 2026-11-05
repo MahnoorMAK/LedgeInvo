@@ -21,7 +21,7 @@
         @include('components.sidebar')
 
         <!-- 2. MAIN DASHBOARD AREA -->
-       
+        <main class="main-content">
             
             <!-- TOPBAR -->
             <header class="topbar">
@@ -44,13 +44,25 @@
             </header>
 
             <!-- DASHBOARD CONTENT -->
-          
+            <div class="dashboard-body">
+                
+                <div class="page-header">
+                    <h1>Welcome back, Roman 👋</h1>
+                    <p>Here's what's happening with your business today.</p>
+                </div>
 
                 <!-- STATS CARDS -->
                 <div class="stats-grid">
                     
                     <!-- Card 1 -->
-                    
+                    <div class="stat-card">
+                        <div class="stat-icon icon-green">💰</div>
+                        <div class="stat-details">
+                            <h3>Total Revenue</h3>
+                            <h2>$48,295.00</h2>
+                            <span class="stat-trend up">↑ 12% from last month</span>
+                        </div>
+                    </div>
 
                     <!-- Card 2 -->
                     <div class="stat-card">
