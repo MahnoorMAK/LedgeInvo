@@ -1,0 +1,1347 @@
+/* public/css/Purchase/invoice.css */
+
+.purchase-invoice-wrapper {
+    margin-top: -20px; 
+    padding: 16px 20px 24px 20px;  
+    font-family: var(--app-font, 'Inter', sans-serif);
+    background-color: var(--bg-color);
+    min-height: calc(100vh - 80px);
+    transition: background-color 0.3s ease;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.pi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.pi-title {
+    font-size: 1.5rem; 
+    font-weight: 700;
+    color: var(--text-main);
+    margin-top: 0; 
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+}
+
+.pi-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;  
+}
+
+.pi-add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary); 
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.pi-add-btn:hover {
+    background: var(--primary-hover);
+}
+
+/* ============================================================
+   CARD BASE
+   ============================================================ */
+.pi-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    overflow: hidden;
+    width: 100%; 
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ============================================================
+   CONTROLS ROW
+   ============================================================ */
+.pi-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px; 
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.pi-search-group {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    max-width: 450px;
+}
+
+.pi-search-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.pi-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+}
+
+.pi-search-input {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.3s ease, color 0.3s ease;
+}
+
+.pi-search-input:focus {
+    border-color: var(--primary); 
+}
+
+.pi-search-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    transition: background 0.2s;
+}
+
+.pi-search-btn:hover {
+    background: var(--primary-hover);
+}
+
+.pi-action-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pi-view-toggle {
+    display: flex;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+.pi-view-btn {
+    background: var(--white);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pi-view-btn svg { width: 16px; height: 16px; }
+
+.pi-view-btn:hover {
+    background: var(--bg-secondary);
+}
+
+.pi-view-btn.active {
+    background: var(--primary); 
+    color: #fff;
+}
+
+.pi-dropdown-btn, .pi-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s, background-color 0.3s ease, color 0.3s ease;
+}
+
+.pi-dropdown-btn svg, .pi-filter-btn svg {
+    width: 14px;
+    height: 14px;
+    color: var(--text-muted);
+}
+
+.pi-dropdown-btn:hover, .pi-filter-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* ============================================================
+   FILTER PANEL
+   ============================================================ */
+.pi-filter-panel {
+    display: none; 
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    gap: 16px;
+    flex-wrap: wrap;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.pi-filter-panel.open {
+    display: flex;
+}
+
+.pi-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 180px;
+}
+
+.pi-filter-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.pi-filter-select {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+}
+
+.pi-filter-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-left: auto;
+}
+
+/* Specific styles for Filter Action Buttons */
+.pi-btn-apply {
+    background: var(--primary);
+}
+.pi-btn-apply:hover {
+    background: var(--primary-hover);
+}
+
+.pi-btn-clear {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+.pi-btn-clear:hover {
+    background: var(--bg-secondary);
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.pi-table-wrapper {
+    overflow-x: auto;
+    overflow-y: scroll; 
+    height: 380px; 
+    width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+    transition: all 0.3s ease;
+}
+
+.pi-table-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.pi-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.pi-table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+.pi-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+.pi-table {
+    width: 100%;
+    table-layout: fixed; 
+    min-width: 1150px; 
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.pi-table th {
+    background: var(--white);
+    padding: 0 12px; 
+    height: 55px;
+    font-size: 0.85rem; 
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap; 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pi-table td {
+    padding: 0 12px; 
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-main);
+    vertical-align: middle; 
+    background: var(--white);
+    white-space: nowrap; 
+    height: 65px; 
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* PRECISE COLUMN WIDTHS */
+.pi-table th:nth-child(1),
+.pi-table td:nth-child(1) { width: 15%; text-align: left; padding-left: 20px; } 
+
+.pi-table th:nth-child(2),
+.pi-table td:nth-child(2) { width: 22%; text-align: left; } 
+
+.pi-table th:nth-child(3),
+.pi-table td:nth-child(3) { width: 11%; } 
+
+.pi-table th:nth-child(4),
+.pi-table td:nth-child(4) { width: 13%; } 
+
+.pi-table th:nth-child(5),
+.pi-table td:nth-child(5) { width: 9%; text-align: right; } 
+
+.pi-table th:nth-child(6),
+.pi-table td:nth-child(6) { width: 8%; text-align: right; } 
+
+.pi-table th:nth-child(7),
+.pi-table td:nth-child(7) { width: 10%; text-align: right; font-weight: 600; } 
+
+.pi-table th:nth-child(8),
+.pi-table td:nth-child(8) { width: 9%; text-align: right; font-weight: 600; } 
+
+.pi-table th:nth-child(9),
+.pi-table td:nth-child(9) { width: 9%; text-align: center; } 
+
+.pi-table th:nth-child(10),
+.pi-table td:nth-child(10) { width: 8%; text-align: right; overflow: visible; padding-right: 30px; } 
+
+
+.pi-table tbody tr:hover {
+    background: color-mix(in srgb, var(--bg-secondary) 50%, transparent);
+}
+
+.pi-fw-bold { font-weight: 600; }
+.pi-balance { font-weight: 600; }
+.text-orange { color: #F59E0B; }
+.text-danger { color: #EF4444; }
+.text-success { color: #10B981; }
+.text-primary { color: var(--primary); }
+
+/* Badges */
+.pi-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem; 
+    font-weight: 600;
+    white-space: nowrap;
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+    border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+/* User Cell */
+.pi-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+}
+
+.pi-avatar {
+    width: 32px; 
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.pi-user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.pi-user-name {
+    font-weight: 600;
+    font-size: 0.9rem; 
+    color: var(--text-main);
+}
+
+.pi-user-email {
+    font-size: 0.8rem; 
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Dates */
+.pi-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+}
+
+.pi-date-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pi-overdue {
+    font-size: 0.75rem; 
+    font-weight: 600;
+    color: #EF4444;
+}
+
+/* Status Pills */
+.pi-status {
+    display: inline-block;
+    padding: 4px 10px; 
+    border-radius: 4px;
+    font-size: 0.75rem; 
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-paid {
+    background: #D1FAE5; 
+    color: #065F46;
+}
+
+.status-posted {
+    background: color-mix(in srgb, var(--primary) 15%, transparent);
+    color: var(--primary);
+}
+
+.status-draft {
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+}
+
+/* ============================================================
+   ACTIONS DROPDOWN MENU (3-dot)
+   ============================================================ */
+.text-right { text-align: right; }
+
+.pi-actions-cell {
+    position: relative;
+    text-align: right;
+    padding-right: 20px !important;
+}
+
+.action-menu-btn {
+    background: transparent;
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: background 0.2s, color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-menu-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--text-main);
+}
+
+.action-menu-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* The Dropdown Panel */
+.action-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    padding: 6px;
+    min-width: 160px;
+    z-index: 100;
+    display: none; 
+    text-align: left;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.action-dropdown.show {
+    display: block; 
+}
+
+.action-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s ease;
+}
+
+.action-dropdown-item:hover {
+    background: var(--bg-secondary);
+}
+
+.action-dropdown-item svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+}
+
+.action-dropdown-item.text-primary { color: var(--primary); }
+.action-dropdown-item.text-primary svg { color: var(--primary); }
+.action-dropdown-item.text-primary:hover { background: var(--primary-light); }
+
+.action-dropdown-item.text-success { color: #10B981; }
+.action-dropdown-item.text-success svg { color: #10B981; }
+.action-dropdown-item.text-success:hover { background: color-mix(in srgb, #10B981 10%, transparent); }
+
+.action-dropdown-item.text-danger { color: #EF4444; }
+.action-dropdown-item.text-danger svg { color: #EF4444; }
+.action-dropdown-item.text-danger:hover { background: color-mix(in srgb, #EF4444 10%, transparent); }
+
+/* ============================================================
+   FOOTER / PAGINATION
+   ============================================================ */
+.pi-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--white);
+    border-top: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.pi-results-info {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.pi-pagination {
+    display: flex;
+    gap: 6px;
+}
+
+.pi-page-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--white);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s, background-color 0.3s ease, color 0.3s ease;
+}
+
+.pi-page-btn:hover:not(.disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.pi-page-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+.pi-page-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-secondary);
+}
+
+/* ============================================================
+   GRID VIEW LAYOUT
+   ============================================================ */
+.pi-table-wrapper.grid-view {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 20px;
+    padding: 20px;
+    background: var(--bg-color);
+    height: auto !important;
+    max-height: none;
+}
+
+.pi-table-wrapper.grid-view .pi-table,
+.pi-table-wrapper.grid-view .pi-table tbody {
+    display: contents;
+}
+
+.pi-table-wrapper.grid-view .pi-table thead {
+    display: none;
+}
+
+/* Style the Row as a Card */
+.pi-table-wrapper.grid-view .pi-table tr {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    transition: box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+    height: 100%;
+    position: relative;
+}
+
+.pi-table-wrapper.grid-view .pi-table tr:hover {
+    box-shadow: 0 6px 16px var(--shadow-color);
+    z-index: 100; 
+}
+
+.pi-table-wrapper.grid-view .pi-table tr:has(.action-dropdown.show) {
+    z-index: 200;
+}
+
+.pi-table-wrapper.grid-view .pi-table td {
+    display: block;
+    padding: 0;
+    border: none;
+    background: transparent;
+    white-space: normal;
+    overflow: visible;
+    text-align: left;
+    width: 100% !important; 
+    color: var(--text-main);
+    height: auto; 
+    min-width: 0; 
+}
+
+/* 1. Invoice Number Header */
+.pi-table-wrapper.grid-view .pi-table td:nth-child(1) {
+    margin-bottom: 16px;
+    padding-right: 40px; 
+}
+
+/* 2. Vendor */
+.pi-table-wrapper.grid-view .pi-table td:nth-child(2) {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 10. Move Action Menu to Top Right */
+.pi-table-wrapper.grid-view .pi-table td:nth-child(10) {
+    position: absolute;
+    top: 20px; 
+    right: 20px;
+    width: auto !important;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pi-table-wrapper.grid-view .pi-table td:nth-child(10) .action-menu-btn {
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    padding: 6px;
+}
+
+/* Dates */
+.pi-table-wrapper.grid-view .pi-table td:nth-child(3),
+.pi-table-wrapper.grid-view .pi-table td:nth-child(4) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--bg-secondary);
+    padding-bottom: 8px;
+}
+.pi-table-wrapper.grid-view .pi-table td:nth-child(3)::before { content: 'Invoice Date:'; font-weight: 600; color: var(--text-muted); }
+.pi-table-wrapper.grid-view .pi-table td:nth-child(4)::before { content: 'Due Date:'; font-weight: 600; color: var(--text-muted); }
+.pi-table-wrapper.grid-view .pi-table td:nth-child(3) svg,
+.pi-table-wrapper.grid-view .pi-table td:nth-child(4) svg { display: none; }
+.pi-table-wrapper.grid-view .pi-table td:nth-child(3) .pi-date,
+.pi-table-wrapper.grid-view .pi-table td:nth-child(4) .pi-date { flex-direction: row; gap: 8px; }
+.pi-table-wrapper.grid-view .pi-table td:nth-child(3) .pi-date-top,
+.pi-table-wrapper.grid-view .pi-table td:nth-child(4) .pi-date-top { gap: 4px; }
+
+/* Financials */
+.pi-table-wrapper.grid-view .pi-table td:nth-child(5),
+.pi-table-wrapper.grid-view .pi-table td:nth-child(6),
+.pi-table-wrapper.grid-view .pi-table td:nth-child(7),
+.pi-table-wrapper.grid-view .pi-table td:nth-child(8) {
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.pi-table-wrapper.grid-view .pi-table td:nth-child(5)::before { content: 'Subtotal'; color: var(--text-muted); }
+.pi-table-wrapper.grid-view .pi-table td:nth-child(6)::before { content: 'Tax'; color: var(--text-muted); }
+.pi-table-wrapper.grid-view .pi-table td:nth-child(7)::before { content: 'Total Amount'; font-weight: 700; color: var(--text-main); }
+.pi-table-wrapper.grid-view .pi-table td:nth-child(7) { 
+    font-size: 1.05rem; 
+    font-weight: 700; 
+    margin-top: 4px; 
+    background: var(--primary-light);
+    color: var(--primary);
+}
+.pi-table-wrapper.grid-view .pi-table td:nth-child(8)::before { content: 'Balance'; font-weight: 700; color: var(--text-muted); }
+
+/* Status Pill in Card (Move to Top Right) */
+.pi-table-wrapper.grid-view .pi-table td:nth-child(9) {
+    position: absolute;
+    top: 70px; /* Aligns with the Customer Name */
+    right: 40px;
+    width: auto !important;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ============================================================
+   DARK THEME FIXES
+   ============================================================ */
+[data-theme="dark"] .status-paid {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+}
+
+[data-theme="dark"] .pi-table-wrapper.grid-view .pi-table td:nth-child(7) {
+    background: var(--bg-secondary);
+    color: var(--text-main);
+}
+
+/* ============================================================
+   CUSTOM PER PAGE DROPDOWN
+   ============================================================ */
+.pi-custom-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 140px; 
+    font-family: inherit;
+    z-index: 100;
+}
+
+.pi-custom-dropdown-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--white);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.pi-custom-dropdown-btn:hover,
+.pi-custom-dropdown-btn:focus {
+    border-color: var(--primary);
+}
+
+/* Arrow Icon */
+.pi-custom-dropdown-btn .pi-select-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+}
+
+/* Rotate arrow UP when opened */
+.pi-custom-dropdown.open .pi-custom-dropdown-btn .pi-select-icon {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+
+.pi-custom-dropdown.open .pi-custom-dropdown-btn {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Dropdown Menu */
+.pi-custom-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    padding: 6px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px var(--shadow-color);
+    list-style: none;
+    margin: 0;
+    z-index: 100;
+    
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+}
+
+.pi-custom-dropdown.open .pi-custom-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.pi-custom-dropdown-item {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pi-custom-dropdown-item:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-main);
+}
+
+.pi-custom-dropdown-item.active {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ============================================================
+   PROFESSIONAL FILTER & DROPDOWN STYLES (Restored)
+   ============================================================ */
+.pi-filter-panel {
+    display: none; 
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s ease;
+}
+.pi-filter-panel.open { display: flex; }
+
+.pi-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+}
+
+.pi-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.pi-filter-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* CUSTOM DROPDOWN BASE */
+.pi-custom-dropdown {
+    position: relative;
+    width: 100%;
+    z-index: 105;
+}
+
+.pi-custom-dropdown-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--white);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    height: 42px;
+}
+
+.pi-custom-dropdown-btn:hover,
+.pi-custom-dropdown-btn:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.pi-custom-dropdown-btn .pi-select-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+}
+
+/* Arrow Animation */
+.pi-custom-dropdown.open .pi-custom-dropdown-btn .pi-select-icon {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+.pi-custom-dropdown.open .pi-custom-dropdown-btn {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Dropdown Menu */
+.pi-custom-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    padding: 6px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px var(--shadow-color);
+    list-style: none;
+    margin: 0;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.pi-custom-dropdown.open .pi-custom-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.pi-custom-dropdown-item {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.pi-custom-dropdown-item:hover,
+.pi-custom-dropdown-item:focus {
+    background-color: var(--bg-secondary);
+    outline: none;
+}
+
+.pi-custom-dropdown-item.active {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* DATE PICKER */
+.pi-date-picker-wrapper {
+    position: relative;
+}
+
+.pi-date-input-mock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    height: 42px;
+    transition: border-color 0.2s;
+}
+
+.pi-date-input-mock:focus,
+.pi-date-input-mock.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    outline: none;
+}
+
+.pi-date-input-mock svg { width: 18px; height: 18px; }
+
+/* Calendar Dropdown */
+.pi-calendar-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 320px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px -5px var(--shadow-color);
+    padding: 16px;
+    z-index: 200;
+    display: none;
+}
+.pi-calendar-dropdown.open { display: block; }
+
+.pi-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.pi-cal-nav { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; padding: 0 10px; }
+.pi-cal-nav:focus { outline: 2px solid var(--primary); border-radius: 4px; }
+.pi-cal-month { font-weight: 600; color: var(--text-main); }
+.pi-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.pi-cal-days-header span { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+.pi-cal-days { display: contents; }
+.pi-cal-day { padding: 8px 0; border-radius: 50%; cursor: pointer; font-size: 0.85rem; color: var(--text-main); transition: background 0.2s; }
+.pi-cal-day:hover, .pi-cal-day:focus { background: var(--bg-secondary); outline: none; }
+.pi-cal-day.active { background: var(--primary); color: #fff; }
+.pi-cal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; }
+.pi-btn-apply-cal { background: var(--primary); color: #fff; border:none; padding: 6px 12px; border-radius:4px; cursor:pointer;}
+.pi-btn-clear-cal { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 6px 12px; border-radius:4px; cursor:pointer;}
+.pi-btn-apply-cal:focus, .pi-btn-clear-cal:focus { outline: 2px solid var(--primary); outline-offset: 2px;}
+
+/* Action Buttons */
+.pi-filter-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+.pi-btn-apply { background: var(--primary); }
+.pi-btn-apply:hover { background: var(--primary-hover); }
+.pi-btn-clear { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); }
+.pi-btn-clear:hover { background: var(--bg-secondary); }
+
+/* ============================================================
+   FIX FOR MISSING GRID BUTTON & ACTION GROUP ALIGNMENT
+   ============================================================ */
+
+/* Force all icons in the controls to be a standard size */
+.pi-controls svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+/* Ensure the action group handles the spacing correctly */
+.pi-action-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap; /* Prevents buttons from wrapping to next line */
+}
+
+
+
+/* Ensure the view toggle buttons are perfectly square */
+.pi-view-toggle {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.pi-view-btn {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================================
+   CALENDAR UI FIXES (Perfect Alignment)
+   ============================================================ */
+
+/* Calendar Container */
+.pi-calendar-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 320px; 
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px -5px var(--shadow-color);
+    padding: 20px;
+    z-index: 999;
+    display: none;
+}
+.pi-calendar-dropdown.open { display: block; }
+
+/* Header */
+.pi-cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.pi-cal-month {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.pi-cal-nav {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0 10px;
+    transition: color 0.2s;
+}
+.pi-cal-nav:hover { color: var(--primary); }
+
+/* From/To Display */
+.pi-cal-selection-display {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+.cal-sel-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--bg-secondary);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+.cal-sel-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.cal-sel-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* --- THE FIX: Grid Alignment --- */
+
+/* The main wrapper that holds both header and days */
+.pi-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: 4px; /* Space between rows */
+    width: 100%;
+}
+
+/* Day labels (Su, Mo, Tu...) */
+.pi-cal-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column: 1 / -1; /* Spans all 7 columns */
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+/* The container for the numbers */
+.pi-cal-days {
+    display: contents; /* Removes this wrapper so days flow directly into the main grid */
+}
+
+/* Individual days and empty slots */
+.pi-cal-day, .pi-cal-days > span:empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px; /* Fixed height for perfect squares */
+    width: 36px;  /* Fixed width */
+    margin: 0 auto; /* Centers inside the grid column */
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+.pi-cal-day:hover {
+    background: var(--bg-secondary);
+}
+
+.pi-cal-day.active {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Footer */
+.pi-cal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 16px;
+}
+.pi-btn-clear-cal {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.pi-btn-apply-cal {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ============================================================
+   CALENDAR RANGE & TODAY HIGHLIGHTS
+   ============================================================ */
+
+/* Base cell styling */
+.pi-cal-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px; 
+    width: 36px;  
+    margin: 0 auto; 
+    cursor: pointer;
+    color: var(--text-main);
+    transition: all 0.2s;
+    position: relative;
+    z-index: 1;
+}
+
+/* Today's Date Outline */
+.pi-cal-day.today {
+    border: 2px solid var(--primary);
+    font-weight: 700;
+    color: var(--primary);
+    border-radius: 50%;
+}
+
+/* --- The Range Background --- */
+/* We use a linear gradient to create the connecting bar behind the text without cutting it off */
+
+/* Middle Dates (Full Bar) */
+.pi-cal-day.in-range {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border-radius: 0; /* Square off to connect */
+    font-weight: 600;
+}
+
+/* Start Date (Half Bar on right) */
+.pi-cal-day.range-start {
+    background-color: var(--primary);
+    color: #ffffff;
+    /* Left side is a circle, right side is square to connect */
+    border-radius: 50% 0 0 50%; 
+    font-weight: 600;
+}
+
+/* End Date (Half Bar on left) */
+.pi-cal-day.range-end {
+    background-color: var(--primary);
+    color: #ffffff;
+    /* Left side is square to connect, right side is a circle */
+    border-radius: 0 50% 50% 0; 
+    font-weight: 600;
+}
+
+/* If start and end are the same day, keep it a full circle */
+.pi-cal-day.range-start.range-end {
+    border-radius: 50%;
+}
+
+/* Hover effects */
+.pi-cal-day.in-range:hover,
+.pi-cal-day.range-start:hover,
+.pi-cal-day.range-end:hover {
+    background-color: var(--primary-hover);
+    color: #fff;
+}
+
+/* For the start date, we want the light background to span to the right to connect with the next day */
+.pi-cal-day.range-start:not(.range-end) {
+    background: linear-gradient(to right, var(--primary) 50%, var(--primary-light) 50%);
+    color: #ffffff;
+}
+
+/* For the end date, we want the light background to span to the left to connect with the previous day */
+.pi-cal-day.range-end:not(.range-start) {
+    background: linear-gradient(to left, var(--primary) 50%, var(--primary-light) 50%);
+    color: #ffffff;
+}
+
+/* To make the text look centered on the gradient, we need to color the text properly */
+.pi-cal-day.range-start:not(.range-end) {
+    color: #ffffff;
+    text-shadow: -1px 0 0 #fff, 1px 0 0 #fff;
+}
