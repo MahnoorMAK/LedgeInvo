@@ -2,44 +2,84 @@
    APEXBOOKS GLOBAL THEME SYSTEM
    ============================================ */
 
-/* ---- LIGHT THEME (Default) ---- */
-:root { --text-main: var(--text-primary); --text-muted: var(--text-secondary); --primary: var(--accent-color); --white: #ffffff; --primary-light: #F0EDF7; --bg-color: #ffffff; }
-[data-theme="dark"] { --text-main: var(--text-primary); --text-muted: var(--text-secondary); --primary: var(--accent-color); --white: #1e1e1e; --primary-light: #2a2438; --bg-color: #121212; }
 :root {
+    /* 1. DEFAULT FONT */
+    --app-font: 'Inter', sans-serif;
+
+    /* 2. DYNAMIC COLORS (Overwritten by JS) */
+    --primary: #7E6BB5;
+    --primary-light: #F0EDF7;
+    --primary-hover: #6A589D;
+    --accent-color: #7E6BB5;
+    --accent-hover: #6A589D;
+
+    /* 3. LIGHT THEME BASE VARIABLES */
     --bg-primary: #ffffff;
     --bg-secondary: #f3f4f6;
     --bg-navbar: #ffffff;
+    --bg-color: #F8F9FC;
+    
     --text-primary: #1a1a1a;
+    --text-main: #1E293B;
+    
     --text-secondary: #6b7280;
-    --border-color: #e5e7eb;
-    --accent-color: #7E6BB5;
-    --accent-hover: #6b5aa0;
-    --accent-text: #ffffff;
+    --text-muted: #64748B;
+    
+    --border-color: #E2E8F0;
+    --white: #FFFFFF;
     --shadow-color: rgba(0, 0, 0, 0.06);
 }
 
-/* ---- DARK THEME ---- */
+/* 4. DARK THEME OVERRIDES */
 [data-theme="dark"] {
     --bg-primary: #121212;
     --bg-secondary: #1e1e1e;
     --bg-navbar: #1a1a1a;
+    --bg-color: #121212;
+    
     --text-primary: #f9fafb;
+    --text-main: #f9fafb;
+    
     --text-secondary: #9ca3af;
+    --text-muted: #9ca3af;
+    
     --border-color: #2d2d2d;
-    --accent-color: #8b5cf6;
-    --accent-hover: #7c4ddb;
-    --accent-text: #ffffff;
+    --white: #1e1e1e;
+    
+    /* Slightly lighter for dark mode readability */
+    --primary-light: #2a2438; 
+    
     --shadow-color: rgba(0, 0, 0, 0.4);
 }
 
-/* ---- GLOBAL BODY THEME ---- */
+/* ============================================
+   GLOBAL APPLICATIONS
+   ============================================ */
+
+body, h1, h2, h3, h4, h5, h6, p, span, div, button, input, select, textarea, a {
+    font-family: var(--app-font) !important;
+}
+
 body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
+   /* transition: background-color 0.3s ease, color 0.3s ease;*/
 }
 
-/* ---- NAVBAR ---- */
+h1, h2, h3, h4, h5, h6, p, span, div {
+    color: inherit;
+}
+
+input, textarea, select {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+input::placeholder {
+    color: var(--text-secondary);
+}
+
 nav {
     background-color: var(--bg-navbar);
     border-bottom: 1px solid var(--border-color);
@@ -52,10 +92,9 @@ nav a {
 }
 
 nav a:hover {
-    color: var(--accent-color);
+    color: var(--primary);
 }
 
-/* ---- THEME TOGGLE BUTTON (Navbar Link Style) ---- */
 .nav-theme-toggle {
     display: inline-flex;
     align-items: center;
@@ -67,18 +106,13 @@ nav a:hover {
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 500;
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-theme-toggle:hover {
-    background-color: transparent;
-    color: var(--accent-color);
-}
-
-.nav-theme-toggle:active {
-    transform: scale(0.96);
+    color: var(--primary) !important;
 }
 
 .nav-theme-toggle .theme-icon {
@@ -92,7 +126,6 @@ nav a:hover {
     display: none;
 }
 
-/* ---- DROPDOWN / BUTTONS ---- */
 .dropdown-menu {
     background-color: var(--bg-primary);
     border: 1px solid var(--border-color);
@@ -100,7 +133,7 @@ nav a:hover {
 }
 
 .dropdown-menu a {
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
 }
 
 .dropdown-menu a:hover {
@@ -108,16 +141,16 @@ nav a:hover {
 }
 
 .btn-primary {
-    background-color: var(--accent-color);
-    color: var(--accent-text);
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
 }
 
 .btn-primary:hover {
-    background-color: var(--accent-hover);
+    background-color: var(--primary-hover) !important;
 }
 
 .btn-login {
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -127,107 +160,19 @@ nav a:hover {
 }
 
 .btn-login:hover {
-    color: var(--text-primary);
+    color: var(--primary) !important;
 }
 
-/* ---- FOOTER ---- */
 footer {
     background-color: var(--bg-navbar);
     border-top: 1px solid var(--border-color);
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
 }
 
 footer a {
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
 }
 
 footer a:hover {
-    color: var(--accent-color);
+    color: var(--primary) !important;
 }
-
-/* ---- INPUTS (for login/forms across pages) ---- */
-input, textarea, select {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-}
-
-input::placeholder {
-    color: var(--text-secondary);
-}
-
-/* ============================================
-   FIXING TEXT CONTRAST IN DARK MODE
-   ============================================ */
-
-/* 1. Force the Logo text to be visible */
-nav .logo, 
-nav .logo a {
-    color: var(--text-primary) !important;
-}
-
-/* 2. Force the Navbar links to be visible */
-nav .nav-links a {
-    color: var(--text-secondary) !important;
-}
-nav .nav-links a:hover {
-    color: var(--accent-color) !important;
-}
-
-/* 3. Fix the Theme button text */
-.nav-theme-toggle {
-    color: var(--text-secondary) !important;
-}
-.nav-theme-toggle:hover {
-    color: var(--accent-color) !important;
-}
-
-/* 4. Fix the "Sign in" dropdown text and other buttons */
-
-.btn-login {
-    color: var(--text-secondary) !important;
-}
-.btn-login:hover {
-    color: var(--accent-color) !important;
-}
-.dropdown-menu a {
-    color: var(--text-primary) !important;
-}
-
-/* 5. Fix the "Get Started" button (keep its white text on purple background) */
-.btn-primary {
-    color: #ffffff !important;
-}
-
-/* 6. Fix the Footer text */
-footer, footer a {
-    color: var(--text-secondary) !important;
-}
-
-/* 7. Ensure all headings (h1, h2, h3) and paragraphs use the theme color */
-h1, h2, h3, h4, h5, h6, p, span, div {
-    /* Only apply this if the element doesn't have a specific color class */
-    color: inherit;
-}
-
-/* 8. Fix any forms or inputs on the page */
-input, textarea, select {
-    background-color: var(--bg-secondary) !important;
-    color: var(--text-primary) !important;
-    border-color: var(--border-color) !important;
-}
-
-
-[data-theme="dark"] .dashboard-mockup { background: #ffffff !important; }
-[data-theme="dark"] .mockup-title { color: #1E293B !important; }
-[data-theme="dark"] .mockup-header { border-bottom-color: #E2E8F0 !important; }
-[data-theme="dark"] .bar { background-color: #F0EDF7 !important; }
-[data-theme="dark"] .bar:nth-child(2), [data-theme="dark"] .bar:nth-child(4), [data-theme="dark"] .bar:nth-child(6) { background-color: #7E6BB5 !important; }
-[data-theme="dark"] .stat-card { background: #F8F9FC !important; border-color: #E2E8F0 !important; }
-[data-theme="dark"] .stat-label { color: #64748B !important; }
-[data-theme="dark"] .stat-value { color: #1E293B !important; }
-
-[data-theme="dark"] .apex-hero-stats, [data-theme="dark"] .apex-hero-stats * { color: #f9fafb !important; border-color: #2d2d2d !important; }
-
-
-
