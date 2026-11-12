@@ -1,7 +1,8 @@
 /**
- * APP.JS — Global layout behavior
- * - Header: shrink/darken on scroll (throttled)
+ * APP1.JS — Global layout behavior
+ * - Header: shrink/darken + hide/show on scroll
  * - Header: mobile hamburger menu
+ * - Header: login dropdown
  * - Global: reveal-on-scroll for [data-reveal]
  * - Global: pause animations during scroll
  */
@@ -39,18 +40,54 @@
     }
 
     /* ==========================================================
-       2. HEADER — MOBILE MENU
+       2. HEADER — HIDE ON SCROLL DOWN
+       ========================================================== */
+   /* (function () {
+        if (!header) return;
+
+        var lastY = window.scrollY;
+        var ticking2 = false;
+        var HIDE_THRESHOLD = 200;
+        var DELTA = 6;
+
+        function updateHide() {
+            var y = window.scrollY;
+            var diff = y - lastY;
+
+            if (Math.abs(diff) < DELTA) {
+                ticking2 = false;
+                return;
+            }
+
+            if (y > HIDE_THRESHOLD && diff > 0) {
+                header.classList.add('is-hidden');
+            } else {
+                header.classList.remove('is-hidden');
+            }
+
+            lastY = y;
+            ticking2 = false;
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!ticking2) {
+                ticking2 = true;
+                requestAnimationFrame(updateHide);
+            }
+        }, { passive: true });
+    })(); */
+
+    /* ==========================================================
+       3. HEADER — MOBILE MENU
        ========================================================== */
     var burger = document.getElementById('hdr-burger');
     var mobile = document.getElementById('hdr-mobile');
 
     if (header && burger && mobile) {
-
         function closeMenu() {
             burger.setAttribute('aria-expanded', 'false');
             mobile.hidden = true;
         }
-
         function openMenu() {
             burger.setAttribute('aria-expanded', 'true');
             mobile.hidden = false;
@@ -80,7 +117,44 @@
     }
 
     /* ==========================================================
-       3. REVEAL ON SCROLL
+       4. LOGIN DROPDOWN
+       ========================================================== */
+    (function () {
+        var dropdown = document.getElementById('signinDropdown');
+        var toggle = document.getElementById('signinToggle');
+        if (!dropdown || !toggle) return;
+
+        function closeDropdown() {
+            dropdown.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+        function openDropdown() {
+            dropdown.classList.add('is-open');
+            toggle.setAttribute('aria-expanded', 'true');
+        }
+
+        closeDropdown();
+        window.addEventListener('pageshow', closeDropdown);
+
+        toggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var isOpen = dropdown.classList.contains('is-open');
+            isOpen ? closeDropdown() : openDropdown();
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!dropdown.contains(e.target)) closeDropdown();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+    })();
+
+    /* ==========================================================
+       5. REVEAL ON SCROLL
+       Uses a slightly earlier trigger so animations start
+       a bit before the element fully enters the viewport.
        ========================================================== */
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -96,10 +170,10 @@
 
                         setTimeout(function () {
                             entry.target.style.willChange = 'auto';
-                        }, 1000);
+                        }, 1500);
                     }
                 });
-            }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
             revealEls.forEach(function (el) { io.observe(el); });
         }
@@ -110,7 +184,7 @@
     }
 
     /* ==========================================================
-       4. PAUSE ANIMATIONS DURING SCROLL
+       6. PAUSE ANIMATIONS DURING SCROLL
        ========================================================== */
     (function () {
         var root = document.documentElement;
@@ -123,14 +197,15 @@
             clearTimeout(timer);
             timer = setTimeout(function () {
                 root.classList.remove('is-scrolling');
-            }, 150);
+            }, 200);
         }, { passive: true });
     })();
 
     /* ==========================================================
-       5. FORM GUARD (demo forms)
+       7. FORM GUARD (demo forms)
        ========================================================== */
     document.querySelectorAll('form[data-demo]').forEach(function (form) {
         form.addEventListener('submit', function (e) { e.preventDefault(); });
     });
+  
 })();
