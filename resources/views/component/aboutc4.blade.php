@@ -10,17 +10,17 @@
             box-sizing: border-box;
         }
 
-        /* ---------- Section background (soft peach gradient) ---------- */
+        /* ---------- Section background (soft slate gradient) ---------- */
         .discover {
             width: 100%;
             padding: 5rem 2rem;
             background: linear-gradient(135deg,
-                #f5e9df 0%,
-                #f2d9c4 35%,
-                #ecc9b1 65%,
-                #f0c9a8 100%);
+                #f8fafc 0%,
+                #eef2ff 35%,
+                #e0e7ff 65%,
+                #e2e8f0 100%);
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            color: #1a120e;
+            color: #0f172a;                    /* slate-900 */
         }
 
         .discover__inner {
@@ -37,7 +37,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 2.5rem;
             align-items: center;
-            box-shadow: 0 30px 60px -30px rgba(80, 40, 20, 0.25);
+            box-shadow: 0 30px 60px -30px rgba(15, 23, 42, 0.22);
+            border: 1px solid rgba(79, 70, 229, 0.08);
         }
 
         /* ---------- Image (with scroll reveal) ---------- */
@@ -46,7 +47,7 @@
             border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16 / 11;
-            background: #ece4d5;
+            background: #e2e8f0;               /* slate-200 */
         }
 
         .discover__image {
@@ -54,9 +55,9 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            /* Start fully clipped from the bottom (nothing visible) */
             clip-path: inset(0 0 100% 0);
             will-change: clip-path;
+            filter: saturate(0.92) contrast(1.02) brightness(1.02);
         }
 
         /* ---------- Right column ---------- */
@@ -70,20 +71,20 @@
             font-size: clamp(1.6rem, 2.6vw, 2.2rem);
             line-height: 1.2;
             letter-spacing: -0.3px;
-            color: #1a120e;
+            color: #0f172a;                    /* slate-900 */
             margin-bottom: 1.2rem;
         }
 
         .discover__text {
             font-size: 0.9rem;
             line-height: 1.65;
-            color: #6b5d51;
+            color: #475569;                    /* slate-600 */
             margin-bottom: 1.8rem;
             max-width: 400px;
         }
 
         /* ============================================================
-           BUTTON — dark brown, 3D, with animated shine
+           BUTTON — indigo, 3D, with animated shine
         ============================================================ */
         .discover__btn {
             position: relative;
@@ -103,13 +104,13 @@
             overflow: hidden;
             isolation: isolate;
 
-            /* 3D look: layered gradient + depth shadow + inner highlight */
-            background: linear-gradient(180deg, #3a2620 0%, #241612 100%);
+            /* 3D indigo gradient + depth shadow */
+            background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
             box-shadow:
-                0 8px 18px -6px rgba(40, 20, 10, 0.55),   /* drop shadow */
-                0 2px 0 0 #4d332a inset,                   /* top edge light */
-                0 -2px 0 0 #120806 inset,                  /* bottom edge dark */
-                0 0 0 1px rgba(255, 255, 255, 0.06) inset; /* hairline border */
+                0 8px 18px -6px rgba(79, 70, 229, 0.55),
+                0 2px 0 0 #818cf8 inset,
+                0 -2px 0 0 #3730a3 inset,
+                0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 
             transition:
                 transform 0.2s ease,
@@ -119,21 +120,21 @@
         .discover__btn:hover {
             transform: translateY(-2px);
             box-shadow:
-                0 14px 24px -8px rgba(40, 20, 10, 0.65),
-                0 2px 0 0 #4d332a inset,
-                0 -2px 0 0 #120806 inset,
-                0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+                0 14px 24px -8px rgba(79, 70, 229, 0.65),
+                0 2px 0 0 #818cf8 inset,
+                0 -2px 0 0 #3730a3 inset,
+                0 0 0 1px rgba(255, 255, 255, 0.12) inset;
         }
 
         .discover__btn:active {
             transform: translateY(0);
             box-shadow:
-                0 4px 10px -4px rgba(40, 20, 10, 0.6),
-                0 1px 0 0 #4d332a inset,
-                0 -1px 0 0 #120806 inset;
+                0 4px 10px -4px rgba(79, 70, 229, 0.6),
+                0 1px 0 0 #818cf8 inset,
+                0 -1px 0 0 #3730a3 inset;
         }
 
-        /* The moving shine streak */
+        /* Moving shine streak */
         .discover__btn::before {
             content: '';
             position: absolute;
@@ -144,7 +145,7 @@
             background: linear-gradient(
                 120deg,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.35) 50%,
+                rgba(255, 255, 255, 0.4) 50%,
                 rgba(255, 255, 255, 0) 100%
             );
             transform: skewX(-25deg);
@@ -228,8 +229,6 @@
                 var image = section.querySelector('.discover__image');
                 if (!image) return;
 
-                /* Reveal window: image starts revealing when its top
-                   crosses 90% of the viewport, finishes at 35%. */
                 var ticking = false;
 
                 function update() {
@@ -242,7 +241,6 @@
                     var progress = (start - rect.top) / (start - end);
                     progress = Math.max(0, Math.min(1, progress));
 
-                    /* 100% inset (hidden) → 0% inset (fully visible) */
                     var bottomInset = (1 - progress) * 100;
                     image.style.clipPath = 'inset(0 0 ' + bottomInset + '% 0)';
 
