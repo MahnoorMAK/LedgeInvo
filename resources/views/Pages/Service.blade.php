@@ -1,176 +1,113 @@
-{{-- resources/views/Page/coming-soon.blade.php --}}
-@extends('Layout.app')
+{{-- resources/views/Pages/Service.blade.php --}}
+@extends('Layout.app1')
 
-@section('title', 'Coming Soon')
+@section('title', 'Our Services - Apexbooks')
 
-@section('page-title', 'Services')
-
-@section('page-subtitle', 'This is the service page!')
-
-@section('services')
-<section class="container">
-    <h1>Services</h1>
-    <h2>This is the service page!</h2>
-    <p>Welcome to our home</p>
-
-    <input type="email" placeholder="Enter your email" id="emailInput">
-    <button onclick="notifyMe()">Notify Me</button>
-
-    <section class="social-icons">
-        <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-    </section>
-
-    <section class="small-text">
-        &copy; 2026 All rights reserved
-    </section>
-</section>
+@section('styles')
+    {{-- Service page styles --}}
+    
+    <link rel="stylesheet" href="{{ asset('css/service.css') }}">
 @endsection
 
-@push('styles')
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+@section('content')
 
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-        flex-direction: column;
-    }
 
-    .container {
-        background: white;
-        padding: 50px 40px;
-        border-radius: 15px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        max-width: 500px;
-        width: 100%;
-    }
+@include('Component.service-hero')
+@include('Component.pricing')
+@include('Component.services-grid')
+@include('Component.Grid')
+@include('Component.accounts-gallery')
 
-    h1 {
-        font-size: 60px;
-        margin-bottom: 10px;
-    }
 
-    h2 {
-        font-size: 28px;
-        color: #333;
-        margin-bottom: 10px;
-    }
+{{-- ============================================
+     FEATURED SHOWCASE BANNER (3D)
+     ============================================ --}}
+<section class="showcase">
+    <div class="showcase-inner">
+        <div class="showcase-content">
+            <div class="showcase-text">
+                <span class="section-eyebrow" style="color: rgba(255,255,255,0.85);">Why teams choose Apexbooks</span>
+                <h2>One platform. Every financial workflow.</h2>
+                <p>
+                    Stop stitching together spreadsheets, inboxes, and disconnected tools.
+                    Apexbooks unifies your entire finance stack so your team can focus on
+                    decisions — not data entry.
+                </p>
+                <div class="showcase-actions">
+                    <a href="/register" class="btn-white">
+                        Get Started <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="/Contact" class="btn-ghost">
+                        Talk to Sales <i class="fa-solid fa-headset"></i>
+                    </a>
+                </div>
+            </div>
 
-    p {
-        color: #666;
-        font-size: 16px;
-        margin-bottom: 25px;
-        line-height: 1.6;
-    }
+            <div class="showcase-visual" aria-hidden="true">
+                <div class="stat-card s1" style="--rot:-4deg;">
+                    <div class="stat-label">Monthly Revenue</div>
+                    <div class="stat-value">$124,500</div>
+                    <div class="stat-trend"><i class="fa-solid fa-arrow-up"></i> 14.2%</div>
+                </div>
+                <div class="stat-card s2" style="--rot:3deg;">
+                    <div class="stat-label">Invoices Processed</div>
+                    <div class="stat-value accent">12,450</div>
+                    <div class="stat-trend"><i class="fa-solid fa-arrow-up"></i> 8.7%</div>
+                </div>
+                <div class="stat-card s3" style="--rot:-2deg;">
+                    <div class="stat-label">Hours Saved / Mo</div>
+                    <div class="stat-value">386</div>
+                    <div class="stat-trend"><i class="fa-solid fa-arrow-up"></i> 22.1%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    input {
-        width: 100%;
-        padding: 12px 15px;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        font-size: 15px;
-        outline: none;
-        margin-bottom: 10px;
-    }
+{{-- ============================================
+     PROCESS / STEPS
+     ============================================ --}}
+<section class="process">
+    <span class="section-eyebrow">How it works</span>
+    <h2 class="section-title">Up and running in days, not months.</h2>
+    <p class="section-subtitle">
+        A guided onboarding process that gets your books clean and your team productive — fast.
+    </p>
 
-    input:focus {
-        border-color: #667eea;
-    }
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">01</div>
+            <h3 class="step-title">Connect your accounts</h3>
+            <p class="step-desc">
+                Link your bank, payment gateways, and existing tools in a few clicks. We'll import your history automatically.
+            </p>
+        </div>
+        <div class="step">
+            <div class="step-number">02</div>
+            <h3 class="step-title">Automate the work</h3>
+            <p class="step-desc">
+                Transactions get categorized, reconciled, and posted to your ledger without anyone touching a spreadsheet.
+            </p>
+        </div>
+        <div class="step">
+            <div class="step-number">03</div>
+            <h3 class="step-title">Invite your team</h3>
+            <p class="step-desc">
+                Give accountants, managers, and stakeholders the access they need — with the permissions you control.
+            </p>
+        </div>
+        <div class="step">
+            <div class="step-number">04</div>
+            <h3 class="step-title">Make confident decisions</h3>
+            <p class="step-desc">
+                Real-time dashboards and forecasts keep everyone aligned on the numbers that matter most.
+            </p>
+        </div>
+    </div>
+</section>
 
-    button {
-        width: 100%;
-        padding: 12px;
-        background: #667eea;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
+@endsection
 
-    button:hover {
-        background: #5a67d8;
-    }
-
-    .social-icons {
-        margin-top: 25px;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .social-icons a {
-        color: #667eea;
-        font-size: 24px;
-        text-decoration: none;
-    }
-
-    .social-icons a:hover {
-        color: #5a67d8;
-    }
-
-    .small-text {
-        font-size: 13px;
-        color: #999;
-        margin-top: 15px;
-    }
-
-    @media (max-width: 480px) {
-        .container {
-            padding: 30px 20px;
-        }
-
-        h1 {
-            font-size: 40px;
-        }
-
-        h2 {
-            font-size: 22px;
-        }
-    }
-</style>
-@endpush
-
-@push('scripts')
-<script>
-    function notifyMe() {
-        const email = document.getElementById('emailInput').value.trim();
-
-        if (!email) {
-            alert('Please enter your email address');
-            return;
-        }
-
-        if (!email.includes('@') || !email.includes('.')) {
-            alert('Please enter a valid email address');
-            return;
-        }
-
-        alert('Thank you! We\'ll notify you at ' + email);
-        document.getElementById('emailInput').value = '';
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('emailInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                notifyMe();
-            }
-        });
-    });
-</script>
-@endpush
+@section('scripts')
+    <script src="{{ asset('js/service.js') }}"></script>
+@endsection
