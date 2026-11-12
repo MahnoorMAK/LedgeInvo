@@ -1,5 +1,5 @@
 /* ============================================================
-   3D COVERFLOW SLIDER — with scroll-triggered entrance
+   3D COVERFLOW SLIDER
    ============================================================ */
 (function () {
     'use strict';
@@ -17,6 +17,7 @@
         let current = 0;
         let timer = null;
         let started = false;
+        let isAnimating = false;
         const INTERVAL = 4000;
         const TOTAL = items.length;
 
@@ -40,16 +41,28 @@
         }
 
         function goTo(index) {
-            current = ((index % TOTAL) + TOTAL) % TOTAL;
+            // Guard: Don't interrupt an ongoing 800ms animation
+            if (isAnimating) return;
+
+            let newIndex = ((index % TOTAL) + TOTAL) % TOTAL;
+            if (newIndex === current) return;
+
+            isAnimating = true;
+            current = newIndex;
             render();
+
+            setTimeout(function () {
+                isAnimating = false;
+            }, 800); // Matches the 0.8s CSS transition
         }
+
         function next() { goTo(current + 1); }
         function prev() { goTo(current - 1); }
 
         function start() { stop(); timer = setInterval(next, INTERVAL); }
         function stop() { if (timer) clearInterval(timer); timer = null; }
 
-        // Wire up controls once, so they're ready before entrance
+        // Controls
         if (nextBtn) nextBtn.addEventListener('click', function () { next(); start(); });
         if (prevBtn) prevBtn.addEventListener('click', function () { prev(); start(); });
 
@@ -73,15 +86,25 @@
             else if (started) start();
         });
 
-        slider.addEventListener('mouseenter', stop);
-        slider.addEventListener('mouseleave', function () {
-            if (started) start();
+        /* HOVER PAUSE (Only on images) */
+        let hoveredCount = 0;
+        function onSlideEnter() { hoveredCount++; stop(); }
+        function onSlideLeave() {
+            hoveredCount = Math.max(0, hoveredCount - 1);
+            if (hoveredCount === 0 && started) start();
+        }
+
+        items.forEach(function (item) {
+            item.addEventListener('mouseenter', onSlideEnter);
+            item.addEventListener('mouseleave', onSlideLeave);
         });
 
+        // Touch swipe
         let touchStartX = 0;
         slider.addEventListener('touchstart', function (e) {
             touchStartX = e.touches[0].clientX;
         }, { passive: true });
+        
         slider.addEventListener('touchend', function (e) {
             const delta = e.changedTouches[0].clientX - touchStartX;
             if (Math.abs(delta) > 40) {
@@ -90,22 +113,14 @@
             }
         }, { passive: true });
 
-        // Apply the initial state classes (invisible until scroll reveal)
         render();
 
-        // ============================================================
-        // SCROLL-TRIGGERED ENTRANCE
-        // ============================================================
+        // Scroll entrance
         function reveal() {
             if (started) return;
             started = true;
-
             slider.classList.add('is-visible');
-
-            // Small delay so slides don't begin moving before they arrive
-            setTimeout(function () {
-                start();
-            }, 1200);
+            setTimeout(function () { start(); }, 1200);
         }
 
         if ('IntersectionObserver' in window) {
@@ -116,14 +131,9 @@
                         observer.unobserve(slider);
                     }
                 });
-            }, {
-                threshold: 0.35,       // trigger when 35% of slider is in view
-                rootMargin: '0px 0px -60px 0px'
-            });
-
+            }, { threshold: 0.35, rootMargin: '0px 0px -60px 0px' });
             observer.observe(slider);
         } else {
-            // Fallback for very old browsers — reveal immediately
             reveal();
         }
     }
