@@ -16,7 +16,6 @@
 @include('Component.pricing')
 @include('Component.services-grid')
 @include('Component.Grid')
-@include('Component.accounts-gallery')
 
 
 {{-- ============================================
