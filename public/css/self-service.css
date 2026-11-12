@@ -1,0 +1,402 @@
+/* ============================================
+   SELF-SERVICE / HELP LINKS
+   ============================================ */
+
+.self {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 100px 32px 120px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.self__head {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 60px;
+}
+
+.self__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--primary-light); /* Dynamic Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    color: var(--primary); /* Dynamic Text */
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+.self__eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+    animation: selfDot 2.2s ease-in-out infinite;
+}
+
+@keyframes selfDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.7); }
+}
+
+.self__title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--text-main); /* Dynamic Text */
+    margin: 0 0 18px;
+}
+
+.self__title-accent {
+    /* Dynamic Gradient Text */
+    background: linear-gradient(115deg, var(--primary-light) 0%, var(--primary) 50%, var(--primary-hover) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.self__subtitle {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    margin: 0;
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+.self__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.self__card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 28px;
+    border-radius: 18px;
+    background: var(--white); /* Dynamic Card Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    box-shadow:
+        0 4px 12px var(--shadow-color),
+        0 20px 40px -20px var(--shadow-color);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s ease,
+        border-color 0.3s ease;
+
+    /* Reveal */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.self__card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.4s ease,
+        border-color 0.3s ease;
+}
+
+.self__card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 8px 20px var(--shadow-color),
+        0 32px 60px -24px var(--shadow-color);
+    border-color: var(--primary); /* Dynamic Border Hover */
+}
+
+/* Dynamic Light sweep on hover */
+.self__card-shine {
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(100deg,
+        transparent 0%,
+        transparent 30%,
+        var(--primary-light) 50%,
+        transparent 70%,
+        transparent 100%);
+    opacity: 0.4;
+    transform: skewX(-20deg);
+    pointer-events: none;
+    z-index: 2;
+    transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.self__card:hover .self__card-shine {
+    left: 130%;
+}
+
+/* ============================================
+   CARD ICON
+   ============================================ */
+.self__card-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 8px 18px var(--shadow-color),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.self__card:hover .self__card-icon {
+    transform: scale(1.08) rotate(-4deg);
+}
+
+.self__card-icon::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 50%;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+    pointer-events: none;
+}
+
+.self__card-icon svg { position: relative; z-index: 1; }
+
+/* Icon variants */
+/* Dynamic Primary Icon */
+.self__card-icon--faq    { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); }
+/* Semantic Icons (Kept for UX meaning) */
+.self__card-icon--help   { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); }
+.self__card-icon--track  { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
+.self__card-icon--login  { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+
+/* ============================================
+   CARD BODY
+   ============================================ */
+.self__card-body {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    z-index: 3;
+}
+
+.self__card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main); /* Dynamic Text */
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+}
+
+.self__card-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    margin: 0 0 14px;
+}
+
+.self__card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary); /* Dynamic Theme Color */
+    transition: color 0.25s ease, gap 0.3s ease;
+}
+
+.self__card-cta svg {
+    transition: transform 0.3s ease;
+}
+
+.self__card:hover .self__card-cta {
+    color: var(--primary-hover);
+    gap: 10px;
+}
+
+.self__card:hover .self__card-cta svg {
+    transform: translateX(3px);
+}
+
+/* ============================================
+   LOGIN CARD — slightly different feel
+   ============================================ */
+.self__card--login {
+    /* Dynamic Featured Background */
+    background: linear-gradient(180deg, var(--primary-light) 0%, var(--white) 60%);
+    border-color: var(--border-color);
+}
+
+.self__card--login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    /* Semantic Green Accent */
+    background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.self__card--login .self__card-cta {
+    color: #059669;
+}
+
+.self__card--login:hover .self__card-cta {
+    color: #047857;
+}
+
+/* ============================================
+   FOOTER LINE
+   ============================================ */
+.self__footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.7;
+}
+
+.self__footer a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.self__footer a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.self__footer a:hover {
+    color: var(--primary-hover);
+}
+
+.self__footer a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* ============================================
+   REVEAL
+   ============================================ */
+[data-self-reveal] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-self-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .self {
+        padding: 80px 24px 100px;
+    }
+
+    .self__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .self__head {
+        margin-bottom: 44px;
+    }
+}
+
+@media (max-width: 640px) {
+    .self {
+        padding: 80px 20px 100px;
+    }
+
+    .self__card {
+        padding: 22px 20px;
+        gap: 14px;
+        border-radius: 16px;
+    }
+
+    .self__card-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+    }
+
+    .self__card-title {
+        font-size: 1rem;
+    }
+
+    .self__card-desc {
+        font-size: 0.825rem;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .self__eyebrow-dot {
+        animation: none !important;
+    }
+
+    [data-self-reveal],
+    .self__card {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .self__card:hover,
+    .self__card:hover .self__card-icon {
+        transform: none;
+    }
+
+    .self__card-shine {
+        display: none;
+    }
+}
