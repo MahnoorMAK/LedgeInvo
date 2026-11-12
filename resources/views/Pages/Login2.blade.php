@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - LedgeInvo Accounting</title>
+    <title>Login - Apexbooks Accounting</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,7 +27,7 @@
 {{-- THEME: Anti-flash script — must run BEFORE body renders --}}
 <script>
     (function() {
-        var t = localStorage.getItem('ledgeinvo-theme');
+        var t = localStorage.getItem('apexbooks-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
     })();
 </script>
@@ -89,7 +89,7 @@
                 <div class="w-10 h-10 rounded-full bg-brand-purple/20 flex items-center justify-center">
                     <i class="fa-solid fa-chart-pie text-brand-purple text-lg"></i>
                 </div>
-                <span class="text-brand-purple font-bold tracking-wider text-sm">LedgeInvo</span>
+                <span class="text-brand-purple font-bold tracking-wider text-sm">Apexbooks</span>
             </div>
             <div>
                 <div class="text-slate-700 text-lg font-mono tracking-widest mb-3">
@@ -138,7 +138,7 @@
                 <div class="w-14 h-14 bg-brand-purple rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-purple/30 mb-4 transform rotate-3 hover:rotate-0 transition-transform duration-300">
                     <i class="fa-solid fa-chart-line text-2xl"></i>
                 </div>
-                <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">LedgeInvo</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Apexbooks</h1>
                 <p class="text-sm text-brand-purple font-semibold tracking-widest uppercase mt-1">Financial Intelligence</p>
             </div>
 
@@ -192,7 +192,7 @@
             <!-- Footer Link -->
            <p class="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
                 Don't have an account?
-                <a href="#" class="font-bold text-brand-purple hover:text-brand-darkPurple transition-colors underline decoration-slate-300 underline-offset-4 hover:decoration-brand-purple">Sign Up</a>
+                <a href="#" class="font-bold text-brand-purple hover:text-brand-darkPurple transition-colors underline decoration-slate-300 underline-offset-4 hover:decoration-brand-purple">Request a demo</a>
             </p>
 
         </div>
