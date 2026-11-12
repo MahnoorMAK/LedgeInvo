@@ -1,0 +1,206 @@
+/* ============================================
+   ACCOUNTS HOVER-EXPAND GALLERY
+   Light + Dark theme aware + Global Theme Color
+   ============================================ */
+
+.acc-gallery-section {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    /* Dynamic Theme Background */
+    background: var(--bg-color);
+    padding: 80px 20px;
+
+    /* Dynamic Theme Font */
+    font-family: var(--app-font, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    transition: background 0.4s ease;
+}
+
+.acc-gallery-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 72rem;
+    padding: 0 20px;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.3s ease 0.5s,
+        transform 0.3s ease 0.5s;
+}
+
+.acc-gallery-wrap.is-ready {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.acc-gallery-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+/* ============================================
+   ITEM
+   ============================================ */
+.acc-gallery-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    flex-shrink: 0;
+
+    /* Dynamic Card Background & Border */
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-color);
+
+    width: 5rem;
+    height: 24rem;
+
+    transition:
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.4s ease;
+}
+
+/* Active state — wider + brighter outline */
+.acc-gallery-item.is-active {
+    width: 24rem;
+    /* Dynamic Primary Border */
+    border-color: var(--primary);
+    box-shadow:
+        0 12px 32px var(--shadow-color),
+        0 0 0 1px var(--primary);
+}
+
+/* ============================================
+   IMAGE
+   ============================================ */
+.acc-gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+/* ============================================
+   OVERLAY — fades in when active
+   ============================================ */
+.acc-gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0) 60%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.acc-gallery-item.is-active .acc-gallery-overlay {
+    opacity: 1;
+}
+
+/* ============================================
+   CAPTION
+   ============================================ */
+.acc-gallery-caption {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.acc-gallery-item.is-active .acc-gallery-caption {
+    opacity: 1;
+}
+
+.acc-gallery-caption p {
+    margin: 0;
+    text-align: left;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1100px) {
+    .acc-gallery-item {
+        width: 4rem;
+        height: 20rem;
+    }
+    .acc-gallery-item.is-active {
+        width: 20rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .acc-gallery-item {
+        width: 3rem;
+        height: 16rem;
+    }
+    .acc-gallery-item.is-active {
+        width: 15rem;
+    }
+    .acc-gallery-caption p {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .acc-gallery-section {
+        padding: 60px 12px;
+    }
+
+    .acc-gallery-item {
+        width: 2rem;
+        height: 12rem;
+    }
+    .acc-gallery-item.is-active {
+        width: 10rem;
+    }
+
+    .acc-gallery-row {
+        gap: 2px;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .acc-gallery-wrap,
+    .acc-gallery-item,
+    .acc-gallery-overlay,
+    .acc-gallery-caption {
+        transition: none !important;
+    }
+
+    .acc-gallery-wrap {
+        opacity: 1;
+        transform: none;
+    }
+}
