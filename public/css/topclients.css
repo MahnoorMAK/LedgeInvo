@@ -5,13 +5,14 @@
     position: relative;
     width: 100%;
     padding: 100px 0 90px;
-    background: var(--bg-color, #F8F9FC);
+    background: var(--bg-color); /* Dynamic Theme Background */
     overflow: hidden;
     isolation: isolate;
     perspective: 1600px;
+    transition: background-color 0.3s ease;
 }
 
-/* Soft purple ambient glow */
+/* Soft theme ambient glow */
 .top-clients-section::before {
     content: '';
     position: absolute;
@@ -20,7 +21,8 @@
     transform: translateX(-50%);
     width: 900px;
     height: 500px;
-    background: radial-gradient(ellipse at center, rgba(126, 107, 181, 0.18) 0%, transparent 65%);
+    /* Dynamic Glow using primary color */
+    background: radial-gradient(ellipse at center, var(--primary-light) 0%, transparent 65%);
     filter: blur(80px);
     pointer-events: none;
     z-index: 0;
@@ -58,14 +60,14 @@
     font-weight: 800;
     letter-spacing: -0.028em;
     line-height: 1.12;
-    color: var(--text-main, #1E293B);
+    color: var(--text-main); /* Dynamic Text */
     margin-bottom: 16px;
 }
 
 .top-clients-subtitle {
     font-size: 1.05rem;
     line-height: 1.7;
-    color: var(--text-muted, #64748B);
+    color: var(--text-muted); /* Dynamic Muted Text */
     max-width: 640px;
     margin: 0 auto;
 }
@@ -128,7 +130,7 @@
     animation-play-state: paused;
 }
 
-/* ---------- Client card — LIGHT THEME ---------- */
+/* ---------- Client card ---------- */
 .client-card {
     display: flex;
     align-items: center;
@@ -137,15 +139,16 @@
     padding: 16px 20px;
     border-radius: 16px;
 
-    background: var(--white, #ffffff);
-    border: 1px solid var(--border-color, #E2E8F0);
+    background: var(--white); /* Dynamic Card Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
+    /* Dynamic Layered Shadow */
     box-shadow:
-        0 1px 2px rgba(15, 23, 42, 0.04),
-        0 8px 20px -8px rgba(15, 23, 42, 0.08),
-        0 20px 40px -20px rgba(126, 107, 181, 0.15),
+        0 1px 2px var(--shadow-color),
+        0 8px 20px -8px var(--shadow-color),
+        0 20px 40px -20px var(--shadow-color),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
     transform-style: preserve-3d;
@@ -161,13 +164,13 @@
 }
 
 .client-card:hover {
-    background: var(--white, #ffffff);
-    border-color: rgba(126, 107, 181, 0.4);
+    background: var(--white);
+    border-color: var(--primary); /* Dynamic Border Hover */
     transform: translateY(-6px) scale(1.03);
     box-shadow:
-        0 2px 4px rgba(15, 23, 42, 0.05),
-        0 24px 48px -12px rgba(126, 107, 181, 0.35),
-        0 0 0 1px rgba(126, 107, 181, 0.15),
+        0 2px 4px var(--shadow-color),
+        0 24px 48px -12px var(--shadow-color),
+        0 0 0 1px var(--border-color),
         inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
@@ -218,7 +221,7 @@
 .client-name {
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--text-main, #1E293B);
+    color: var(--text-main); /* Dynamic Text */
     letter-spacing: -0.005em;
     white-space: nowrap;
     overflow: hidden;
@@ -231,7 +234,7 @@
     align-items: center;
     gap: 14px;
     font-size: 0.8rem;
-    color: var(--text-muted, #64748B);
+    color: var(--text-muted);
 }
 
 .client-stat {
@@ -243,15 +246,15 @@
 
 .client-stat-value {
     font-weight: 600;
-    color: var(--text-main, #1E293B);
+    color: var(--text-main);
 }
 
 .client-stat-label {
-    color: var(--text-muted, #64748B);
+    color: var(--text-muted);
 }
 
 .client-stat-icon {
-    color: var(--accent-color, #7E6BB5);
+    color: var(--primary); /* Dynamic Theme Color */
     flex-shrink: 0;
 }
 
@@ -280,60 +283,6 @@
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0.45s;
-}
-
-/* ============================================================
-   DARK MODE — inverts the cards
-   ============================================================ */
-[data-theme="dark"] .top-clients-section {
-    background: #121212;
-}
-
-[data-theme="dark"] .top-clients-section::before {
-    background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.22) 0%, transparent 65%);
-}
-
-[data-theme="dark"] .top-clients-title {
-    color: #f9fafb;
-}
-
-[data-theme="dark"] .top-clients-subtitle {
-    color: #9ca3af;
-}
-
-[data-theme="dark"] .client-card {
-    background: rgba(26, 24, 38, 0.75);
-    border-color: rgba(255, 255, 255, 0.06);
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.4),
-        0 12px 28px -12px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-[data-theme="dark"] .client-card:hover {
-    background: rgba(36, 32, 52, 0.9);
-    border-color: rgba(167, 139, 250, 0.35);
-    box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.4),
-        0 24px 48px -12px rgba(139, 92, 246, 0.4),
-        0 0 0 1px rgba(167, 139, 250, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-[data-theme="dark"] .client-name {
-    color: #f9fafb;
-}
-
-[data-theme="dark"] .client-stat-value {
-    color: #cbd5e1;
-}
-
-[data-theme="dark"] .client-stat-label {
-    color: #6b7280;
-}
-
-[data-theme="dark"] .client-stat-icon {
-    color: #a78bfa;
 }
 
 /* ============================================================
