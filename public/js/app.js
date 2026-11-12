@@ -1,4 +1,8 @@
 // app.js
+
+/* ============================================================
+   SIGN-IN DROPDOWN
+   ============================================================ */
 (function () {
     const dropdown = document.getElementById('signinDropdown');
     const toggle = document.getElementById('signinToggle');
@@ -37,6 +41,7 @@
         }
     });
 })();
+
 /* ============================================================
    THREE-DOT NAV MENU
    ============================================================ */
@@ -96,7 +101,9 @@
     });
 })();
 
-/* Navbar hide/show on scroll */
+/* ============================================================
+   NAVBAR HIDE/SHOW ON SCROLL
+   ============================================================ */
 (function () {
     let lastY = 0;
     const nav = document.querySelector('nav');
