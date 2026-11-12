@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - LedgeInvo Accounting</title>
+    <title>Login - Apexbooks Accounting</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -104,7 +104,7 @@
                 <div class="w-10 h-10 bg-brand-purple rounded-xl flex items-center justify-center text-white shadow-md">
                     <i class="fa-solid fa-calculator text-xl"></i>
                 </div>
-                <span class="text-2xl font-bold tracking-tight text-slate-900">LedgeInvo<span class="text-brand-purple">.</span></span>
+                <span class="text-2xl font-bold tracking-tight text-slate-900">Apexbooks<span class="text-brand-purple">.</span></span>
             </div>
 
             <h2 class="text-3xl font-bold text-slate-900 mb-2">Welcome back</h2>
