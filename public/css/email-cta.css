@@ -1,0 +1,330 @@
+/* ============================================================
+   APEXBOOKS — TAKE CONTROL OF YOUR EMAIL
+   ============================================================ */
+
+.eml-cta {
+    position: relative;
+    max-width: 1280px;
+    margin: 80px auto;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: stretch;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    perspective: 1600px;
+    
+    /* Unified Container */
+    border-radius: 32px;
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    box-shadow: 
+        0 24px 60px -20px var(--shadow-color),
+        0 0 0 1px var(--border-color);
+    
+    /* Entrance Animation */
+    opacity: 0;
+    animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    
+    /* Smooth transition for the hover float effect */
+    transition: 
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.4s ease;
+}
+
+/* Float and become prominent on hover */
+.eml-cta:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+        0 35px 70px -20px var(--shadow-color),
+        0 0 0 1px var(--primary);
+    border-color: var(--primary);
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   LEFT SIDE — VISUAL & TEXT
+   ============================================ */
+.eml-cta__visual {
+    position: relative;
+    /* Dynamic Background */
+    background: var(--primary-light); 
+    border-radius: 31px 0 0 31px;
+    padding: 64px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    isolation: isolate;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Ambient Glows */
+.eml-cta__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.glow-1 {
+    top: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    /* Dynamic Glow */
+    background: radial-gradient(circle, var(--primary), transparent 70%);
+    opacity: 0.3;
+}
+
+.glow-2 {
+    bottom: -20%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    /* Dynamic Glow */
+    background: radial-gradient(circle, var(--primary-hover), transparent 70%);
+    opacity: 0.2;
+}
+
+.eml-cta__content {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+}
+
+/* Badge */
+.eml-cta__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--white); /* Dynamic Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    color: var(--primary); /* Dynamic Text */
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.eml-cta__badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981; /* Semantic Green */
+    box-shadow: 0 0 10px #10B981;
+}
+
+/* Typography */
+.eml-cta__title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--text-main); /* Dynamic Text */
+    margin: 0 0 20px;
+}
+
+.eml-cta__title-accent {
+    /* Dynamic Gradient Text */
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.eml-cta__desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    margin: 0;
+}
+
+/* ============================================
+   RIGHT SIDE — FORM
+   ============================================ */
+.eml-cta__form-side {
+    background: var(--white); /* Dynamic Background */
+    border-radius: 0 31px 31px 0;
+    padding: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    opacity: 0;
+    animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.eml-cta__form-card {
+    width: 100%;
+    max-width: 400px;
+}
+
+.eml-cta__form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+}
+
+.eml-cta__form-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 0 32px;
+    line-height: 1.5;
+}
+
+.eml-cta__group {
+    margin-bottom: 20px;
+}
+
+.eml-cta__group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+/* Inputs */
+.eml-cta__input-wrap {
+    position: relative;
+}
+
+.eml-cta__group input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--text-main);
+    background: var(--bg-color); /* Dynamic Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.eml-cta__input-wrap input {
+    padding-left: 44px;
+}
+
+.eml-cta__input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.eml-cta__group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+/* Submit Button */
+.eml-cta__submit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 24px;
+    background: var(--primary); /* Dynamic Theme Color */
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 10px;
+}
+
+.eml-cta__submit:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -10px var(--shadow-color);
+}
+
+/* Trust Block */
+.eml-cta__trust {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.eml-cta__avatars {
+    display: flex;
+}
+
+.eml-cta__av {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    border: 2px solid var(--white); /* Dynamic Border */
+    margin-left: -8px;
+}
+
+.eml-cta__av:first-child { margin-left: 0; }
+
+.eml-cta__trust-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .eml-cta {
+        grid-template-columns: 1fr;
+        padding: 0 24px;
+        border-radius: 24px;
+    }
+    
+    .eml-cta__visual {
+        border-radius: 23px 23px 0 0;
+        padding: 48px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .eml-cta__form-side {
+        border-radius: 0 0 23px 23px;
+        padding: 48px;
+    }
+}
+
+@media (max-width: 600px) {
+    .eml-cta {
+        margin: 40px auto;
+        padding: 0 16px;
+    }
+    
+    .eml-cta__visual {
+        padding: 32px 24px;
+    }
+    
+    .eml-cta__form-side {
+        padding: 32px 24px;
+    }
+}
