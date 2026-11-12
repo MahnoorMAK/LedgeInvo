@@ -1,0 +1,481 @@
+/* ============================================
+   PRICING — 3 tiers, slow unfold reveal
+   Light + Dark theme aware
+   ============================================ */
+
+.prc {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 32px 120px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+
+    /* Center the entire section on the page */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.prc__head {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 40px;
+}
+
+.prc__title {
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--text-main);
+    margin: 0 0 18px;
+}
+
+.prc__title-accent {
+    background: linear-gradient(115deg, var(--primary-light) 0%, var(--primary) 50%, var(--primary-hover) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.prc__subtitle {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* ============================================
+   BILLING TOGGLE
+   ============================================ */
+.prc__toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    margin: 0 auto 52px;
+}
+
+.prc__toggle-btn {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.25s ease;
+    white-space: nowrap;
+}
+
+.prc__toggle-btn.is-active {
+    color: var(--primary);
+}
+
+.prc__toggle-save {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--primary-light);
+    color: var(--primary);
+    letter-spacing: 0.02em;
+}
+
+.prc__toggle-pill {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: calc(100% - 10px);
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow:
+        0 2px 8px var(--shadow-color),
+        0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+.prc__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: stretch;
+}
+
+/* ============================================
+   CARD BASE
+   ============================================ */
+.prc__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 28px;
+    border-radius: 20px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    box-shadow:
+        0 4px 12px var(--shadow-color),
+        0 20px 40px -20px var(--shadow-color);
+    opacity: 0;
+    will-change: opacity, transform;
+    transform-style: preserve-3d;
+}
+
+/* ============================================
+   SLOW SYNCHRONIZED UNFOLD REVEAL
+   ============================================ */
+
+/* ---------- LEFT CARD ---------- */
+.prc__card--left {
+    transform-origin: left center;
+    transform: translateX(18%) scaleX(0.12);
+    opacity: 0;
+    transition:
+        opacity 4s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 4s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.5s ease,
+        border-color 0.4s ease;
+}
+
+.prc__card--left.is-visible {
+    transform: translateX(0) scaleX(1);
+    opacity: 1;
+}
+
+/* ---------- RIGHT CARD ---------- */
+.prc__card--right {
+    transform-origin: right center;
+    transform: translateX(-18%) scaleX(0.12);
+    opacity: 0;
+    transition:
+        opacity 4s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 4s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.5s ease,
+        border-color 0.4s ease;
+}
+
+.prc__card--right.is-visible {
+    transform: translateX(0) scaleX(1);
+    opacity: 1;
+}
+
+/* ---------- CENTER CARD ---------- */
+.prc__card--center {
+    transform-origin: center center;
+    transform: scale(0.05) rotate(-4deg);
+    filter: blur(14px);
+    transition:
+        opacity 4.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 4.6s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 4.6s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.5s ease,
+        border-color 0.4s ease;
+}
+
+.prc__card--center.is-visible {
+    transform: scale(1) rotate(0);
+    filter: blur(0);
+    opacity: 1;
+}
+
+/* ============================================
+   FEATURED (CENTER) CARD - FIXED CONTRAST
+   ============================================ */
+.prc__card--featured {
+    background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg-primary) 100%);
+    border-color: var(--primary);
+    box-shadow:
+        0 4px 12px var(--shadow-color),
+        0 24px 48px -20px var(--shadow-color);
+    /* Force dark text on the light featured card */
+    color: #1E293B !important; 
+}
+
+/* Force all text inside the featured card to be dark */
+.prc__card--featured .prc__card-name,
+.prc__card--featured .prc__card-desc,
+.prc__card--featured .prc__price-amount,
+.prc__card--featured .prc__price-symbol,
+.prc__card--featured .prc__price-period,
+.prc__card--featured .prc__features-title,
+.prc__card--featured .prc__features-list li {
+    color: #1E293B !important;
+}
+
+/* ============================================
+   CARD CONTENT
+   ============================================ */
+.prc__card-head {
+    margin-bottom: 24px;
+}
+
+.prc__card-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+}
+
+.prc__card-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* ---------- Price ---------- */
+.prc__price {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    background: var(--bg-color);
+    margin-bottom: 26px;
+}
+
+.prc__card--featured .prc__price {
+    background: rgba(255, 255, 255, 0.5) !important; /* Semi-transparent white to contrast with dark text */
+}
+
+.prc__price-symbol {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    align-self: flex-start;
+    line-height: 1.3;
+}
+
+.prc__price-amount {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.prc__price-period {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-left: 4px;
+}
+
+/* ---------- Features ---------- */
+.prc__features {
+    flex: 1;
+    margin-bottom: 26px;
+}
+
+.prc__features-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0 0 14px;
+    letter-spacing: 0.01em;
+}
+
+.prc__features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.prc__features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.prc__check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.prc__card--featured .prc__check {
+    background: var(--primary-hover);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    color: #ffffff !important;
+}
+
+/* ---------- CTA ---------- */
+.prc__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease;
+}
+
+.prc__cta--ghost {
+    background: var(--white);
+    border: 1.5px solid var(--border-color);
+    color: var(--primary);
+}
+
+.prc__cta--ghost:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.prc__cta--primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 24px -10px var(--shadow-color);
+}
+
+.prc__cta--primary:hover {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px -12px var(--shadow-color);
+}
+
+/* ============================================
+   HOVER (after reveal)
+   ============================================ */
+.prc__card.is-visible:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 8px 20px var(--shadow-color),
+        0 32px 60px -24px var(--shadow-color);
+    border-color: var(--primary);
+}
+
+.prc__card--featured.is-visible:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 8px 20px var(--shadow-color),
+        0 36px 72px -24px var(--shadow-color);
+    border-color: var(--primary-hover);
+}
+
+/* ============================================
+   HEADER + TOGGLE REVEAL
+   ============================================ */
+[data-prc-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-prc-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .prc__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .prc__card--left,
+    .prc__card--right,
+    .prc__card--center {
+        transform: translateY(40px);
+        transform-origin: center center;
+        filter: none;
+        transition:
+            opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .prc__card--left.is-visible,
+    .prc__card--right.is-visible,
+    .prc__card--center.is-visible {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .prc {
+        padding: 80px 20px 100px;
+    }
+
+    .prc__card {
+        padding: 26px 22px;
+    }
+
+    .prc__price-amount {
+        font-size: 2.25rem;
+    }
+
+    .prc__toggle-btn {
+        padding: 9px 16px;
+        font-size: 13px;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .prc__card,
+    .prc__card--left,
+    .prc__card--right,
+    .prc__card--center,
+    [data-prc-reveal],
+    .prc__toggle-pill {
+        transition: none !important;
+        animation: none !important;
+        filter: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    .prc__card.is-visible:hover,
+    .prc__card--featured.is-visible:hover {
+        transform: translateY(-6px);
+    }
+}
