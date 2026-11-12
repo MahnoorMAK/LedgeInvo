@@ -49,3 +49,11 @@ Route::get('/customer-payments/create', function () {
 Route::get('/vendor-payments/create', function () {
     return view('pages.vendor-payments.create');
 })->name('vendor-payments.create');
+// Chart of Accounts Page
+Route::get('/chart-of-accounts', function () {
+    return view('pages.chart-of-accounts.index');
+})->name('chart-of-accounts.index');
+// Account Types Page
+Route::get('/account-types', function () {
+    return view('pages.account-types.index');
+})->name('account-types.index');
