@@ -4,14 +4,13 @@
 @section('content')
 <section id="manage-revenues-section">
     <style>
-        /* Scoped CSS for Manage Revenues Section */
         #manage-revenues-section {
             --primary: #10b981;
             --primary-hover: #059669;
             --border-color: #e5e7eb;
             --text-main: #111827;
             --text-muted: #6b7280;
-            --bg-gray: #f9fafb;
+            --bg-gray: transparent;
 
             --blue-light: #eff6ff;
             --blue-text: #3b82f6;
@@ -25,13 +24,12 @@
             --green-text: #10b981;
 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* FIX: transparent background so no separate white/grey block appears */
+
+            /* Fully transparent — no separate background block */
             background: transparent;
-            /* FIX: fill the page width, no centering gap */
             width: 100%;
             max-width: 100%;
             margin: 0;
-            /* FIX: no outer padding ring — align flush with page */
             padding: 0;
             box-sizing: border-box;
             color: var(--text-main);
@@ -88,7 +86,7 @@
             border: 1px solid var(--border-color);
             border-radius: 0.5rem;
             margin-bottom: 1.5rem;
-            background: #ffffff;
+            background: transparent;
             overflow: hidden;
         }
 
@@ -120,7 +118,7 @@
         }
 
         #manage-revenues-section .calendar-nav-btn:hover {
-            background: var(--bg-gray);
+            background: #f3f4f6;
             color: var(--text-main);
         }
 
@@ -147,7 +145,7 @@
         }
 
         #manage-revenues-section .day-cell:hover {
-            background: var(--bg-gray);
+            background: #f3f4f6;
         }
 
         #manage-revenues-section .day-name {
@@ -173,10 +171,9 @@
 
         /* Main Container */
         #manage-revenues-section .main-container {
-            background: #ffffff;
+            background: transparent;
             border-radius: 0.5rem;
             border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -190,6 +187,7 @@
             gap: 1rem;
             align-items: center;
             flex-wrap: wrap;
+            background: transparent;
         }
 
         #manage-revenues-section .search-box {
@@ -220,6 +218,7 @@
             border-radius: 0.375rem;
             font-size: 0.875rem;
             outline: none;
+            background: #ffffff;
         }
 
         #manage-revenues-section .search-input-wrapper input:focus {
@@ -242,7 +241,7 @@
         }
 
         #manage-revenues-section .btn-outline {
-            background-color: white;
+            background-color: #ffffff;
             color: var(--text-main);
             border: 1px solid var(--border-color);
             padding: 0.5rem 1rem;
@@ -256,7 +255,7 @@
         }
 
         #manage-revenues-section .btn-outline:hover {
-            background-color: var(--bg-gray);
+            background-color: #f3f4f6;
         }
 
         #manage-revenues-section .toolbar select {
@@ -265,7 +264,7 @@
             border-radius: 0.375rem;
             font-size: 0.875rem;
             outline: none;
-            background: white;
+            background: #ffffff;
             cursor: pointer;
         }
 
@@ -277,7 +276,7 @@
             border-top: 1px solid var(--border-color);
             gap: 1.5rem;
             overflow-x: auto;
-            background: #ffffff;
+            background: transparent;
         }
 
         #manage-revenues-section .tab {
@@ -315,6 +314,7 @@
         #manage-revenues-section .table-container {
             overflow-x: auto;
             width: 100%;
+            background: transparent;
         }
 
         #manage-revenues-section table {
@@ -322,10 +322,11 @@
             border-collapse: collapse;
             text-align: left;
             min-width: 1000px;
+            background: transparent;
         }
 
         #manage-revenues-section th {
-            background-color: var(--bg-gray);
+            background-color: transparent;
             padding: 0.75rem 1rem;
             font-size: 0.75rem;
             font-weight: 600;
@@ -339,6 +340,11 @@
             border-bottom: 1px solid var(--border-color);
             font-size: 0.875rem;
             vertical-align: middle;
+            background: transparent;
+        }
+
+        #manage-revenues-section tbody tr:hover td {
+            background: #f9fafb;
         }
 
         #manage-revenues-section .badge-id {
@@ -459,9 +465,7 @@
             border-top: 1px solid var(--border-color);
             flex-wrap: wrap;
             gap: 1rem;
-            background: #ffffff;
-            border-bottom-left-radius: 0.5rem;
-            border-bottom-right-radius: 0.5rem;
+            background: transparent;
         }
 
         #manage-revenues-section .page-numbers {
@@ -473,7 +477,7 @@
         #manage-revenues-section .page-btn {
             padding: 0.4rem 0.75rem;
             border: 1px solid var(--border-color);
-            background: white;
+            background: #ffffff;
             border-radius: 0.375rem;
             cursor: pointer;
             font-size: 0.875rem;
@@ -532,14 +536,11 @@
             <div class="calendar-title" id="calendarMonthYear">Nov 2026</div>
             <button class="calendar-nav-btn" id="nextMonth">›</button>
         </div>
-        <div class="calendar-days" id="calendarDays">
-            <!-- Days injected via JS -->
-        </div>
+        <div class="calendar-days" id="calendarDays"></div>
     </div>
 
     <!-- Main Container -->
     <div class="main-container">
-        <!-- Toolbar -->
         <div class="toolbar">
             <div class="search-box">
                 <div class="search-input-wrapper">
@@ -557,7 +558,6 @@
             <button class="btn-outline" id="filterBtn">▼ Filters</button>
         </div>
 
-        <!-- Tabs -->
         <div class="tabs" id="statusTabs">
             <div class="tab active" data-status="all">⊞ All <span class="tab-count">15</span></div>
             <div class="tab" data-status="draft">📄 Draft <span class="tab-count">3</span></div>
@@ -565,7 +565,6 @@
             <div class="tab" data-status="posted">✓ Posted <span class="tab-count">7</span></div>
         </div>
 
-        <!-- Table -->
         <div class="table-container">
             <table>
                 <thead>
@@ -580,29 +579,22 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-                    <!-- Data injected via JS -->
-                </tbody>
+                <tbody id="tableBody"></tbody>
             </table>
         </div>
 
-        <!-- Pagination -->
         <div class="pagination">
             <div class="pageInfo" id="pageInfo" style="font-size: 0.875rem; color: var(--text-muted);"></div>
-            <div class="page-numbers" id="pageNumbers">
-                <!-- Pagination buttons injected via JS -->
-            </div>
+            <div class="page-numbers" id="pageNumbers"></div>
         </div>
     </div>
 
-    <!-- Toast for Feedback -->
     <div class="toast" id="toast"></div>
 
     <script>
         (function() {
             const section = document.getElementById('manage-revenues-section');
 
-            // --- 1. Generate 50 Deterministic Entities of Dummy Data ---
             const categories = [
                 { name: "Subscription Revenue", class: "cat-sub", coa: "4040 - Subscription Revenue", bank: "Credit Line Account" },
                 { name: "Product Sales", class: "cat-prod", coa: "4100 - Sales Revenue", bank: "Business Checking Account" },
@@ -615,10 +607,8 @@
             for (let i = 1; i <= 50; i++) {
                 const cat    = categories[(i - 1) % categories.length];
                 const status = statuses[(i - 1) % statuses.length];
-
                 const date = new Date(2026, 10, 11);
                 date.setDate(date.getDate() - (i * 2));
-
                 const amount = (1000 + i * 137.5).toFixed(2);
 
                 revenuesData.push({
@@ -635,7 +625,6 @@
                 });
             }
 
-            // --- 2. State Management ---
             let state = {
                 data: [...revenuesData],
                 filteredData: [...revenuesData],
@@ -646,7 +635,6 @@
                 currentDate: new Date(2026, 10, 11)
             };
 
-            // --- 3. DOM Elements ---
             const tableBody = section.querySelector('#tableBody');
             const pageNumbers = section.querySelector('#pageNumbers');
             const pageInfo = section.querySelector('#pageInfo');
@@ -658,7 +646,6 @@
             const calendarMonthYear = section.querySelector('#calendarMonthYear');
             const toast = section.querySelector('#toast');
 
-            // --- 4. Helper Functions ---
             function formatCurrency(amount) {
                 return '$' + Number(amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             }
@@ -674,27 +661,20 @@
                 setTimeout(() => toast.classList.remove('show'), 3000);
             }
 
-            // --- 5. Calendar Logic ---
             function renderCalendar() {
                 const year = state.currentDate.getFullYear();
                 const month = state.currentDate.getMonth();
-
                 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                 const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
                 calendarMonthYear.textContent = `${monthNames[month]} ${year}`;
-
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
-
                 calendarDays.innerHTML = '';
 
                 for (let i = 1; i <= daysInMonth; i++) {
                     const dayCell = document.createElement('div');
                     dayCell.className = 'day-cell';
-
-                    if (i === state.currentDate.getDate()) {
-                        dayCell.classList.add('active');
-                    }
+                    if (i === state.currentDate.getDate()) dayCell.classList.add('active');
 
                     dayCell.innerHTML = `
                         <div class="day-name">${monthNames[month]}</div>
@@ -711,7 +691,6 @@
                 }
             }
 
-            // --- 6. Table & Pagination Logic ---
             function applyFilters() {
                 let filtered = [...state.data];
 
@@ -737,8 +716,7 @@
                     if(counts[item.status.toLowerCase()] !== undefined) counts[item.status.toLowerCase()]++;
                 });
 
-                const tabs = statusTabs.querySelectorAll('.tab');
-                tabs.forEach(tab => {
+                statusTabs.querySelectorAll('.tab').forEach(tab => {
                     const status = tab.getAttribute('data-status');
                     tab.querySelector('.tab-count').textContent = counts[status];
                 });
@@ -765,7 +743,6 @@
 
                 paginatedData.forEach(item => {
                     const tr = document.createElement('tr');
-
                     const statusClass = item.status === 'Approved' ? 'status-approved' : (item.status === 'Posted' ? 'status-posted' : 'status-draft');
                     const statusIcon = item.status === 'Approved' ? '📄' : (item.status === 'Posted' ? '✓' : '📄');
 
@@ -822,7 +799,6 @@
 
             function renderPagination() {
                 const totalPages = Math.ceil(state.filteredData.length / state.perPage) || 1;
-
                 const startRecord = state.filteredData.length === 0 ? 0 : ((state.currentPage - 1) * state.perPage) + 1;
                 const endRecord = Math.min(state.currentPage * state.perPage, state.filteredData.length);
                 pageInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${state.filteredData.length} entries`;
@@ -877,8 +853,6 @@
                 pageNumbers.appendChild(nextBtn);
             }
 
-            // --- 7. Event Listeners ---
-
             section.querySelector('#prevMonth').addEventListener('click', () => {
                 state.currentDate.setMonth(state.currentDate.getMonth() - 1);
                 state.currentDate.setDate(1);
@@ -894,10 +868,8 @@
             statusTabs.addEventListener('click', (e) => {
                 const tab = e.target.closest('.tab');
                 if (!tab) return;
-
                 statusTabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-
                 state.currentTab = tab.getAttribute('data-status');
                 state.currentPage = 1;
                 applyFilters();
@@ -926,10 +898,8 @@
             section.querySelector('#addRevenueBtn').addEventListener('click', () => alert('Open Add Revenue Modal'));
             section.querySelector('#filterBtn').addEventListener('click', () => alert('Open Filters Panel'));
 
-            // --- 8. Initialization ---
             renderCalendar();
             applyFilters();
-
         })();
     </script>
 </section>
