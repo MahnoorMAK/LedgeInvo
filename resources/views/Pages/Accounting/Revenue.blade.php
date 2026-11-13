@@ -25,12 +25,16 @@
             --green-text: #10b981;
 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* FIX: transparent background so no separate white/grey block appears */
+            background: transparent;
+            /* FIX: fill the page width, no centering gap */
             width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: #ffffff;
+            max-width: 100%;
+            margin: 0;
+            /* FIX: no outer padding ring — align flush with page */
+            padding: 0;
             box-sizing: border-box;
+            color: var(--text-main);
         }
 
         #manage-revenues-section * {
@@ -72,6 +76,7 @@
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.2s;
+            flex-shrink: 0;
         }
 
         #manage-revenues-section .btn-add:hover {
@@ -83,7 +88,7 @@
             border: 1px solid var(--border-color);
             border-radius: 0.5rem;
             margin-bottom: 1.5rem;
-            background: white;
+            background: #ffffff;
             overflow: hidden;
         }
 
@@ -168,12 +173,14 @@
 
         /* Main Container */
         #manage-revenues-section .main-container {
-            background: white;
+            background: #ffffff;
             border-radius: 0.5rem;
             border: 1px solid var(--border-color);
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
+            width: 100%;
+            overflow: hidden;
         }
 
         /* Toolbar */
@@ -227,6 +234,7 @@
             border-radius: 0.375rem;
             cursor: pointer;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         #manage-revenues-section .btn-search:hover {
@@ -244,6 +252,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            white-space: nowrap;
         }
 
         #manage-revenues-section .btn-outline:hover {
@@ -268,6 +277,7 @@
             border-top: 1px solid var(--border-color);
             gap: 1.5rem;
             overflow-x: auto;
+            background: #ffffff;
         }
 
         #manage-revenues-section .tab {
@@ -304,12 +314,14 @@
         /* Table */
         #manage-revenues-section .table-container {
             overflow-x: auto;
+            width: 100%;
         }
 
         #manage-revenues-section table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            min-width: 1000px;
         }
 
         #manage-revenues-section th {
@@ -338,6 +350,7 @@
             background: var(--blue-light);
             color: var(--blue-text);
             border: 1px solid #bfdbfe;
+            white-space: nowrap;
         }
 
         #manage-revenues-section .date-cell {
@@ -345,6 +358,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            white-space: nowrap;
         }
 
         #manage-revenues-section .category-badge {
@@ -354,6 +368,7 @@
             font-size: 0.75rem;
             font-weight: 500;
             border: 1px solid;
+            white-space: nowrap;
         }
         #manage-revenues-section .cat-sub { background: var(--blue-light); color: var(--blue-text); border-color: #bfdbfe; }
         #manage-revenues-section .cat-prod { background: var(--purple-light); color: var(--purple-text); border-color: #e9d5ff; }
@@ -364,7 +379,7 @@
             flex-direction: column;
             gap: 0.25rem;
         }
-        #manage-revenues-section .coa-main { color: var(--text-main); font-weight: 500; font-size: 0.8125rem; }
+        #manage-revenues-section .coa-main { color: var(--text-main); font-weight: 500; font-size: 0.8125rem; white-space: nowrap; }
         #manage-revenues-section .coa-sub {
             color: var(--blue-text);
             font-size: 0.75rem;
@@ -372,9 +387,10 @@
             padding: 0.1rem 0.4rem;
             border-radius: 0.25rem;
             width: fit-content;
+            white-space: nowrap;
         }
 
-        #manage-revenues-section .amount { font-weight: 600; color: var(--text-main); }
+        #manage-revenues-section .amount { font-weight: 600; color: var(--text-main); white-space: nowrap; }
 
         #manage-revenues-section .status-badge {
             padding: 0.25rem 0.6rem;
@@ -385,6 +401,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.25rem;
+            white-space: nowrap;
         }
         #manage-revenues-section .status-approved { background: var(--blue-light); color: var(--blue-text); border-color: #bfdbfe; }
         #manage-revenues-section .status-posted { background: var(--green-light); color: var(--green-text); border-color: #a7f3d0; }
@@ -405,14 +422,15 @@
             align-items: center;
             justify-content: center;
             font-size: 1rem;
+            flex-shrink: 0;
         }
         #manage-revenues-section .approver-info {
             display: flex;
             flex-direction: column;
             gap: 0.1rem;
         }
-        #manage-revenues-section .approver-name { font-size: 0.8125rem; font-weight: 500; }
-        #manage-revenues-section .approver-email { font-size: 0.7rem; color: var(--text-muted); }
+        #manage-revenues-section .approver-name { font-size: 0.8125rem; font-weight: 500; white-space: nowrap; }
+        #manage-revenues-section .approver-email { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
 
         #manage-revenues-section .actions {
             display: flex;
@@ -441,7 +459,7 @@
             border-top: 1px solid var(--border-color);
             flex-wrap: wrap;
             gap: 1rem;
-            background: var(--bg-gray);
+            background: #ffffff;
             border-bottom-left-radius: 0.5rem;
             border-bottom-right-radius: 0.5rem;
         }
@@ -490,6 +508,12 @@
             transform: translateY(0);
         }
 
+        /* Responsive */
+        @media (max-width: 768px) {
+            #manage-revenues-section .page-header { flex-direction: column; gap: 1rem; }
+            #manage-revenues-section .toolbar { flex-direction: column; align-items: stretch; }
+            #manage-revenues-section .search-box { min-width: 0; }
+        }
     </style>
 
     <!-- Page Header -->
@@ -579,9 +603,6 @@
             const section = document.getElementById('manage-revenues-section');
 
             // --- 1. Generate 50 Deterministic Entities of Dummy Data ---
-            // FIXED: Removed Math.random() so the table contents no longer
-            // change on every page refresh. All values are derived from the
-            // loop index `i`, so the same 50 rows render every time.
             const categories = [
                 { name: "Subscription Revenue", class: "cat-sub", coa: "4040 - Subscription Revenue", bank: "Credit Line Account" },
                 { name: "Product Sales", class: "cat-prod", coa: "4100 - Sales Revenue", bank: "Business Checking Account" },
@@ -592,15 +613,12 @@
 
             const revenuesData = [];
             for (let i = 1; i <= 50; i++) {
-                // Deterministic category and status based on index
                 const cat    = categories[(i - 1) % categories.length];
                 const status = statuses[(i - 1) % statuses.length];
 
-                // Deterministic date: fixed anchor + index-based offset
-                const date = new Date(2026, 10, 11); // 11 Nov 2026
+                const date = new Date(2026, 10, 11);
                 date.setDate(date.getDate() - (i * 2));
 
-                // Deterministic amount
                 const amount = (1000 + i * 137.5).toFixed(2);
 
                 revenuesData.push({
@@ -625,7 +643,7 @@
                 perPage: 10,
                 searchQuery: "",
                 currentTab: "all",
-                currentDate: new Date(2026, 10, 11) // Setting to match screenshot (Nov 2026)
+                currentDate: new Date(2026, 10, 11)
             };
 
             // --- 3. DOM Elements ---
@@ -666,7 +684,6 @@
 
                 calendarMonthYear.textContent = `${monthNames[month]} ${year}`;
 
-                // Get days in month
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
 
                 calendarDays.innerHTML = '';
@@ -698,12 +715,10 @@
             function applyFilters() {
                 let filtered = [...state.data];
 
-                // Apply Tab Filter
                 if (state.currentTab !== 'all') {
                     filtered = filtered.filter(item => item.status.toLowerCase() === state.currentTab);
                 }
 
-                // Apply Search Filter
                 if (state.searchQuery) {
                     const query = state.searchQuery.toLowerCase();
                     filtered = filtered.filter(item =>
@@ -717,7 +732,6 @@
 
                 state.filteredData = filtered;
 
-                // Update Tab Counts dynamically
                 const counts = { all: state.data.length, draft: 0, approved: 0, posted: 0 };
                 state.data.forEach(item => {
                     if(counts[item.status.toLowerCase()] !== undefined) counts[item.status.toLowerCase()]++;
@@ -755,7 +769,6 @@
                     const statusClass = item.status === 'Approved' ? 'status-approved' : (item.status === 'Posted' ? 'status-posted' : 'status-draft');
                     const statusIcon = item.status === 'Approved' ? '📄' : (item.status === 'Posted' ? '✓' : '📄');
 
-                    // Build Approved By cell
                     let approvedByHtml = '-';
                     if (item.approverName !== '-') {
                         approvedByHtml = `
@@ -769,7 +782,6 @@
                         `;
                     }
 
-                    // Build Actions based on status
                     let actionsHtml = '';
                     if (item.status === 'Draft') {
                         actionsHtml = `
@@ -817,7 +829,6 @@
 
                 pageNumbers.innerHTML = '';
 
-                // Previous Button
                 const prevBtn = document.createElement('button');
                 prevBtn.className = 'page-btn';
                 prevBtn.textContent = 'Previous';
@@ -830,7 +841,6 @@
                 };
                 pageNumbers.appendChild(prevBtn);
 
-                // Numbered Buttons
                 for (let i = 1; i <= totalPages; i++) {
                     if (totalPages > 7) {
                         if (i !== 1 && i !== totalPages && Math.abs(state.currentPage - i) > 1) {
@@ -854,7 +864,6 @@
                     pageNumbers.appendChild(btn);
                 }
 
-                // Next Button
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'page-btn';
                 nextBtn.textContent = 'Next';
@@ -870,7 +879,6 @@
 
             // --- 7. Event Listeners ---
 
-            // Calendar Nav
             section.querySelector('#prevMonth').addEventListener('click', () => {
                 state.currentDate.setMonth(state.currentDate.getMonth() - 1);
                 state.currentDate.setDate(1);
@@ -883,7 +891,6 @@
                 renderCalendar();
             });
 
-            // Tabs
             statusTabs.addEventListener('click', (e) => {
                 const tab = e.target.closest('.tab');
                 if (!tab) return;
@@ -896,7 +903,6 @@
                 applyFilters();
             });
 
-            // Search
             searchBtn.addEventListener('click', () => {
                 state.searchQuery = searchInput.value.trim();
                 state.currentPage = 1;
@@ -911,14 +917,12 @@
                 }
             });
 
-            // Per Page
             perPageSelect.addEventListener('change', (e) => {
                 state.perPage = parseInt(e.target.value);
                 state.currentPage = 1;
                 updateUI();
             });
 
-            // Buttons that just show alerts
             section.querySelector('#addRevenueBtn').addEventListener('click', () => alert('Open Add Revenue Modal'));
             section.querySelector('#filterBtn').addEventListener('click', () => alert('Open Filters Panel'));
 
