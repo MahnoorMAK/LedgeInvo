@@ -1,0 +1,85 @@
+/* ============================================================
+   APEXBOOKS — SCROLL HIGHLIGHT HEADING
+   ============================================================ */
+.scroll-highlight-section {
+    position: relative;
+    width: 100%;
+    padding: 140px 64px 120px;
+    background: var(--bg-color); /* Dynamic Theme Background */
+    transition: background-color 0.3s ease;
+}
+
+.scroll-highlight-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.scroll-highlight-eyebrow {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-highlight-section.is-visible .scroll-highlight-eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- Heading ---------- */
+.scroll-highlight-heading {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: clamp(2rem, 4.5vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--text-main); /* Dynamic Text Color */
+    margin: 0;
+    /* Disable word-break inside words for cleaner line breaks */
+    word-spacing: 0.05em;
+}
+
+/* Each word starts faded, becomes active on scroll */
+.sh-word {
+    display: inline-block;
+    color: var(--text-muted); /* Dynamic Inactive Color */
+    transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: color;
+}
+
+.sh-word.is-active {
+    color: var(--text-main); /* Dynamic Active Color */
+}
+
+/* ------------------ Responsive ------------------ */
+@media (max-width: 900px) {
+    .scroll-highlight-section { padding: 100px 32px 80px; }
+    .scroll-highlight-heading { font-size: 1.75rem; }
+}
+
+@media (max-width: 560px) {
+    .scroll-highlight-section { padding: 80px 20px 64px; }
+    .scroll-highlight-heading { font-size: 1.4rem; }
+    .scroll-highlight-eyebrow { font-size: 0.7rem; margin-bottom: 24px; }
+}
+
+/* ------------------ Reduced motion ------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .sh-word {
+        color: var(--text-main) !important;
+        transition: none !important;
+    }
+    .scroll-highlight-eyebrow {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

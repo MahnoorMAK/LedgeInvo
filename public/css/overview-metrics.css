@@ -1,0 +1,333 @@
+/* ============================================================
+   LEDGEINVO — OVERVIEW + METRICS
+   ============================================================ */
+.om-section {
+    position: relative;
+    width: 100%;
+    padding: 120px 64px 100px;
+    background: var(--bg-color); /* Dynamic Background */
+}
+
+/* ---------- Header ---------- */
+.om-header {
+    max-width: 1080px;
+    margin: 0 auto 72px;
+    text-align: center;
+}
+
+.om-eyebrow {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.om-section.is-visible .om-eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- Serif title — matches the hero font ---------- */
+.om-title {
+    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+    font-size: clamp(1.75rem, 3.8vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    margin: 0;
+}
+
+/* Each word starts faded, becomes dark when .is-active */
+.om-word {
+    display: inline-block;
+    color: var(--text-muted); /* Dynamic Inactive Color */
+    transition: color 2.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: color;
+}
+
+.om-word.is-active {
+    color: var(--text-main); /* Dynamic Active Color */
+}
+
+/* ---------- Grid ---------- */
+.om-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+}
+
+/* ---------- Base card ---------- */
+.om-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    min-height: 420px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s ease;
+}
+
+.om-grid.is-visible .om-card:nth-child(1) { transition-delay: 0.15s; }
+.om-grid.is-visible .om-card:nth-child(2) { transition-delay: 0.45s; }
+.om-grid.is-visible .om-card:nth-child(3) { transition-delay: 0.75s; }
+
+.om-grid.is-visible .om-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- Stat card ---------- */
+.om-card-stat {
+    background: var(--white); /* Dynamic Card Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    padding: 40px 36px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Dynamic Shadow */
+    box-shadow:
+        0 1px 2px var(--shadow-color),
+        0 12px 32px -20px var(--shadow-color);
+}
+
+.om-card-stat:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 2px 4px var(--shadow-color),
+        0 30px 60px -25px var(--shadow-color);
+}
+
+/* Stat value row */
+.om-stat-top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.om-stat-value {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+    font-size: clamp(4rem, 8vw, 6.5rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--text-main); /* Dynamic Text */
+    font-variant-numeric: tabular-nums;
+}
+
+.om-stat-suffix {
+    color: var(--primary); /* Dynamic Theme Color */
+    font-size: 0.65em;
+    font-weight: 400;
+}
+
+.om-stat-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    max-width: 240px;
+}
+
+/* Description */
+.om-stat-desc {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 24px 0 auto;
+    max-width: 280px;
+}
+
+/* Footer tag */
+.om-stat-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin-top: 24px;
+    align-self: flex-start;
+
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--primary); /* Dynamic Theme Color */
+
+    background: var(--primary-light); /* Dynamic Light Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    border-radius: 999px;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.om-card-stat:hover .om-stat-tag {
+    background: var(--primary); /* Dynamic Hover Background */
+    border-color: var(--primary);
+    color: #ffffff; /* Keep white for contrast */
+}
+
+/* ---------- CTA card ---------- */
+.om-card-cta {
+    position: relative;
+    cursor: pointer;
+    box-shadow:
+        0 12px 32px -20px var(--shadow-color);
+}
+
+.om-card-cta img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.om-card-cta:hover img {
+    transform: scale(1.06);
+}
+
+.om-cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(20, 14, 32, 0.9) 0%,
+        rgba(20, 14, 32, 0.55) 45%,
+        rgba(20, 14, 32, 0.15) 75%
+    );
+    transition: background 0.5s ease;
+}
+
+.om-card-cta:hover .om-cta-overlay {
+    background: linear-gradient(
+        to top,
+        rgba(20, 14, 32, 0.95) 0%,
+        rgba(20, 14, 32, 0.6) 45%,
+        rgba(20, 14, 32, 0.2) 75%
+    );
+}
+
+.om-cta-content {
+    position: absolute;
+    inset: 0;
+    padding: 36px 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    z-index: 2;
+}
+
+.om-cta-title {
+    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+    font-size: clamp(1.5rem, 2.2vw, 1.85rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+    max-width: 320px;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.om-cta-arrow {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition:
+        background-color 0.4s ease,
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.om-card-cta:hover .om-cta-arrow {
+    background: #ffffff;
+    color: var(--primary); /* Dynamic Theme Color */
+    transform: scale(1.1) rotate(-45deg);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+    .om-section { padding: 100px 40px 80px; }
+    .om-grid { gap: 20px; }
+    .om-card { min-height: 400px; }
+}
+
+@media (max-width: 900px) {
+    .om-section { padding: 80px 32px 64px; }
+    .om-header { margin-bottom: 56px; }
+
+    .om-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .om-card-cta {
+        grid-column: 1 / -1;
+        min-height: 340px;
+    }
+}
+
+@media (max-width: 640px) {
+    .om-section { padding: 64px 20px 48px; }
+    .om-header { margin-bottom: 40px; }
+    .om-eyebrow { font-size: 0.7rem; margin-bottom: 24px; }
+
+    .om-grid { grid-template-columns: 1fr; gap: 16px; }
+    .om-card-cta { min-height: 320px; }
+
+    .om-card-stat { padding: 32px 28px 26px; }
+    .om-stat-value { font-size: 4rem; }
+    .om-stat-title { font-size: 1rem; }
+    .om-cta-content { padding: 28px 24px; }
+    .om-cta-title { font-size: 1.35rem; max-width: 220px; }
+    .om-cta-arrow { width: 40px; height: 40px; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .om-word,
+    .om-eyebrow,
+    .om-card,
+    .om-card-cta img,
+    .om-cta-arrow {
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+    .om-word {
+        color: var(--text-main) !important;
+    }
+}

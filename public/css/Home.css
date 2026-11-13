@@ -19,15 +19,16 @@
     line-height: 1.1;
     letter-spacing: -0.02em;
     margin-bottom: 24px;
+    color: var(--text-main); /* Dynamic Text */
 }
 
 .hero-text h1 span {
-    color: var(--primary);
+    color: var(--primary); /* Dynamic Theme Color */
 }
 
 .hero-text p {
     font-size: 18px;
-    color: var(--text-muted);
+    color: var(--text-muted); /* Dynamic Muted Text */
     line-height: 1.6;
     margin-bottom: 40px;
     max-width: 90%;
@@ -50,9 +51,9 @@
 }
 
 .btn-secondary {
-    background-color: var(--white);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
+    background-color: var(--white); /* Dynamic Background */
+    color: var(--text-main); /* Dynamic Text */
+    border: 1px solid var(--border-color); /* Dynamic Border */
     padding: 16px 32px;
     border-radius: 12px;
     font-size: 16px;
@@ -62,7 +63,7 @@
 }
 
 .btn-secondary:hover {
-    background-color: #f1f5f9;
+    background-color: var(--bg-secondary); /* Dynamic Hover Background */
 }
 
 /* ---------- Dashboard Mockup ---------- */
@@ -71,11 +72,11 @@
     width: 100%;
     max-width: 500px;
     margin-left: auto;
-    background: var(--white);
+    background: var(--white); /* Dynamic Background */
     border-radius: 24px;
     padding: 24px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 25px 50px -12px var(--shadow-color); /* Dynamic Shadow */
+    border: 1px solid var(--border-color); /* Dynamic Border */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -88,7 +89,8 @@
     right: -20px;
     bottom: -20px;
     left: -20px;
-    background: linear-gradient(135deg, var(--primary), #c4b5fd);
+    /* Dynamic Glow Gradient */
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
     filter: blur(30px);
     opacity: 0.15;
     border-radius: 40px;
@@ -106,6 +108,7 @@
 .mockup-title {
     font-weight: 600;
     font-size: 16px;
+    color: var(--text-main);
 }
 
 .mockup-dots {
@@ -117,7 +120,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #E2E8F0;
+    background-color: var(--border-color);
 }
 
 .mockup-dots span:nth-child(1) { background-color: #FCA5A5; }
@@ -135,12 +138,12 @@
 
 .bar {
     flex: 1;
-    background-color: var(--primary-light);
+    background-color: var(--primary-light); /* Dynamic Light Bar */
     border-radius: 6px 6px 0 0;
 }
 
 .bar:nth-child(1) { height: 40%; }
-.bar:nth-child(2) { height: 70%; background-color: var(--primary); }
+.bar:nth-child(2) { height: 70%; background-color: var(--primary); } /* Dynamic Primary Bar */
 .bar:nth-child(3) { height: 50%; }
 .bar:nth-child(4) { height: 90%; background-color: var(--primary); }
 .bar:nth-child(5) { height: 60%; }
@@ -154,10 +157,10 @@
 }
 
 .stat-card {
-    background-color: #F8F9FC;
+    background-color: var(--bg-color); /* Dynamic Background */
     padding: 16px;
     border-radius: 12px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color); /* Dynamic Border */
 }
 
 .stat-label {
@@ -169,6 +172,7 @@
 .stat-value {
     font-size: 20px;
     font-weight: 700;
+    color: var(--text-main);
 }
 
 .stat-trend {

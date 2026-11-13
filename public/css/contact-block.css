@@ -1,0 +1,361 @@
+/* ============================================
+   CONTACT BLOCK — CLEAN SOFT UI
+   Solid cards in light mode, smooth glass in dark mode.
+   Slow, deliberate reveal.
+   Floating form card on hover.
+   ============================================ */
+
+.ctb {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 32px 120px;
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 40px;
+    align-items: stretch;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    perspective: 1600px;
+}
+
+/* ============================================
+   LEFT — INFO CARDS
+   ============================================ */
+.ctb__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    height: 100%;
+}
+
+.ctb__card {
+    position: relative;
+    /* Dynamic Card Background */
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    
+    /* Dynamic Shadow */
+    box-shadow: 
+        0 4px 6px -1px var(--shadow-color),
+        0 12px 24px -8px var(--shadow-color);
+    
+    /* Entrance initial state */
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    transition: 
+        opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.4s ease,
+        border-color 0.4s ease,
+        background 0.3s ease;
+}
+
+.ctb__card.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Hover: Lifts slightly, border gets a subtle theme color tint */
+.ctb__card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: 
+        0 12px 20px -8px var(--shadow-color),
+        0 25px 45px -15px var(--shadow-color);
+}
+
+/* ---------- Card icon ---------- */
+.ctb__card-icon {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    /* Dynamic Icon Gradient */
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 
+        0 8px 18px var(--shadow-color),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    
+    /* Smooth entrance */
+    transform: scale(0.85);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.ctb__card.is-visible .ctb__card-icon {
+    transform: scale(1);
+}
+
+.ctb__card:hover .ctb__card-icon {
+    transform: scale(1.08) rotate(-4deg);
+    box-shadow: 0 12px 25px var(--shadow-color);
+}
+
+/* ---------- Card body ---------- */
+.ctb__card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.ctb__card-body h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main); /* Dynamic Text */
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+}
+
+.ctb__card-body p {
+    font-size: 0.925rem;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    line-height: 1.6;
+    margin: 0 0 16px;
+}
+
+.ctb__card-body a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary); /* Dynamic Theme Color */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding-bottom: 2px;
+    border-bottom: 1.5px solid transparent;
+}
+
+.ctb__card-body a:hover {
+    color: var(--primary-hover);
+    border-bottom-color: var(--primary-hover);
+    gap: 10px;
+}
+
+/* ============================================
+   RIGHT — FORM CARD
+   ============================================ */
+.ctb__form-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    /* Entrance initial state */
+    opacity: 0;
+    transform: translateY(40px);
+    /* Ensure smooth floating on hover by transitioning transform */
+    transition: opacity 0.8s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ctb__form-wrap.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Float the whole wrapper on hover --- */
+.ctb__form-wrap.is-visible:hover {
+    transform: translateY(-8px);
+}
+
+.ctb__form-card {
+    flex: 1;
+    position: relative;
+    background: var(--white); /* Dynamic Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    border-radius: 24px;
+    padding: 48px;
+    
+    /* Base Shadow */
+    box-shadow: 
+        0 4px 6px -1px var(--shadow-color),
+        0 20px 40px -10px var(--shadow-color);
+        
+    /* Transition for the border and shadow */
+    transition: 
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+}
+
+/* --- Intensify shadow and border when wrapper is hovered --- */
+.ctb__form-wrap:hover .ctb__form-card {
+    border-color: var(--primary);
+    box-shadow: 
+        0 12px 20px -8px var(--shadow-color),
+        0 35px 60px -15px var(--shadow-color);
+}
+
+/* ---------- Titles ---------- */
+.ctb__form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+}
+
+.ctb__form-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 0 32px;
+    line-height: 1.6;
+}
+
+/* ---------- Layout rows ---------- */
+.ctb__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.ctb__group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.ctb__group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+}
+
+.ctb__group label .required {
+    color: var(--primary);
+    margin-left: 2px;
+}
+
+/* ---------- Inputs ---------- */
+.ctb__input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--text-main);
+    background: var(--bg-color); /* Dynamic Background */
+    border: 1.5px solid var(--border-color); /* Dynamic Border */
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.ctb__input::placeholder {
+    color: var(--text-muted);
+}
+
+.ctb__input:hover {
+    background: var(--bg-secondary); /* Dynamic Hover Background */
+}
+
+/* The Magic Focus: Dynamic Theme Glow */
+.ctb__input:focus {
+    background: var(--white);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+    transform: translateY(-2px);
+}
+
+textarea.ctb__input {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.6;
+}
+
+/* ---------- Submit button ---------- */
+.ctb__submit {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 24px;
+    /* Dynamic Gradient Button */
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 25px -10px var(--shadow-color);
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.ctb__submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px -10px var(--shadow-color);
+}
+
+.ctb__submit:active {
+    transform: translateY(-1px);
+}
+
+.ctb__submit-icon {
+    transition: transform 0.3s ease;
+}
+
+.ctb__submit:hover .ctb__submit-icon {
+    transform: translateX(6px);
+}
+
+/* Subtle shimmer on button */
+.ctb__submit-flash {
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-20deg);
+    animation: submitShimmer 4s infinite;
+}
+
+@keyframes submitShimmer {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .ctb {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .ctb__form-card { padding: 32px 28px; }
+}
+
+@media (max-width: 640px) {
+    .ctb { padding: 40px 20px 80px; }
+    .ctb__row { grid-template-columns: 1fr; }
+    .ctb__form-card { padding: 24px 20px; }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .ctb__card,
+    .ctb__card-icon,
+    .ctb__form-wrap,
+    .ctb__submit {
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+    .ctb__submit-flash { display: none; }
+}
