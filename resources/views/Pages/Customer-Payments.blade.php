@@ -7,11 +7,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-        /* Scoped styles to the section */
+        /* OVERRIDE DASHBOARD PADDING & MARGINS */
         #manage-customer-payments {
-            --primary: #3b82f6; /* Bright Blue */
+            --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --bg-color: #f9fafb;
+            --bg-color: #ffffff;
             --surface: #ffffff;
             --border: #e5e7eb;
             --text-main: #111827;
@@ -26,10 +26,18 @@
             --danger: #ef4444;
 
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background-color: #ffffff;
             color: var(--text-main);
+            
+            /* FIT TO SCREEN & REMOVE DASHBOARD GAP */
+            width: 100vw;
+            max-width: 100vw;
+            margin: -24px -24px -24px -24px; /* Ye dashboard ki padding ko pull kar ke sides se chipka dega */
             padding: 2rem;
+            box-sizing: border-box;
+            min-height: 100vh;
             display: block;
+            overflow-x: hidden;
         }
 
         #manage-customer-payments * {
@@ -69,17 +77,19 @@
             align-items: center;
             justify-content: center;
             transition: background 0.2s;
+            flex-shrink: 0;
         }
 
         #manage-customer-payments .btn-add:hover { background-color: var(--primary-hover); }
 
-        /* --- Calendar Widget (Made Shorter) --- */
+        /* --- Calendar Widget --- */
         #manage-customer-payments .calendar-widget {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 10px;
-            margin-bottom: 1.5rem;
+            margin: 0 0 1.5rem 0;
             overflow: hidden;
+            width: 100%;
         }
 
         #manage-customer-payments .calendar-header {
@@ -106,7 +116,7 @@
             transition: background 0.2s;
         }
 
-        #manage-customer-payments .cal-nav-btn:hover { background: var(--bg-color); }
+        #manage-customer-payments .cal-nav-btn:hover { background: #f3f4f6; }
 
         #manage-customer-payments .calendar-grid {
             display: flex;
@@ -129,7 +139,7 @@
         }
 
         #manage-customer-payments .month-btn:last-child { border-right: none; }
-        #manage-customer-payments .month-btn:hover { background-color: var(--bg-color); }
+        #manage-customer-payments .month-btn:hover { background-color: #f3f4f6; }
 
         #manage-customer-payments .month-btn.active {
             background-color: var(--primary);
@@ -147,7 +157,7 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        #manage-customer-payments .nav-arrow-col:hover { background: var(--bg-color); }
+        #manage-customer-payments .nav-arrow-col:hover { background: #f3f4f6; }
         #manage-customer-payments .nav-arrow-col:last-child {
             border-right: none;
             border-left: 1px solid var(--border);
@@ -159,6 +169,8 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            width: 100%;
+            overflow: hidden;
         }
 
         /* Toolbar */
@@ -220,7 +232,7 @@
             font-family: 'Inter', sans-serif;
             transition: background 0.2s;
         }
-        #manage-customer-payments .btn-clear:hover { background-color: #f9fafb; }
+        #manage-customer-payments .btn-clear:hover { background-color: #f3f4f6; }
 
         #manage-customer-payments .filter-group {
             display: flex;
@@ -271,7 +283,7 @@
         }
 
         #manage-customer-payments .tab-count {
-            background: var(--bg-color);
+            background: #f3f4f6;
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 0.75rem;
@@ -282,7 +294,7 @@
             color: var(--primary);
         }
 
-        /* Table (Made more compact) */
+        /* Table */
         #manage-customer-payments .table-container {
             width: 100%;
             overflow-x: auto;
@@ -296,7 +308,7 @@
         }
 
         #manage-customer-payments th {
-            background-color: #f9fafb;
+            background-color: #ffffff;
             color: var(--text-muted);
             font-weight: 500;
             padding: 0.65rem 1rem;
@@ -311,9 +323,10 @@
             padding: 0.75rem 1rem;
             border-bottom: 1px solid var(--border);
             vertical-align: middle;
+            background-color: #ffffff;
         }
 
-        #manage-customer-payments tr:hover { background-color: #f9fafb; }
+        #manage-customer-payments tr:hover td { background-color: #f9fafb; }
 
         /* Table Specific Styles */
         #manage-customer-payments .id-badge {
@@ -422,6 +435,14 @@
             font-size: 0.875rem;
             color: var(--text-muted);
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #manage-customer-payments { margin: 0; padding: 1rem; width: 100%; }
+            #manage-customer-payments .page-header { flex-direction: column; gap: 1rem; }
+            #manage-customer-payments .toolbar { flex-direction: column; align-items: stretch; }
+            #manage-customer-payments .search-group { max-width: 100%; }
+        }
     </style>
 
     <!-- Header -->
@@ -435,7 +456,7 @@
         </button>
     </header>
 
-    <!-- Calendar Widget (Shorter) -->
+    <!-- Calendar Widget -->
     <div class="calendar-widget">
         <div class="calendar-header">
             <button class="cal-nav-btn" onclick="changeYear(-1)">
@@ -459,7 +480,6 @@
 
     <!-- Main Content Card -->
     <main class="main-card">
-        <!-- Toolbar (Matched to Image) -->
         <div class="toolbar">
             <div class="search-group">
                 <input type="text" id="searchInput" class="search-input" placeholder="Search contracts...">
@@ -479,7 +499,6 @@
             </div>
         </div>
 
-        <!-- Tabs -->
         <div class="tabs">
             <button class="tab active" onclick="setTab('All', this)">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -499,7 +518,6 @@
             </button>
         </div>
 
-        <!-- Table -->
         <div class="table-container">
             <table>
                 <thead>
@@ -513,13 +531,10 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-                    <!-- Rows generated by JS -->
-                </tbody>
+                <tbody id="tableBody"></tbody>
             </table>
         </div>
 
-        <!-- Pagination -->
         <div class="pagination-footer">
             <span id="pageInfo" class="page-info"></span>
             <button class="btn-filter" onclick="prevPage()" id="btnPrev">Previous</button>
@@ -528,7 +543,6 @@
     </main>
 
     <script>
-        // --- State & Data Generation ---
         let payments = [];
         let filteredPayments = [];
 
@@ -538,7 +552,7 @@
             page: 1,
             pageSize: 10,
             calYear: 2026,
-            calMonth: 10 // November (0-indexed)
+            calMonth: 10
         };
 
         const firstNames = ["Jennifer", "Ashley", "Lisa", "Sarah", "Michael", "John", "Emily", "David", "Jessica", "Daniel", "Sophia", "James", "Olivia", "Robert", "Emma", "William", "Ava", "Joseph", "Isabella", "Thomas"];
@@ -547,26 +561,19 @@
         const statuses = ["Pending", "Cleared", "Pending", "Cleared", "Cancelled"];
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-        // FIXED: Replaced Math.random() with deterministic, index-based values
-        // so the same 50 rows render on every page refresh.
         function generateMockData() {
             const data = [];
-            const startDate = new Date(2026, 1, 1); // 1 Feb 2026
+            const startDate = new Date(2026, 1, 1);
 
             for (let i = 1; i <= 50; i++) {
-                // Deterministic name / id / amount / date / status / account
                 const fName = firstNames[(i - 1) % firstNames.length];
                 const lName = lastNames[(i - 1) % lastNames.length];
                 const idNum = (50 - i).toString().padStart(3, '0');
-
-                // Amount: stable, increasing pattern
                 const amount = (500 + i * 97.5).toFixed(2);
 
-                // Date: fixed anchor + deterministic offset
                 const date = new Date(startDate);
-                date.setDate(date.getDate() + (i * 0.5 | 0)); // spread across Feb
+                date.setDate(date.getDate() + (i * 0.5 | 0));
 
-                // Status cycles through the array
                 const status = statuses[(i - 1) % statuses.length];
                 const account = bankAccounts[(i - 1) % bankAccounts.length];
 
@@ -584,7 +591,6 @@
             return data;
         }
 
-        // Initialize App
         function init() {
             payments = generateMockData();
             renderCalendar();
@@ -592,7 +598,6 @@
             applyFilters();
         }
 
-        // --- Calendar Logic ---
         function renderCalendar() {
             document.getElementById('currentMonthDisplay').innerText = `${monthNames[currentState.calMonth]} ${currentState.calYear}`;
 
@@ -633,7 +638,6 @@
             renderCalendar();
         }
 
-        // --- Core Logic ---
         function updateCounts() {
             const counts = {
                 All: payments.length,
@@ -783,7 +787,6 @@
             renderTable();
         }
 
-        // --- Action Handlers ---
         function handleAction(action, id) {
             const paymentIndex = payments.findIndex(p => p.id === id);
 
@@ -809,9 +812,7 @@
             }
         }
 
-        // Start the app
         init();
-
     </script>
 </section>
 @endsection
