@@ -13,10 +13,11 @@
     .mt-add-btn svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none}
     .mt-box{border:1px solid #e2e8f0;border-radius:12px;background:#fff;display:flex;flex-direction:column}
     .mt-topbar{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:16px}
-    .mt-search{display:flex;gap:10px;flex:1;max-width:400px;position:relative}
+    .mt-search{display:flex;gap:10px;flex:1;max-width:500px;position:relative}
     .mt-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:#9ca3af;fill:none;stroke-width:2}
     .mt-search input{width:100%;padding:10px 12px 10px 36px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;outline:none}
-    .mt-search button{padding:10px 20px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer}
+    .mt-search button{padding:10px 20px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer;white-space:nowrap}
+    .mt-search button.mt-clear-btn{background:#fff;color:#475569;border:1px solid #cbd5e1}
     .mt-controls{display:flex;align-items:center;gap:12px}
     .mt-controls select{padding:10px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;outline:none;cursor:pointer}
     .mt-controls button{padding:10px 16px;background:#fff;border:1px solid #cbd5e1;border-radius:6px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px}
@@ -77,6 +78,7 @@
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
         <input type="text" id="searchInput" placeholder="Search transfers..." />
         <button id="searchBtn">Search</button>
+        <button id="clearBtn" class="mt-clear-btn">Clear</button>
       </div>
       <div class="mt-controls">
         <select id="topPerPageSelect">
@@ -145,6 +147,7 @@
       const tbody = document.getElementById('tableBody');
       const searchInput = document.getElementById('searchInput');
       const searchBtn = document.getElementById('searchBtn');
+      const clearBtn = document.getElementById('clearBtn');
       const perPageSelect = document.getElementById('topPerPageSelect');
       const filterPanel = document.getElementById('filterPanel');
       const filterToggleBtn = document.getElementById('filterToggleBtn');
@@ -220,6 +223,14 @@
 
       searchBtn.onclick = applySearchAndFilter;
       searchInput.onkeyup = (e) => { if (e.key === 'Enter') applySearchAndFilter(); };
+      
+      // Clear button: instantly clears the search bar and resets the table
+      clearBtn.onclick = () => {
+        searchInput.value = '';
+        applySearchAndFilter();
+        searchInput.focus();
+      };
+      
       perPageSelect.onchange = (e) => { rowsPerPage = parseInt(e.target.value); currentPage = 1; renderTable(); };
       filterToggleBtn.onclick = () => filterPanel.classList.toggle('show');
       filterWarehouse.onchange = (e) => { currentWarehouseFilter = e.target.value; };
