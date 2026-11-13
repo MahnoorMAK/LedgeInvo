@@ -1,6 +1,33 @@
+<style>
+  /* Force layout wrapper to be white and add standard padding so table doesn't cut */
+  body main, 
+  .main-content, 
+  .content-wrapper,
+  #app > main {
+      background-color: #ffffff !important;
+      padding: 24px !important; /* Padding wapas add ki taake table side se cut na ho */
+      margin: 0 !important;
+  }
+</style>
+
 <section class="contract-table-section">
 <style>
-.contract-table-section{font-family:system-ui,sans-serif;background:#fff;padding:24px;border-radius:12px;border:1px solid #e2e8f0;max-width:1200px;margin:40px auto;color:#0f172a}
+.contract-table-section{
+  font-family:system-ui,sans-serif;
+  background:#ffffff;
+  padding:24px;
+  border-radius:12px;
+  border:1px solid #e2e8f0;
+  
+  /* Table ko center karne aur side se cut hone se bachane ke liye */
+  width: 100%; 
+  max-width: 1400px; 
+  margin: 0 auto; 
+  box-sizing: border-box;
+  color:#0f172a;
+}
+
+/* Baqi saara CSS same rahega */
 .contract-table-section *{box-sizing:border-box;margin:0;padding:0}
 .ct-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:16px}
 .ct-search-group{display:flex;gap:10px;flex:1;max-width:480px}
@@ -18,11 +45,9 @@
 .ct-view-btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none}
 .ct-per-page{padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;cursor:pointer}
 
-/* Updated Filter Button to include chevron */
 .ct-btn-filter{padding:8px 16px;background:#fff;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px}
 .ct-btn-filter:hover,.ct-btn-filter.active{background:#f1f5f9;border-color:#94a3b8}
 
-/* Filter Dropdown */
 .ct-filter-dropdown{display:block;width:100%;max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;background:#fff;border-radius:12px;margin-top:0}
 .ct-filter-dropdown.show{max-height:800px;opacity:1;margin-top:8px;margin-bottom:20px;border:1px solid #e2e8f0;box-shadow:0 10px 25px -5px rgba(0,0,0,.1)}
 .ct-filter-dropdown-inner{padding:24px}
@@ -32,14 +57,12 @@
 .ct-filter-input:focus,.ct-filter-select:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .ct-filter-actions{display:flex;gap:12px}
 
-/* Active Filters */
 .ct-active-filters{display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-bottom:16px;flex-wrap:wrap;align-items:center;gap:10px}
 .ct-active-filters.show{display:flex}
 .ct-filter-chip{display:inline-flex;align-items:center;gap:6px;background:#e0e7ff;color:#3730a3;border-radius:20px;padding:4px 10px;font-size:12px}
 .ct-chip-remove{background:none;border:none;cursor:pointer;color:#4338ca;font-size:14px}
 .ct-clear-all-filters{margin-left:auto;background:none;border:none;color:#dc2626;font-size:13px;cursor:pointer}
 
-/* Table & Grid */
 .ct-contract-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:600;background:#eff6ff;color:#3b82f6;border:1px solid #bfdbfe;margin-bottom:6px}
 .ct-contract-title{font-size:14px;color:#1e293b;font-weight:500;line-height:1.4}
 .ct-user-cell{display:flex;align-items:center;gap:10px}
@@ -49,7 +72,6 @@
 .ct-table th{background:#f8fafc;padding:12px 16px;font-size:13px;font-weight:600;color:#475569;border-bottom:1px solid #e2e8f0;position:sticky;top:0}
 .ct-table td{padding:14px 16px;font-size:14px;color:#1e293b;border-bottom:1px solid #e2e8f0;vertical-align:top}
 
-/* Changed Grid to 2 Columns */
 .ct-grid-container{display:none;grid-template-columns:repeat(2, 1fr);gap:16px;max-height:600px;overflow-y:auto;padding-bottom:16px}
 .ct-grid-card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;position:relative}
 .ct-grid-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #f1f5f9;padding-bottom:12px}
@@ -60,14 +82,12 @@
 .ct-data-container.view-grid .ct-table-container{display:none}
 .ct-data-container.view-grid .ct-grid-container{display:grid}
 
-/* Custom Pill Badges */
 .ct-status{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600;background:#fff}
 .ct-status.active{color:#10b981;border:1px solid #10b981}
 .ct-status.expired,.ct-status.declined{color:#ef4444;border:1px solid #ef4444}
 .ct-status.closed{color:#8b5cf6;border:1px solid #8b5cf6}
 .ct-status.pending{color:#eab308;border:1px solid #eab308}
 
-/* Timeline */
 .ct-duration-cell{display:flex;flex-direction:column;gap:6px;min-width:200px;max-width:240px}
 .ct-duration-header{display:flex;justify-content:space-between;align-items:flex-end}
 .ct-duration-label{font-size:13px;font-weight:600;color:#334155}
@@ -80,7 +100,6 @@
 .ct-timeline-fill.expired,.ct-timeline-fill.declined{background:#ef4444}
 .ct-timeline-fill.pending{background:#eab308}
 
-/* Actions Menu */
 .ct-action-wrapper{position:relative;display:flex;justify-content:center}
 .ct-action-btn{background:none;border:none;font-size:20px;color:#64748b;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1}
 .ct-action-btn:hover{background:#f1f5f9;color:#0f172a}
@@ -97,12 +116,10 @@
 .ct-page-btn.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
 .ct-page-btn:disabled{opacity:.5}
 
-/* Responsive adjustments */
 @media(max-width:900px){
   .ct-filter-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:650px){
-  /* Drop to 1 column for grid on mobile screens */
   .ct-grid-container{grid-template-columns:1fr}
 }
 @media(max-width:600px){
@@ -124,7 +141,6 @@
     <select class="ct-per-page" id="perPageSelect">
       <option value="10">10 per page</option><option value="25">25 per page</option><option value="50" selected>50 per page</option>
     </select>
-    <!-- Added SVG chevron here -->
     <button class="ct-btn-filter" id="filterToggleBtn">
       Filters 
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
