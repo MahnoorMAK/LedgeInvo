@@ -20,21 +20,19 @@
     .manage-contracts-section {
       position: relative;
       width: 100%;
-      /* Changed background to white */
       background-color: #ffffff; 
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      /* Removed top padding to fix the empty space */
       padding: 24px; 
       box-sizing: border-box;
       display: flex;
       justify-content: center;
-      min-height: 100vh; /* Ensures it fills the screen */
+      align-items: flex-start; /* Ensures it doesn't stretch to full height */
+      /* Removed min-height: 100vh to stop it from stretching to the bottom */
     }
     .manage-contracts-section *, .manage-contracts-section *::before, .manage-contracts-section *::after {
       box-sizing: border-box; margin: 0; padding: 0;
     }
     .mc-container { width: 100%; max-width: 1200px; }
-    /* Removed padding-top from header as the section now has standard padding */
     .mc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
     .mc-header-text h1 { font-size: 20px; font-weight: 600; color: #0f172a; margin-bottom: 4px; }
     .mc-header-text p { font-size: 14px; color: #64748b; }
