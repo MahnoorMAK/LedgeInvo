@@ -1,0 +1,145 @@
+/* =========================================
+   GLOBAL RESET (Sidebar ke liye zaroori)
+   ========================================= */
+.sidebar * {
+    box-sizing: border-box;
+}
+
+/* =========================================
+   SIDEBAR MAIN
+   ========================================= */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    border-right: 1px solid #e2e8f0;
+    padding: 20px 15px;
+    font-family: 'Inter', sans-serif;
+    flex-shrink: 0;
+}
+
+/* Logo */
+.sidebar .logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: #7C3AED;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+
+/* Search Bar */
+.search-wrapper {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.search-wrapper .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 13px;
+    width: 16px !important;  /* Size Fix */
+    height: 16px !important; /* Size Fix */
+    stroke: #94a3b8;
+    fill: none;
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-wrapper input:focus {
+    border-color: #7C3AED;
+}
+
+/* Menu Lists */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu .category-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin: 20px 0 8px 10px;
+}
+
+/* Menu Items */
+.sidebar-menu .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 2px;
+    transition: all 0.2s ease;
+}
+
+/* Icons Size Fix */
+.sidebar-menu .menu-item .side-icon {
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 12px;
+    stroke: #64748b;
+    fill: none;
+    flex-shrink: 0;
+}
+
+.sidebar-menu .menu-item:hover {
+    background-color: #F0EDF7;
+    color: #7C3AED;
+}
+
+.sidebar-menu .menu-item:hover .side-icon {
+    stroke: #7C3AED;
+}
+
+.sidebar-menu .arrow {
+    margin-left: auto;
+    font-size: 12px;
+    color: #94a3b8;
+    transition: transform 0.3s ease;
+}
+
+/* Active Item */
+.sidebar-menu .menu-item.active {
+    background-color: #F0EDF7;
+    color: #7C3AED;
+    font-weight: 600;
+}
+
+.sidebar-menu .menu-item.active .side-icon {
+    stroke: #7C3AED;
+}
+
+/* Sub Menu */
+.sub-menu {
+    list-style: none;
+    padding: 0 0 0 30px;
+    margin: 0 0 10px 0;
+    border-left: 2px solid #F0EDF7;
+}
+
+.sub-menu li {
+    padding: 8px 0;
+    font-size: 13px;
+    color: #64748b;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.sub-menu li:hover {
+    color: #7C3AED;
+    font-weight: 600;
+}

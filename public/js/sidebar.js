@@ -1,24 +1,72 @@
-document.addEventListener("DOMContentLoaded", function () {
-    
-    const menuItems = document.querySelectorAll('.menu-item');
-    
-    menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // Find the sub-menu immediately after this item
-            const subMenu = this.nextElementSibling;
-            
-            // If a sub-menu exists, toggle it
-            if (subMenu && subMenu.classList.contains('sub-menu')) {
-                if (subMenu.style.display === 'block') {
-                    subMenu.style.display = 'none';
-                    this.querySelector('.arrow').style.transform = 'rotate(0deg)';
+/* public/js/sidebar.js */
+
+(function () {
+    'use strict';
+
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        // 1. Handle Sticky Search Bar Shadow on Scroll
+        const sidebarContainer = document.querySelector('.sidebar-container');
+        if (sidebarContainer) {
+            sidebarContainer.addEventListener('scroll', function() {
+                if (this.scrollTop > 10) {
+                    this.classList.add('is-scrolled');
                 } else {
-                    subMenu.style.display = 'block';
-                    this.querySelector('.arrow').style.transform = 'rotate(180deg)';
+                    this.classList.remove('is-scrolled');
                 }
-            }
+            });
+        }
+
+        // 2. Search Filter Functionality
+        const searchInput = document.querySelector('.sidebar-search-box');
+        const menuItems = document.querySelectorAll('.sidebar-menu-list li.menu-item');
+        const subItems = document.querySelectorAll('.sidebar-menu-list li.sub-item');
+        const allClickable = document.querySelectorAll('.sidebar-menu-list li.menu-item, .sidebar-menu-list li.sub-item');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function (e) {
+                const query = e.target.value.toLowerCase();
+
+                menuItems.forEach(function (item) {
+                    if (item.classList.contains('title')) return; 
+                    
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(query)) {
+                        item.style.display = 'flex';
+                        if (item.classList.contains('has-submenu')) {
+                            item.classList.add('open');
+                        }
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                subItems.forEach(function (sub) {
+                    if (sub.textContent.toLowerCase().includes(query)) {
+                        sub.style.display = 'flex';
+                    } else {
+                        sub.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // 3. Handle Clicks (Dropdowns + Active Highlighting)
+        allClickable.forEach(function (item) {
+            item.addEventListener('click', function (e) {
+                if (item.classList.contains('has-submenu')) {
+                    if (e.target.tagName.toLowerCase() === 'a') {
+                        return;
+                    }
+                    e.stopPropagation();
+                    item.classList.toggle('open');
+                } else {
+                    allClickable.forEach(function (i) {
+                        i.classList.remove('active');
+                    });
+                    item.classList.add('active');
+                }
+            });
         });
     });
-
-    console.log("✅ Sidebar JS Loaded perfectly");
-});
+})();

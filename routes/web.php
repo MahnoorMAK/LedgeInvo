@@ -57,3 +57,28 @@ Route::get('/chart-of-accounts', function () {
 Route::get('/account-types', function () {
     return view('pages.account-types.index');
 })->name('account-types.index');
+// Sales Invoice Create Page
+Route::get('/sales-invoices/create', function () {
+    return view('pages.sales-invoices.create');
+})->name('sales-invoices.create');
+// Milestones Page
+Route::get('/goals/milestones', function () {
+    return view('pages.milestones.index'); 
+})->name('goals.milestones.index');
+// Tracking Page ka Route
+Route::get('/tracking', function () {
+    return view('pages.tracking.index');
+})->name('tracking.index');
+// Categories Page ka Route
+Route::get('/categories', function () {
+    return view('pages.categories.index');
+})->name('categories.index');
+// Budget Page ka Route
+Route::get('/budgets', function () {
+    return view('pages.budgets.index');
+})->name('budgets.index');
+Route::get('/budget-periods', function () {
+    return view('pages.budget-periods.index');
+})->name('budget-periods.index');
+//Route::get('/Sidebar', function () {return view('Layout.Sidebar');})->name('Sidebar');
+Route::get('/sidebar', function () {return view('Layout.sidebar');})->name('sidebar');
