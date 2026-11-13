@@ -2,24 +2,40 @@
      MANAGE CONTRACTS & CREATE MODAL COMBINED
      ============================================= -->
 
+<style>
+  /* Force layout wrapper to be white and remove padding to fix white space at top/sides */
+  body main, 
+  .main-content, 
+  .content-wrapper,
+  #app > main {
+      background-color: #ffffff !important;
+      padding: 0 !important;
+      margin: 0 !important;
+  }
+</style>
+
 <!-- SECTION 1: MANAGE CONTRACTS -->
 <section class="manage-contracts-section" aria-label="Manage Contracts">
   <style>
     .manage-contracts-section {
       position: relative;
       width: 100%;
-      background-color: #f8fafc;
+      /* Changed background to white */
+      background-color: #ffffff; 
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      padding: 0 24px 24px 24px;
+      /* Removed top padding to fix the empty space */
+      padding: 24px; 
       box-sizing: border-box;
       display: flex;
       justify-content: center;
+      min-height: 100vh; /* Ensures it fills the screen */
     }
     .manage-contracts-section *, .manage-contracts-section *::before, .manage-contracts-section *::after {
       box-sizing: border-box; margin: 0; padding: 0;
     }
     .mc-container { width: 100%; max-width: 1200px; }
-    .mc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; padding-top: 24px; }
+    /* Removed padding-top from header as the section now has standard padding */
+    .mc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
     .mc-header-text h1 { font-size: 20px; font-weight: 600; color: #0f172a; margin-bottom: 4px; }
     .mc-header-text p { font-size: 14px; color: #64748b; }
     .mc-add-btn { width: 40px; height: 40px; background-color: #10b981; border: none; border-radius: 6px; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.2s ease; flex-shrink: 0; }
@@ -61,7 +77,7 @@
     .mc-card.theme-red .mc-card-subtitle { color: #991b1b; }
 
     @media (max-width: 1024px) { .mc-cards { flex-wrap: wrap; } .mc-card { flex: 1 1 calc(33.333% - 16px); } }
-    @media (max-width: 768px) { .manage-contracts-section { padding: 0 16px 16px 16px; } .mc-card { flex: 1 1 calc(50% - 16px); } }
+    @media (max-width: 768px) { .manage-contracts-section { padding: 16px; } .mc-card { flex: 1 1 calc(50% - 16px); } }
     @media (max-width: 480px) { .mc-card { flex: 1 1 100%; } }
   </style>
 
