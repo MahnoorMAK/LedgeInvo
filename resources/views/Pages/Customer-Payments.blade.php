@@ -3,11 +3,22 @@
 @section('title', 'Create Item - LedgeInvo')
 
 @section('content')
+<style>
+    /* Force the parent wrapper containing our section to be white with no padding */
+    body main, 
+    .main-content, 
+    .content-wrapper,
+    #app > main {
+        background-color: #ffffff !important;
+        padding: 0 !important;
+    }
+</style>
+
 <section id="manage-customer-payments">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-        /* OVERRIDE DASHBOARD PADDING & MARGINS */
+        /* Scoped styles to the section */
         #manage-customer-payments {
             --primary: #3b82f6;
             --primary-hover: #2563eb;
@@ -29,15 +40,12 @@
             background-color: #ffffff;
             color: var(--text-main);
             
-            /* FIT TO SCREEN & REMOVE DASHBOARD GAP */
-            width: 100vw;
-            max-width: 100vw;
-            margin: -24px -24px -24px -24px; /* Ye dashboard ki padding ko pull kar ke sides se chipka dega */
-            padding: 2rem;
-            box-sizing: border-box;
-            min-height: 100vh;
+            /* Fit exactly inside the layout's content area */
+            width: 100%;
+            margin: 0;
+            padding: 2rem; /* Standard padding for content */
             display: block;
-            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         #manage-customer-payments * {
@@ -77,7 +85,6 @@
             align-items: center;
             justify-content: center;
             transition: background 0.2s;
-            flex-shrink: 0;
         }
 
         #manage-customer-payments .btn-add:hover { background-color: var(--primary-hover); }
@@ -87,9 +94,8 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 10px;
-            margin: 0 0 1.5rem 0;
+            margin-bottom: 1.5rem;
             overflow: hidden;
-            width: 100%;
         }
 
         #manage-customer-payments .calendar-header {
@@ -116,7 +122,7 @@
             transition: background 0.2s;
         }
 
-        #manage-customer-payments .cal-nav-btn:hover { background: #f3f4f6; }
+        #manage-customer-payments .cal-nav-btn:hover { background: var(--bg-color); }
 
         #manage-customer-payments .calendar-grid {
             display: flex;
@@ -139,7 +145,7 @@
         }
 
         #manage-customer-payments .month-btn:last-child { border-right: none; }
-        #manage-customer-payments .month-btn:hover { background-color: #f3f4f6; }
+        #manage-customer-payments .month-btn:hover { background-color: var(--bg-color); }
 
         #manage-customer-payments .month-btn.active {
             background-color: var(--primary);
@@ -157,7 +163,7 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        #manage-customer-payments .nav-arrow-col:hover { background: #f3f4f6; }
+        #manage-customer-payments .nav-arrow-col:hover { background: var(--bg-color); }
         #manage-customer-payments .nav-arrow-col:last-child {
             border-right: none;
             border-left: 1px solid var(--border);
@@ -169,8 +175,6 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            width: 100%;
-            overflow: hidden;
         }
 
         /* Toolbar */
@@ -232,7 +236,7 @@
             font-family: 'Inter', sans-serif;
             transition: background 0.2s;
         }
-        #manage-customer-payments .btn-clear:hover { background-color: #f3f4f6; }
+        #manage-customer-payments .btn-clear:hover { background-color: #f9fafb; }
 
         #manage-customer-payments .filter-group {
             display: flex;
@@ -283,15 +287,17 @@
         }
 
         #manage-customer-payments .tab-count {
-            background: #f3f4f6;
+            background: var(--bg-color);
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 0.75rem;
             color: var(--text-muted);
+            border: 1px solid var(--border);
         }
         #manage-customer-payments .tab.active .tab-count {
             background: var(--badge-bg-blue);
             color: var(--primary);
+            border-color: transparent;
         }
 
         /* Table */
@@ -308,7 +314,7 @@
         }
 
         #manage-customer-payments th {
-            background-color: #ffffff;
+            background-color: #f9fafb;
             color: var(--text-muted);
             font-weight: 500;
             padding: 0.65rem 1rem;
@@ -323,10 +329,9 @@
             padding: 0.75rem 1rem;
             border-bottom: 1px solid var(--border);
             vertical-align: middle;
-            background-color: #ffffff;
         }
 
-        #manage-customer-payments tr:hover td { background-color: #f9fafb; }
+        #manage-customer-payments tr:hover { background-color: #f9fafb; }
 
         /* Table Specific Styles */
         #manage-customer-payments .id-badge {
@@ -434,14 +439,6 @@
         #manage-customer-payments .page-info {
             font-size: 0.875rem;
             color: var(--text-muted);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            #manage-customer-payments { margin: 0; padding: 1rem; width: 100%; }
-            #manage-customer-payments .page-header { flex-direction: column; gap: 1rem; }
-            #manage-customer-payments .toolbar { flex-direction: column; align-items: stretch; }
-            #manage-customer-payments .search-group { max-width: 100%; }
         }
     </style>
 
