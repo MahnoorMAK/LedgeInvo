@@ -32,10 +32,12 @@
       .ct-section * { box-sizing: border-box; margin: 0; padding: 0; }
       
       .ct-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
-      .ct-search-group { display: flex; gap: 10px; flex: 1; max-width: 400px; position: relative; }
+      .ct-search-group { display: flex; gap: 10px; flex: 1; max-width: 500px; position: relative; }
       .ct-search-group svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: #9ca3af; fill: none; stroke-width: 2; }
       .ct-search-input { width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
-      .ct-btn-search { padding: 10px 20px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; }
+      .ct-btn-search { padding: 10px 20px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+      .ct-btn-clear { padding: 10px 20px; background: #fff; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+      .ct-btn-clear:hover { background: #f1f5f9; }
       
       .ct-controls { display: flex; align-items: center; gap: 16px; }
       .ct-view-toggles { display: flex; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; }
@@ -117,6 +119,7 @@
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" class="ct-search-input" id="searchInput" placeholder="Search customers...">
         <button class="ct-btn-search" id="searchBtn">Search</button>
+        <button class="ct-btn-clear" id="clearBtn">Clear</button>
       </div>
       <div class="ct-controls">
         <div class="ct-view-toggles">
@@ -271,6 +274,14 @@
 
         document.getElementById('searchBtn').onclick = applyFilter;
         document.getElementById('searchInput').onkeyup = function(e) { if (e.key === 'Enter') applyFilter(); };
+
+        // Clear button: instantly clears the search bar and resets results
+        document.getElementById('clearBtn').onclick = function() {
+          document.getElementById('searchInput').value = '';
+          applyFilter();
+          document.getElementById('searchInput').focus();
+        };
+
         document.getElementById('perPageSelect').onchange = function(e) { perPage = parseInt(e.target.value); page = 1; render(); };
         
         document.getElementById('filterToggleBtn').onclick = function() { document.getElementById('filterPanel').classList.toggle('show'); };
