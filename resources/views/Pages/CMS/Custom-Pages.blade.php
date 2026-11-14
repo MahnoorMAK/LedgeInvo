@@ -1,17 +1,30 @@
 @extends('layout.dashboard')
 @section('title', 'Custom Pages')
 @section('content')
+
+<!-- Force pure page background to white to remove grey gaps -->
+<style>
+    body, html, #app, .main-content, .content-wrapper, main {
+        background-color: #ffffff !important;
+    }
+</style>
+
 <section id="manage-pages-app">
     <style>
         /* Base & Reset */
         #manage-pages-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #374151;
-            background: #fff;
+            background: #ffffff;
             padding: 24px;
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
+            
+            /* FIX: Wrapper Margin Issue */
+            margin: -24px; 
+            width: calc(100% + 48px);
+            min-height: calc(100vh - 1px);
         }
         #manage-pages-app * { box-sizing: border-box; }
         
@@ -20,8 +33,9 @@
         .mp-title h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111; }
         .mp-title p { margin: 0; color: #6b7280; font-size: 13px; }
         
-        .mp-btn-add { background: #10b981; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
-        .mp-btn-add:hover { background: #059669; }
+        /* Theme: Bright Blue */
+        .mp-btn-add { background: #3b82f6; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .mp-btn-add:hover { background: #2563eb; }
 
         /* Main Container */
         .mp-main-container { border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
@@ -30,12 +44,12 @@
         .mp-toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
         .mp-search-group { display: flex; gap: 8px; flex: 1; max-width: 400px; }
         .mp-search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
-        .mp-search-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .mp-search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         
         .mp-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .mp-btn:hover { background: #f9fafb; }
-        .mp-btn-primary { background: #10b981; color: white; border-color: #10b981; }
-        .mp-btn-primary:hover { background: #059669; border-color: #059669; }
+        .mp-btn-primary { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .mp-btn-primary:hover { background: #2563eb; border-color: #2563eb; }
         
         .mp-select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
 
@@ -49,7 +63,7 @@
         
         /* Cell Elements */
         .mp-item-cell { display: flex; align-items: center; gap: 12px; }
-        .mp-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #ecfdf5; color: #10b981; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .mp-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #eff6ff; color: #3b82f6; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .mp-item-name { font-weight: 500; color: #111; font-size: 13px; }
         
         .mp-badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; border: 1px solid transparent; }
@@ -65,13 +79,15 @@
         .mp-dropdown { 
             display: none; position: absolute; right: 16px; top: 40px; 
             background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 100; min-width: 120px; text-align: left;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 100; min-width: 130px; text-align: left;
         }
         .mp-dropdown.show { display: block; }
         .mp-dropdown-item { padding: 8px 12px; font-size: 13px; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         .mp-dropdown-item:hover { background: #f3f4f6; }
         .mp-dropdown-item.mp-del { color: #ef4444; }
         .mp-dropdown-item.mp-del:hover { background: #fef2f2; }
+        
+        .mp-dropdown-item svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
 
         /* Pagination Area */
         .mp-pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e5e7eb; background: #fff; }
@@ -81,7 +97,7 @@
         .mp-page-btn:hover:not(:disabled) { background: #f9fafb; }
         .mp-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .mp-page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; min-width: 32px; text-align: center; }
-        .mp-page-num.active { background: #10b981; color: #fff; border-color: #10b981; }
+        .mp-page-num.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
     </style>
 
     <!-- Header -->
@@ -134,7 +150,7 @@
 
         <!-- Pagination -->
         <div class="mp-pagination">
-            <div class="mp-page-info" id="mp-page-info">Showing 1 to 5 of 5 results</div>
+            <div class="mp-page-info" id="mp-page-info">Showing 1 to 10 of 25 results</div>
             <div class="mp-page-controls">
                 <button class="mp-page-btn" id="mp-prev-btn" disabled>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -151,14 +167,24 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Mock Data
-            const initialData = [
-                { id: 1, title: "About Us", slug: "/About-Us", status: "Active", date: "2026-01-16" },
-                { id: 2, title: "Privacy Policy", slug: "/Privacy-Policy", status: "Active", date: "2026-01-16" },
-                { id: 3, title: "Terms of Service", slug: "/Terms-Of-Service", status: "Active", date: "2026-01-16" },
-                { id: 4, title: "FAQ", slug: "/Faq", status: "Active", date: "2026-01-16" },
-                { id: 5, title: "Help Center", slug: "/Help-Center", status: "Active", date: "2026-01-16" }
-            ];
+            // Generate 25 Mock Data Entities
+            const pageNames = ["About Us", "Privacy Policy", "Terms of Service", "FAQ", "Help Center", "Contact Us", "Careers", "Blog", "Press", "Partners", "Pricing", "Features", "Solutions", "Resources", "Support", "Community", "Events", "Newsroom", "Security", "Legal", "Cookies", "Sitemap", "Accessibility", "Status", "Developers"];
+            
+            let initialData = [];
+            for (let i = 0; i < 25; i++) {
+                const title = pageNames[i];
+                const slug = "/" + title.replace(/\s+/g, '-').toLowerCase();
+                const status = i % 5 === 0 ? "Draft" : "Active"; // Mix of Active and Draft
+                const date = `2026-01-${String((i % 28) + 1).padStart(2, '0')}`;
+
+                initialData.push({
+                    id: i + 1,
+                    title: title,
+                    slug: slug,
+                    status: status,
+                    lastUpdated: date
+                });
+            }
 
             // State
             let state = {
@@ -211,8 +237,33 @@
                         item.title.toLowerCase().includes(query) || 
                         item.slug.toLowerCase().includes(query);
                 });
+
+                // Re-apply sorting if a column is selected
+                if (state.sortColumn) {
+                    sortData();
+                }
+
                 state.currentPage = 1;
                 renderView();
+            };
+
+            const sortData = () => {
+                state.filteredData.sort((a, b) => {
+                    let valA = a[state.sortColumn] || '';
+                    let valB = b[state.sortColumn] || '';
+                    
+                    if (state.sortColumn === 'lastUpdated') {
+                        valA = new Date(valA).getTime();
+                        valB = new Date(valB).getTime();
+                    } else {
+                        if (typeof valA === 'string') valA = valA.toLowerCase();
+                        if (typeof valB === 'string') valB = valB.toLowerCase();
+                    }
+
+                    if (valA < valB) return state.sortAsc ? -1 : 1;
+                    if (valA > valB) return state.sortAsc ? 1 : -1;
+                    return 0;
+                });
             };
 
             const renderView = () => {
@@ -249,19 +300,28 @@
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                                 ${row.slug}
                             </span></td>
-                            <td><span class="mp-badge mp-badge-status">${row.status}</span></td>
+                            <td><span class="mp-badge ${row.status === 'Active' ? 'mp-badge-status' : 'mp-badge-draft'}">${row.status}</span></td>
                             <td><div class="mp-date">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                ${row.date}
+                                ${row.lastUpdated}
                             </div></td>
                             <td class="mp-actions-cell">
                                 <button class="mp-dots-btn" onclick="toggleDropdown(event, ${row.id})">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
                                 </button>
                                 <div class="mp-dropdown" id="dropdown-${row.id}">
-                                    <div class="mp-dropdown-item" onclick="viewPage(${row.id})">View Page</div>
-                                    <div class="mp-dropdown-item" onclick="editPage(${row.id})">Edit</div>
-                                    <div class="mp-dropdown-item mp-del" onclick="deletePage(${row.id})">Delete</div>
+                                    <div class="mp-dropdown-item" onclick="viewPage(${row.id})">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        View Page
+                                    </div>
+                                    <div class="mp-dropdown-item" onclick="editPage(${row.id})">
+                                        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        Edit
+                                    </div>
+                                    <div class="mp-dropdown-item mp-del" onclick="deletePage(${row.id})">
+                                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        Delete
+                                    </div>
                                 </div>
                             </td>
                         `;
@@ -300,6 +360,7 @@
                 searchInput.value = '';
                 state.searchQuery = '';
                 applyFilters();
+                searchInput.focus();
             });
 
             pageSizeSelect.addEventListener('change', (e) => {
@@ -326,16 +387,7 @@
                         state.sortColumn = column;
                         state.sortAsc = true;
                     }
-
-                    state.filteredData.sort((a, b) => {
-                        let valA = a[column] || '';
-                        let valB = b[column] || '';
-                        if (typeof valA === 'string') valA = valA.toLowerCase();
-                        if (typeof valB === 'string') valB = valB.toLowerCase();
-                        if (valA < valB) return state.sortAsc ? -1 : 1;
-                        if (valA > valB) return state.sortAsc ? 1 : -1;
-                        return 0;
-                    });
+                    sortData();
                     renderView();
                 });
             });
