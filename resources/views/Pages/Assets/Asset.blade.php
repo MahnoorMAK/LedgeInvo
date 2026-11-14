@@ -13,7 +13,7 @@
 .ma-btn-add{background:#3b82f6;color:#fff;border:none;border-radius:6px;width:40px;height:40px;display:flex;justify-content:center;align-items:center;cursor:pointer;transition:0.2s}
 .ma-btn-add:hover{background:#2563eb}
 
-/* Adjusted Cards */
+/* Cards */
 .ma-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .ma-card{border-radius:8px;padding:20px;border:1px solid transparent;display:flex;justify-content:space-between;align-items:center}
 .ma-card-blue{background:#eff6ff;border-color:#dbeafe}
@@ -39,7 +39,7 @@
 
 /* Toolbar */
 .ma-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:16px;flex-wrap:wrap}
-.ma-search-group{display:flex;gap:8px;flex:1;max-width:400px} /* Shorter search bar */
+.ma-search-group{display:flex;gap:8px;flex:1;max-width:400px}
 .ma-search-input{flex:1;padding:10px 14px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;outline:none}
 .ma-search-input:focus{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,0.2)}
 .ma-btn{padding:10px 16px;border-radius:6px;border:1px solid #d1d5db;background:#fff;cursor:pointer;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:0.2s;color:#374151;white-space:nowrap}
@@ -81,6 +81,13 @@
 .ma-text-green{color:#16a34a;font-weight:600;white-space:nowrap}
 .ma-text-orange{color:#ea580c;font-weight:600;white-space:nowrap}
 
+/* Grid View */
+.ma-grid-wrapper{display:none;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.ma-grid-card{border:1px solid #e5e7eb;border-radius:8px;padding:20px;background:#fff;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(0,0,0,0.02)}
+.ma-grid-header{display:flex;justify-content:space-between;align-items:flex-start}
+.ma-grid-body{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;border-top:1px solid #e5e7eb;padding-top:16px}
+.ma-grid-label{color:#6b7280;font-size:12px;text-transform:uppercase;margin-bottom:4px;display:block}
+
 /* Dropdown */
 .ma-action-menu{position:relative;display:flex;justify-content:flex-end}
 .ma-action-trigger{background:none;border:none;cursor:pointer;color:#6b7280;padding:6px;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:0.2s}
@@ -96,6 +103,14 @@
 .ma-dropdown-btn.delete{color:#ef4444}
 .ma-dropdown-btn.delete:hover{background:#fef2f2}
 .ma-dropdown-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* Pagination */
+.ma-pagination{display:flex;justify-content:space-between;align-items:center;padding:16px 0;margin-top:16px;border-top:1px solid #e5e7eb}
+.ma-page-info{font-size:14px;color:#6b7280}
+.ma-page-controls{display:flex;gap:8px}
+.ma-page-btn{padding:8px 16px;border:1px solid #d1d5db;background:#fff;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500;color:#374151;transition:0.2s}
+.ma-page-btn:hover:not(:disabled){background:#f9fafb}
+.ma-page-btn:disabled{opacity:0.5;cursor:not-allowed}
 
 .ma-toast{visibility:hidden;min-width:250px;background:#333;color:#fff;text-align:center;border-radius:4px;padding:12px;position:fixed;z-index:1000;bottom:30px;left:50%;transform:translateX(-50%);font-size:14px;opacity:0;transition:0.3s}
 .ma-toast.show{visibility:visible;opacity:1}
@@ -136,15 +151,20 @@
     </div>
     <div style="display:flex;gap:12px;align-items:center">
         <div class="ma-view-toggles">
-            <button class="ma-view-btn active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
-            <button class="ma-view-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
+            <button class="ma-view-btn active" id="ma-view-list"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+            <button class="ma-view-btn" id="ma-view-grid"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
         </div>
-        <select class="ma-select-input" id="ma-page-size"><option value="10">10 per page</option><option value="20">20 per page</option><option value="50">50 per page</option></select>
+        <select class="ma-select-input" id="ma-page-size">
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="20">20 per page</option>
+        </select>
         <button class="ma-btn" id="ma-filter-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>Filters</button>
     </div>
 </div>
 
-<div class="ma-table-wrapper">
+<!-- List View -->
+<div class="ma-table-wrapper" id="ma-list-container">
     <table class="ma-table">
         <thead>
             <tr>
@@ -161,6 +181,19 @@
         <tbody id="ma-table-body"></tbody>
     </table>
 </div>
+
+<!-- Grid View -->
+<div class="ma-grid-wrapper" id="ma-grid-container"></div>
+
+<!-- Pagination -->
+<div class="ma-pagination">
+    <div class="ma-page-info" id="ma-page-info">Showing 0 of 0 results</div>
+    <div class="ma-page-controls">
+        <button class="ma-page-btn" id="ma-prev-btn">Previous</button>
+        <button class="ma-page-btn" id="ma-next-btn">Next</button>
+    </div>
+</div>
+
 <div id="ma-toast" class="ma-toast"></div>
 
 <script>
@@ -171,13 +204,34 @@ document.addEventListener("DOMContentLoaded", () => {
         { id:"FUR-DSK-003", name:"Executive Office Desk", category:"Vehicles", catClass:"ma-badge-blue", date:"2024-01-19", qty:15, unitPrice:450, totalCost:6750, location:"Floor 3 - IT Department", locClass:"ma-badge-purple", icon:"desk" },
         { id:"VEH-CAR-004", name:"Toyota Camry 2024", category:"Machinery", catClass:"ma-badge-pink", date:"2024-02-29", qty:2, unitPrice:28000, totalCost:56000, location:"Main Office Building", locClass:"ma-badge-pink", icon:"car" },
         { id:"MAC-PRT-005", name:"Industrial Printer MX-5000", category:"Electronics", catClass:"ma-badge-blue", date:"2024-02-14", qty:3, unitPrice:3500, totalCost:10500, location:"Production Floor", locClass:"ma-badge-green", icon:"printer" },
-        { id:"ELC-TV-006", name:"Samsung 55\" Smart TV", category:"Software Licenses", catClass:"ma-badge-purple", date:"2024-01-24", qty:8, unitPrice:650, totalCost:5200, location:"Conference Room A", locClass:"ma-badge-orange", icon:"tv" }
+        { id:"ELC-TV-006", name:"Samsung 55\" Smart TV", category:"Software Licenses", catClass:"ma-badge-purple", date:"2024-01-24", qty:8, unitPrice:650, totalCost:5200, location:"Conference Room A", locClass:"ma-badge-orange", icon:"tv" },
+        { id:"OFF-CHR-007", name:"Ergonomic Office Chair", category:"Furniture", catClass:"ma-badge-yellow", date:"2024-03-01", qty:25, unitPrice:150, totalCost:3750, location:"Floor 2 - Administration", locClass:"ma-badge-green", icon:"desk" },
+        { id:"NET-SWT-008", name:"Cisco 24-Port Switch", category:"Networking", catClass:"ma-badge-blue", date:"2024-03-05", qty:4, unitPrice:600, totalCost:2400, location:"Server Room", locClass:"ma-badge-gray", icon:"desktop" },
+        { id:"PRJ-EPS-009", name:"Epson Projector X500", category:"Electronics", catClass:"ma-badge-blue", date:"2024-01-10", qty:2, unitPrice:850, totalCost:1700, location:"Conference Room B", locClass:"ma-badge-orange", icon:"tv" },
+        { id:"FRK-LFT-010", name:"Forklift Truck 2T", category:"Machinery", catClass:"ma-badge-pink", date:"2024-02-15", qty:1, unitPrice:15000, totalCost:15000, location:"Warehouse", locClass:"ma-badge-purple", icon:"car" },
+        { id:"SRV-DEL-011", name:"Dell PowerEdge Server", category:"IT Infrastructure", catClass:"ma-badge-gray", date:"2024-03-10", qty:3, unitPrice:4500, totalCost:13500, location:"Server Room", locClass:"ma-badge-gray", icon:"desktop" },
+        { id:"TBL-CNF-012", name:"Conference Room Table", category:"Furniture", catClass:"ma-badge-yellow", date:"2024-01-28", qty:1, unitPrice:2200, totalCost:2200, location:"Conference Room A", locClass:"ma-badge-orange", icon:"desk" }
     ];
 
-    let state = { data:[...assets], filtered:[...assets], sortCol:'name', sortAsc:true };
-    const tbody = document.getElementById('ma-table-body');
+    let state = { 
+        data: [...assets], 
+        filtered: [...assets], 
+        sortCol: 'name', 
+        sortAsc: true,
+        currentPage: 1,
+        pageSize: 5,
+        viewMode: 'list'
+    };
+
+    const tableBody = document.getElementById('ma-table-body');
+    const gridContainer = document.getElementById('ma-grid-container');
+    const listContainer = document.getElementById('ma-list-container');
     const toast = document.getElementById('ma-toast');
     const searchInput = document.getElementById('ma-search-input');
+    const pageInfo = document.getElementById('ma-page-info');
+    const prevBtn = document.getElementById('ma-prev-btn');
+    const nextBtn = document.getElementById('ma-next-btn');
+    const pageSizeSelect = document.getElementById('ma-page-size');
 
     const formatMoney = v => "$" + v.toLocaleString('en-US',{minimumFractionDigits:2});
     
@@ -204,52 +258,142 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!e.target.closest('.ma-action-menu')) document.querySelectorAll('.ma-dropdown').forEach(m => m.classList.remove('show'));
     });
 
+    const actionMenu = id => `
+        <div class="ma-action-menu">
+            <button class="ma-action-trigger" onclick="toggleMenu(this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+            <div class="ma-dropdown">
+                <button class="ma-dropdown-btn view" onclick="viewAsset('${id}')">View</button>
+                <button class="ma-dropdown-btn edit" onclick="editAsset('${id}')">Edit</button>
+                <button class="ma-dropdown-btn delete" onclick="deleteAsset('${id}')">Delete</button>
+            </div>
+        </div>`;
+
     window.viewAsset = id => showToast(`Opening details for: ${id}`);
     window.editAsset = id => showToast(`Editing: ${id}`);
-    window.deleteAsset = idx => {
-        showToast(`Deleted: ${state.filtered[idx].name}`);
-        state.data = state.data.filter(a => a.id !== state.filtered[idx].id);
-        state.filtered.splice(idx, 1);
+    window.deleteAsset = id => {
+        state.data = state.data.filter(a => a.id !== id);
+        applyFilters();
+        showToast(`Asset deleted.`);
+    };
+
+    const applyFilters = () => {
+        const q = searchInput.value.toLowerCase().trim();
+        state.filtered = state.data.filter(a => 
+            a.name.toLowerCase().includes(q) || a.id.toLowerCase().includes(q)
+        );
+        
+        if (state.sortCol) {
+            state.filtered.sort((a, b) => (a[state.sortCol] > b[state.sortCol] ? 1 : -1) * (state.sortAsc ? 1 : -1));
+        }
+        state.currentPage = 1;
         render();
     };
 
     const render = () => {
-        tbody.innerHTML = state.filtered.length === 0 
-            ? `<tr><td colspan="8" style="text-align:center;padding:24px;color:#6b7280">No assets found.</td></tr>` 
-            : state.filtered.map((row, i) => `
-                <tr>
-                    <td><div class="ma-item-cell">
-                        <div class="ma-item-icon">${icons[row.icon]}</div>
-                        <div class="ma-item-info"><span class="ma-item-name">${row.name}</span><span class="ma-item-id">${row.id}</span></div>
-                    </div></td>
-                    <td><span class="ma-badge ${row.catClass}">${row.category}</span></td>
-                    <td><span class="ma-date">📅 ${row.date}</span></td>
-                    <td><span class="ma-qty">${row.qty}</span></td>
-                    <td><span class="ma-text-green">${formatMoney(row.unitPrice)}</span></td>
-                    <td><span class="ma-text-orange">${formatMoney(row.totalCost)}</span></td>
-                    <td><span class="ma-badge ${row.locClass}">${row.location}</span></td>
-                    <td><div class="ma-action-menu">
-                        <button class="ma-action-trigger" onclick="toggleMenu(this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
-                        <div class="ma-dropdown">
-                            <button class="ma-dropdown-btn view" onclick="viewAsset('${row.id}')">View</button>
-                            <button class="ma-dropdown-btn edit" onclick="editAsset('${row.id}')">Edit</button>
-                            <button class="ma-dropdown-btn delete" onclick="deleteAsset(${i})">Delete</button>
+        const totalItems = state.filtered.length;
+        const totalPages = Math.ceil(totalItems / state.pageSize) || 1;
+        
+        if (state.currentPage > totalPages) state.currentPage = totalPages;
+        if (state.currentPage < 1) state.currentPage = 1;
+
+        const startIndex = (state.currentPage - 1) * state.pageSize;
+        const endIndex = Math.min(startIndex + state.pageSize, totalItems);
+        const pageData = state.filtered.slice(startIndex, endIndex);
+
+        // Update Pagination UI
+        pageInfo.textContent = totalItems === 0 ? 'Showing 0 results' : `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} results`;
+        prevBtn.disabled = state.currentPage === 1 || totalItems === 0;
+        nextBtn.disabled = state.currentPage === totalPages || totalItems === 0;
+
+        // Toggle View mode
+        if (state.viewMode === 'list') {
+            listContainer.style.display = 'block';
+            gridContainer.style.display = 'none';
+            
+            tableBody.innerHTML = pageData.length === 0 
+                ? `<tr><td colspan="8" style="text-align:center;padding:24px;color:#6b7280">No assets found.</td></tr>` 
+                : pageData.map(row => `
+                    <tr>
+                        <td><div class="ma-item-cell">
+                            <div class="ma-item-icon">${icons[row.icon]}</div>
+                            <div class="ma-item-info"><span class="ma-item-name">${row.name}</span><span class="ma-item-id">${row.id}</span></div>
+                        </div></td>
+                        <td><span class="ma-badge ${row.catClass}">${row.category}</span></td>
+                        <td><span class="ma-date">📅 ${row.date}</span></td>
+                        <td><span class="ma-qty">${row.qty}</span></td>
+                        <td><span class="ma-text-green">${formatMoney(row.unitPrice)}</span></td>
+                        <td><span class="ma-text-orange">${formatMoney(row.totalCost)}</span></td>
+                        <td><span class="ma-badge ${row.locClass}">${row.location}</span></td>
+                        <td>${actionMenu(row.id)}</td>
+                    </tr>`).join('');
+        } else {
+            listContainer.style.display = 'none';
+            gridContainer.style.display = 'grid';
+            
+            gridContainer.innerHTML = pageData.length === 0 
+                ? `<div style="grid-column:1/-1;text-align:center;padding:24px;color:#6b7280">No assets found.</div>` 
+                : pageData.map(row => `
+                    <div class="ma-grid-card">
+                        <div class="ma-grid-header">
+                            <div class="ma-item-cell">
+                                <div class="ma-item-icon">${icons[row.icon]}</div>
+                                <div class="ma-item-info"><span class="ma-item-name">${row.name}</span><span class="ma-item-id">${row.id}</span></div>
+                            </div>
+                            ${actionMenu(row.id)}
                         </div>
-                    </div></td>
-                </tr>`).join('');
+                        <div class="ma-grid-body">
+                            <div><span class="ma-grid-label">Category</span><span class="ma-badge ${row.catClass}">${row.category}</span></div>
+                            <div><span class="ma-grid-label">Location</span><span class="ma-badge ${row.locClass}">${row.location}</span></div>
+                            <div><span class="ma-grid-label">Qty</span><span class="ma-qty">${row.qty}</span></div>
+                            <div><span class="ma-grid-label">Date</span><span class="ma-date" style="font-size:13px">${row.date}</span></div>
+                            <div><span class="ma-grid-label">Unit Price</span><span class="ma-text-green">${formatMoney(row.unitPrice)}</span></div>
+                            <div><span class="ma-grid-label">Total Cost</span><span class="ma-text-orange">${formatMoney(row.totalCost)}</span></div>
+                        </div>
+                    </div>`).join('');
+        }
     };
 
-    document.getElementById('ma-search-btn').addEventListener('click', () => {
-        const q = searchInput.value.toLowerCase().trim();
-        state.filtered = state.data.filter(a => a.name.toLowerCase().includes(q) || a.id.toLowerCase().includes(q));
+    // Event Listeners
+    document.getElementById('ma-search-btn').addEventListener('click', applyFilters);
+    document.getElementById('ma-clear-btn').addEventListener('click', () => {
+        searchInput.value = '';
+        applyFilters();
+        searchInput.focus();
+    });
+
+    pageSizeSelect.addEventListener('change', e => {
+        state.pageSize = parseInt(e.target.value);
+        state.currentPage = 1;
         render();
     });
 
-    document.getElementById('ma-clear-btn').addEventListener('click', () => {
-        searchInput.value = '';
-        state.filtered = [...state.data];
+    prevBtn.addEventListener('click', () => {
+        if (state.currentPage > 1) {
+            state.currentPage--;
+            render();
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        const totalPages = Math.ceil(state.filtered.length / state.pageSize);
+        if (state.currentPage < totalPages) {
+            state.currentPage++;
+            render();
+        }
+    });
+
+    document.getElementById('ma-view-list').addEventListener('click', () => {
+        document.getElementById('ma-view-list').classList.add('active');
+        document.getElementById('ma-view-grid').classList.remove('active');
+        state.viewMode = 'list';
         render();
-        searchInput.focus();
+    });
+
+    document.getElementById('ma-view-grid').addEventListener('click', () => {
+        document.getElementById('ma-view-grid').classList.add('active');
+        document.getElementById('ma-view-list').classList.remove('active');
+        state.viewMode = 'grid';
+        render();
     });
 
     document.querySelectorAll('th[data-sort]').forEach(th => {
@@ -257,11 +401,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const col = th.dataset.sort;
             state.sortAsc = state.sortCol === col ? !state.sortAsc : true;
             state.sortCol = col;
-            state.filtered.sort((a, b) => (a[col] > b[col] ? 1 : -1) * (state.sortAsc ? 1 : -1));
-            render();
+            applyFilters();
         });
     });
 
+    // Init
     render();
 });
 </script>
