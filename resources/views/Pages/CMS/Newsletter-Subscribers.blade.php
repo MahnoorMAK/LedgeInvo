@@ -7,11 +7,12 @@
         #newsletter-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #374151;
-            background: #fff;
+            background: #ffffff;
             padding: 24px;
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
+            width: 100%;
         }
         #newsletter-app * { box-sizing: border-box; }
         
@@ -20,22 +21,23 @@
         .nl-title h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111; }
         .nl-title p { margin: 0; color: #6b7280; font-size: 13px; }
         
-        .nl-btn-add { background: #10b981; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
-        .nl-btn-add:hover { background: #059669; }
+        /* Theme: Bright Blue */
+        .nl-btn-add { background: #3b82f6; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .nl-btn-add:hover { background: #2563eb; }
 
         /* Main Container */
         .nl-main-container { border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
 
         /* Toolbar */
         .nl-toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
-        .nl-search-group { display: flex; gap: 8px; flex: 1; max-width: 500px; }
+        .nl-search-group { display: flex; gap: 8px; flex: 1; max-width: 450px; }
         .nl-search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
-        .nl-search-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .nl-search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         
         .nl-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .nl-btn:hover { background: #f9fafb; }
-        .nl-btn-primary { background: #10b981; color: white; border-color: #10b981; }
-        .nl-btn-primary:hover { background: #059669; border-color: #059669; }
+        .nl-btn-primary { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .nl-btn-primary:hover { background: #2563eb; border-color: #2563eb; }
         
         .nl-select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
 
@@ -49,7 +51,7 @@
         
         /* Cell Elements */
         .nl-item-cell { display: flex; align-items: center; gap: 12px; }
-        .nl-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #ecfdf5; color: #10b981; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .nl-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #eff6ff; color: #3b82f6; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .nl-item-name { font-weight: 500; color: #111; font-size: 13px; }
         
         .nl-ip-badge { display: inline-block; padding: 4px 8px; border: 1px solid #e5e7eb; border-radius: 4px; font-size: 12px; color: #4b5563; font-family: monospace; }
@@ -58,7 +60,7 @@
 
         .nl-actions { display: flex; gap: 12px; justify-content: flex-end; }
         .nl-action-btn { background: none; border: none; cursor: pointer; color: #6b7280; padding: 0; transition: color 0.2s; display: flex; align-items: center; justify-content: center; }
-        .nl-action-btn.nl-view:hover { color: #10b981; }
+        .nl-action-btn.nl-view:hover { color: #3b82f6; }
         .nl-action-btn.nl-delete:hover { color: #ef4444; }
 
         /* Pagination Area */
@@ -69,7 +71,7 @@
         .nl-page-btn:hover:not(:disabled) { background: #f9fafb; }
         .nl-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .nl-page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; min-width: 32px; text-align: center; }
-        .nl-page-num.active { background: #10b981; color: #fff; border-color: #10b981; }
+        .nl-page-num.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
         
         /* Utility */
         .text-right { text-align: right; }
@@ -195,11 +197,9 @@
             // Action Handlers
             window.viewSubscriber = function(id) {
                 console.log("Viewing subscriber:", id);
-                // In a real app, open a modal here
             };
 
             window.deleteSubscriber = function(id) {
-                // Instant deletion without confirmation for demonstration
                 state.data = state.data.filter(item => item.id !== id);
                 applyFilters();
             };
@@ -331,6 +331,7 @@
                 searchInput.value = '';
                 state.searchQuery = '';
                 applyFilters();
+                searchInput.focus();
             });
 
             // Page Size Change
