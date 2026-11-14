@@ -18,7 +18,7 @@
             background: #ffffff;
             padding: 24px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 15px; /* Increased base font size */
             position: relative;
             
             /* FIX: Wrapper Margin Issue */
@@ -30,11 +30,11 @@
         
         /* Header */
         .mp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-        .mp-title h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111; }
-        .mp-title p { margin: 0; color: #6b7280; font-size: 13px; }
+        .mp-title h2 { margin: 0 0 6px 0; font-size: 24px; font-weight: 700; color: #111; } /* Bigger and bolder title */
+        .mp-title p { margin: 0; color: #6b7280; font-size: 14px; }
         
         /* Theme: Bright Blue */
-        .mp-btn-add { background: #3b82f6; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .mp-btn-add { background: #3b82f6; color: white; border: none; border-radius: 6px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
         .mp-btn-add:hover { background: #2563eb; }
 
         /* Main Container */
@@ -42,61 +42,75 @@
 
         /* Toolbar */
         .mp-toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
-        .mp-search-group { display: flex; gap: 8px; flex: 1; max-width: 400px; }
-        .mp-search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
+        .mp-search-group { display: flex; gap: 8px; flex: 1; max-width: 450px; }
+        .mp-search-input { flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; }
         .mp-search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         
-        .mp-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
+        .mp-btn { padding: 10px 16px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .mp-btn:hover { background: #f9fafb; }
         .mp-btn-primary { background: #3b82f6; color: white; border-color: #3b82f6; }
         .mp-btn-primary:hover { background: #2563eb; border-color: #2563eb; }
         
-        .mp-select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
+        .mp-select-input { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; background: #fff; cursor: pointer; }
 
         /* Table */
         .mp-table-wrapper { width: 100%; overflow-x: auto; }
         .mp-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .mp-table th, .mp-table td { padding: 14px 16px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
-        .mp-table th { background: #f9fafb; font-weight: 500; color: #4b5563; font-size: 12px; cursor: pointer; user-select: none; }
+        .mp-table th, .mp-table td { padding: 16px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+        
+        /* Bigger and Bolder Table Headers */
+        .mp-table th { 
+            background: #f9fafb; 
+            font-weight: 700; /* Bold */
+            color: #1f2937; 
+            font-size: 14px; /* Bigger font */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer; 
+            user-select: none; 
+        }
         .mp-table th:hover { background: #f3f4f6; }
         .mp-table tbody tr:hover { background: #f9fafb; }
         
         /* Cell Elements */
         .mp-item-cell { display: flex; align-items: center; gap: 12px; }
-        .mp-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #eff6ff; color: #3b82f6; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-        .mp-item-name { font-weight: 500; color: #111; font-size: 13px; }
+        .mp-icon-box { width: 36px; height: 36px; border-radius: 6px; background: #eff6ff; color: #3b82f6; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .mp-item-name { font-weight: 600; color: #111; font-size: 15px; } /* Bolder name */
         
-        .mp-badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; border: 1px solid transparent; }
+        .mp-badge { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid transparent; }
         .mp-badge-url { background: #eff6ff; color: #1d4ed8; border-color: #dbeafe; }
+        
+        /* Status Badges */
         .mp-badge-status { background: #ecfdf5; color: #059669; border-color: #d1fae5; border-radius: 12px; }
+        .mp-badge-draft { background: #f3f4f6; color: #4b5563; border-color: #e5e7eb; border-radius: 12px; }
 
-        .mp-date { display: flex; align-items: center; gap: 6px; color: #4b5563; font-size: 13px; }
+        .mp-date { display: flex; align-items: center; gap: 8px; color: #4b5563; font-size: 14px; font-weight: 500; }
 
         /* Actions Dropdown */
-        .mp-actions-cell { position: relative; text-align: right; width: 50px; }
-        .mp-dots-btn { background: none; border: none; cursor: pointer; color: #6b7280; padding: 4px; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .mp-actions-cell { position: relative; text-align: right; width: 60px; }
+        .mp-dots-btn { background: none; border: none; cursor: pointer; color: #6b7280; padding: 6px; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .mp-dots-btn:hover { background: #e5e7eb; color: #111; }
         .mp-dropdown { 
-            display: none; position: absolute; right: 16px; top: 40px; 
+            display: none; position: absolute; right: 16px; top: 45px; 
             background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 100; min-width: 130px; text-align: left;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); z-index: 100; min-width: 140px; text-align: left;
         }
         .mp-dropdown.show { display: block; }
-        .mp-dropdown-item { padding: 8px 12px; font-size: 13px; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .mp-dropdown-item { padding: 10px 14px; font-size: 14px; font-weight: 500; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .mp-dropdown-item:hover { background: #f3f4f6; }
         .mp-dropdown-item.mp-del { color: #ef4444; }
         .mp-dropdown-item.mp-del:hover { background: #fef2f2; }
         
-        .mp-dropdown-item svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .mp-dropdown-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 
         /* Pagination Area */
         .mp-pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e5e7eb; background: #fff; }
-        .mp-page-info { font-size: 13px; color: #6b7280; }
+        .mp-page-info { font-size: 14px; color: #6b7280; font-weight: 500; }
         .mp-page-controls { display: flex; gap: 6px; align-items: center; }
-        .mp-page-btn { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+        .mp-page-btn { padding: 8px 14px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #374151; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
         .mp-page-btn:hover:not(:disabled) { background: #f9fafb; }
         .mp-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .mp-page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; min-width: 32px; text-align: center; }
+        .mp-page-num { padding: 8px 14px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #374151; min-width: 36px; text-align: center; }
         .mp-page-num.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
     </style>
 
@@ -126,6 +140,7 @@
                     <option value="5">5 per page</option>
                     <option value="10" selected>10 per page</option>
                     <option value="20">20 per page</option>
+                    <option value="25">25 per page</option>
                 </select>
             </div>
         </div>
@@ -139,7 +154,7 @@
                         <th>URL Slug</th>
                         <th data-sort="status">Status ↕</th>
                         <th data-sort="lastUpdated">Last Updated ↕</th>
-                        <th style="text-align: right; width: 50px;"></th>
+                        <th style="text-align: right; width: 60px;"></th>
                     </tr>
                 </thead>
                 <tbody id="mp-table-body">
@@ -283,7 +298,7 @@
 
                 tableBody.innerHTML = '';
                 if (paginatedData.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 24px; color: #6b7280;">No pages found.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 24px; color: #6b7280; font-size: 15px;">No pages found.</td></tr>`;
                 } else {
                     paginatedData.forEach(row => {
                         const tr = document.createElement('tr');
@@ -291,23 +306,23 @@
                             <td>
                                 <div class="mp-item-cell">
                                     <div class="mp-icon-box">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                                     </div>
                                     <span class="mp-item-name">${row.title}</span>
                                 </div>
                             </td>
                             <td><span class="mp-badge mp-badge-url">
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                                 ${row.slug}
                             </span></td>
                             <td><span class="mp-badge ${row.status === 'Active' ? 'mp-badge-status' : 'mp-badge-draft'}">${row.status}</span></td>
                             <td><div class="mp-date">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                 ${row.lastUpdated}
                             </div></td>
                             <td class="mp-actions-cell">
                                 <button class="mp-dots-btn" onclick="toggleDropdown(event, ${row.id})">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
                                 </button>
                                 <div class="mp-dropdown" id="dropdown-${row.id}">
                                     <div class="mp-dropdown-item" onclick="viewPage(${row.id})">
