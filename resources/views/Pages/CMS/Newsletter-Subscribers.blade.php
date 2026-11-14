@@ -18,7 +18,7 @@
             background: #ffffff;
             padding: 24px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 15px; /* Increased base font size */
             position: relative;
             margin: -24px; 
             width: calc(100% + 48px);
@@ -28,11 +28,11 @@
         
         /* Header */
         .nl-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-        .nl-title h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111; }
-        .nl-title p { margin: 0; color: #6b7280; font-size: 13px; }
+        .nl-title h2 { margin: 0 0 6px 0; font-size: 24px; font-weight: 700; color: #111; } /* Bigger and bolder title */
+        .nl-title p { margin: 0; color: #6b7280; font-size: 14px; }
         
         /* Theme: Bright Blue */
-        .nl-btn-add { background: #3b82f6; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .nl-btn-add { background: #3b82f6; color: white; border: none; border-radius: 6px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
         .nl-btn-add:hover { background: #2563eb; }
 
         /* Main Container */
@@ -41,42 +41,53 @@
         /* Toolbar */
         .nl-toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
         .nl-search-group { display: flex; gap: 8px; flex: 1; max-width: 450px; }
-        .nl-search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
+        .nl-search-input { flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; }
         .nl-search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         
-        .nl-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
+        .nl-btn { padding: 10px 16px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .nl-btn:hover { background: #f9fafb; }
         .nl-btn-primary { background: #3b82f6; color: white; border-color: #3b82f6; }
         .nl-btn-primary:hover { background: #2563eb; border-color: #2563eb; }
         
-        .nl-select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
+        .nl-select-input { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; background: #fff; cursor: pointer; }
 
         /* Table */
         .nl-table-wrapper { width: 100%; overflow-x: auto; }
         .nl-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .nl-table th, .nl-table td { padding: 14px 16px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
-        .nl-table th { background: #f9fafb; font-weight: 500; color: #4b5563; font-size: 12px; cursor: pointer; user-select: none; }
+        .nl-table th, .nl-table td { padding: 16px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+        
+        /* Bigger and Bolder Table Headers */
+        .nl-table th { 
+            background: #f9fafb; 
+            font-weight: 700; /* Bold */
+            color: #1f2937; 
+            font-size: 14px; /* Bigger font */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer; 
+            user-select: none; 
+        }
         .nl-table th:hover { background: #f3f4f6; }
         .nl-table tbody tr:hover { background: #f9fafb; }
         
         /* Cell Elements */
         .nl-item-cell { display: flex; align-items: center; gap: 12px; }
-        .nl-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #eff6ff; color: #3b82f6; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-        .nl-item-name { font-weight: 500; color: #111; font-size: 13px; }
+        .nl-icon-box { width: 36px; height: 36px; border-radius: 6px; background: #eff6ff; color: #3b82f6; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .nl-item-name { font-weight: 600; color: #111; font-size: 15px; } /* Bolder name */
         
-        .nl-ip-badge { display: inline-block; padding: 4px 8px; border: 1px solid #e5e7eb; border-radius: 4px; font-size: 12px; color: #4b5563; font-family: monospace; }
+        .nl-ip-badge { display: inline-block; padding: 6px 10px; border: 1px solid #e5e7eb; border-radius: 4px; font-size: 13px; color: #4b5563; font-family: monospace; }
         
-        .nl-date { display: flex; align-items: center; gap: 6px; color: #4b5563; font-size: 13px; }
+        .nl-date { display: flex; align-items: center; gap: 8px; color: #4b5563; font-size: 14px; font-weight: 500; }
 
         /* 3 Dots Action Menu */
         .nl-action-menu { position: relative; display: flex; justify-content: flex-end; }
-        .nl-action-trigger { background: none; border: none; cursor: pointer; color: #6b7280; padding: 4px; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .nl-action-trigger { background: none; border: none; cursor: pointer; color: #6b7280; padding: 6px; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .nl-action-trigger:hover { background: #f3f4f6; color: #111; }
         
-        .nl-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; min-width: 130px; padding: 6px 0; flex-direction: column; }
+        .nl-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; min-width: 140px; padding: 6px 0; flex-direction: column; }
         .nl-dropdown.show { display: flex; }
         
-        .nl-dropdown-btn { background: none; border: none; padding: 8px 16px; text-align: left; font-size: 13px; cursor: pointer; width: 100%; display: flex; align-items: center; gap: 10px; transition: background 0.2s; font-family: inherit; }
+        .nl-dropdown-btn { background: none; border: none; padding: 10px 16px; text-align: left; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; gap: 10px; transition: background 0.2s; font-family: inherit; }
         .nl-dropdown-btn:hover { background: #f9fafb; }
         
         /* Button Colors */
@@ -86,16 +97,16 @@
         .nl-dropdown-btn.delete { color: #ef4444; }
         .nl-dropdown-btn.delete:hover { background: #fef2f2; }
         
-        .nl-dropdown-btn svg { width: 16px; height: 16px; stroke: currentColor; }
+        .nl-dropdown-btn svg { width: 18px; height: 18px; stroke: currentColor; }
 
         /* Pagination Area */
         .nl-pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e5e7eb; background: #fff; }
-        .nl-page-info { font-size: 13px; color: #6b7280; }
+        .nl-page-info { font-size: 14px; color: #6b7280; font-weight: 500; }
         .nl-page-controls { display: flex; gap: 6px; align-items: center; }
-        .nl-page-btn { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+        .nl-page-btn { padding: 8px 14px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #374151; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
         .nl-page-btn:hover:not(:disabled) { background: #f9fafb; }
         .nl-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .nl-page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; min-width: 32px; text-align: center; }
+        .nl-page-num { padding: 8px 14px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #374151; min-width: 36px; text-align: center; }
         .nl-page-num.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
         
         /* Utility */
@@ -302,7 +313,7 @@
                 // Render Table Rows
                 tableBody.innerHTML = '';
                 if (paginatedData.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 24px; color: #6b7280;">No subscribers found.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 24px; color: #6b7280; font-size: 15px;">No subscribers found.</td></tr>`;
                 } else {
                     paginatedData.forEach(row => {
                         const tr = document.createElement('tr');
@@ -310,7 +321,7 @@
                             <td>
                                 <div class="nl-item-cell">
                                     <div class="nl-icon-box">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                     </div>
                                     <span class="nl-item-name">${row.email}</span>
                                 </div>
@@ -318,7 +329,7 @@
                             <td><span class="nl-ip-badge">${row.ip}</span></td>
                             <td>
                                 <div class="nl-date">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                     ${row.date}
                                 </div>
                             </td>
