@@ -1,6 +1,14 @@
 @extends('layout.dashboard')
 @section('title', 'Newsletter Subscribers')
 @section('content')
+
+<!-- Pure page ka background white karne ke liye -->
+<style>
+    body, html, #app, .main-content, .content-wrapper, main {
+        background-color: #ffffff !important;
+    }
+</style>
+
 <section id="newsletter-app">
     <style>
         /* Base & Reset */
@@ -12,7 +20,11 @@
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
-            width: 100%;
+            
+            /* FIX: Negative margin layout ki padding ko pull karega, bina layout ko tode */
+            margin: -24px; 
+            width: calc(100% + 48px);
+            min-height: calc(100vh - 1px);
         }
         #newsletter-app * { box-sizing: border-box; }
         
