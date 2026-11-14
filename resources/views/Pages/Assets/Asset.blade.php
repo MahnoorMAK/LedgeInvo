@@ -81,8 +81,8 @@
 .ma-text-green{color:#16a34a;font-weight:600;white-space:nowrap}
 .ma-text-orange{color:#ea580c;font-weight:600;white-space:nowrap}
 
-/* Grid View */
-.ma-grid-wrapper{display:none;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+/* Grid View (2 columns) */
+.ma-grid-wrapper{display:none;grid-template-columns:repeat(2, 1fr);gap:16px}
 .ma-grid-card{border:1px solid #e5e7eb;border-radius:8px;padding:20px;background:#fff;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(0,0,0,0.02)}
 .ma-grid-header{display:flex;justify-content:space-between;align-items:flex-start}
 .ma-grid-body{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;border-top:1px solid #e5e7eb;padding-top:16px}
@@ -104,13 +104,16 @@
 .ma-dropdown-btn.delete:hover{background:#fef2f2}
 .ma-dropdown-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
-/* Pagination */
-.ma-pagination{display:flex;justify-content:space-between;align-items:center;padding:16px 0;margin-top:16px;border-top:1px solid #e5e7eb}
-.ma-page-info{font-size:14px;color:#6b7280}
-.ma-page-controls{display:flex;gap:8px}
-.ma-page-btn{padding:8px 16px;border:1px solid #d1d5db;background:#fff;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500;color:#374151;transition:0.2s}
-.ma-page-btn:hover:not(:disabled){background:#f9fafb}
+/* Pagination matching the screenshot */
+.ma-pagination{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;margin-top:24px;border:1px solid #e5e7eb;border-radius:8px;background:#fff}
+.ma-page-info{font-size:14px;color:#374151}
+.ma-page-controls{display:flex;gap:6px;align-items:center}
+.ma-page-btn{padding:6px 12px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500;color:#6b7280;transition:0.2s}
+.ma-page-btn:hover:not(:disabled){background:#f9fafb;color:#111827}
 .ma-page-btn:disabled{opacity:0.5;cursor:not-allowed}
+.ma-page-num{padding:6px 12px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500;color:#374151;min-width:34px;text-align:center;transition:0.2s}
+.ma-page-num:hover{background:#f9fafb}
+.ma-page-num.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
 
 .ma-toast{visibility:hidden;min-width:250px;background:#333;color:#fff;text-align:center;border-radius:4px;padding:12px;position:fixed;z-index:1000;bottom:30px;left:50%;transform:translateX(-50%);font-size:14px;opacity:0;transition:0.3s}
 .ma-toast.show{visibility:visible;opacity:1}
@@ -188,9 +191,8 @@
 <!-- Pagination -->
 <div class="ma-pagination">
     <div class="ma-page-info" id="ma-page-info">Showing 0 of 0 results</div>
-    <div class="ma-page-controls">
-        <button class="ma-page-btn" id="ma-prev-btn">Previous</button>
-        <button class="ma-page-btn" id="ma-next-btn">Next</button>
+    <div class="ma-page-controls" id="ma-page-controls">
+        <!-- Pagination buttons injected via JS -->
     </div>
 </div>
 
@@ -229,8 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toast = document.getElementById('ma-toast');
     const searchInput = document.getElementById('ma-search-input');
     const pageInfo = document.getElementById('ma-page-info');
-    const prevBtn = document.getElementById('ma-prev-btn');
-    const nextBtn = document.getElementById('ma-next-btn');
+    const pageControls = document.getElementById('ma-page-controls');
     const pageSizeSelect = document.getElementById('ma-page-size');
 
     const formatMoney = v => "$" + v.toLocaleString('en-US',{minimumFractionDigits:2});
@@ -301,9 +302,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const pageData = state.filtered.slice(startIndex, endIndex);
 
         // Update Pagination UI
-        pageInfo.textContent = totalItems === 0 ? 'Showing 0 results' : `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} results`;
-        prevBtn.disabled = state.currentPage === 1 || totalItems === 0;
-        nextBtn.disabled = state.currentPage === totalPages || totalItems === 0;
+        pageInfo.textContent = totalItems === 0 ? 'Showing 0 results' : `Showing ${startIndex + 1}-${endIndex} of ${totalItems}`;
+        
+        let paginationHTML = `<button class="ma-page-btn" onclick="goPage(${state.currentPage - 1})" ${state.currentPage === 1 ? 'disabled' : ''}>Prev</button>`;
+        
+        // Generate Numbered Pages
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHTML += `<button class="ma-page-num ${i === state.currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+        }
+        
+        paginationHTML += `<button class="ma-page-btn" onclick="goPage(${state.currentPage + 1})" ${state.currentPage === totalPages ? 'disabled' : ''}>Next</button>`;
+        pageControls.innerHTML = paginationHTML;
 
         // Toggle View mode
         if (state.viewMode === 'list') {
@@ -353,7 +362,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Event Listeners
+    window.goPage = p => {
+        state.currentPage = p;
+        render();
+    };
+
     document.getElementById('ma-search-btn').addEventListener('click', applyFilters);
     document.getElementById('ma-clear-btn').addEventListener('click', () => {
         searchInput.value = '';
@@ -365,21 +378,6 @@ document.addEventListener("DOMContentLoaded", () => {
         state.pageSize = parseInt(e.target.value);
         state.currentPage = 1;
         render();
-    });
-
-    prevBtn.addEventListener('click', () => {
-        if (state.currentPage > 1) {
-            state.currentPage--;
-            render();
-        }
-    });
-
-    nextBtn.addEventListener('click', () => {
-        const totalPages = Math.ceil(state.filtered.length / state.pageSize);
-        if (state.currentPage < totalPages) {
-            state.currentPage++;
-            render();
-        }
     });
 
     document.getElementById('ma-view-list').addEventListener('click', () => {
