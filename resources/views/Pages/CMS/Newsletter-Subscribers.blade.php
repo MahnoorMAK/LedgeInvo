@@ -2,7 +2,7 @@
 @section('title', 'Newsletter Subscribers')
 @section('content')
 
-<!-- Pure page ka background white karne ke liye -->
+<!-- Force pure page background to white to remove grey gaps -->
 <style>
     body, html, #app, .main-content, .content-wrapper, main {
         background-color: #ffffff !important;
@@ -20,8 +20,6 @@
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
-            
-            /* FIX: Negative margin layout ki padding ko pull karega, bina layout ko tode */
             margin: -24px; 
             width: calc(100% + 48px);
             min-height: calc(100vh - 1px);
@@ -70,10 +68,25 @@
         
         .nl-date { display: flex; align-items: center; gap: 6px; color: #4b5563; font-size: 13px; }
 
-        .nl-actions { display: flex; gap: 12px; justify-content: flex-end; }
-        .nl-action-btn { background: none; border: none; cursor: pointer; color: #6b7280; padding: 0; transition: color 0.2s; display: flex; align-items: center; justify-content: center; }
-        .nl-action-btn.nl-view:hover { color: #3b82f6; }
-        .nl-action-btn.nl-delete:hover { color: #ef4444; }
+        /* 3 Dots Action Menu */
+        .nl-action-menu { position: relative; display: flex; justify-content: flex-end; }
+        .nl-action-trigger { background: none; border: none; cursor: pointer; color: #6b7280; padding: 4px; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .nl-action-trigger:hover { background: #f3f4f6; color: #111; }
+        
+        .nl-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; min-width: 130px; padding: 6px 0; flex-direction: column; }
+        .nl-dropdown.show { display: flex; }
+        
+        .nl-dropdown-btn { background: none; border: none; padding: 8px 16px; text-align: left; font-size: 13px; cursor: pointer; width: 100%; display: flex; align-items: center; gap: 10px; transition: background 0.2s; font-family: inherit; }
+        .nl-dropdown-btn:hover { background: #f9fafb; }
+        
+        /* Button Colors */
+        .nl-dropdown-btn.view { color: #3b82f6; }
+        .nl-dropdown-btn.view:hover { background: #eff6ff; }
+        
+        .nl-dropdown-btn.delete { color: #ef4444; }
+        .nl-dropdown-btn.delete:hover { background: #fef2f2; }
+        
+        .nl-dropdown-btn svg { width: 16px; height: 16px; stroke: currentColor; }
 
         /* Pagination Area */
         .nl-pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e5e7eb; background: #fff; }
@@ -128,7 +141,7 @@
                         <th data-sort="email">Email ↕</th>
                         <th data-sort="ip">IP Address ↕</th>
                         <th data-sort="date">Subscribed At ↕</th>
-                        <th class="text-right">Actions</th>
+                        <th class="text-right" style="width: 80px;"></th> <!-- Removed Text, kept alignment -->
                     </tr>
                 </thead>
                 <tbody id="nl-table-body">
@@ -209,12 +222,29 @@
             // Action Handlers
             window.viewSubscriber = function(id) {
                 console.log("Viewing subscriber:", id);
+                // In a real app, open a modal here
             };
 
             window.deleteSubscriber = function(id) {
                 state.data = state.data.filter(item => item.id !== id);
                 applyFilters();
             };
+
+            // Toggle 3-dots menu
+            window.toggleMenu = function(btn) {
+                // Close all other open menus
+                document.querySelectorAll('.nl-dropdown').forEach(m => {
+                    if (m !== btn.nextElementSibling) m.classList.remove('show');
+                });
+                btn.nextElementSibling.classList.toggle('show');
+            };
+
+            // Close menu on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.nl-action-menu')) {
+                    document.querySelectorAll('.nl-dropdown').forEach(m => m.classList.remove('show'));
+                }
+            });
 
             // Logic
             const applyFilters = () => {
@@ -293,13 +323,20 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="nl-actions">
-                                    <button class="nl-action-btn nl-view" onclick="viewSubscriber('${row.id}')" title="View">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <div class="nl-action-menu">
+                                    <button class="nl-action-trigger" onclick="toggleMenu(this)" title="Actions">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
                                     </button>
-                                    <button class="nl-action-btn nl-delete" onclick="deleteSubscriber('${row.id}')" title="Delete">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                    </button>
+                                    <div class="nl-dropdown">
+                                        <button class="nl-dropdown-btn view" onclick="viewSubscriber('${row.id}')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            View
+                                        </button>
+                                        <button class="nl-dropdown-btn delete" onclick="deleteSubscriber('${row.id}')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
                         `;
