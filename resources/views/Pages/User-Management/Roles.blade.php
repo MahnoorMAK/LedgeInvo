@@ -2,17 +2,31 @@
 @section('title', 'Manage Roles - LedgeInvo')
 @section('content')
 
+<style>
+  /* Force layout wrapper to be white and remove padding to fix white space at top/sides */
+  body main, 
+  .main-content, 
+  .content-wrapper,
+  #app > main {
+      background-color: #ffffff !important;
+      padding: 0 !important;
+      margin: 0 !important;
+  }
+</style>
+
 <section id="manage-roles-app">
     <style>
         /* Base & Reset */
         #manage-roles-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #374151;
-            background: #fff;
+            background: #ffffff;
             padding: 24px;
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
+            width: 100%;
+            min-height: 100vh; /* Fills the screen */
         }
         #manage-roles-app * { box-sizing: border-box; }
         
@@ -21,8 +35,8 @@
         .mr-title h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111; }
         .mr-title p { margin: 0; color: #6b7280; font-size: 13px; }
         
-        .mr-btn-add { background: #10b981; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
-        .mr-btn-add:hover { background: #059669; }
+        .mr-btn-add { background: #3b82f6; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .mr-btn-add:hover { background: #2563eb; }
 
         /* Main Container */
         .mr-main-container { border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
@@ -31,14 +45,14 @@
         .mr-toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
         
         /* Shortened Search Group */
-        .mr-search-group { display: flex; gap: 8px; flex: 1; max-width: 350px; }
+        .mr-search-group { display: flex; gap: 8px; flex: 1; max-width: 380px; }
         .mr-search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
-        .mr-search-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .mr-search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         
         .mr-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; white-space: nowrap; }
         .mr-btn:hover { background: #f9fafb; }
-        .mr-btn-primary { background: #10b981; color: white; border-color: #10b981; }
-        .mr-btn-primary:hover { background: #059669; border-color: #059669; }
+        .mr-btn-primary { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .mr-btn-primary:hover { background: #2563eb; border-color: #2563eb; }
         
         /* Clear Button Style */
         .mr-btn-clear { background: #f3f4f6; color: #4b5563; border-color: #d1d5db; }
@@ -47,7 +61,7 @@
         .mr-view-toggles { display: flex; border: 1px solid #d1d5db; border-radius: 6px; overflow: hidden; }
         .mr-view-btn { padding: 8px 12px; background: #fff; border: none; border-right: 1px solid #d1d5db; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .mr-view-btn:last-child { border-right: none; }
-        .mr-view-btn.active { background: #10b981; color: #fff; }
+        .mr-view-btn.active { background: #bfdbfe; color: #1e40af; }
         
         .mr-select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
 
@@ -68,10 +82,10 @@
 
         /* Shared Cell Elements */
         .mr-role-cell { display: flex; align-items: center; gap: 12px; }
-        .mr-icon-box { width: 36px; height: 36px; border-radius: 8px; background: #ecfdf5; color: #10b981; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .mr-icon-box { width: 36px; height: 36px; border-radius: 8px; background: #eff6ff; color: #3b82f6; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .mr-item-name { font-weight: 600; color: #111; font-size: 14px; }
 
-        .mr-permission-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; background: #ecfdf5; color: #059669; }
+        .mr-permission-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; background: #eff6ff; color: #1d4ed8; }
         
         .mr-users-cell { display: flex; align-items: center; }
         .mr-avatar-group { display: flex; align-items: center; }
@@ -91,7 +105,7 @@
         .mr-page-btn:hover:not(:disabled) { background: #f9fafb; }
         .mr-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .mr-page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; min-width: 32px; text-align: center; }
-        .mr-page-num.active { background: #10b981; color: #fff; border-color: #10b981; }
+        .mr-page-num.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
     </style>
 
     <!-- Header -->
