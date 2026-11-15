@@ -151,31 +151,56 @@
             flex-wrap: wrap;
         }
 
-        /* Updated Search Box */
+        /* Search Box container */
         #manage-goals-section .search-box {
             display: flex;
-            flex: 0 1 350px; /* Shortened width */
-            min-width: 200px;
+            flex: 0 1 450px; /* Accommodates Search + Clear buttons */
+            min-width: 250px;
+            gap: 0.5rem;
         }
 
         #manage-goals-section .search-box input {
             flex: 1;
             padding: 0.5rem 1rem;
             border: 1px solid var(--border-color);
-            border-right: none;
-            border-radius: 0.375rem 0 0 0.375rem;
+            border-radius: 0.375rem;
             font-size: 0.875rem;
             outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        #manage-goals-section .search-box input:focus {
+            border-color: var(--primary);
         }
 
-        #manage-goals-section .search-box button {
+        #manage-goals-section .btn-search {
             background-color: var(--primary);
             color: white;
             border: 1px solid var(--primary);
             padding: 0 1rem;
-            border-radius: 0 0.375rem 0.375rem 0;
+            border-radius: 0.375rem;
             cursor: pointer;
             font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        #manage-goals-section .btn-search:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #manage-goals-section .btn-clear {
+            background-color: white;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 0 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        #manage-goals-section .btn-clear:hover {
+            background-color: #f3f4f6;
         }
 
         #manage-goals-section .toolbar select,
@@ -417,7 +442,8 @@
         <div class="toolbar">
             <div class="search-box">
                 <input type="text" class="searchInput" placeholder="Search Goals...">
-                <button class="searchBtn">Search</button>
+                <button class="btn-search">Search</button>
+                <button class="btn-clear">Clear</button>
             </div>
             <select class="perPageSelect">
                 <option value="10">10 per page</option>
@@ -547,7 +573,8 @@
             const pageInfo = section.querySelector('.pageInfo');
             const perPageSelect = section.querySelector('.perPageSelect');
             const searchInput = section.querySelector('.searchInput');
-            const searchBtn = section.querySelector('.searchBtn');
+            const searchBtn = section.querySelector('.btn-search');
+            const clearBtn = section.querySelector('.btn-clear');
             const tabs = section.querySelectorAll('.tab');
 
             // --- 5. Stats Rendering ---
@@ -722,6 +749,14 @@
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') performSearch();
+            });
+
+            // Clear Button Logic
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = ''; // Clear input instantly
+                state.searchQuery = ''; // Reset search state
+                applyFilters(); // Re-render everything with cleared filters
+                searchInput.focus(); // Optional: put cursor back in input
             });
 
             perPageSelect.addEventListener('change', (e) => {
