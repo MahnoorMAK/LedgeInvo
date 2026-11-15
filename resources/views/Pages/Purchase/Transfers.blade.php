@@ -10,22 +10,21 @@
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
+        background-color: #ffffff !important;
     }
 </style>
 
 <section class="mt-section">
   <style>
-    /* 1. Removed standard side margin and set to 0 to remove extra starting space */
-    /* 2. Kept padding for internal spacing but removed the auto-margin which was centering it and leaving gap on sides */
     .mt-section{
         font-family: system-ui, sans-serif;
-        background: #fff;
-        padding: 24px; /* Reduced top padding slightly for a tighter fit */
+        background: #ffffff;
+        padding: 24px;
         border-radius: 12px;
         box-shadow: 0 1px 3px rgba(0,0,0,.05);
         border: 1px solid #e2e8f0;
-        max-width: 100%; /* Changed from 1100px to 100% to fill the space */
-        margin: 0; /* Removed auto margin to remove side gaps */
+        max-width: 100%;
+        margin: 0;
         color: #0f172a;
         box-sizing: border-box;
     }
@@ -33,15 +32,25 @@
     .mt-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
     .mt-header h1{font-size:20px;font-weight:600;color:#111827;margin-bottom:6px}
     .mt-header p{font-size:14px;color:#6b7280}
-    .mt-add-btn{width:40px;height:40px;background:#3b82f6;border:none;border-radius:6px;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    
+    /* Changed to Bright Blue */
+    .mt-add-btn{width:40px;height:40px;background:#3b82f6;border:none;border-radius:6px;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s}
+    .mt-add-btn:hover{background:#2563eb}
     .mt-add-btn svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none}
+    
     .mt-box{border:1px solid #e2e8f0;border-radius:12px;background:#fff;display:flex;flex-direction:column}
     .mt-topbar{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:16px}
     .mt-search{display:flex;gap:10px;flex:1;max-width:500px;position:relative}
     .mt-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:#9ca3af;fill:none;stroke-width:2}
     .mt-search input{width:100%;padding:10px 12px 10px 36px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;outline:none}
-    .mt-search button{padding:10px 20px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer;white-space:nowrap}
+    .mt-search input:focus{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,.2)}
+    
+    /* Changed to Bright Blue */
+    .mt-search button{padding:10px 20px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background 0.2s}
+    .mt-search button:hover{background:#2563eb}
     .mt-search button.mt-clear-btn{background:#fff;color:#475569;border:1px solid #cbd5e1}
+    .mt-search button.mt-clear-btn:hover{background:#f9fafb}
+    
     .mt-controls{display:flex;align-items:center;gap:12px}
     .mt-controls select{padding:10px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;outline:none;cursor:pointer}
     .mt-controls button{padding:10px 16px;background:#fff;border:1px solid #cbd5e1;border-radius:6px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px}
@@ -52,7 +61,11 @@
     .mt-filter-label{font-size:14px;font-weight:600;color:#475569}
     .mt-filter-row{display:flex;gap:12px}
     .mt-filter-select{flex:1;padding:10px 14px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;color:#64748b;outline:none;cursor:pointer}
-    .mt-btn-apply{padding:10px 24px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer}
+    
+    /* Changed to Bright Blue */
+    .mt-btn-apply{padding:10px 24px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-weight:500;cursor:pointer;transition:background 0.2s}
+    .mt-btn-apply:hover{background:#2563eb}
+    
     .mt-btn-cancel{padding:10px 24px;background:#fff;border:1px solid #cbd5e1;border-radius:6px;font-weight:500;cursor:pointer}
     .mt-table-wrapper{width:100%;max-height:500px;overflow-y:auto;overflow-x:auto;scroll-behavior:smooth}
     .mt-table{width:100%;border-collapse:collapse;table-layout:fixed;text-align:left}
@@ -76,8 +89,12 @@
     .mt-qty{padding:2px 8px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:4px;font-size:12px;font-weight:600;display:inline-block}
     .mt-date{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:#4b5563}
     .mt-date svg{width:16px;height:16px;stroke:#9ca3af;fill:none;stroke-width:2}
-    .mt-del-btn{background:none;border:none;cursor:pointer;color:#ef4444;padding:6px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;margin:0 auto}
-    .mt-del-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+    
+    /* Professional Trash Icon Styling */
+    .mt-del-btn{background:none;border:none;cursor:pointer;color:#ef4444;padding:6px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;margin:0 auto;transition:background 0.2s}
+    .mt-del-btn:hover{background:#fef2f2}
+    .mt-del-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    
     .mt-table-wrapper::-webkit-scrollbar{width:6px;height:6px}
     .mt-table-wrapper::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
     .empty-row td{text-align:center;padding:32px!important;color:#6b7280}
@@ -88,7 +105,9 @@
     .mt-page-btn:disabled{opacity:.5;cursor:not-allowed}
     .mt-page-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
     .mt-page-num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;padding:0 8px;background:#fff;border:1px solid #e2e8f0;border-radius:6px;font-size:14px;font-weight:500;color:#475569;cursor:pointer}
-    .mt-page-num.active{background:#10b981;color:#fff;border-color:#10b981;font-weight:600}
+    
+    /* Changed to Bright Blue */
+    .mt-page-num.active{background:#3b82f6;color:#fff;border-color:#3b82f6;font-weight:600}
   </style>
 
   <div class="mt-header">
@@ -125,7 +144,16 @@
 
     <div class="mt-table-wrapper">
       <table class="mt-table">
-        <thead><tr><th>Product</th><th>From Warehouse</th><th>To Warehouse</th><th>Quantity</th><th>Date</th><th style="text-align:center">Actions</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>From Warehouse</th>
+                <th>To Warehouse</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th></th> <!-- Removed "Actions" text, kept empty cell for alignment -->
+            </tr>
+        </thead>
         <tbody id="tableBody"></tbody>
       </table>
     </div>
@@ -210,7 +238,16 @@
               <td><span class="mt-tag t-${r.tw.color}">${r.tw.name}</span></td>
               <td><span class="mt-qty">${r.qty}</span></td>
               <td><div class="mt-date"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${r.date}</div></td>
-              <td><button class="mt-del-btn"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></td>
+              <td>
+                <button class="mt-del-btn" title="Delete Transfer">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        <line x1="10" y1="11" x2="10" y2="17"/>
+                        <line x1="14" y1="11" x2="14" y2="17"/>
+                    </svg>
+                </button>
+              </td>
             </tr>`).join('');
 
         resultsText.textContent = `Showing ${totalResults === 0 ? 0 : startIndex + 1} to ${endIndex} of ${totalResults} results`;
