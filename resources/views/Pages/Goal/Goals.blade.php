@@ -7,8 +7,10 @@
     <style>
         /* Scoped CSS for Manage Goals Section */
         #manage-goals-section {
-            --primary: #10b981;
-            --primary-hover: #059669;
+            /* Updated to Bright Blue Theme */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            
             --border-color: #e5e7eb;
             --text-main: #111827;
             --text-muted: #6b7280;
@@ -151,10 +153,9 @@
             flex-wrap: wrap;
         }
 
-        /* Search Box container */
         #manage-goals-section .search-box {
             display: flex;
-            flex: 0 1 450px; /* Accommodates Search + Clear buttons */
+            flex: 0 1 450px;
             min-width: 250px;
             gap: 0.5rem;
         }
@@ -251,7 +252,7 @@
         }
 
         #manage-goals-section .tab.active .tab-count {
-            background: #ecfdf5;
+            background: var(--blue-light);
             color: var(--primary);
         }
 
