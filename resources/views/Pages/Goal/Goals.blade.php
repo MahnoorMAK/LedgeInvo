@@ -151,10 +151,11 @@
             flex-wrap: wrap;
         }
 
+        /* Updated Search Box */
         #manage-goals-section .search-box {
             display: flex;
-            flex: 1;
-            min-width: 250px;
+            flex: 0 1 350px; /* Shortened width */
+            min-width: 200px;
         }
 
         #manage-goals-section .search-box input {
@@ -466,7 +467,6 @@
             const section = document.getElementById('manage-goals-section');
 
             // --- 1. Deterministic PRNG (Mulberry32) ---
-            // Same seed → same output on every page refresh.
             function seededRandom(seed) {
                 return function() {
                     seed |= 0;
@@ -499,7 +499,6 @@
             const priorities = ['High', 'Medium', 'Critical', 'Low'];
             const statuses = ['Draft', 'Active', 'Completed'];
 
-            // Fixed reference date so overdue flags don't drift day-to-day
             const REFERENCE_DATE = new Date('2026-01-01T00:00:00Z');
 
             let goalsData = [];
@@ -731,7 +730,6 @@
                 updateUI();
             });
 
-            // Tab clicks → status filter
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     tabs.forEach(t => t.classList.remove('active'));
