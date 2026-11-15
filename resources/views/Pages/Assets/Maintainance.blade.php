@@ -2,31 +2,92 @@
 
 @section('title', 'Manage Maintenance')
 @section('content')
+
+<!-- AGGRESSIVE OVERRIDE TO REMOVE WRAPPER MARGINS, PADDING, AND FORCE WHITE BACKGROUND -->
+<style>
+    /* Reset the entire document and common wrapper classes */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden;
+    }
+    
+    /* Target every possible container that might have padding */
+    #app, main, .main, .app-main, .main-content, .content, .content-wrapper, 
+    .page-wrapper, .app-content, .container, .container-fluid, .page-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Specifically target the direct child of the body or #app to remove any residual margin */
+    body > div, #app > div {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+</style>
+
 <section id="mm-app">
     <style>
-        #mm-app { font-family: system-ui, -apple-system, sans-serif; color: #374151; background: #fff; padding: 24px; box-sizing: border-box; font-size: 14px; }
+        #mm-app { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            color: #374151; 
+            background: #ffffff; /* Changed to white */
+            padding: 24px; 
+            box-sizing: border-box; 
+            font-size: 14px; 
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            display: block;
+            
+            /* Bright Blue Theme Variables */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-light: #eff6ff;
+        }
         #mm-app * { box-sizing: border-box; }
         .mm-header { display: flex; justify-content: space-between; margin-bottom: 24px; }
         .mm-header h2 { margin: 0 0 4px 0; font-size: 20px; color: #111; }
         .mm-header p { margin: 0; color: #6b7280; font-size: 13px; }
-        .btn-add { background: #10b981; color: #fff; border: none; border-radius: 6px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        /* Changed to Bright Blue */
+        .btn-add { background: var(--primary); color: #fff; border: none; border-radius: 6px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .btn-add:hover { background: var(--primary-hover); }
+        
         .mm-card { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         
         .toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; gap: 12px; }
         .search-group { display: flex; gap: 8px; flex: 1; max-width: 400px; }
         .search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         .btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-primary { background: #10b981; color: #fff; border-color: #10b981; }
+        
+        /* Changed to Bright Blue */
+        .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
         
         .view-toggles { display: flex; border: 1px solid #d1d5db; border-radius: 6px; overflow: hidden; }
         .view-btn { padding: 8px 12px; background: #fff; border: none; cursor: pointer; color: #6b7280; display: flex; }
         .view-btn:first-child { border-right: 1px solid #d1d5db; }
-        .view-btn.active { background: #10b981; color: #fff; }
+        
+        /* Changed to Bright Blue */
+        .view-btn.active { background: var(--primary); color: #fff; }
+        
         .select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; cursor: pointer; }
 
         .tabs { display: flex; gap: 20px; padding: 12px 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; overflow-x: auto; }
         .tab { display: flex; gap: 8px; color: #6b7280; cursor: pointer; white-space: nowrap; }
-        .tab.active { color: #10b981; font-weight: 600; }
+        
+        /* Changed to Bright Blue */
+        .tab.active { color: var(--primary); font-weight: 600; }
 
         .table-wrapper { width: 100%; overflow-x: auto; }
         .mm-table { width: 100%; border-collapse: collapse; text-align: left; }
@@ -64,7 +125,9 @@
         .page-btn { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; }
         .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; }
-        .page-num.active { background: #10b981; color: #fff; border-color: #10b981; }
+        
+        /* Changed to Bright Blue */
+        .page-num.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     </style>
 
     <div class="mm-header">
