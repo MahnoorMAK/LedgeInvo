@@ -3,11 +3,8 @@
      ============================================= -->
 
 <style>
-  /* Force layout wrapper to be white and remove padding to fix white space at top/sides */
-  body main, 
-  .main-content, 
-  .content-wrapper,
-  #app > main {
+  /* Aggressive override to remove any default padding/margins from parent containers */
+  body, html, body main, .main-content, .content-wrapper, #app, #app > main {
       background-color: #ffffff !important;
       padding: 0 !important;
       margin: 0 !important;
@@ -22,24 +19,31 @@
       width: 100%;
       background-color: #ffffff; 
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      padding: 24px; 
+      padding: 0; 
+      margin: 0;
       box-sizing: border-box;
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Ensures it doesn't stretch to full height */
-      /* Removed min-height: 100vh to stop it from stretching to the bottom */
+      align-items: flex-start;
     }
     .manage-contracts-section *, .manage-contracts-section *::before, .manage-contracts-section *::after {
       box-sizing: border-box; margin: 0; padding: 0;
     }
-    .mc-container { width: 100%; max-width: 1200px; }
+    .mc-container { 
+      width: 100%; 
+      max-width: 1200px; 
+      padding-top: 24px; 
+    }
     .mc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
     .mc-header-text h1 { font-size: 20px; font-weight: 600; color: #0f172a; margin-bottom: 4px; }
     .mc-header-text p { font-size: 14px; color: #64748b; }
-    .mc-add-btn { width: 40px; height: 40px; background-color: #10b981; border: none; border-radius: 6px; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.2s ease; flex-shrink: 0; }
-    .mc-add-btn:hover { background-color: #059669; }
+    
+    /* Changed to Bright Blue */
+    .mc-add-btn { width: 40px; height: 40px; background-color: #3b82f6; border: none; border-radius: 6px; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.2s ease; flex-shrink: 0; }
+    .mc-add-btn:hover { background-color: #2563eb; }
+    
     .mc-add-btn svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-    .mc-cards { display: flex; gap: 16px; width: 100%; }
+    .mc-cards { display: flex; gap: 16px; width: 100%; margin-bottom: 24px; }
     .mc-card { flex: 1; min-width: 0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; position: relative; border: 1px solid transparent; transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .mc-card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08); }
     .mc-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
@@ -75,7 +79,7 @@
     .mc-card.theme-red .mc-card-subtitle { color: #991b1b; }
 
     @media (max-width: 1024px) { .mc-cards { flex-wrap: wrap; } .mc-card { flex: 1 1 calc(33.333% - 16px); } }
-    @media (max-width: 768px) { .manage-contracts-section { padding: 16px; } .mc-card { flex: 1 1 calc(50% - 16px); } }
+    @media (max-width: 768px) { .mc-container { padding: 16px; } .mc-card { flex: 1 1 calc(50% - 16px); } }
     @media (max-width: 480px) { .mc-card { flex: 1 1 100%; } }
   </style>
 
@@ -137,13 +141,12 @@
 </section>
 
 <!-- SECTION 2: CREATE CONTRACT MODAL -->
-<!-- Added inline style display: none so it is hidden by default -->
 <section class="create-contract-section" id="createContractModal" aria-label="Create Contract Modal" style="display: none;">
   <style>
     .create-contract-section {
-      position: fixed; /* Changed to fixed to overlay on top of the page */
+      position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(15, 23, 42, 0.4); /* Dark overlay */
+      background-color: rgba(15, 23, 42, 0.4);
       z-index: 9999;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       display: flex; justify-content: center; align-items: center;
@@ -167,7 +170,10 @@
     .create-contract-section .required-star { color: #ef4444; font-size: 14px; }
     .create-contract-section .form-control { width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; color: #0f172a; background: #ffffff; transition: border-color 0.15s, box-shadow 0.15s; font-family: inherit; outline: none; }
     .create-contract-section .form-control::placeholder { color: #94a3b8; font-weight: 400; }
-    .create-contract-section .form-control:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+    
+    /* Changed focus to Bright Blue */
+    .create-contract-section .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+    
     .create-contract-section input[type="date"] { cursor: pointer; color-scheme: light; appearance: none; -webkit-appearance: none; padding-right: 12px; }
     .create-contract-section input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.6; transition: opacity 0.15s; font-size: 16px; }
     .create-contract-section input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
@@ -186,8 +192,11 @@
     .create-contract-section .btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s, border-color 0.15s, box-shadow 0.15s; font-family: inherit; border: 1px solid transparent; line-height: 1.4; }
     .create-contract-section .btn-secondary { background: #ffffff; border-color: #cbd5e1; color: #0f172a; }
     .create-contract-section .btn-secondary:hover { background: #f8fafc; border-color: #94a3b8; }
-    .create-contract-section .btn-primary { background: #10b981; border-color: #10b981; color: #ffffff; box-shadow: 0 4px 10px -2px rgba(16, 185, 129, 0.3); }
-    .create-contract-section .btn-primary:hover { background: #059669; border-color: #059669; }
+    
+    /* Changed to Bright Blue */
+    .create-contract-section .btn-primary { background: #3b82f6; border-color: #3b82f6; color: #ffffff; box-shadow: 0 4px 10px -2px rgba(59, 130, 246, 0.3); }
+    .create-contract-section .btn-primary:hover { background: #2563eb; border-color: #2563eb; }
+    
     @media (max-width: 480px) { .create-contract-section .date-row { flex-direction: column; gap: 18px; } .create-contract-section { padding: 10px; } }
   </style>
 
