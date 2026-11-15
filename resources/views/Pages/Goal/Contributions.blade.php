@@ -4,7 +4,6 @@
 
 <!-- AGGRESSIVE OVERRIDE TO REMOVE WRAPPER MARGINS, PADDING, AND FORCE WHITE BACKGROUND -->
 <style>
-    /* Reset the entire document and common wrapper classes */
     html, body {
         margin: 0 !important;
         padding: 0 !important;
@@ -14,7 +13,6 @@
         overflow-x: hidden;
     }
     
-    /* Target every possible container that might have padding */
     #app, main, .main, .app-main, .main-content, .content, .content-wrapper, 
     .page-wrapper, .app-content, .container, .container-fluid, .page-content {
         margin: 0 !important;
@@ -26,7 +24,6 @@
         border: none !important;
     }
 
-    /* Specifically target the direct child of the body or #app to remove any residual margin */
     body > div, #app > div {
         margin: 0 !important;
         padding: 0 !important;
@@ -39,7 +36,7 @@
         #manage-contributions-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #374151;
-            background: #ffffff; /* Changed from #f9fafb to #ffffff */
+            background: #ffffff;
             padding: 24px;
             box-sizing: border-box;
             font-size: 14px;
@@ -48,6 +45,11 @@
             width: 100%;
             max-width: 100%;
             margin: 0;
+            
+            /* Bright Blue Theme */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-light: #eff6ff;
         }
         #manage-contributions-app * { box-sizing: border-box; }
         
@@ -89,8 +91,8 @@
             height: 42px;
         }
         .mc-input-wrapper:focus-within {
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
         .mc-input-wrapper svg { color: #6b7280; width: 18px; height: 18px; margin-right: 10px; flex-shrink: 0; }
         .mc-input-wrapper input, .mc-input-wrapper select {
@@ -112,13 +114,14 @@
             transition: border-color 0.2s;
         }
         .mc-form-group textarea:focus {
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
+        /* Changed to Bright Blue */
         .mc-btn-submit {
             width: 100%;
-            background: #10b981;
+            background: var(--primary);
             color: #fff;
             border: none;
             border-radius: 6px;
@@ -129,7 +132,7 @@
             transition: background 0.2s;
             margin-top: 8px;
         }
-        .mc-btn-submit:hover { background: #059669; }
+        .mc-btn-submit:hover { background: var(--primary-hover); }
 
         /* Right Side: Table Area */
         .mc-table-card {
@@ -156,14 +159,16 @@
             height: 36px;
             flex: 1;
         }
-        .mc-search-input-wrapper:focus-within { border-color: #10b981; }
+        .mc-search-input-wrapper:focus-within { border-color: var(--primary); }
         .mc-search-input-wrapper svg { color: #6b7280; width: 16px; height: 16px; margin-right: 8px; }
         .mc-search-input-wrapper input { border: none; outline: none; font-size: 13px; width: 100%; background: transparent; }
         
         .mc-btn { padding: 0 12px; height: 36px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .mc-btn:hover { background: #f9fafb; }
-        .mc-btn-primary { background: #10b981; color: #fff; border-color: #10b981; }
-        .mc-btn-primary:hover { background: #059669; border-color: #059669; }
+        
+        /* Changed to Bright Blue */
+        .mc-btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .mc-btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
         
         .mc-select-input { padding: 0 12px; height: 36px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
 
@@ -177,22 +182,29 @@
         
         /* Cell Elements */
         .mc-goal-cell { display: flex; align-items: center; gap: 12px; }
-        .mc-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #ecfdf5; color: #10b981; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        
+        /* Changed to Bright Blue */
+        .mc-icon-box { width: 32px; height: 32px; border-radius: 6px; background: var(--primary-light); color: var(--primary); display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        
         .mc-goal-info { display: flex; flex-direction: column; gap: 2px; }
         .mc-goal-name { font-weight: 500; color: #111827; font-size: 13px; }
         .mc-goal-desc { font-size: 12px; color: #6b7280; }
         
         .mc-date { display: flex; align-items: center; gap: 6px; color: #4b5563; font-size: 13px; }
-        .mc-amount { font-weight: 500; color: #059669; }
+        
+        /* Changed to Bright Blue */
+        .mc-amount { font-weight: 500; color: var(--primary); }
         
         .mc-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; border: 1px solid transparent; }
         .mc-badge-manual { background: #eff6ff; color: #1d4ed8; border-color: #dbeafe; }
         .mc-badge-automatic { background: #ecfdf5; color: #059669; border-color: #d1fae5; }
 
         .mc-actions { display: flex; gap: 12px; justify-content: center; }
-        .mc-action-btn { background: none; border: none; cursor: pointer; color: #3b82f6; padding: 4px; border-radius: 4px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        
+        /* Changed to Bright Blue */
+        .mc-action-btn { background: none; border: none; cursor: pointer; color: var(--primary); padding: 4px; border-radius: 4px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
         .mc-action-btn.mc-delete { color: #ef4444; }
-        .mc-action-btn:hover { background: #eff6ff; }
+        .mc-action-btn:hover { background: var(--primary-light); }
         .mc-action-btn.mc-delete:hover { background: #fef2f2; }
 
         /* Empty State */
