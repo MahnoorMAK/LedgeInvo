@@ -2,10 +2,30 @@
 @section('title', 'Purchase-Return - LedgeInvo')
 
 @section('content')
+<!-- Added a style block to force the parent wrapper to remove left/right padding and margin -->
+<style>
+    /* Aggressively remove padding and margins from the parent layout wrapper */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+</style>
+
 <section class="pr-section">
 <style>
-/* Changed margin to 1px to remove extra starting space */
-.pr-section{font-family:system-ui,sans-serif;background:#fff;padding:24px 32px;max-width:1200px;margin:1px auto;color:#0f172a;box-sizing:border-box}
+/* 1. Removed standard side padding from the section so it touches the edges */
+.pr-section{
+    font-family: system-ui, sans-serif;
+    background: #fff;
+    padding: 16px 24px; /* Top/Bottom padding, minimal Left/Right padding */
+    width: 100%;
+    max-width: 100%; /* Changed from 1200px to 100% to fill the remaining space */
+    margin: 0; /* Removed auto margin */
+    color: #0f172a;
+    box-sizing: border-box;
+}
 .pr-section *,.pr-section *::before,.pr-section *::after{box-sizing:border-box;margin:0;padding:0}
 /* Header */
 .pr-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
