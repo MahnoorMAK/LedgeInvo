@@ -2,6 +2,18 @@
 @section('title', 'Revenue - LedgeInvo')
 
 @section('content')
+<!-- Added style block to force the parent wrapper to remove padding, margin, and set white background -->
+<style>
+    /* Aggressively remove padding/margins AND set background to white */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background-color: #ffffff !important; /* Forces background to white */
+    }
+</style>
+
 <section id="manage-revenues-section">
     <style>
         #manage-revenues-section {
@@ -29,7 +41,7 @@
             width: 100%;
             max-width: 100%;
             margin: 0;
-            padding: 0;
+            padding: 24px; /* Added padding for internal spacing */
             box-sizing: border-box;
             color: var(--text-main);
         }
