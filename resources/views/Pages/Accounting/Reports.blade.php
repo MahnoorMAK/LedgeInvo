@@ -1,520 +1,349 @@
-@extends('layout.dashboard')
-@section('title', 'Reports - LedgeInvo')
-@section('content')
-<section id="reports-section">
+<section id="reports-aging-app">
     <style>
-        /* Scoped CSS for Reports Section */
-        #reports-section {
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --border-color: #e5e7eb;
-            --text-main: #111827;
-            --text-muted: #6b7280;
-            --bg-gray: #f9fafb;
-
+        /* Base & Reset */
+        #reports-aging-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            width: 100%;
+            color: #374151;
+            background: #f9fafb;
+            padding: 24px;
+            box-sizing: border-box;
+            font-size: 14px;
+            min-height: 100vh;
+        }
+        #reports-aging-app * { box-sizing: border-box; }
+        
+        /* Page Header */
+        .ra-header { margin-bottom: 24px; }
+        .ra-header h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111827; }
+        .ra-header p { margin: 0; color: #6b7280; font-size: 13px; }
+
+        /* Main Card Container */
+        .ra-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow: hidden;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
-            background: #ffffff;
-            box-sizing: border-box;
         }
 
-        #reports-section * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        #reports-section .page-header {
-            margin-bottom: 1.5rem;
-        }
-
-        #reports-section .page-header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 0.25rem;
-        }
-
-        #reports-section .page-header p {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        #reports-section .main-container {
-            background: white;
-            border-radius: 0.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        /* Tabs */
+        .ra-tabs {
             display: flex;
-            flex-direction: column;
-        }
-
-        #reports-section .tabs-container {
-            padding: 1rem;
-            background: var(--bg-gray);
-            border-bottom: 1px solid var(--border-color);
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-        }
-
-        #reports-section .tabs {
-            display: flex;
-            background: white;
-            border-radius: 0.375rem;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            width: fit-content;
-        }
-
-        #reports-section .tab {
-            padding: 0.6rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            cursor: pointer;
-            background: white;
-            border-right: 1px solid var(--border-color);
-            transition: all 0.2s;
-        }
-
-        #reports-section .tab:last-child {
-            border-right: none;
-        }
-
-        #reports-section .tab:hover {
-            background: var(--bg-gray);
-        }
-
-        #reports-section .tab.active {
-            background: white;
-            color: var(--text-main);
-            box-shadow: inset 0 -2px 0 var(--primary);
-        }
-
-        #reports-section .toolbar {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        #reports-section .toolbar label {
-            font-size: 0.875rem;
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        #reports-section .toolbar-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        #reports-section .date-input-wrapper {
-            position: relative;
-            width: 300px;
-            max-width: 100%;
-        }
-
-        #reports-section .date-input-wrapper span {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-
-        #reports-section .date-input-wrapper input {
-            width: 100%;
-            padding: 0.5rem 1rem 0.5rem 2.2rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            outline: none;
-            color: var(--text-main);
-            font-family: inherit;
-        }
-
-        #reports-section .date-input-wrapper input:focus {
-            border-color: var(--primary);
-        }
-
-        #reports-section .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.55rem 1.5rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        #reports-section .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        #reports-section .btn-outline {
-            background-color: transparent;
-            color: var(--text-main);
-            border: none;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.2s;
-        }
-
-        #reports-section .btn-outline:hover {
-            color: var(--primary);
-        }
-
-        #reports-section .report-title-area {
-            padding: 1.5rem;
-            background: white;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        #reports-section .report-title-area h2 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 0.25rem;
-        }
-
-        #reports-section .report-title-area p {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        #reports-section .table-container {
+            gap: 8px;
+            padding: 16px 16px 0 16px;
+            border-bottom: 1px solid #e5e7eb;
             overflow-x: auto;
-            background: white;
+            background: #f9fafb;
         }
-
-        #reports-section table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: right;
-        }
-
-        #reports-section th {
-            background-color: var(--bg-gray);
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--border-color);
+        .ra-tab {
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+            background: transparent;
+            color: #6b7280;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            margin-bottom: -1px;
             white-space: nowrap;
         }
-
-        #reports-section th:first-child {
-            text-align: left;
+        .ra-tab:hover { color: #111827; background: #f3f4f6; }
+        .ra-tab.active {
+            background: #fff;
+            border-color: #e5e7eb;
+            border-bottom-color: #fff;
+            color: #111827;
+            font-weight: 600;
         }
 
-        #reports-section td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.875rem;
-            color: var(--text-main);
-        }
+        /* Content Area */
+        .ra-content { padding: 24px; }
 
-        #reports-section td:first-child {
-            text-align: left;
+        /* Filter Section */
+        .ra-filter-section {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            background: #fff;
+        }
+        .ra-input-group { display: flex; flex-direction: column; gap: 8px; max-width: 350px; }
+        .ra-input-group label { font-size: 13px; font-weight: 500; color: #374151; }
+        
+        .ra-date-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            padding: 0 12px;
+            height: 40px;
+        }
+        .ra-date-wrapper svg { color: #6b7280; width: 18px; height: 18px; margin-right: 10px; }
+        .ra-date-wrapper input { 
+            border: none; outline: none; font-size: 14px; color: #111827; 
+            background: transparent; font-family: inherit; width: 100%; 
+        }
+        
+        .ra-actions { display: flex; gap: 12px; margin-top: 16px; }
+        
+        .ra-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            color: #374151;
+            height: 40px;
         }
+        .ra-btn:hover { background: #f9fafb; }
+        .ra-btn-primary { background: #10b981; color: #fff; border-color: #10b981; }
+        .ra-btn-primary:hover { background: #059669; border-color: #059669; }
+        
+        /* Report Title Area */
+        .ra-report-title-area {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 16px;
+            margin-bottom: 0;
+        }
+        .ra-report-title-area h3 { margin: 0 0 4px 0; font-size: 18px; font-weight: 600; color: #111827; }
+        .ra-report-title-area p { margin: 0; font-size: 13px; color: #6b7280; }
 
-        #reports-section tr.total-row {
-            background-color: var(--bg-gray);
+        /* Table */
+        .ra-table-wrapper {
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            overflow: hidden;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .ra-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .ra-table th, .ra-table td { padding: 16px; border-bottom: 1px solid #e5e7eb; }
+        .ra-table th { 
+            background: #f9fafb; font-weight: 500; color: #4b5563; font-size: 13px; 
+            position: sticky; top: 0; z-index: 10;
+        }
+        
+        /* Table Footer / Totals */
+        .ra-table tfoot td {
+            background: #f3f4f6;
             font-weight: 600;
-        }
-
-        #reports-section tr.total-row td {
-            border-top: 2px solid var(--border-color);
+            color: #111827;
             border-bottom: none;
-            padding: 1rem;
+            border-top: 2px solid #e5e7eb;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
 
-        #reports-section tr.total-row td:first-child {
-            font-weight: 600;
-        }
-
-        #reports-section .status-message {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--text-main);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.3s;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        #reports-section .status-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .ra-table tbody tr:hover { background: #f9fafb; }
+        
+        .ra-text-right { text-align: right; }
+        .ra-font-bold { font-weight: 600; color: #111827; }
+        
+        /* Empty State */
+        .ra-empty { text-align: center; padding: 40px; color: #6b7280; }
     </style>
 
     <!-- Page Header -->
-    <div class="page-header">
-        <h1>Reports</h1>
+    <div class="ra-header">
+        <h2>Reports</h2>
         <p>Generate and analyze aging reports, tax summaries, and customer/vendor balances to track cash flows.</p>
     </div>
 
-    <!-- Main Container -->
-    <div class="main-container">
+    <!-- Main Card -->
+    <div class="ra-card">
         <!-- Tabs -->
-        <div class="tabs-container">
-            <div class="tabs">
-                <div class="tab active" data-tab="invoice-aging">Invoice Aging</div>
-                <div class="tab" data-tab="bill-aging">Bill Aging</div>
-                <div class="tab" data-tab="tax-summary">Tax Summary</div>
-                <div class="tab" data-tab="customer-balance">Customer Balance</div>
-                <div class="tab" data-tab="vendor-balance">Vendor Balance</div>
-            </div>
+        <div class="ra-tabs">
+            <button class="ra-tab active" data-tab="invoice-aging">Invoice Aging</button>
+            <button class="ra-tab" data-tab="bill-aging">Bill Aging</button>
+            <button class="ra-tab" data-tab="tax-summary">Tax Summary</button>
+            <button class="ra-tab" data-tab="customer-balance">Customer Balance</button>
+            <button class="ra-tab" data-tab="vendor-balance">Vendor Balance</button>
         </div>
 
-        <!-- Toolbar -->
-        <div class="toolbar">
-            <label>As Of Date</label>
-            <div class="toolbar-actions">
-                <div class="date-input-wrapper">
-                    <span>📅</span>
-                    <input type="date" id="reportDate">
+        <!-- Content -->
+        <div class="ra-content">
+            <!-- Filter Section -->
+            <div class="ra-filter-section">
+                <div class="ra-input-group">
+                    <label>As Of Date</label>
+                    <div class="ra-date-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <input type="date" id="ra-date-input" value="2026-12-31">
+                    </div>
                 </div>
-                <button class="btn-primary" id="generateBtn">Generate</button>
-                <button class="btn-outline" id="downloadBtn">
-                    <span>🖨️</span> Download PDF
-                </button>
+                
+                <div class="ra-actions">
+                    <button class="ra-btn ra-btn-primary" id="ra-generate-btn">Generate</button>
+                    <button class="ra-btn" id="ra-download-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download PDF
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <!-- Report Title -->
-        <div class="report-title-area">
-            <h2 id="reportTitle">Invoice Aging Report</h2>
-            <p id="reportSubtitle">As of 2026-12-31</p>
-        </div>
+            <!-- Report Title Area -->
+            <div class="ra-report-title-area">
+                <h3 id="ra-dynamic-title">Invoice Aging Report</h3>
+                <p>As of <span id="ra-dynamic-date">2026-12-31</span></p>
+            </div>
 
-        <!-- Table Area -->
-        <div class="table-container">
-            <table>
-                <thead id="tableHead"></thead>
-                <tbody id="tableBody"></tbody>
-                <tfoot id="tableFoot"></tfoot>
-            </table>
+            <!-- Table -->
+            <div class="ra-table-wrapper">
+                <table class="ra-table">
+                    <thead id="ra-table-head">
+                        <!-- Headers injected dynamically -->
+                    </thead>
+                    <tbody id="ra-table-body">
+                        <!-- Rows injected dynamically -->
+                    </tbody>
+                    <tfoot id="ra-table-foot">
+                        <!-- Totals injected dynamically -->
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- Toast Notification for Action Feedback -->
-    <div class="status-message" id="toast"></div>
-
     <script>
-        (function() {
-            const section = document.getElementById('reports-section');
+        document.addEventListener("DOMContentLoaded", function() {
+            // Exact data from screenshot plus the extra row
+            const mockData = {
+                "invoice-aging": {
+                    title: "Invoice Aging Report",
+                    headers: ["Customer", "Current", "1-30 Days", "31-60 Days", "61-90 Days", ">90 Days", "Total"],
+                    rows: [
+                        { customer: "Lisa Anderson", current: 0.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 623.98, total: 623.98 },
+                        { customer: "Michelle Hall", current: 0.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 2093.85, total: 2093.85 },
+                        { customer: "Ashley Lewis", current: 0.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 413.40, total: 413.40 },
+                        { customer: "Jennifer Martinez", current: 0.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 1770.00, total: 1770.00 },
+                        { customer: "Amanda White", current: 0.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 531.00, total: 531.00 },
+                        { customer: "Sarah Johnson", current: 0.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 3075.25, total: 3075.25 }
+                    ]
+                },
+                "bill-aging": {
+                    title: "Bill Aging Report",
+                    headers: ["Vendor", "Current", "1-30 Days", "31-60 Days", "61-90 Days", ">90 Days", "Total"],
+                    rows: [
+                        { customer: "Tech Solutions Inc", current: 0.00, d30: 1500.00, d60: 0.00, d90: 0.00, d90plus: 0.00, total: 1500.00 },
+                        { customer: "Office Supplies Co", current: 250.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 0.00, total: 250.00 },
+                        { customer: "Cloud Hosting LLC", current: 0.00, d30: 0.00, d60: 850.00, d90: 0.00, d90plus: 0.00, total: 850.00 }
+                    ]
+                }
+                // Other tabs can remain simplified or use the same structure
+            };
 
-            // --- State ---
+            // Helper: Format Currency
+            const formatMoney = (val) => {
+                if (val === null || val === undefined) return "-";
+                return "$" + Number(val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            };
+
+            // DOM Elements
+            const tabs = document.querySelectorAll('.ra-tab');
+            const tableHead = document.getElementById('ra-table-head');
+            const tableBody = document.getElementById('ra-table-body');
+            const tableFoot = document.getElementById('ra-table-foot');
+            const dynamicTitle = document.getElementById('ra-dynamic-title');
+            const dateInput = document.getElementById('ra-date-input');
+            const dynamicDate = document.getElementById('ra-dynamic-date');
+
             let currentTab = 'invoice-aging';
-            const currentDate = new Date().toISOString().split('T')[0];
 
-            // Initialize date input to today
-            document.getElementById('reportDate').value = currentDate;
-
-            // --- 1. Deterministic PRNG (Mulberry32) ---
-            // Same seed → same output, so refreshing the page will NOT change the data.
-            function seededRandom(seed) {
-                return function() {
-                    seed |= 0;
-                    seed = seed + 0x6D2B79F5 | 0;
-                    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
-                    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-                    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-                };
-            }
-
-            function hashString(str) {
-                let h = 0;
-                for (let i = 0; i < str.length; i++) {
-                    h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+            // Render Function
+            const renderReport = (tabKey) => {
+                const data = mockData[tabKey];
+                if (!data) {
+                    tableHead.innerHTML = '';
+                    tableBody.innerHTML = `<tr><td colspan="7" class="ra-empty">Report not configured for this demo tab.</td></tr>`;
+                    tableFoot.innerHTML = '';
+                    return;
                 }
-                return h;
-            }
 
-            // --- 2. Generate 50 Dynamic Entities (deterministic by tab + date) ---
-            const firstNames = ["Lisa", "Michelle", "Ashley", "Jennifer", "Amanda", "Sarah", "Jessica", "Emily", "David", "James", "John", "Robert", "Michael", "William", "Richard"];
-            const lastNames = ["Anderson", "Hall", "Lewis", "Martinez", "White", "Johnson", "Smith", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez"];
+                // Update Titles
+                dynamicTitle.textContent = data.title;
+                dynamicDate.textContent = dateInput.value || "No date selected";
 
-            function generateData(tabType, dateStr) {
-                const rand = seededRandom(hashString(tabType + '|' + dateStr));
-                let data = [];
+                // Render Headers
+                tableHead.innerHTML = `<tr>${data.headers.map((h, i) => 
+                    `<th class="${i > 0 ? 'ra-text-right' : ''}">${h}</th>`
+                ).join('')}</tr>`;
 
-                for (let i = 0; i < 50; i++) {
-                    const name = `${firstNames[Math.floor(rand() * firstNames.length)]} ${lastNames[Math.floor(rand() * lastNames.length)]}`;
+                // Initialize Totals
+                let totals = { current: 0, d30: 0, d60: 0, d90: 0, d90plus: 0, total: 0 };
 
-                    if (tabType === 'invoice-aging' || tabType === 'bill-aging') {
-                        const current = rand() > 0.8 ? (rand() * 500) : 0;
-                        const d30     = rand() > 0.8 ? (rand() * 800) : 0;
-                        const d60     = rand() > 0.8 ? (rand() * 1000) : 0;
-                        const d90     = rand() > 0.8 ? (rand() * 1500) : 0;
-                        const over90  = rand() > 0.4 ? (rand() * 3000 + 100) : 0;
-                        const total   = current + d30 + d60 + d90 + over90;
-                        data.push({ name, current, d30, d60, d90, over90, total });
-                    } else {
-                        data.push({ name, balance: rand() * 5000 });
-                    }
-                }
-                return data;
-            }
+                // Render Rows & Calculate Totals
+                tableBody.innerHTML = data.rows.map(row => {
+                    // Add to totals
+                    totals.current += row.current;
+                    totals.d30 += row.d30;
+                    totals.d60 += row.d60;
+                    totals.d90 += row.d90;
+                    totals.d90plus += row.d90plus;
+                    totals.total += row.total;
 
-            // --- 3. Formatting Helpers ---
-            function formatCurrency(amount) {
-                return '$' + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            }
+                    return `<tr>
+                        <td>${row.customer}</td>
+                        <td class="ra-text-right">${formatMoney(row.current)}</td>
+                        <td class="ra-text-right">${formatMoney(row.d30)}</td>
+                        <td class="ra-text-right">${formatMoney(row.d60)}</td>
+                        <td class="ra-text-right">${formatMoney(row.d90)}</td>
+                        <td class="ra-text-right">${formatMoney(row.d90plus)}</td>
+                        <td class="ra-text-right ra-font-bold">${formatMoney(row.total)}</td>
+                    </tr>`;
+                }).join('');
 
-            function showToast(message) {
-                const toast = document.getElementById('toast');
-                toast.textContent = message;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            }
+                // Render Footer Totals
+                tableFoot.innerHTML = `<tr>
+                    <td>Total</td>
+                    <td class="ra-text-right">${formatMoney(totals.current)}</td>
+                    <td class="ra-text-right">${formatMoney(totals.d30)}</td>
+                    <td class="ra-text-right">${formatMoney(totals.d60)}</td>
+                    <td class="ra-text-right">${formatMoney(totals.d90)}</td>
+                    <td class="ra-text-right">${formatMoney(totals.d90plus)}</td>
+                    <td class="ra-text-right">${formatMoney(totals.total)}</td>
+                </tr>`;
+            };
 
-            // --- 4. Render Functions ---
-            function renderTable() {
-                const head = document.getElementById('tableHead');
-                const body = document.getElementById('tableBody');
-                const foot = document.getElementById('tableFoot');
-                const reportTitle = document.getElementById('reportTitle');
-                const reportSubtitle = document.getElementById('reportSubtitle');
-
-                const selectedDate = document.getElementById('reportDate').value;
-                reportSubtitle.textContent = `As of ${selectedDate || currentDate}`;
-
-                const data = generateData(currentTab, selectedDate || currentDate);
-
-                if (currentTab === 'invoice-aging' || currentTab === 'bill-aging') {
-                    const label = currentTab === 'invoice-aging' ? 'Customer' : 'Vendor';
-                    const titleStr = currentTab === 'invoice-aging' ? 'Invoice Aging Report' : 'Bill Aging Report';
-
-                    reportTitle.textContent = titleStr;
-
-                    head.innerHTML = `
-                        <tr>
-                            <th>${label}</th>
-                            <th>Current</th>
-                            <th>1-30 Days</th>
-                            <th>31-60 Days</th>
-                            <th>61-90 Days</th>
-                            <th>&gt;90 Days</th>
-                            <th>Total</th>
-                        </tr>
-                    `;
-
-                    body.innerHTML = '';
-                    let totals = { current: 0, d30: 0, d60: 0, d90: 0, over90: 0, total: 0 };
-
-                    data.forEach(item => {
-                        if (item.total > 0) {
-                            totals.current += item.current;
-                            totals.d30 += item.d30;
-                            totals.d60 += item.d60;
-                            totals.d90 += item.d90;
-                            totals.over90 += item.over90;
-                            totals.total += item.total;
-
-                            const tr = document.createElement('tr');
-                            tr.innerHTML = `
-                                <td>${item.name}</td>
-                                <td>${formatCurrency(item.current)}</td>
-                                <td>${formatCurrency(item.d30)}</td>
-                                <td>${formatCurrency(item.d60)}</td>
-                                <td>${formatCurrency(item.d90)}</td>
-                                <td>${formatCurrency(item.over90)}</td>
-                                <td>${formatCurrency(item.total)}</td>
-                            `;
-                            body.appendChild(tr);
-                        }
-                    });
-
-                    foot.innerHTML = `
-                        <tr class="total-row">
-                            <td>Total</td>
-                            <td>${formatCurrency(totals.current)}</td>
-                            <td>${formatCurrency(totals.d30)}</td>
-                            <td>${formatCurrency(totals.d60)}</td>
-                            <td>${formatCurrency(totals.d90)}</td>
-                            <td>${formatCurrency(totals.over90)}</td>
-                            <td>${formatCurrency(totals.total)}</td>
-                        </tr>
-                    `;
-                } else {
-                    reportTitle.textContent = currentTab.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' Report';
-
-                    head.innerHTML = `
-                        <tr>
-                            <th>Account Name</th>
-                            <th style="text-align: right;">Balance</th>
-                        </tr>
-                    `;
-
-                    body.innerHTML = '';
-                    let totalBalance = 0;
-
-                    data.forEach(item => {
-                        totalBalance += item.balance;
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${item.name}</td>
-                            <td>${formatCurrency(item.balance)}</td>
-                        `;
-                        body.appendChild(tr);
-                    });
-
-                    foot.innerHTML = `
-                        <tr class="total-row">
-                            <td>Total</td>
-                            <td>${formatCurrency(totalBalance)}</td>
-                        </tr>
-                    `;
-                }
-            }
-
-            // --- 5. Event Listeners ---
-            const tabs = document.querySelectorAll('.tab');
+            // Tab Switching Logic
             tabs.forEach(tab => {
-                tab.addEventListener('click', (e) => {
+                tab.addEventListener('click', () => {
                     tabs.forEach(t => t.classList.remove('active'));
-                    e.target.classList.add('active');
-                    currentTab = e.target.getAttribute('data-tab');
-                    renderTable();
+                    tab.classList.add('active');
+                    currentTab = tab.getAttribute('data-tab');
+                    renderReport(currentTab);
                 });
             });
 
-            document.getElementById('generateBtn').addEventListener('click', () => {
-                renderTable();
-                showToast('Report generated successfully!');
+            // Generate Button Logic
+            document.getElementById('ra-generate-btn').addEventListener('click', () => {
+                renderReport(currentTab);
             });
 
-            document.getElementById('downloadBtn').addEventListener('click', () => {
-                showToast('Downloading PDF... (Simulated action)');
+            // PDF Download Logic (Simulated)
+            document.getElementById('ra-download-btn').addEventListener('click', () => {
+                const btn = document.getElementById('ra-download-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `Generating...`;
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 800);
             });
 
-            // --- 6. Initialization ---
-            renderTable();
-        })();
+            // Initialize
+            renderReport(currentTab);
+        });
     </script>
 </section>
-@endsection
