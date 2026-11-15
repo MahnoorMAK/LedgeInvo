@@ -203,18 +203,9 @@
             min-width: 0;
         }
 
-        #manage-revenues-section .search-input-wrapper span {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            pointer-events: none;
-        }
-
         #manage-revenues-section .search-input-wrapper input {
             width: 100%;
-            padding: 0.5rem 1rem 0.5rem 2.2rem;
+            padding: 0.5rem 1rem;
             border: 1px solid var(--border-color);
             border-radius: 0.375rem;
             font-size: 0.875rem;
@@ -512,27 +503,6 @@
         #manage-revenues-section .page-btn.active { background-color: var(--primary); color: white; border-color: var(--primary); }
         #manage-revenues-section .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* Toast */
-        #manage-revenues-section .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--text-main);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s;
-            pointer-events: none;
-            z-index: 1000;
-        }
-        #manage-revenues-section .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             #manage-revenues-section .page-header { flex-direction: column; gap: 1rem; }
@@ -566,7 +536,6 @@
         <div class="toolbar">
             <div class="search-box">
                 <div class="search-input-wrapper">
-                    <span>🔍</span>
                     <input type="text" id="searchInput" placeholder="Search revenues...">
                 </div>
                 <button class="btn-search" id="searchBtn">Search</button>
@@ -611,8 +580,6 @@
             <div class="page-numbers" id="pageNumbers"></div>
         </div>
     </div>
-
-    <div class="toast" id="toast"></div>
 
     <script>
         (function() {
@@ -668,7 +635,6 @@
             const statusTabs = section.querySelector('#statusTabs');
             const calendarDays = section.querySelector('#calendarDays');
             const calendarMonthYear = section.querySelector('#calendarMonthYear');
-            const toast = section.querySelector('#toast');
 
             function formatCurrency(amount) {
                 return '$' + Number(amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -679,17 +645,10 @@
                 return d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
             }
 
-            function showToast(message) {
-                toast.textContent = message;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            }
-
             function renderCalendar() {
                 const year = state.currentDate.getFullYear();
                 const month = state.currentDate.getMonth();
                 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
                 calendarMonthYear.textContent = `${monthNames[month]} ${year}`;
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -708,7 +667,6 @@
                     dayCell.onclick = () => {
                         state.currentDate.setDate(i);
                         renderCalendar();
-                        showToast(`Filtered to ${fullMonthNames[month]} ${i}, ${year}`);
                     };
 
                     calendarDays.appendChild(dayCell);
@@ -918,7 +876,6 @@
                 state.currentPage = 1;
                 applyFilters();
                 searchInput.focus();
-                showToast('Search cleared');
             });
 
             perPageSelect.addEventListener('change', (e) => {
