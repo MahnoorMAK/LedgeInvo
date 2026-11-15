@@ -3,6 +3,18 @@
 @section('title', 'Debit Notes - LedgeInvo')
 
 @section('content')
+<!-- Added style block to force the parent wrapper to remove left/right padding, margins, and set background to white -->
+<style>
+    /* Aggressively remove padding/margins AND set background to white */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background-color: #ffffff !important; /* Forces the background to white */
+    }
+</style>
+
 <section id="manage-debit-notes">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
@@ -11,7 +23,7 @@
         #manage-debit-notes {
             --primary: #3b82f6; /* Bright Blue */
             --primary-hover: #2563eb;
-            --bg-color: #f9fafb;
+            --bg-color: #ffffff; /* Changed to white */
             --surface: #ffffff;
             --border: #e5e7eb;
             --text-main: #111827;
@@ -28,8 +40,12 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding: 2rem;
+            padding: 24px; /* Added padding for internal spacing so it doesn't touch the edges */
             display: block;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            box-sizing: border-box;
         }
 
         #manage-debit-notes * {
