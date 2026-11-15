@@ -26,12 +26,12 @@
         #mvp .nav-arrow-col:last-child{border-right:none;border-left:1px solid var(--border)}
         #mvp .main-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
         #mvp .toolbar{display:flex;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);gap:1rem;flex-wrap:wrap}
-        #mvp .search-group{display:flex;gap:.5rem;flex:1;max-width:550px;align-items:center}
-        #mvp .search-input{flex:1;padding:.6rem 1rem;border:none;background:#f3f4f6;border-radius:8px;font-size:.875rem;outline:none;font-family:'Inter',sans-serif;color:var(--text)}
+        #mvp .search-group{display:flex;gap:.5rem;flex:0 1 360px;max-width:360px;align-items:center}
+        #mvp .search-input{flex:1;min-width:0;padding:.6rem 1rem;border:none;background:#f3f4f6;border-radius:8px;font-size:.875rem;outline:none;font-family:'Inter',sans-serif;color:var(--text)}
         #mvp .search-input:focus{background:#e5e7eb}
-        #mvp .btn-search{background:var(--primary);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:500;font-size:.875rem;font-family:'Inter',sans-serif}
+        #mvp .btn-search{background:var(--primary);color:#fff;border:none;padding:.6rem 1.25rem;border-radius:8px;cursor:pointer;font-weight:500;font-size:.875rem;font-family:'Inter',sans-serif;white-space:nowrap}
         #mvp .btn-search:hover{background:var(--primary-hover)}
-        #mvp .btn-clear{background:#fff;color:#1f2937;border:1px solid var(--border);padding:.6rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:500;font-size:.875rem;font-family:'Inter',sans-serif}
+        #mvp .btn-clear{background:#fff;color:#1f2937;border:1px solid var(--border);padding:.6rem 1.25rem;border-radius:8px;cursor:pointer;font-weight:500;font-size:.875rem;font-family:'Inter',sans-serif;white-space:nowrap}
         #mvp .filter-group{display:flex;gap:.75rem;align-items:center}
         #mvp .select-styled,#mvp .btn-filter{padding:.6rem 1rem;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:.875rem;cursor:pointer;outline:none;color:var(--text);font-family:'Inter',sans-serif}
         #mvp .tabs{display:flex;padding:0 1.25rem;border-bottom:1px solid var(--border);gap:2rem}
@@ -67,6 +67,10 @@
         #mvp .empty-state{text-align:center;padding:3rem;color:var(--muted)}
         #mvp .pagination-footer{padding:1rem 1.25rem;display:flex;justify-content:flex-end;gap:10px;align-items:center;border-top:1px solid var(--border)}
         #mvp .page-info{font-size:.875rem;color:var(--muted)}
+
+        @media (max-width:768px){
+            #mvp .search-group{flex:1 1 100%;max-width:100%}
+        }
     </style>
 
     <header class="page-header">
@@ -95,7 +99,7 @@
     <main class="main-card">
         <div class="toolbar">
             <div class="search-group">
-                <input type="text" id="searchInput" class="search-input" placeholder="Search vendors...">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search payment no.">
                 <button class="btn-search" onclick="applyFilters()">Search</button>
                 <button class="btn-clear" onclick="clearSearch()">Clear</button>
             </div>
