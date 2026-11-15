@@ -490,7 +490,7 @@
     <main class="main-card">
         <div class="toolbar">
             <div class="search-group">
-                <input type="text" id="searchInput" class="search-input" placeholder="Search contracts...">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search payment no.">
                 <button class="btn-search" onclick="applyFilters()">Search</button>
                 <button class="btn-clear" onclick="clearSearch()">Clear</button>
             </div>
