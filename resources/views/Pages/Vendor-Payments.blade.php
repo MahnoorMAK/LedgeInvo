@@ -3,10 +3,41 @@
 @section('title', 'Vendor Payment - LedgeInvo')
 
 @section('content')
+<!-- Added style block to force the parent wrapper to remove left/right padding, margins, and set background to white -->
+<style>
+    /* Aggressively remove padding/margins AND set background to white */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background-color: #ffffff !important; /* Forces the background to white */
+    }
+</style>
+
 <section id="mvp">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        #mvp{--primary:#3b82f6;--primary-hover:#2563eb;--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--danger:#ef4444;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:2rem;display:block}
+        /* Changed background to white and added padding for internal spacing */
+        #mvp{
+            --primary:#3b82f6;
+            --primary-hover:#2563eb;
+            --bg:#ffffff; /* Changed from #f9fafb to #ffffff */
+            --surface:#fff;
+            --border:#e5e7eb;
+            --text:#111827;
+            --muted:#6b7280;
+            --danger:#ef4444;
+            font-family:'Inter',sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            padding:24px; /* Added padding so it doesn't touch the very edges */
+            display:block;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            box-sizing: border-box;
+        }
         #mvp *{box-sizing:border-box;margin:0;padding:0}
         #mvp .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem}
         #mvp .page-header h1{font-size:1.5rem;font-weight:600;margin-bottom:.25rem}
