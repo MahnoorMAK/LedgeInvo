@@ -2,6 +2,36 @@
 @section('title', 'Manage Locations')
 @section('content')
 
+<!-- AGGRESSIVE OVERRIDE TO REMOVE WRAPPER MARGINS, PADDING, AND FORCE WHITE BACKGROUND -->
+<style>
+    /* Reset the entire document and common wrapper classes */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden;
+    }
+    
+    /* Target every possible container that might have padding */
+    #app, main, .main, .app-main, .main-content, .content, .content-wrapper, 
+    .page-wrapper, .app-content, .container, .container-fluid, .page-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Specifically target the direct child of the body or #app to remove any residual margin */
+    body > div, #app > div {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+</style>
 
 <section id="manage-locations-app">
     <style>
@@ -9,11 +39,20 @@
         #manage-locations-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #374151;
-            background: #fff;
+            background: #ffffff;
             padding: 24px;
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            display: block;
+            
+            /* Bright Blue Theme Variables */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-light: #eff6ff;
         }
         #manage-locations-app * { box-sizing: border-box; }
         
@@ -22,8 +61,9 @@
         .ml-title h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111; }
         .ml-title p { margin: 0; color: #6b7280; font-size: 13px; }
         
-        .ml-btn-add { background: #10b981; color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
-        .ml-btn-add:hover { background: #059669; }
+        /* Changed to Bright Blue */
+        .ml-btn-add { background: var(--primary); color: white; border: none; border-radius: 6px; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .ml-btn-add:hover { background: var(--primary-hover); }
 
         /* Main Container */
         .ml-main-container { border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
@@ -32,17 +72,21 @@
         .ml-toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
         .ml-search-group { display: flex; gap: 8px; flex: 1; max-width: 450px; }
         .ml-search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
-        .ml-search-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .ml-search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         
         .ml-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .ml-btn:hover { background: #f9fafb; }
-        .ml-btn-primary { background: #10b981; color: white; border-color: #10b981; }
-        .ml-btn-primary:hover { background: #059669; border-color: #059669; }
+        
+        /* Changed to Bright Blue */
+        .ml-btn-primary { background: var(--primary); color: white; border-color: var(--primary); }
+        .ml-btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
         
         .ml-view-toggles { display: flex; border: 1px solid #d1d5db; border-radius: 6px; overflow: hidden; }
         .ml-view-btn { padding: 8px 12px; background: #fff; border: none; border-right: 1px solid #d1d5db; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .ml-view-btn:last-child { border-right: none; }
-        .ml-view-btn.active { background: #10b981; color: #fff; }
+        
+        /* Changed to Bright Blue */
+        .ml-view-btn.active { background: var(--primary); color: #fff; }
         
         .ml-select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
 
@@ -50,7 +94,10 @@
         .ml-filter-tabs { display: flex; gap: 20px; padding: 12px 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; overflow-x: auto; }
         .ml-filter-tab { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6b7280; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: all 0.2s; user-select: none; white-space: nowrap; }
         .ml-filter-tab:hover { color: #111; }
-        .ml-filter-tab.active { color: #10b981; font-weight: 600; }
+        
+        /* Changed to Bright Blue */
+        .ml-filter-tab.active { color: var(--primary); font-weight: 600; }
+        
         .ml-filter-tab svg { color: currentColor; }
         .ml-filter-count { font-size: 13px; color: inherit; }
 
@@ -71,7 +118,10 @@
 
         /* Shared Cell Elements */
         .ml-item-cell { display: flex; align-items: center; gap: 12px; }
-        .ml-icon-box { width: 32px; height: 32px; border-radius: 50%; background: #f0fdf4; color: #10b981; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        
+        /* Changed to Bright Blue */
+        .ml-icon-box { width: 32px; height: 32px; border-radius: 50%; background: var(--primary-light); color: var(--primary); display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        
         .ml-item-info { display: flex; flex-direction: column; gap: 2px; }
         .ml-item-name { font-weight: 500; color: #111; font-size: 13px; }
         .ml-item-id { font-size: 11px; color: #6b7280; }
@@ -85,7 +135,9 @@
         .ml-actions { display: flex; gap: 12px; justify-content: flex-end; }
         .ml-action-btn { background: none; border: none; cursor: pointer; color: #6b7280; padding: 0; transition: color 0.2s; display: flex; align-items: center; justify-content: center; }
         .ml-action-btn:hover { color: #111; }
-        .ml-action-btn.ml-view:hover { color: #10b981; }
+        
+        /* Changed to Bright Blue for view */
+        .ml-action-btn.ml-view:hover { color: var(--primary); }
         .ml-action-btn.ml-edit:hover { color: #3b82f6; }
         .ml-action-btn.ml-delete:hover { color: #ef4444; }
 
@@ -97,7 +149,9 @@
         .ml-page-btn:hover:not(:disabled) { background: #f9fafb; }
         .ml-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .ml-page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; min-width: 32px; text-align: center; }
-        .ml-page-num.active { background: #10b981; color: #fff; border-color: #10b981; }
+        
+        /* Changed to Bright Blue */
+        .ml-page-num.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     </style>
 
     <!-- Header -->
