@@ -3,14 +3,15 @@
 @section('title', 'Customer-Management')
 
 @section('content')
-<!-- Added style block to force the parent wrapper to remove left/right padding and margin -->
+<!-- Added background-color: #ffffff to force the page background to white -->
 <style>
-    /* Aggressively remove padding and margins from common parent layouts */
+    /* Aggressively remove padding/margins AND set background to white */
     body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
+        background-color: #ffffff !important; /* Forces the background to white */
     }
 </style>
 
@@ -40,6 +41,7 @@
         color: #0f172a; 
         padding: 24px; /* Kept padding for internal spacing */
         box-sizing: border-box;
+        background-color: #ffffff; /* Ensures the wrapper itself is white */
       }
       .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
       .page-header h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; color: #111827; }
