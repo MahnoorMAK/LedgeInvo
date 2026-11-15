@@ -2,18 +2,52 @@
 
 @section('title', 'Trial Balance')
 @section('content')
+
+<!-- AGGRESSIVE OVERRIDE TO REMOVE WRAPPER MARGINS, PADDING, AND FORCE WHITE BACKGROUND -->
+<style>
+    /* Reset the entire document and common wrapper classes */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden;
+    }
+    
+    /* Target every possible container that might have padding */
+    #app, main, .main, .app-main, .main-content, .content, .content-wrapper, 
+    .page-wrapper, .app-content, .container, .container-fluid, .page-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Specifically target the direct child of the body or #app to remove any residual margin */
+    body > div, #app > div {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+</style>
+
 <section id="trial-balance-app">
     <style>
         /* Base & Reset */
         #trial-balance-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #333;
-            background: #fff;
+            background: #ffffff; /* Changed to white */
             padding: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 100%; /* Changed from 1200px to 100% */
+            margin: 0; /* Changed from auto to remove centering gaps */
             font-size: 14px;
             box-sizing: border-box;
+            width: 100%;
+            display: block;
         }
         #trial-balance-app * { box-sizing: border-box; }
         
