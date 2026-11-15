@@ -190,13 +190,14 @@
         #manage-customer-payments .search-group {
             display: flex;
             gap: 0.5rem;
-            flex: 1;
-            max-width: 550px;
+            flex: 0 1 360px;
+            max-width: 360px;
             align-items: center;
         }
 
         #manage-customer-payments .search-input {
             flex: 1;
+            min-width: 0;
             padding: 0.6rem 1rem;
             border: none;
             background-color: #f3f4f6;
@@ -214,13 +215,14 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 0.6rem 1.5rem;
+            padding: 0.6rem 1.25rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             font-size: 0.875rem;
             font-family: 'Inter', sans-serif;
             transition: background 0.2s;
+            white-space: nowrap;
         }
         #manage-customer-payments .btn-search:hover { background-color: var(--primary-hover); }
 
@@ -228,13 +230,14 @@
             background-color: white;
             color: #1f2937;
             border: 1px solid #e5e7eb;
-            padding: 0.6rem 1.5rem;
+            padding: 0.6rem 1.25rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             font-size: 0.875rem;
             font-family: 'Inter', sans-serif;
             transition: background 0.2s;
+            white-space: nowrap;
         }
         #manage-customer-payments .btn-clear:hover { background-color: #f9fafb; }
 
@@ -439,6 +442,14 @@
         #manage-customer-payments .page-info {
             font-size: 0.875rem;
             color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #manage-customer-payments .search-group {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
         }
     </style>
 
