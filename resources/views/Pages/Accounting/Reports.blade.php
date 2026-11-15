@@ -2,6 +2,36 @@
 @section('title','Reports')
 @section('content')
 
+<!-- AGGRESSIVE OVERRIDE TO REMOVE WRAPPER MARGINS, PADDING, AND FORCE WHITE BACKGROUND -->
+<style>
+    /* Reset the entire document and common wrapper classes */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden;
+    }
+    
+    /* Target every possible container that might have padding */
+    #app, main, .main, .app-main, .main-content, .content, .content-wrapper, 
+    .page-wrapper, .app-content, .container, .container-fluid, .page-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Specifically target the direct child of the body or #app to remove any residual margin */
+    body > div, #app > div {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+</style>
 
 <section id="reports-aging-app">
     <style>
@@ -9,11 +39,14 @@
         #reports-aging-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #374151;
-            background: #f9fafb;
+            background: #ffffff; /* Changed to white */
             padding: 24px;
             box-sizing: border-box;
             font-size: 14px;
             min-height: 100vh;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
         }
         #reports-aging-app * { box-sizing: border-box; }
         
