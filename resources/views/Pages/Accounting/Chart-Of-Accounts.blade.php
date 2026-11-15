@@ -6,8 +6,9 @@
     <style>
         /* Scoped CSS for Manage Chart of Accounts Section */
         #manage-chart-of-accounts {
-            --primary: #10b981;
-            --primary-hover: #059669;
+            /* Updated to Bright Blue Theme */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
             --border-color: #e5e7eb;
             --text-main: #111827;
             --text-muted: #6b7280;
@@ -91,10 +92,10 @@
             flex-wrap: wrap;
         }
 
+        /* Updated Search Box Area */
         #manage-chart-of-accounts .search-box {
             display: flex;
-            flex: 1;
-            min-width: 250px;
+            flex: 0 1 400px; /* Shortened the maximum width */
             gap: 0.5rem;
         }
 
@@ -104,18 +105,11 @@
             position: relative;
         }
 
-        #manage-chart-of-accounts .search-input-wrapper span {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            pointer-events: none;
-        }
+        /* Removed the absolute positioned icon span */
 
         #manage-chart-of-accounts .search-input-wrapper input {
             width: 100%;
-            padding: 0.5rem 1rem 0.5rem 2.2rem;
+            padding: 0.5rem 1rem; /* Standardized padding since icon is removed */
             border: 1px solid var(--border-color);
             border-radius: 0.375rem;
             font-size: 0.875rem;
@@ -125,6 +119,7 @@
 
         #manage-chart-of-accounts .search-input-wrapper input:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Bright blue glow */
         }
 
         #manage-chart-of-accounts .btn-search {
@@ -206,7 +201,7 @@
         }
 
         #manage-chart-of-accounts .tab.active .tab-count {
-            background: #ecfdf5;
+            background: #eff6ff; /* Light blue background */
             color: var(--primary);
         }
 
@@ -390,7 +385,6 @@
         <div class="toolbar">
             <div class="search-box">
                 <div class="search-input-wrapper">
-                    <span>🔍</span>
                     <input type="text" class="searchInput" placeholder="Search Chart Of Accounts...">
                 </div>
                 <button class="btn-search">Search</button>
@@ -444,7 +438,6 @@
             const section = document.getElementById('manage-chart-of-accounts');
 
             // --- 1. Deterministic PRNG (Mulberry32) ---
-            // Same seed → same output. Refreshing the page will NOT change the data.
             function seededRandom(seed) {
                 return function() {
                     seed |= 0;
@@ -463,10 +456,9 @@
                 return h;
             }
 
-            // Fixed seed => same dataset on every refresh
             const rand = seededRandom(hashString('chart-of-accounts-v1'));
 
-            // --- 2. Generate 50 Entities of Dummy Data (deterministic) ---
+            // --- 2. Generate 50 Entities ---
             const accountNames = [
                 "Salaries Expense", "Marketing Expense", "Office Supplies",
                 "Rent Expense", "Sales Commission Expense", "Utilities Expense",
