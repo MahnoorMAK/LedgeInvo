@@ -1,3 +1,8 @@
+@extends('Layout.dashboard')
+@section('title','Reports')
+@section('content')
+
+
 <section id="reports-aging-app">
     <style>
         /* Base & Reset */
@@ -91,9 +96,11 @@
         
         .ra-actions { display: flex; gap: 12px; margin-top: 16px; }
         
+        /* Buttons */
         .ra-btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 10px 18px;
             border-radius: 6px;
@@ -105,10 +112,20 @@
             background: #fff;
             color: #374151;
             height: 40px;
+            min-width: 130px;
         }
         .ra-btn:hover { background: #f9fafb; }
-        .ra-btn-primary { background: #10b981; color: #fff; border-color: #10b981; }
-        .ra-btn-primary:hover { background: #059669; border-color: #059669; }
+        
+        /* Bright Blue Buttons */
+        .ra-btn-primary { 
+            background: #3b82f6; 
+            color: #fff; 
+            border-color: #3b82f6; 
+        }
+        .ra-btn-primary:hover { 
+            background: #2563eb; 
+            border-color: #2563eb; 
+        }
         
         /* Report Title Area */
         .ra-report-title-area {
@@ -154,6 +171,10 @@
         
         /* Empty State */
         .ra-empty { text-align: center; padding: 40px; color: #6b7280; }
+        
+        /* Loading animation for button */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .spin { animation: spin 1s linear infinite; }
     </style>
 
     <!-- Page Header -->
@@ -219,7 +240,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Exact data from screenshot plus the extra row
+            // Data Model
             const mockData = {
                 "invoice-aging": {
                     title: "Invoice Aging Report",
@@ -241,8 +262,32 @@
                         { customer: "Office Supplies Co", current: 250.00, d30: 0.00, d60: 0.00, d90: 0.00, d90plus: 0.00, total: 250.00 },
                         { customer: "Cloud Hosting LLC", current: 0.00, d30: 0.00, d60: 850.00, d90: 0.00, d90plus: 0.00, total: 850.00 }
                     ]
+                },
+                "tax-summary": {
+                    title: "Tax Summary Report",
+                    headers: ["Tax Rate", "Taxable Amount", "Tax Collected", "Tax Paid", "Net Tax Owed"],
+                    rows: [
+                        { customer: "Standard (10%)", current: 15000.00, d30: 1500.00, d60: 0.00, d90: 1500.00, d90plus: 0, total: 0 },
+                        { customer: "Reduced (5%)", current: 5000.00, d30: 250.00, d60: 50.00, d90: 200.00, d90plus: 0, total: 0 }
+                    ]
+                },
+                "customer-balance": {
+                    title: "Customer Balance Summary",
+                    headers: ["Customer", "Total Invoiced", "Total Paid", "Balance Due"],
+                    rows: [
+                        { customer: "Lisa Anderson", current: 5000.00, d30: 4376.02, d60: 623.98, d90: 0, d90plus: 0, total: 0 },
+                        { customer: "Michelle Hall", current: 10000.00, d30: 7906.15, d60: 2093.85, d90: 0, d90plus: 0, total: 0 },
+                        { customer: "Ashley Lewis", current: 2000.00, d30: 1586.60, d60: 413.40, d90: 0, d90plus: 0, total: 0 }
+                    ]
+                },
+                "vendor-balance": {
+                    title: "Vendor Balance Summary",
+                    headers: ["Vendor", "Total Billed", "Total Paid", "Balance Due"],
+                    rows: [
+                        { customer: "Tech Solutions Inc", current: 10000.00, d30: 8500.00, d60: 1500.00, d90: 0, d90plus: 0, total: 0 },
+                        { customer: "Office Supplies Co", current: 1000.00, d30: 750.00, d60: 250.00, d90: 0, d90plus: 0, total: 0 }
+                    ]
                 }
-                // Other tabs can remain simplified or use the same structure
             };
 
             // Helper: Format Currency
@@ -284,7 +329,7 @@
                 // Initialize Totals
                 let totals = { current: 0, d30: 0, d60: 0, d90: 0, d90plus: 0, total: 0 };
 
-                // Render Rows & Calculate Totals
+                // Render Rows
                 tableBody.innerHTML = data.rows.map(row => {
                     // Add to totals
                     totals.current += row.current;
@@ -329,17 +374,53 @@
 
             // Generate Button Logic
             document.getElementById('ra-generate-btn').addEventListener('click', () => {
-                renderReport(currentTab);
+                const btn = document.getElementById('ra-generate-btn');
+                const originalText = btn.innerHTML;
+                
+                // Visual feedback
+                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Generating...`;
+                btn.disabled = true;
+
+                // Simulate processing delay
+                setTimeout(() => {
+                    renderReport(currentTab);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 600);
             });
 
-            // PDF Download Logic (Simulated)
+            // PDF Download Logic
             document.getElementById('ra-download-btn').addEventListener('click', () => {
                 const btn = document.getElementById('ra-download-btn');
                 const originalText = btn.innerHTML;
-                btn.innerHTML = `Generating...`;
+                
+                // Visual feedback
+                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Downloading...`;
+                btn.disabled = true;
+
+                // Simulate download delay
                 setTimeout(() => {
+                    // Create a simple text blob to actually download something to the user's machine
+                    const reportData = mockData[currentTab];
+                    let csvContent = reportData.headers.join(",") + "\n";
+                    reportData.rows.forEach(row => {
+                        csvContent += `${row.customer},${row.current},${row.d30},${row.d60},${row.d90},${row.d90plus},${row.total}\n`;
+                    });
+                    
+                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                    const link = document.createElement("a");
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", `${reportData.title.replace(/ /g, "_")}.csv`);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Reset button
                     btn.innerHTML = originalText;
-                }, 800);
+                    btn.disabled = false;
+                }, 1000);
             });
 
             // Initialize
@@ -347,3 +428,4 @@
         });
     </script>
 </section>
+@endsection
