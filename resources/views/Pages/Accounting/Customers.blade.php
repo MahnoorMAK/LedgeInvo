@@ -3,6 +3,17 @@
 @section('title', 'Customer-Management')
 
 @section('content')
+<!-- Added style block to force the parent wrapper to remove left/right padding and margin -->
+<style>
+    /* Aggressively remove padding and margins from common parent layouts */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+</style>
+
 <!-- ============================================================
      MANAGE CUSTOMERS PAGE (OVERLAP FIXED)
      ============================================================ -->
@@ -21,7 +32,15 @@
 
   <section class="ct-section">
     <style>
-      .page-wrapper { max-width: 1400px; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif; color: #0f172a; padding: 24px 24px 40px 24px; }
+      /* Changed max-width to 100% and margin to 0 to remove side gaps */
+      .page-wrapper { 
+        max-width: 100%; 
+        margin: 0; 
+        font-family: system-ui, -apple-system, sans-serif; 
+        color: #0f172a; 
+        padding: 24px; /* Kept padding for internal spacing */
+        box-sizing: border-box;
+      }
       .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
       .page-header h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; color: #111827; }
       .page-header p { font-size: 14px; color: #6b7280; }
