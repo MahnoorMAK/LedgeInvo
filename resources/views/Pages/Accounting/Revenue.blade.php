@@ -5,8 +5,8 @@
 <section id="manage-revenues-section">
     <style>
         #manage-revenues-section {
-            --primary: #10b981;
-            --primary-hover: #059669;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
             --border-color: #e5e7eb;
             --text-main: #111827;
             --text-muted: #6b7280;
@@ -25,7 +25,6 @@
 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-            /* Fully transparent — no separate background block */
             background: transparent;
             width: 100%;
             max-width: 100%;
@@ -194,12 +193,14 @@
             display: flex;
             flex: 1;
             min-width: 250px;
+            max-width: 520px;
             gap: 0.5rem;
         }
 
         #manage-revenues-section .search-input-wrapper {
             position: relative;
-            flex: 1;
+            flex: 0 1 280px;
+            min-width: 0;
         }
 
         #manage-revenues-section .search-input-wrapper span {
@@ -238,6 +239,26 @@
 
         #manage-revenues-section .btn-search:hover {
             background-color: var(--primary-hover);
+        }
+
+        #manage-revenues-section .btn-clear {
+            background-color: #ffffff;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 0 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        #manage-revenues-section .btn-clear:hover {
+            background-color: var(--blue-light);
+            color: var(--blue-text);
+            border-color: #bfdbfe;
         }
 
         #manage-revenues-section .btn-outline {
@@ -306,7 +327,7 @@
         }
 
         #manage-revenues-section .tab.active .tab-count {
-            background: var(--green-light);
+            background: var(--blue-light);
             color: var(--primary);
         }
 
@@ -516,7 +537,8 @@
         @media (max-width: 768px) {
             #manage-revenues-section .page-header { flex-direction: column; gap: 1rem; }
             #manage-revenues-section .toolbar { flex-direction: column; align-items: stretch; }
-            #manage-revenues-section .search-box { min-width: 0; }
+            #manage-revenues-section .search-box { min-width: 0; max-width: 100%; }
+            #manage-revenues-section .search-input-wrapper { flex: 1 1 auto; }
         }
     </style>
 
@@ -548,6 +570,7 @@
                     <input type="text" id="searchInput" placeholder="Search revenues...">
                 </div>
                 <button class="btn-search" id="searchBtn">Search</button>
+                <button class="btn-clear" id="clearBtn" title="Clear search">Clear</button>
             </div>
             <select id="perPageSelect">
                 <option value="10">10 per page</option>
@@ -555,14 +578,14 @@
                 <option value="25">25 per page</option>
                 <option value="50">50 per page</option>
             </select>
-            <button class="btn-outline" id="filterBtn">▼ Filters</button>
+            <button class="btn-outline" id="filterBtn">Filters</button>
         </div>
 
         <div class="tabs" id="statusTabs">
-            <div class="tab active" data-status="all">⊞ All <span class="tab-count">15</span></div>
-            <div class="tab" data-status="draft">📄 Draft <span class="tab-count">3</span></div>
-            <div class="tab" data-status="approved">▶ Approved <span class="tab-count">5</span></div>
-            <div class="tab" data-status="posted">✓ Posted <span class="tab-count">7</span></div>
+            <div class="tab active" data-status="all">All <span class="tab-count">15</span></div>
+            <div class="tab" data-status="draft">Draft <span class="tab-count">3</span></div>
+            <div class="tab" data-status="approved">Approved <span class="tab-count">5</span></div>
+            <div class="tab" data-status="posted">Posted <span class="tab-count">7</span></div>
         </div>
 
         <div class="table-container">
@@ -641,6 +664,7 @@
             const perPageSelect = section.querySelector('#perPageSelect');
             const searchInput = section.querySelector('#searchInput');
             const searchBtn = section.querySelector('#searchBtn');
+            const clearBtn = section.querySelector('#clearBtn');
             const statusTabs = section.querySelector('#statusTabs');
             const calendarDays = section.querySelector('#calendarDays');
             const calendarMonthYear = section.querySelector('#calendarMonthYear');
@@ -744,7 +768,6 @@
                 paginatedData.forEach(item => {
                     const tr = document.createElement('tr');
                     const statusClass = item.status === 'Approved' ? 'status-approved' : (item.status === 'Posted' ? 'status-posted' : 'status-draft');
-                    const statusIcon = item.status === 'Approved' ? '📄' : (item.status === 'Posted' ? '✓' : '📄');
 
                     let approvedByHtml = '-';
                     if (item.approverName !== '-') {
@@ -789,7 +812,7 @@
                             </div>
                         </td>
                         <td class="amount">${formatCurrency(item.amount)}</td>
-                        <td><span class="status-badge ${statusClass}">${statusIcon} ${item.status}</span></td>
+                        <td><span class="status-badge ${statusClass}">${item.status}</span></td>
                         <td>${approvedByHtml}</td>
                         <td><div class="actions">${actionsHtml}</div></td>
                     `;
@@ -887,6 +910,15 @@
                     state.currentPage = 1;
                     applyFilters();
                 }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                state.searchQuery = '';
+                state.currentPage = 1;
+                applyFilters();
+                searchInput.focus();
+                showToast('Search cleared');
             });
 
             perPageSelect.addEventListener('change', (e) => {
