@@ -30,7 +30,7 @@
         
         /* Toolbar */
         .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 16px; flex-wrap: wrap; }
-        .search-group { display: flex; gap: 8px; flex: 1; max-width: 400px; }
+        .search-group { display: flex; gap: 8px; flex: 1; max-width: 450px; }
         .search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
         .search-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
         .filter-group { display: flex; gap: 12px; align-items: center; }
@@ -67,10 +67,6 @@
         .details-content { padding: 16px; font-size: 13px; color: #555; display: flex; gap: 40px; }
         .expand-btn { cursor: pointer; color: #6b7280; font-weight: bold; transition: transform 0.2s; display: inline-block; width: 16px; text-align: center; }
         .expand-btn.open { transform: rotate(90deg); }
-        
-        /* Toast Notification */
-        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 4px; padding: 12px; position: fixed; z-index: 1000; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 14px; opacity: 0; transition: opacity 0.3s, visibility 0.3s; }
-        #toast.show { visibility: visible; opacity: 1; }
     </style>
 
     <!-- Header -->
@@ -93,6 +89,7 @@
         <div class="search-group">
             <input type="text" id="searchInput" class="search-input" placeholder="Search journal entries...">
             <button class="btn btn-primary" id="searchBtn">Search</button>
+            <button class="btn" id="clearBtn">Clear</button>
         </div>
         <div class="filter-group">
             <select class="select-input" id="pageSizeSelect">
@@ -140,9 +137,6 @@
         </div>
     </div>
 
-    <!-- Toast Notification for Interactions -->
-    <div id="toast"></div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Mock Data (108 items generated)
@@ -187,18 +181,11 @@
             const pageNumbers = document.getElementById('pageNumbers');
             const searchInput = document.getElementById('searchInput');
             const searchBtn = document.getElementById('searchBtn');
+            const clearBtn = document.getElementById('clearBtn');
             const pageSizeSelect = document.getElementById('pageSizeSelect');
-            const toast = document.getElementById('toast');
 
             // Helper: Format Currency
             const formatMoney = (amount) => "$" + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-            // Helper: Toast
-            const showToast = (msg) => {
-                toast.textContent = msg;
-                toast.className = "show";
-                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-            };
 
             // Function: Render Table
             const renderTable = () => {
@@ -302,13 +289,21 @@
                 }
                 state.currentPage = 1;
                 renderTable();
-                showToast(`Search applied. Found ${state.filteredData.length} results.`);
             };
 
             // Event Listeners: Search
             searchBtn.addEventListener('click', applySearch);
             searchInput.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') applySearch();
+            });
+
+            // Event Listeners: Clear
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = ''; // Clear input field
+                state.searchQuery = ''; // Clear state
+                state.filteredData = [...state.data]; // Reset table data
+                state.currentPage = 1; // Reset to page 1
+                renderTable(); // Re-render
             });
 
             // Event Listeners: Pagination
@@ -332,7 +327,6 @@
                 state.pageSize = parseInt(e.target.value);
                 state.currentPage = 1;
                 renderTable();
-                showToast(`Showing ${state.pageSize} items per page.`);
             });
 
             // Event Listeners: Sorting
@@ -367,21 +361,20 @@
                     });
                     
                     renderTable();
-                    showToast(`Sorted by ${column} (${state.sortAsc ? 'Ascending' : 'Descending'})`);
                 });
             });
 
-            // Event Listeners: Other Buttons
+            // Event Listeners: Other Buttons (kept as simple console logs or alerts for UI feedback)
             document.getElementById('downloadPdfBtn').addEventListener('click', () => {
-                showToast("Generating PDF... Download will start shortly.");
+                // Silent action for download simulation
             });
 
             document.getElementById('addJournalBtn').addEventListener('click', () => {
-                showToast("Opening new journal entry form...");
+                // Silent action for add simulation
             });
 
             document.getElementById('filterBtn').addEventListener('click', () => {
-                showToast("Filter panel toggled.");
+                // Silent action for filter simulation
             });
 
             // Expose row expand function globally for inline onclick handler
