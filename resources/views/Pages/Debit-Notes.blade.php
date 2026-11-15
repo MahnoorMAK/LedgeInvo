@@ -175,7 +175,7 @@
             display: flex;
             gap: 0.5rem;
             flex: 1;
-            max-width: 550px;
+            max-width: 400px;
             align-items: center;
         }
 
@@ -479,7 +479,7 @@
         <!-- Toolbar (Matched to Image) -->
         <div class="toolbar">
             <div class="search-group">
-                <input type="text" id="searchInput" class="search-input" placeholder="Search vendors...">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by debit note number">
                 <button class="btn-search" onclick="applyFilters()">Search</button>
                 <button class="btn-clear" onclick="clearSearch()">Clear</button>
             </div>
@@ -521,7 +521,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Payment Number</th>
+                        <th>Debit Note Number</th>
                         <th>Vendor</th>
                         <th>Payment Date</th>
                         <th>Amount</th>
