@@ -2,6 +2,17 @@
 @section('title', 'Credit Notes')
 @section('content')
 
+<!-- Added style block to force the parent wrapper to remove left/right padding, margins, and set background to white -->
+<style>
+    /* Aggressively remove padding/margins AND set background to white */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background-color: #ffffff !important; /* Forces the background to white */
+    }
+</style>
 
 <section id="credit-notes-app">
     <style>
@@ -9,11 +20,14 @@
         #credit-notes-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #374151;
-            background: #fff;
+            background: #ffffff; /* Changed to white */
             padding: 24px;
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
 
             /* Bright blue theme variables (matched to Debit Notes) */
             --primary: #3b82f6;
