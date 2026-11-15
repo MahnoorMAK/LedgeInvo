@@ -14,6 +14,12 @@
             box-sizing: border-box;
             font-size: 14px;
             position: relative;
+
+            /* Bright blue theme variables (matched to Debit Notes) */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --badge-bg-blue: #eff6ff;
+            --badge-text-blue: #1d4ed8;
         }
         #credit-notes-app * { box-sizing: border-box; }
         
@@ -35,7 +41,7 @@
         .cn-cal-month { flex: 1; text-align: center; padding: 12px 0; border-right: 1px solid #e5e7eb; cursor: pointer; color: #4b5563; transition: background 0.2s; }
         .cn-cal-month:last-child { border-right: none; }
         .cn-cal-month:hover { background: #f9fafb; }
-        .cn-cal-month.active { background: #10b981; color: #fff; }
+        .cn-cal-month.active { background: var(--primary); color: #fff; }
         .cn-cal-month-name { font-size: 12px; margin-bottom: 4px; }
         .cn-cal-month-day { font-size: 16px; font-weight: 600; }
 
@@ -44,14 +50,14 @@
 
         /* Toolbar */
         .cn-toolbar { padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
-        .cn-search-group { display: flex; gap: 8px; flex: 1; max-width: 450px; }
+        .cn-search-group { display: flex; gap: 8px; flex: 1; max-width: 400px; }
         .cn-search-input { flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
-        .cn-search-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .cn-search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         
         .cn-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .cn-btn:hover { background: #f9fafb; }
-        .cn-btn-primary { background: #10b981; color: white; border-color: #10b981; }
-        .cn-btn-primary:hover { background: #059669; border-color: #059669; }
+        .cn-btn-primary { background: var(--primary); color: white; border-color: var(--primary); }
+        .cn-btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
         
         .cn-select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
 
@@ -59,7 +65,7 @@
         .cn-filter-tabs { display: flex; gap: 20px; padding: 12px 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; overflow-x: auto; }
         .cn-filter-tab { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: all 0.2s; user-select: none; white-space: nowrap; }
         .cn-filter-tab:hover { color: #111; }
-        .cn-filter-tab.active { color: #10b981; font-weight: 600; }
+        .cn-filter-tab.active { color: var(--primary); font-weight: 600; }
         .cn-filter-tab svg { color: currentColor; }
         .cn-filter-count { font-size: 13px; color: inherit; }
 
@@ -72,8 +78,8 @@
         .cn-table tbody tr:hover { background: #f9fafb; }
         
         /* Cell Elements */
-        .cn-badge-id { display: inline-block; padding: 4px 8px; background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; border-radius: 4px; font-size: 12px; font-weight: 500; }
-        .cn-badge-return { display: inline-block; padding: 4px 8px; background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .cn-badge-id { display: inline-block; padding: 4px 8px; background: var(--badge-bg-blue); color: var(--badge-text-blue); border: 1px solid #dbeafe; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .cn-badge-return { display: inline-block; padding: 4px 8px; background: var(--badge-bg-blue); color: var(--badge-text-blue); border: 1px solid #dbeafe; border-radius: 4px; font-size: 12px; font-weight: 500; }
         
         .cn-user-cell { display: flex; align-items: center; gap: 12px; }
         .cn-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background: #e5e7eb; }
@@ -89,7 +95,7 @@
 
         .cn-status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
         .cn-status-draft { background: #fffbeb; color: #b45309; border: 1px solid #fef3c7; }
-        .cn-status-applied { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; }
+        .cn-status-applied { background: var(--badge-bg-blue); color: var(--badge-text-blue); border: 1px solid #dbeafe; }
         .cn-status-partial { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
         .cn-status-approved { background: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
 
@@ -107,7 +113,7 @@
         .cn-page-btn:hover:not(:disabled) { background: #f9fafb; }
         .cn-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .cn-page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; color: #374151; min-width: 32px; text-align: center; }
-        .cn-page-num.active { background: #10b981; color: #fff; border-color: #10b981; }
+        .cn-page-num.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     </style>
 
     <!-- Header -->
