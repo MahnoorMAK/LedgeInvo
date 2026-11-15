@@ -2,9 +2,33 @@
 @section('title', 'Item - LedgeInvo')
 
 @section('content')
+<!-- Added style block to force the parent wrapper to remove left/right padding and margin -->
+<style>
+    /* Aggressively remove padding and margins from common parent layouts */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+</style>
+
 <section class="pts">
 <style>
-.pts{font-family:system-ui,sans-serif;background:#fff;padding:24px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.05);border:1px solid #e2e8f0;max-width:1300px;margin:40px auto;color:#0f172a}
+/* 1. Changed margin to 0 to remove the 40px top/bottom space */
+/* 2. Changed max-width to 100% to fill the space instead of centering with a gap */
+.pts{
+    font-family:system-ui,sans-serif;
+    background:#fff;
+    padding:24px;
+    border-radius:12px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05);
+    border:1px solid #e2e8f0;
+    max-width:100%; /* Changed from 1300px to 100% */
+    margin:0; /* Changed from 40px auto to 0 */
+    color:#0f172a;
+    box-sizing:border-box;
+}
 .pts *{box-sizing:border-box;margin:0;padding:0}
 .pts-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;gap:16px;flex-wrap:wrap}
 .pts-head h1{font-size:24px;font-weight:600;color:#111827;margin-bottom:6px}
