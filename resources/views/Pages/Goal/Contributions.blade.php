@@ -1,523 +1,438 @@
-@extends('layout.dashboard')
-@section('title', 'Manage Contributions')
+@extends('Layout.dashboard')
+@section('title','Contributions')
 @section('content')
 
 
-<section id="manage-contributions-section">
+<section id="manage-contributions-app">
     <style>
-        /* Scoped CSS for Manage Contributions Section */
-        #manage-contributions-section {
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --border-color: #e5e7eb;
-            --text-main: #111827;
-            --text-muted: #6b7280;
-            --danger: #ef4444;
-
+        /* Base & Reset */
+        #manage-contributions-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 0.5rem;
-            border: 1px solid var(--border-color);
+            color: #374151;
+            background: #f9fafb;
+            padding: 24px;
+            box-sizing: border-box;
+            font-size: 14px;
+            position: relative;
+            min-height: 100vh;
+        }
+        #manage-contributions-app * { box-sizing: border-box; }
+        
+        /* Header */
+        .mc-header { margin-bottom: 24px; }
+        .mc-header h2 { margin: 0 0 6px 0; font-size: 20px; font-weight: 600; color: #111827; }
+        .mc-header p { margin: 0; color: #6b7280; font-size: 13px; }
+
+        /* Layout Grid */
+        .mc-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Left Side: Form */
+        .mc-form-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
         }
+        .mc-form-header { margin-bottom: 20px; }
+        .mc-form-header h3 { margin: 0 0 4px 0; font-size: 16px; font-weight: 600; color: #111827; }
+        .mc-form-header p { margin: 0; font-size: 13px; color: #6b7280; }
 
-        #manage-contributions-section * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Toolbar (Search & Per Page) */
-        #manage-contributions-section .toolbar {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
+        .mc-form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        .mc-form-group label { font-size: 13px; font-weight: 500; color: #374151; }
+        
+        .mc-input-wrapper {
             display: flex;
-            gap: 1rem;
             align-items: center;
-            flex-wrap: wrap;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            padding: 0 12px;
+            height: 42px;
         }
-
-        #manage-contributions-section .search-box {
-            display: flex;
-            flex: 1;
-            min-width: 250px;
+        .mc-input-wrapper:focus-within {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
         }
+        .mc-input-wrapper svg { color: #6b7280; width: 18px; height: 18px; margin-right: 10px; flex-shrink: 0; }
+        .mc-input-wrapper input, .mc-input-wrapper select {
+            border: none; outline: none; font-size: 14px; color: #111827;
+            background: transparent; font-family: inherit; width: 100%; height: 100%;
+        }
+        .mc-input-wrapper select { cursor: pointer; }
 
-        #manage-contributions-section .search-box input {
-            flex: 1;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-right: none;
-            border-radius: 0.375rem 0 0 0.375rem;
-            font-size: 0.875rem;
+        .mc-form-group textarea {
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #111827;
+            resize: vertical;
+            min-height: 80px;
             outline: none;
             transition: border-color 0.2s;
         }
-
-        #manage-contributions-section .search-box input:focus {
-            border-color: var(--primary);
+        .mc-form-group textarea:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
         }
 
-        #manage-contributions-section .search-box button {
-            background-color: var(--primary);
-            color: white;
-            border: 1px solid var(--primary);
-            padding: 0 1rem;
-            border-radius: 0 0.375rem 0.375rem 0;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
-
-        #manage-contributions-section .search-box button:hover {
-            background-color: var(--primary-hover);
-        }
-
-        #manage-contributions-section .toolbar select {
-            padding: 0.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            outline: none;
-            background: white;
-            cursor: pointer;
-        }
-
-        /* Table Styles */
-        #manage-contributions-section .table-container {
-            overflow-x: auto;
-        }
-
-        #manage-contributions-section table {
+        .mc-btn-submit {
             width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        #manage-contributions-section th {
-            background-color: #f9fafb;
-            padding: 0.75rem 1rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border-color);
-            white-space: nowrap;
-        }
-
-        #manage-contributions-section td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.875rem;
-            vertical-align: middle;
-        }
-
-        #manage-contributions-section .goal-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        #manage-contributions-section .icon-box {
-            width: 32px;
-            height: 32px;
-            background-color: #ecfdf5;
-            color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        #manage-contributions-section .goal-title {
-            font-weight: 500;
-            color: var(--text-main);
-        }
-
-        #manage-contributions-section .goal-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            max-width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        #manage-contributions-section .amount {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        #manage-contributions-section .badge {
-            padding: 0.25rem 0.5rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: inline-block;
-        }
-
-        #manage-contributions-section .badge.manual {
-            background-color: #eff6ff;
-            color: #3b82f6;
-            border: 1px solid #bfdbfe;
-        }
-
-        #manage-contributions-section .badge.automatic {
-            background-color: #ecfdf5;
-            color: #10b981;
-            border: 1px solid #a7f3d0;
-        }
-
-        #manage-contributions-section .actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        #manage-contributions-section .action-btn {
-            background: none;
+            background: #10b981;
+            color: #fff;
             border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            color: var(--text-muted);
-            padding: 0.25rem;
-            font-size: 1rem;
-            transition: color 0.2s;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+        .mc-btn-submit:hover { background: #059669; }
+
+        /* Right Side: Table Area */
+        .mc-table-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        #manage-contributions-section .action-btn:hover { color: var(--text-main); }
-        #manage-contributions-section .action-btn.delete:hover { color: var(--danger); }
-
-        /* Pagination */
-        #manage-contributions-section .pagination {
-            padding: 1rem;
+        /* Toolbar */
+        .mc-toolbar { padding: 16px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .mc-search-group { display: flex; gap: 8px; flex: 1; max-width: 450px; }
+        
+        .mc-search-input-wrapper {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-top: 1px solid var(--border-color);
-            flex-wrap: wrap;
-            gap: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            padding: 0 12px;
+            height: 36px;
+            flex: 1;
         }
+        .mc-search-input-wrapper:focus-within { border-color: #10b981; }
+        .mc-search-input-wrapper svg { color: #6b7280; width: 16px; height: 16px; margin-right: 8px; }
+        .mc-search-input-wrapper input { border: none; outline: none; font-size: 13px; width: 100%; background: transparent; }
+        
+        .mc-btn { padding: 0 12px; height: 36px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
+        .mc-btn:hover { background: #f9fafb; }
+        .mc-btn-primary { background: #10b981; color: #fff; border-color: #10b981; }
+        .mc-btn-primary:hover { background: #059669; border-color: #059669; }
+        
+        .mc-select-input { padding: 0 12px; height: 36px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; background: #fff; cursor: pointer; }
 
-        #manage-contributions-section .page-numbers {
-            display: flex;
-            gap: 0.25rem;
-            flex-wrap: wrap;
-        }
+        /* Table */
+        .mc-table-wrapper { width: 100%; overflow-x: auto; }
+        .mc-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .mc-table th, .mc-table td { padding: 16px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+        .mc-table th { background: #f9fafb; font-weight: 500; color: #4b5563; font-size: 12px; cursor: pointer; user-select: none; }
+        .mc-table th:hover { background: #f3f4f6; }
+        .mc-table tbody tr:hover { background: #f9fafb; }
+        
+        /* Cell Elements */
+        .mc-goal-cell { display: flex; align-items: center; gap: 12px; }
+        .mc-icon-box { width: 32px; height: 32px; border-radius: 6px; background: #ecfdf5; color: #10b981; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .mc-goal-info { display: flex; flex-direction: column; gap: 2px; }
+        .mc-goal-name { font-weight: 500; color: #111827; font-size: 13px; }
+        .mc-goal-desc { font-size: 12px; color: #6b7280; }
+        
+        .mc-date { display: flex; align-items: center; gap: 6px; color: #4b5563; font-size: 13px; }
+        .mc-amount { font-weight: 500; color: #059669; }
+        
+        .mc-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; border: 1px solid transparent; }
+        .mc-badge-manual { background: #eff6ff; color: #1d4ed8; border-color: #dbeafe; }
+        .mc-badge-automatic { background: #ecfdf5; color: #059669; border-color: #d1fae5; }
 
-        #manage-contributions-section .page-btn {
-            padding: 0.5rem 0.75rem;
-            border: 1px solid var(--border-color);
-            background: white;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            min-width: 36px;
-            text-align: center;
-        }
+        .mc-actions { display: flex; gap: 12px; justify-content: center; }
+        .mc-action-btn { background: none; border: none; cursor: pointer; color: #3b82f6; padding: 4px; border-radius: 4px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .mc-action-btn.mc-delete { color: #ef4444; }
+        .mc-action-btn:hover { background: #eff6ff; }
+        .mc-action-btn.mc-delete:hover { background: #fef2f2; }
 
-        #manage-contributions-section .page-btn:hover:not(:disabled) {
-            background-color: #f3f4f6;
-        }
+        /* Empty State */
+        .mc-empty { text-align: center; padding: 40px; color: #6b7280; }
 
-        #manage-contributions-section .page-btn.active {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        #manage-contributions-section .page-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        #manage-contributions-section .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-muted);
+        /* Responsive */
+        @media (max-width: 992px) {
+            .mc-layout { grid-template-columns: 1fr; }
         }
     </style>
 
-    <!-- Toolbar -->
-    <div class="toolbar">
-        <div class="search-box">
-            <input type="text" class="searchInput" placeholder="Search contributions...">
-            <button class="searchBtn">Search</button>
+    <!-- Page Header -->
+    <div class="mc-header">
+        <h2>Manage Contributions</h2>
+        <p>Track and manage financial contributions, deposit amounts, notes, and contribution dates for organization goals.</p>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="mc-layout">
+        
+        <!-- Left Side: Add Form -->
+        <div class="mc-form-card">
+            <div class="mc-form-header">
+                <h3>Add New Contribution</h3>
+                <p>Fill in the details to create a new contribution</p>
+            </div>
+            
+            <form id="add-contribution-form">
+                <div class="mc-form-group">
+                    <label>Goal</label>
+                    <div class="mc-input-wrapper">
+                        <select id="form-goal" required>
+                            <option value="Investment Portfolio">Investment Portfolio</option>
+                            <option value="Credit Card Debt">Credit Card Debt</option>
+                            <option value="Operational Cost Reduction">Operational Cost Reduction</option>
+                            <option value="Retirement Savings">Retirement Savings</option>
+                            <option value="Student Loan Payoff">Student Loan Payoff</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mc-form-group">
+                    <label>Date</label>
+                    <div class="mc-input-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <input type="date" id="form-date" required>
+                    </div>
+                </div>
+
+                <div class="mc-form-group">
+                    <label>Amount</label>
+                    <div class="mc-input-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        <input type="number" id="form-amount" placeholder="0.00" step="0.01" min="0" required>
+                    </div>
+                </div>
+
+                <div class="mc-form-group">
+                    <label>Notes</label>
+                    <textarea id="form-notes" placeholder="Enter notes..."></textarea>
+                </div>
+
+                <button type="submit" class="mc-btn-submit">Add Contribution</button>
+            </form>
         </div>
-        <select class="perPageSelect">
-            <option value="10">10 per page</option>
-            <option value="5">5 per page</option>
-            <option value="25">25 per page</option>
-            <option value="50">50 per page</option>
-        </select>
-    </div>
 
-    <!-- Table -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Goal</th>
-                    <th>Date ↓↑</th>
-                    <th>Amount ↓↑</th>
-                    <th>Type ↓↑</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody class="tableBody">
-                <!-- Data injected via JS -->
-            </tbody>
-        </table>
-    </div>
+        <!-- Right Side: Table Area -->
+        <div class="mc-table-card">
+            <!-- Toolbar -->
+            <div class="mc-toolbar">
+                <div class="mc-search-group">
+                    <div class="mc-search-input-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="search-input" placeholder="Search contributions...">
+                    </div>
+                    <button class="mc-btn mc-btn-primary" id="search-btn">Search</button>
+                    <button class="mc-btn" id="clear-btn">Clear</button>
+                </div>
+                
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <select class="mc-select-input" id="page-size">
+                        <option value="10">10 per page</option>
+                        <option value="5">5 per page</option>
+                        <option value="20">20 per page</option>
+                    </select>
+                    <button class="mc-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        Filters
+                    </button>
+                </div>
+            </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <div class="pageInfo" style="font-size: 0.875rem; color: var(--text-muted);"></div>
-        <div class="page-numbers">
-            <!-- Pagination buttons injected via JS -->
+            <!-- Table -->
+            <div class="mc-table-wrapper">
+                <table class="mc-table">
+                    <thead>
+                        <tr>
+                            <th>Goal ↕</th>
+                            <th>Date ↕</th>
+                            <th>Amount ↕</th>
+                            <th>Type ↕</th>
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Rows injected via JS -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <script>
-        (function() {
-            const section = document.getElementById('manage-contributions-section');
-
-            // --- 1. Deterministic PRNG (Mulberry32) ---
-            // Same seed → same output on every page refresh.
-            function seededRandom(seed) {
-                return function() {
-                    seed |= 0;
-                    seed = seed + 0x6D2B79F5 | 0;
-                    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
-                    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-                    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-                };
-            }
-
-            function hashString(str) {
-                let h = 0;
-                for (let i = 0; i < str.length; i++) {
-                    h = Math.imul(31, h) + str.charCodeAt(i) | 0;
-                }
-                return h;
-            }
-
-            const rand = seededRandom(hashString('manage-contributions-v1'));
-
-            // --- 2. Generate 50 Entities of Dummy Data (deterministic) ---
-            const goals = [
-                { name: "Investment Portfolio", desc: "Initial contribution to start the goal" },
-                { name: "Credit Card Debt", desc: "Monthly automatic transfer" },
-                { name: "Operational Cost Reduction", desc: "Bonus allocation from quarterly performance" },
-                { name: "Retirement Savings", desc: "Additional contribution from savings" },
-                { name: "Student Loan Payoff", desc: "Scheduled monthly contribution" }
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. Initial Mock Data
+            let contributionsData = [
+                { id: 1, goal: "Investment Portfolio", desc: "Initial contribution to start the goal", date: "2026-01-17", amount: 5000.00, type: "Manual" },
+                { id: 2, goal: "Credit Card Debt", desc: "Monthly automatic transfer", date: "2026-01-22", amount: 2500.00, type: "Automatic" },
+                { id: 3, goal: "Operational Cost Reduction", desc: "Bonus allocation from quarterly performance", date: "2026-01-27", amount: 1000.00, type: "Automatic" },
+                { id: 4, goal: "Retirement Savings", desc: "Additional contribution from savings", date: "2026-02-01", amount: 3000.00, type: "Manual" },
+                { id: 5, goal: "Student Loan Payoff", desc: "Scheduled monthly contribution", date: "2026-02-06", amount: 1500.00, type: "Automatic" }
             ];
 
-            // Fixed reference date so relative dates don't drift day-to-day
-            const REFERENCE_DATE = new Date('2026-01-01T00:00:00Z');
-
-            let contributions = [];
-            for (let i = 1; i <= 50; i++) {
-                const goalObj = goals[Math.floor(rand() * goals.length)];
-                const isAutomatic = rand() > 0.5;
-
-                const date = new Date(REFERENCE_DATE);
-                date.setDate(date.getDate() - Math.floor(rand() * 365));
-
-                contributions.push({
-                    id: i,
-                    goal: goalObj.name,
-                    desc: goalObj.desc,
-                    date: date.toISOString().split('T')[0],
-                    amount: (rand() * 5000 + 100).toFixed(2),
-                    type: isAutomatic ? 'Automatic' : 'Manual'
-                });
-            }
-
-            // --- 3. State Management ---
+            // 2. State
             let state = {
-                data: [...contributions],
-                filteredData: [...contributions],
-                currentPage: 1,
-                perPage: 10,
+                data: [...contributionsData],
+                filteredData: [...contributionsData],
                 searchQuery: ""
             };
 
-            // --- 4. DOM Elements (Scoped to the section) ---
-            const tableBody = section.querySelector('.tableBody');
-            const pageNumbers = section.querySelector('.page-numbers');
-            const pageInfo = section.querySelector('.pageInfo');
-            const perPageSelect = section.querySelector('.perPageSelect');
-            const searchInput = section.querySelector('.searchInput');
-            const searchBtn = section.querySelector('.searchBtn');
+            // 3. DOM Elements
+            const tableBody = document.getElementById('table-body');
+            const form = document.getElementById('add-contribution-form');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const dateInput = document.getElementById('form-date');
 
-            // --- 5. Core Functions ---
-            function updateUI() {
-                renderTable();
-                renderPagination();
-            }
+            // 4. Set Default Date to today
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
 
-            function renderTable() {
+            // 5. Helper Functions
+            const formatMoney = (val) => "$" + Number(val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const formatDate = (dateStr) => {
+                const d = new Date(dateStr);
+                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            };
+
+            // 6. Render Function
+            const renderTable = () => {
                 tableBody.innerHTML = '';
-
+                
                 if (state.filteredData.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">No contributions found.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="5" class="mc-empty">No contributions found.</td></tr>`;
                     return;
                 }
 
-                const startIndex = (state.currentPage - 1) * state.perPage;
-                const endIndex = startIndex + state.perPage;
-                const paginatedData = state.filteredData.slice(startIndex, endIndex);
-
-                paginatedData.forEach(item => {
+                state.filteredData.forEach((row, index) => {
+                    const badgeClass = row.type === 'Manual' ? 'mc-badge-manual' : 'mc-badge-automatic';
                     const tr = document.createElement('tr');
-
-                    const dateObj = new Date(item.date);
-                    const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
-
                     tr.innerHTML = `
                         <td>
-                            <div class="goal-cell">
-                                <div class="icon-box">$</div>
-                                <div>
-                                    <div class="goal-title">${item.goal}</div>
-                                    <div class="goal-desc">${item.desc}</div>
+                            <div class="mc-goal-cell">
+                                <div class="mc-icon-box">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                </div>
+                                <div class="mc-goal-info">
+                                    <span class="mc-goal-name">${row.goal}</span>
+                                    <span class="mc-goal-desc">${row.desc}</span>
                                 </div>
                             </div>
                         </td>
-                        <td style="color: var(--text-muted);">📅 ${formattedDate}</td>
-                        <td class="amount">$${Number(item.amount).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
                         <td>
-                            <span class="badge ${item.type.toLowerCase()}">${item.type}</span>
+                            <div class="mc-date">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                ${formatDate(row.date)}
+                            </div>
                         </td>
+                        <td><span class="mc-amount">${formatMoney(row.amount)}</span></td>
+                        <td><span class="mc-badge ${badgeClass}">${row.type}</span></td>
                         <td>
-                            <div class="actions">
-                                <button class="action-btn edit-btn" title="Edit" data-id="${item.id}">✏️</button>
-                                <button class="action-btn delete delete-btn" title="Delete" data-id="${item.id}">🗑️</button>
+                            <div class="mc-actions">
+                                <button class="mc-action-btn" onclick="editContribution(${index})" title="Edit">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </button>
+                                <button class="mc-action-btn mc-delete" onclick="deleteContribution(${index})" title="Delete">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                </button>
                             </div>
                         </td>
                     `;
-
                     tableBody.appendChild(tr);
                 });
-            }
+            };
 
-            function renderPagination() {
-                const totalPages = Math.ceil(state.filteredData.length / state.perPage) || 1;
-
-                const startRecord = state.filteredData.length === 0 ? 0 : ((state.currentPage - 1) * state.perPage) + 1;
-                const endRecord = Math.min(state.currentPage * state.perPage, state.filteredData.length);
-                pageInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${state.filteredData.length} entries`;
-
-                pageNumbers.innerHTML = '';
-
-                // Previous Button
-                const prevBtn = document.createElement('button');
-                prevBtn.className = 'page-btn';
-                prevBtn.textContent = 'Previous';
-                prevBtn.disabled = state.currentPage === 1;
-                prevBtn.onclick = () => {
-                    if (state.currentPage > 1) {
-                        state.currentPage--;
-                        updateUI();
-                    }
-                };
-                pageNumbers.appendChild(prevBtn);
-
-                // Numbered Buttons
-                for (let i = 1; i <= totalPages; i++) {
-                    const btn = document.createElement('button');
-                    btn.className = `page-btn ${i === state.currentPage ? 'active' : ''}`;
-                    btn.textContent = i;
-                    btn.onclick = () => {
-                        state.currentPage = i;
-                        updateUI();
-                    };
-                    pageNumbers.appendChild(btn);
-                }
-
-                // Next Button
-                const nextBtn = document.createElement('button');
-                nextBtn.className = 'page-btn';
-                nextBtn.textContent = 'Next';
-                nextBtn.disabled = state.currentPage === totalPages;
-                nextBtn.onclick = () => {
-                    if (state.currentPage < totalPages) {
-                        state.currentPage++;
-                        updateUI();
-                    }
-                };
-                pageNumbers.appendChild(nextBtn);
-            }
-
-            // --- 6. Event Listeners ---
-            function performSearch() {
-                const query = searchInput.value.toLowerCase();
-                state.searchQuery = query;
-
-                state.filteredData = state.data.filter(item =>
-                    item.goal.toLowerCase().includes(query) ||
+            // 7. Filter Logic
+            const applyFilters = () => {
+                const query = state.searchQuery.toLowerCase();
+                state.filteredData = state.data.filter(item => 
+                    item.goal.toLowerCase().includes(query) || 
                     item.desc.toLowerCase().includes(query) ||
                     item.type.toLowerCase().includes(query)
                 );
+                renderTable();
+            };
 
-                state.currentPage = 1;
-                updateUI();
-            }
+            // 8. Event Listeners
+            // Form Submit
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const newGoal = document.getElementById('form-goal').value;
+                const newDate = document.getElementById('form-date').value;
+                const newAmount = parseFloat(document.getElementById('form-amount').value);
+                const newNotes = document.getElementById('form-notes').value || "Manual contribution entry";
 
-            searchBtn.addEventListener('click', performSearch);
+                // Add to data
+                state.data.unshift({
+                    id: Date.now(),
+                    goal: newGoal,
+                    desc: newNotes,
+                    date: newDate,
+                    amount: newAmount,
+                    type: "Manual" // Defaulting form entries to Manual
+                });
+
+                // Reset form & re-render
+                form.reset();
+                dateInput.value = `${yyyy}-${mm}-${dd}`; // Reset date to today
+                applyFilters(); // Re-render table with new data
+            });
+
+            // Search
+            searchBtn.addEventListener('click', () => {
+                state.searchQuery = searchInput.value.trim();
+                applyFilters();
+            });
+
             searchInput.addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') performSearch();
-            });
-
-            perPageSelect.addEventListener('change', (e) => {
-                state.perPage = parseInt(e.target.value);
-                state.currentPage = 1;
-                updateUI();
-            });
-
-            // Event delegation for edit/delete buttons (avoids global window pollution
-            // and works correctly regardless of re-renders)
-            tableBody.addEventListener('click', (e) => {
-                const btn = e.target.closest('button');
-                if (!btn) return;
-
-                const id = parseInt(btn.getAttribute('data-id'));
-
-                if (btn.classList.contains('delete-btn')) {
-                    deleteContribution(id);
-                } else if (btn.classList.contains('edit-btn')) {
-                    alert('Edit function triggered for ID: ' + id);
+                if (e.key === 'Enter') {
+                    state.searchQuery = searchInput.value.trim();
+                    applyFilters();
                 }
             });
 
-            function deleteContribution(id) {
-                if (confirm("Are you sure you want to delete this contribution?")) {
-                    state.data = state.data.filter(item => item.id !== id);
+            // Clear
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                state.searchQuery = '';
+                applyFilters();
+            });
 
-                    if (state.searchQuery) {
-                        performSearch();
-                    } else {
-                        state.filteredData = [...state.data];
-                        const totalPages = Math.ceil(state.filteredData.length / state.perPage) || 1;
-                        if (state.currentPage > totalPages) {
-                            state.currentPage = totalPages;
-                        }
-                        updateUI();
-                    }
-                }
-            }
+            // Global Actions (Edit/Delete)
+            window.editContribution = (index) => {
+                console.log("Editing row:", state.filteredData[index]);
+                // Implement edit modal or inline editing here
+            };
 
-            // --- 7. Initialization ---
-            updateUI();
-        })();
+            window.deleteContribution = (index) => {
+                // Get the actual item from the filtered data to remove it from the main state
+                const itemToDelete = state.filteredData[index];
+                state.data = state.data.filter(item => item.id !== itemToDelete.id);
+                applyFilters();
+            };
+
+            // 9. Initialize
+            applyFilters();
+        });
     </script>
 </section>
 @endsection
