@@ -53,6 +53,7 @@
             --primary: #3b82f6;
             --primary-hover: #2563eb;
             --primary-light: #eff6ff;
+            --danger: #ef4444;
         }
         #manage-locations-app * { box-sizing: border-box; }
         
@@ -132,14 +133,18 @@
 
         .ml-text-muted { color: #6b7280; }
 
-        .ml-actions { display: flex; gap: 12px; justify-content: flex-end; }
-        .ml-action-btn { background: none; border: none; cursor: pointer; color: #6b7280; padding: 0; transition: color 0.2s; display: flex; align-items: center; justify-content: center; }
-        .ml-action-btn:hover { color: #111; }
-        
-        /* Changed to Bright Blue for view */
-        .ml-action-btn.ml-view:hover { color: var(--primary); }
-        .ml-action-btn.ml-edit:hover { color: #3b82f6; }
-        .ml-action-btn.ml-delete:hover { color: #ef4444; }
+        /* 3-Dots Menu */
+        .ml-action-menu { position: relative; display: inline-flex; justify-content: center; width: 100%; }
+        .ml-action-menu-btn { background: transparent; border: none; cursor: pointer; color: #6b7280; padding: 4px; border-radius: 4px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .ml-action-menu-btn:hover { background: #f3f4f6; color: #111; }
+        .ml-action-menu-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .ml-action-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 20; min-width: 140px; padding: 4px 0; }
+        .ml-action-dropdown.show { display: block; }
+        .ml-action-dropdown-item { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; color: #334155; cursor: pointer; white-space: nowrap; width: 100%; background: none; border: none; text-align: left; font-family: inherit; }
+        .ml-action-dropdown-item:hover { background: #f8fafc; }
+        .ml-action-dropdown-item.delete { color: var(--danger); }
+        .ml-action-dropdown-item.delete:hover { background: #fef2f2; }
+        .ml-action-dropdown-item svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         /* Pagination Area */
         .ml-pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e5e7eb; background: #fff; }
@@ -230,7 +235,7 @@
                         <th data-sort="type">Type <span style="font-size:10px; color:#9ca3af;">↕</span></th>
                         <th>Parent Location</th>
                         <th>Status</th>
-                        <th style="text-align: right;">Actions</th>
+                        <th style="text-align: right;"></th>
                     </tr>
                 </thead>
                 <tbody id="ml-table-body">
@@ -313,21 +318,37 @@
                 return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icons[type] || icons.Room}</svg>`;
             };
 
+            // 3-Dots Menu Builder
+            const buildActionMenu = (actualIndex) => `
+                <div class="ml-action-menu">
+                    <button class="ml-action-menu-btn" onclick="toggleMenu(this)">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                    <div class="ml-action-dropdown">
+                        <button class="ml-action-dropdown-item" onclick="viewLocation(${actualIndex})">
+                            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            View
+                        </button>
+                        <button class="ml-action-dropdown-item" onclick="editLocation(${actualIndex})">
+                            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit
+                        </button>
+                        <button class="ml-action-dropdown-item delete" onclick="deleteLocation(${actualIndex})">
+                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+
             // Function: Apply Filters & Search
             const applyFilters = () => {
                 state.filteredData = state.data.filter(item => {
-                    // Filter by tab
                     const matchesCondition = state.activeFilter === 'all' || item.type === state.activeFilter;
-                    
-                    // Filter by search
                     const query = state.searchQuery.toLowerCase();
-                    const matchesSearch = query === '' || 
-                        item.name.toLowerCase().includes(query) || 
-                        item.id.toLowerCase().includes(query);
-                    
+                    const matchesSearch = query === '' || item.name.toLowerCase().includes(query) || item.id.toLowerCase().includes(query);
                     return matchesCondition && matchesSearch;
                 });
-
                 state.currentPage = 1;
                 renderView();
             };
@@ -344,12 +365,8 @@
                 const endIndex = Math.min(startIndex + state.pageSize, totalItems);
                 const paginatedData = state.filteredData.slice(startIndex, endIndex);
 
-                // Update Text
-                pageInfo.textContent = totalItems === 0 
-                    ? "Showing 0 results" 
-                    : `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} results`;
+                pageInfo.textContent = totalItems === 0 ? "Showing 0 results" : `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} results`;
 
-                // Render Content
                 if (state.viewMode === 'list') {
                     listContainer.style.display = 'block';
                     gridContainer.style.display = 'none';
@@ -360,7 +377,6 @@
                     renderGridCards(paginatedData, startIndex);
                 }
 
-                // Update Pagination
                 renderPagination(totalPages);
             };
 
@@ -388,19 +404,7 @@
                         <td><span class="ml-badge ml-badge-type">${row.type}</span></td>
                         <td class="ml-text-muted">${row.parent}</td>
                         <td><span class="ml-badge ml-badge-status">${row.status}</span></td>
-                        <td>
-                            <div class="ml-actions">
-                                <button class="ml-action-btn ml-view" onclick="viewLocation(${actualIndex})" title="View">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
-                                <button class="ml-action-btn ml-edit" onclick="editLocation(${actualIndex})" title="Edit">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                </button>
-                                <button class="ml-action-btn ml-delete" onclick="deleteLocation(${actualIndex})" title="Delete">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </button>
-                            </div>
-                        </td>
+                        <td>${buildActionMenu(actualIndex)}</td>
                     `;
                     tableBody.appendChild(tr);
                 });
@@ -436,17 +440,7 @@
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span class="ml-badge ml-badge-status">${row.status}</span>
-                            <div class="ml-actions">
-                                <button class="ml-action-btn ml-view" onclick="viewLocation(${actualIndex})">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
-                                <button class="ml-action-btn ml-edit" onclick="editLocation(${actualIndex})">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                </button>
-                                <button class="ml-action-btn ml-delete" onclick="deleteLocation(${actualIndex})">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </button>
-                            </div>
+                            ${buildActionMenu(actualIndex)}
                         </div>
                     `;
                     gridContainer.appendChild(div);
@@ -479,15 +473,40 @@
                 }
             };
 
-            // Action Handlers (Simulated, no loading text)
-            window.viewLocation = (index) => { console.log("View", state.filteredData[index].name); };
-            window.editLocation = (index) => { console.log("Edit", state.filteredData[index].name); };
-            window.deleteLocation = (index) => {
-                const item = state.filteredData[index];
-                // In a real app, confirm before deleting
-                state.data = state.data.filter(a => a.id !== item.id);
-                applyFilters();
+            // Global Actions
+            window.toggleMenu = (btn) => {
+                const dropdowns = document.querySelectorAll('.ml-action-dropdown');
+                dropdowns.forEach(d => {
+                    if (d !== btn.nextElementSibling) d.classList.remove('show');
+                });
+                btn.nextElementSibling.classList.toggle('show');
             };
+
+            window.viewLocation = (index) => {
+                document.querySelectorAll('.ml-action-dropdown').forEach(d => d.classList.remove('show'));
+                console.log("View", state.filteredData[index].name);
+            };
+            
+            window.editLocation = (index) => {
+                document.querySelectorAll('.ml-action-dropdown').forEach(d => d.classList.remove('show'));
+                console.log("Edit", state.filteredData[index].name);
+            };
+            
+            window.deleteLocation = (index) => {
+                document.querySelectorAll('.ml-action-dropdown').forEach(d => d.classList.remove('show'));
+                const item = state.filteredData[index];
+                if (confirm(`Delete location ${item.name}?`)) {
+                    state.data = state.data.filter(a => a.id !== item.id);
+                    applyFilters();
+                }
+            };
+
+            // Close menus on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.ml-action-menu')) {
+                    document.querySelectorAll('.ml-action-dropdown').forEach(d => d.classList.remove('show'));
+                }
+            });
 
             // Event: Search
             document.getElementById('ml-search-btn').addEventListener('click', () => {
@@ -502,7 +521,7 @@
                 }
             });
 
-            // Event: Clear (Clears search input only once and resets)
+            // Event: Clear
             document.getElementById('ml-clear-btn').addEventListener('click', () => {
                 searchInput.value = '';
                 state.searchQuery = '';
