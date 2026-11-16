@@ -50,6 +50,7 @@
             --primary: #3b82f6;
             --primary-hover: #2563eb;
             --primary-light: #eff6ff;
+            --danger: #ef4444;
         }
         #manage-contributions-app * { box-sizing: border-box; }
         
@@ -118,7 +119,6 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
-        /* Changed to Bright Blue */
         .mc-btn-submit {
             width: 100%;
             background: var(--primary);
@@ -166,7 +166,6 @@
         .mc-btn { padding: 0 12px; height: 36px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; color: #374151; }
         .mc-btn:hover { background: #f9fafb; }
         
-        /* Changed to Bright Blue */
         .mc-btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
         .mc-btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
         
@@ -183,7 +182,6 @@
         /* Cell Elements */
         .mc-goal-cell { display: flex; align-items: center; gap: 12px; }
         
-        /* Changed to Bright Blue */
         .mc-icon-box { width: 32px; height: 32px; border-radius: 6px; background: var(--primary-light); color: var(--primary); display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         
         .mc-goal-info { display: flex; flex-direction: column; gap: 2px; }
@@ -192,20 +190,24 @@
         
         .mc-date { display: flex; align-items: center; gap: 6px; color: #4b5563; font-size: 13px; }
         
-        /* Changed to Bright Blue */
         .mc-amount { font-weight: 500; color: var(--primary); }
         
         .mc-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; border: 1px solid transparent; }
         .mc-badge-manual { background: #eff6ff; color: #1d4ed8; border-color: #dbeafe; }
         .mc-badge-automatic { background: #ecfdf5; color: #059669; border-color: #d1fae5; }
 
-        .mc-actions { display: flex; gap: 12px; justify-content: center; }
-        
-        /* Changed to Bright Blue */
-        .mc-action-btn { background: none; border: none; cursor: pointer; color: var(--primary); padding: 4px; border-radius: 4px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
-        .mc-action-btn.mc-delete { color: #ef4444; }
-        .mc-action-btn:hover { background: var(--primary-light); }
-        .mc-action-btn.mc-delete:hover { background: #fef2f2; }
+        /* 3-Dots Menu */
+        .mc-action-menu { position: relative; display: inline-flex; justify-content: center; width: 100%; }
+        .mc-action-menu-btn { background: transparent; border: none; cursor: pointer; color: #6b7280; padding: 4px; border-radius: 4px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .mc-action-menu-btn:hover { background: #f3f4f6; color: #111; }
+        .mc-action-menu-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .mc-action-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 20; min-width: 140px; padding: 4px 0; }
+        .mc-action-dropdown.show { display: block; }
+        .mc-action-dropdown-item { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; color: #334155; cursor: pointer; white-space: nowrap; width: 100%; background: none; border: none; text-align: left; font-family: inherit; }
+        .mc-action-dropdown-item:hover { background: #f8fafc; }
+        .mc-action-dropdown-item.delete { color: var(--danger); }
+        .mc-action-dropdown-item.delete:hover { background: #fef2f2; }
+        .mc-action-dropdown-item svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         /* Empty State */
         .mc-empty { text-align: center; padding: 40px; color: #6b7280; }
@@ -306,7 +308,7 @@
                             <th>Date ↕</th>
                             <th>Amount ↕</th>
                             <th>Type ↕</th>
-                            <th style="text-align: center;">Actions</th>
+                            <th style="text-align: center;"></th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
@@ -369,6 +371,19 @@
 
                 state.filteredData.forEach((row, index) => {
                     const badgeClass = row.type === 'Manual' ? 'mc-badge-manual' : 'mc-badge-automatic';
+
+                    // 3-Dots menu items
+                    const menuItems = `
+                        <button class="mc-action-dropdown-item" onclick="editContribution(${index})">
+                            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit
+                        </button>
+                        <button class="mc-action-dropdown-item delete" onclick="deleteContribution(${index})">
+                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            Delete
+                        </button>
+                    `;
+
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>
@@ -391,13 +406,13 @@
                         <td><span class="mc-amount">${formatMoney(row.amount)}</span></td>
                         <td><span class="mc-badge ${badgeClass}">${row.type}</span></td>
                         <td>
-                            <div class="mc-actions">
-                                <button class="mc-action-btn" onclick="editContribution(${index})" title="Edit">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <div class="mc-action-menu">
+                                <button class="mc-action-menu-btn" onclick="toggleMenu(this)">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
                                 </button>
-                                <button class="mc-action-btn mc-delete" onclick="deleteContribution(${index})" title="Delete">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </button>
+                                <div class="mc-action-dropdown">
+                                    ${menuItems}
+                                </div>
                             </div>
                         </td>
                     `;
@@ -416,8 +431,38 @@
                 renderTable();
             };
 
-            // 8. Event Listeners
-            // Form Submit
+            // 8. Global Action Handlers
+            window.toggleMenu = function(btn) {
+                const dropdowns = document.querySelectorAll('.mc-action-dropdown');
+                dropdowns.forEach(d => {
+                    if (d !== btn.nextElementSibling) d.classList.remove('show');
+                });
+                btn.nextElementSibling.classList.toggle('show');
+            };
+
+            window.editContribution = (index) => {
+                document.querySelectorAll('.mc-action-dropdown').forEach(d => d.classList.remove('show'));
+                console.log("Editing row:", state.filteredData[index]);
+                alert(`Editing: ${state.filteredData[index].goal}`);
+            };
+
+            window.deleteContribution = (index) => {
+                document.querySelectorAll('.mc-action-dropdown').forEach(d => d.classList.remove('show'));
+                const itemToDelete = state.filteredData[index];
+                if (confirm(`Delete contribution for ${itemToDelete.goal}?`)) {
+                    state.data = state.data.filter(item => item.id !== itemToDelete.id);
+                    applyFilters();
+                }
+            };
+
+            // Close menus on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.mc-action-menu')) {
+                    document.querySelectorAll('.mc-action-dropdown').forEach(d => d.classList.remove('show'));
+                }
+            });
+
+            // 9. Event Listeners
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 
@@ -426,23 +471,20 @@
                 const newAmount = parseFloat(document.getElementById('form-amount').value);
                 const newNotes = document.getElementById('form-notes').value || "Manual contribution entry";
 
-                // Add to data
                 state.data.unshift({
                     id: Date.now(),
                     goal: newGoal,
                     desc: newNotes,
                     date: newDate,
                     amount: newAmount,
-                    type: "Manual" // Defaulting form entries to Manual
+                    type: "Manual"
                 });
 
-                // Reset form & re-render
                 form.reset();
-                dateInput.value = `${yyyy}-${mm}-${dd}`; // Reset date to today
-                applyFilters(); // Re-render table with new data
+                dateInput.value = `${yyyy}-${mm}-${dd}`;
+                applyFilters();
             });
 
-            // Search
             searchBtn.addEventListener('click', () => {
                 state.searchQuery = searchInput.value.trim();
                 applyFilters();
@@ -455,27 +497,13 @@
                 }
             });
 
-            // Clear
             clearBtn.addEventListener('click', () => {
                 searchInput.value = '';
                 state.searchQuery = '';
                 applyFilters();
             });
 
-            // Global Actions (Edit/Delete)
-            window.editContribution = (index) => {
-                console.log("Editing row:", state.filteredData[index]);
-                // Implement edit modal or inline editing here
-            };
-
-            window.deleteContribution = (index) => {
-                // Get the actual item from the filtered data to remove it from the main state
-                const itemToDelete = state.filteredData[index];
-                state.data = state.data.filter(item => item.id !== itemToDelete.id);
-                applyFilters();
-            };
-
-            // 9. Initialize
+            // 10. Initialize
             applyFilters();
         });
     </script>
