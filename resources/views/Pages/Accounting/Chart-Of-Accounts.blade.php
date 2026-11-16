@@ -55,10 +55,10 @@
 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             width: 100%;
-            max-width: 100%; /* Changed from 1200px to 100% */
-            margin: 0; /* Removed auto centering */
+            max-width: 100%;
+            margin: 0;
             padding: 2rem;
-            background: #ffffff; /* Changed from #f9fafb to #ffffff */
+            background: #ffffff;
             box-sizing: border-box;
             display: block;
         }
@@ -124,10 +124,9 @@
             flex-wrap: wrap;
         }
 
-        /* Updated Search Box Area */
         #manage-chart-of-accounts .search-box {
             display: flex;
-            flex: 0 1 400px; /* Shortened the maximum width */
+            flex: 0 1 400px;
             gap: 0.5rem;
         }
 
@@ -137,11 +136,9 @@
             position: relative;
         }
 
-        /* Removed the absolute positioned icon span */
-
         #manage-chart-of-accounts .search-input-wrapper input {
             width: 100%;
-            padding: 0.5rem 1rem; /* Standardized padding since icon is removed */
+            padding: 0.5rem 1rem;
             border: 1px solid var(--border-color);
             border-radius: 0.375rem;
             font-size: 0.875rem;
@@ -151,7 +148,7 @@
 
         #manage-chart-of-accounts .search-input-wrapper input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Bright blue glow */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
 
         #manage-chart-of-accounts .btn-search {
@@ -233,7 +230,7 @@
         }
 
         #manage-chart-of-accounts .tab.active .tab-count {
-            background: #eff6ff; /* Light blue background */
+            background: #eff6ff;
             color: var(--primary);
         }
 
@@ -329,23 +326,92 @@
             border-color: var(--border-color);
         }
 
-        #manage-chart-of-accounts .actions {
-            display: flex;
-            gap: 0.75rem;
-            color: var(--blue-text);
+        /* 3-Dots Action Menu */
+        #manage-chart-of-accounts .action-menu {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            width: 100%;
         }
 
-        #manage-chart-of-accounts .action-btn {
-            background: none;
+        #manage-chart-of-accounts .action-menu-btn {
+            background: transparent;
             border: none;
             cursor: pointer;
-            color: var(--blue-text);
-            font-size: 1.1rem;
-            transition: opacity 0.2s;
+            color: var(--text-muted);
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        #manage-chart-of-accounts .action-btn:hover {
-            opacity: 0.7;
+        #manage-chart-of-accounts .action-menu-btn:hover {
+            background: #f3f4f6;
+            color: var(--text-main);
+        }
+
+        #manage-chart-of-accounts .action-menu-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        #manage-chart-of-accounts .action-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 20;
+            min-width: 140px;
+            padding: 4px 0;
+        }
+
+        #manage-chart-of-accounts .action-dropdown.show {
+            display: block;
+        }
+
+        #manage-chart-of-accounts .action-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            color: #334155;
+            cursor: pointer;
+            white-space: nowrap;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        #manage-chart-of-accounts .action-dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        #manage-chart-of-accounts .action-dropdown-item.delete {
+            color: var(--danger);
+        }
+
+        #manage-chart-of-accounts .action-dropdown-item.delete:hover {
+            background: #fef2f2;
+        }
+
+        #manage-chart-of-accounts .action-dropdown-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         #manage-chart-of-accounts .pagination {
@@ -449,7 +515,7 @@
                         <th>Opening Balance</th>
                         <th>Current Balance ↑↓</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th></th> <!-- Removed Actions text -->
                     </tr>
                 </thead>
                 <tbody class="tableBody">
@@ -590,9 +656,20 @@
                         <td>${formatCurrency(item.currentBalance)}</td>
                         <td><span class="status-badge ${statusClass}">${item.status}</span></td>
                         <td>
-                            <div class="actions">
-                                <button class="action-btn" title="View" onclick="alert('Viewing: ${item.title}')">👁️</button>
-                                <button class="action-btn" title="Edit" onclick="alert('Editing: ${item.title}')">✏️</button>
+                            <div class="action-menu">
+                                <button class="action-menu-btn" onclick="toggleMenu(this)">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                                </button>
+                                <div class="action-dropdown">
+                                    <button class="action-dropdown-item" onclick="handleAction('view', '${item.title}')">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        View
+                                    </button>
+                                    <button class="action-dropdown-item" onclick="handleAction('edit', '${item.title}')">
+                                        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        Edit
+                                    </button>
+                                </div>
                             </div>
                         </td>
                     `;
@@ -645,7 +722,34 @@
                 pageNumbers.appendChild(nextBtn);
             }
 
-            // --- 6. Event Listeners ---
+            // --- 6. Global Action Handlers ---
+            window.toggleMenu = function(btn) {
+                const dropdowns = document.querySelectorAll('.action-dropdown');
+                dropdowns.forEach(d => {
+                    if (d !== btn.nextElementSibling) d.classList.remove('show');
+                });
+                btn.nextElementSibling.classList.toggle('show');
+            };
+
+            window.handleAction = function(action, name) {
+                // Close dropdown
+                document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+
+                if (action === 'view') {
+                    alert(`Viewing: ${name}`);
+                } else if (action === 'edit') {
+                    alert(`Editing: ${name}`);
+                }
+            };
+
+            // Close menus on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.action-menu')) {
+                    document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+                }
+            });
+
+            // --- 7. Event Listeners ---
             function performSearch() {
                 const query = searchInput.value.toLowerCase();
                 state.searchQuery = query;
@@ -680,7 +784,7 @@
                 updateUI();
             });
 
-            // --- 7. Initialization ---
+            // --- 8. Initialization ---
             updateUI();
         })();
     </script>
