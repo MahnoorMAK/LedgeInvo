@@ -89,12 +89,95 @@
         #mvp .status-pending{background:#fef3c7;color:#b45309}
         #mvp .status-cleared{background:#d1fae5;color:#047857}
         #mvp .status-cancelled{background:#fee2e2;color:#b91c1c}
-        #mvp .actions-cell{display:flex;gap:.5rem}
-        #mvp .action-btn{background:none;border:none;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:4px;border-radius:4px}
-        #mvp .action-btn:hover{background:var(--border)}
-        #mvp .action-btn.approve:hover{color:var(--primary)}
-        #mvp .action-btn.reject:hover{color:var(--danger)}
-        #mvp .action-btn.view:hover{color:#1d4ed8}
+        
+        /* 3-Dots Action Menu */
+        #mvp .action-menu {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #mvp .action-menu-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--muted);
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #mvp .action-menu-btn:hover {
+            background: #f3f4f6;
+            color: var(--text);
+        }
+
+        #mvp .action-menu-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        #mvp .action-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 20;
+            min-width: 140px;
+            padding: 4px 0;
+        }
+
+        #mvp .action-dropdown.show {
+            display: block;
+        }
+
+        #mvp .action-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            color: #334155;
+            cursor: pointer;
+            white-space: nowrap;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        #mvp .action-dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        #mvp .action-dropdown-item.delete {
+            color: var(--danger);
+        }
+
+        #mvp .action-dropdown-item.delete:hover {
+            background: #fef2f2;
+        }
+
+        #mvp .action-dropdown-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         #mvp .empty-state{text-align:center;padding:3rem;color:var(--muted)}
         #mvp .pagination-footer{padding:1rem 1.25rem;display:flex;justify-content:flex-end;gap:10px;align-items:center;border-top:1px solid var(--border)}
         #mvp .page-info{font-size:.875rem;color:var(--muted)}
@@ -156,7 +239,15 @@
         <div class="table-container">
             <table>
                 <thead>
-                    <tr><th>Payment Number</th><th>Vendor</th><th>Payment Date</th><th>Amount</th><th>Bank Account</th><th>Status</th><th>Actions</th></tr>
+                    <tr>
+                        <th>Payment Number</th>
+                        <th>Vendor</th>
+                        <th>Payment Date</th>
+                        <th>Amount</th>
+                        <th>Bank Account</th>
+                        <th>Status</th>
+                        <th></th> <!-- Removed Actions text -->
+                    </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -234,8 +325,32 @@
             const s=(state.page-1)*state.pageSize,e=Math.min(s+state.pageSize,filtered.length);
             tb.innerHTML=filtered.slice(s,e).map(p=>{
                 const cls=p.status==='Cleared'?'status-cleared':p.status==='Cancelled'?'status-cancelled':'status-pending';
-                const acts=p.status==='Pending'
-                    ?`<button class="action-btn approve" title="Approve" onclick="handleAction('approve','${p.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></button><button class="action-btn reject" title="Reject" onclick="handleAction('reject','${p.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button>`:'';
+                
+                // Build 3-dots menu items based on status
+                let menuItems = '';
+                if (p.status === 'Pending') {
+                    menuItems = `
+                        <button class="action-dropdown-item" onclick="handleAction('approve','${p.id}')">
+                            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            Approve
+                        </button>
+                        <button class="action-dropdown-item" onclick="handleAction('reject','${p.id}')">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            Reject
+                        </button>
+                    `;
+                }
+                menuItems += `
+                    <button class="action-dropdown-item" onclick="handleAction('view','${p.id}')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        View
+                    </button>
+                    <button class="action-dropdown-item delete" onclick="handleAction('delete','${p.id}')">
+                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                        Delete
+                    </button>
+                `;
+
                 return `<tr>
                     <td><span class="id-badge">${p.id}</span></td>
                     <td><div class="vendor-cell"><img src="${p.avatar}" class="avatar"><div class="vendor-info"><span class="vendor-name">${p.vendorName}</span><span class="vendor-email">${p.email}</span></div></div></td>
@@ -243,10 +358,16 @@
                     <td class="amount-cell">$${p.amount.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
                     <td><span class="bank-account-badge">${p.account}</span></td>
                     <td><span class="status-badge ${cls}">${p.status}</span></td>
-                    <td><div class="actions-cell">${acts}
-                        <button class="action-btn view" title="View" onclick="handleAction('view','${p.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                        <button class="action-btn" title="Delete" onclick="handleAction('delete','${p.id}')" style="color:var(--danger)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                    </div></td>
+                    <td>
+                        <div class="action-menu">
+                            <button class="action-menu-btn" onclick="toggleMenu(this)">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                            </button>
+                            <div class="action-dropdown">
+                                ${menuItems}
+                            </div>
+                        </div>
+                    </td>
                 </tr>`;
             }).join('');
             updatePaginationUI(total);
@@ -265,13 +386,32 @@
         function prevPage(){if(state.page>1){state.page--;renderTable()}}
         function changePageSize(){state.pageSize=parseInt(document.getElementById('pageSizeSelect').value);state.page=1;renderTable()}
 
-        function handleAction(a,id){
+        // Global Action Handlers
+        window.toggleMenu = function(btn) {
+            const dropdowns = document.querySelectorAll('.action-dropdown');
+            dropdowns.forEach(d => {
+                if (d !== btn.nextElementSibling) d.classList.remove('show');
+            });
+            btn.nextElementSibling.classList.toggle('show');
+        };
+
+        window.handleAction = function(action, id) {
+            // Close dropdown
+            document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+
             const i=payments.findIndex(p=>p.id===id);
-            if(a==='approve'){payments[i].status='Cleared';updateCounts();applyFilters()}
-            else if(a==='reject'){payments[i].status='Cancelled';updateCounts();applyFilters()}
-            else if(a==='delete'){if(confirm(`Delete payment ${id}?`)){payments.splice(i,1);updateCounts();applyFilters()}}
-            else if(a==='view'){alert(`Viewing details for Payment ID: ${id}`)}
-        }
+            if(action==='approve'){payments[i].status='Cleared';updateCounts();applyFilters()}
+            else if(action==='reject'){payments[i].status='Cancelled';updateCounts();applyFilters()}
+            else if(action==='delete'){if(confirm(`Delete payment ${id}?`)){payments.splice(i,1);updateCounts();applyFilters()}}
+            else if(action==='view'){alert(`Viewing details for Payment ID: ${id}`)}
+        };
+
+        // Close menus on outside click
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.action-menu')) {
+                document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+            }
+        });
 
         // Init
         payments=genData();renderCalendar();updateCounts();applyFilters();
