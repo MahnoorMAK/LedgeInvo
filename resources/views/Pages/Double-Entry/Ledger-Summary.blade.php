@@ -39,12 +39,12 @@
         #ledger-app {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #333;
-            background: #ffffff; /* Changed to white */
+            background: #ffffff;
             padding: 24px;
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            max-width: 100%; /* Changed from 1200px to fill available space */
-            margin: 0; /* Changed from auto to remove centering gaps */
+            max-width: 100%;
+            margin: 0;
             font-size: 14px;
             width: 100%;
             box-sizing: border-box;
@@ -153,7 +153,6 @@
                     <th data-sort="debit" style="text-align: right;">Total Debit <span class="sort-icon">↕</span></th>
                     <th data-sort="credit" style="text-align: right;">Total Credit <span class="sort-icon">↕</span></th>
                     <th data-sort="status">Status <span class="sort-icon">↕</span></th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -224,15 +223,13 @@
 
             // Function: Render Table
             const renderTable = () => {
-                // Calculate Pagination
                 const start = (state.currentPage - 1) * state.pageSize;
                 const end = start + state.pageSize;
                 const paginatedData = state.filteredData.slice(start, end);
 
-                // Generate Rows
                 tableBody.innerHTML = '';
                 if (paginatedData.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 24px; color: #6b7280;">No entries found.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding: 24px; color: #6b7280;">No entries found.</td></tr>`;
                 }
 
                 paginatedData.forEach(row => {
@@ -247,32 +244,24 @@
                         <td style="text-align: right; font-weight: 500;" class="text-red">${formatMoney(row.debit)}</td>
                         <td style="text-align: right; font-weight: 500;" class="text-green">${formatMoney(row.credit)}</td>
                         <td><span class="badge badge-green" style="background:#ecfdf5; color:#059669; border:none;">${row.status}</span></td>
-                        <td class="text-muted">-</td>
                     `;
                     tableBody.appendChild(tr);
                 });
 
-                // Update Pagination Info
                 const total = state.filteredData.length;
                 const showingTo = total === 0 ? 0 : end > total ? total : end;
                 pageInfo.textContent = `Showing ${total === 0 ? 0 : start + 1} to ${showingTo} of ${total} results`;
 
-                // Render Pagination Buttons
                 renderPagination();
             };
 
-            // Function: Render Pagination
             const renderPagination = () => {
                 const totalPages = Math.ceil(state.filteredData.length / state.pageSize);
                 pageNumbers.innerHTML = '';
                 
-                // Prev Button
                 prevPageBtn.disabled = state.currentPage === 1;
-                
-                // Next Button
                 nextPageBtn.disabled = state.currentPage === totalPages || totalPages === 0;
 
-                // Page Numbers (Simplified logic for up to 11 pages as in screenshot)
                 let startPage = Math.max(1, state.currentPage - 2);
                 let endPage = Math.min(totalPages, startPage + 4);
                 
@@ -289,7 +278,6 @@
                     pageNumbers.appendChild(btn);
                 }
 
-                // Ellipsis
                 if (endPage < totalPages) {
                     const span = document.createElement('span');
                     span.textContent = '...';
@@ -307,7 +295,6 @@
                 }
             };
 
-            // Function: Filter & Search
             const applySearch = () => {
                 const query = searchInput.value.toLowerCase().trim();
                 state.searchQuery = query;
@@ -326,22 +313,19 @@
                 renderTable();
             };
 
-            // Event Listeners: Search
             searchBtn.addEventListener('click', applySearch);
             searchInput.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') applySearch();
             });
 
-            // Event Listeners: Clear
             clearBtn.addEventListener('click', () => {
-                searchInput.value = ''; // Clear input field
-                state.searchQuery = ''; // Clear state
-                state.filteredData = [...state.data]; // Reset table data
-                state.currentPage = 1; // Reset to page 1
-                renderTable(); // Re-render
+                searchInput.value = '';
+                state.searchQuery = '';
+                state.filteredData = [...state.data];
+                state.currentPage = 1;
+                renderTable();
             });
 
-            // Event Listeners: Pagination
             prevPageBtn.addEventListener('click', () => {
                 if (state.currentPage > 1) {
                     state.currentPage--;
@@ -357,14 +341,12 @@
                 }
             });
 
-            // Event Listeners: Page Size
             pageSizeSelect.addEventListener('change', (e) => {
                 state.pageSize = parseInt(e.target.value);
                 state.currentPage = 1;
                 renderTable();
             });
 
-            // Event Listeners: Sorting
             document.querySelectorAll('th[data-sort]').forEach(th => {
                 th.addEventListener('click', () => {
                     const column = th.getAttribute('data-sort');
@@ -376,17 +358,13 @@
                         state.sortAsc = true;
                     }
 
-                    // Reset all icons
                     document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '↕');
-                    // Set active icon
                     th.querySelector('.sort-icon').textContent = state.sortAsc ? '↑' : '↓';
 
-                    // Sorting Logic
                     state.filteredData.sort((a, b) => {
                         let valA = a[column];
                         let valB = b[column];
 
-                        // Convert to lowercase for string comparison
                         if (typeof valA === 'string') valA = valA.toLowerCase();
                         if (typeof valB === 'string') valB = valB.toLowerCase();
 
@@ -399,32 +377,21 @@
                 });
             });
 
-            // Event Listeners: Other Buttons (kept as simple console logs or alerts for UI feedback)
-            document.getElementById('downloadPdfBtn').addEventListener('click', () => {
-                // Silent action for download simulation
-            });
+            document.getElementById('downloadPdfBtn').addEventListener('click', () => {});
+            document.getElementById('addJournalBtn').addEventListener('click', () => {});
+            document.getElementById('filterBtn').addEventListener('click', () => {});
 
-            document.getElementById('addJournalBtn').addEventListener('click', () => {
-                // Silent action for add simulation
-            });
-
-            document.getElementById('filterBtn').addEventListener('click', () => {
-                // Silent action for filter simulation
-            });
-
-            // Expose row expand function globally for inline onclick handler
             window.toggleDetails = function(btnElement) {
                 const tr = btnElement.closest('tr');
                 btnElement.classList.toggle('open');
                 
-                // Check if next sibling is a details row
                 if (tr.nextElementSibling && tr.nextElementSibling.classList.contains('details-row')) {
                     tr.nextElementSibling.remove();
                 } else {
                     const detailsTr = document.createElement('tr');
                     detailsTr.className = 'details-row';
                     detailsTr.innerHTML = `
-                        <td colspan="10">
+                        <td colspan="9">
                             <div class="details-content">
                                 <div><strong>Transaction ID:</strong> TXN-${Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
                                 <div><strong>Created By:</strong> System Auto-Sync</div>
@@ -437,7 +404,6 @@
                 }
             };
 
-            // Initialize App
             renderTable();
         });
     </script>
