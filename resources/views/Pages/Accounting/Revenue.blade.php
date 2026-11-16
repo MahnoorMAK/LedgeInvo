@@ -17,8 +17,8 @@
 <section id="manage-revenues-section">
     <style>
         #manage-revenues-section {
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
+            --primary: #10b981; /* Emerald Green from image */
+            --primary-hover: #059669;
             --border-color: #e5e7eb;
             --text-main: #111827;
             --text-muted: #6b7280;
@@ -41,7 +41,7 @@
             width: 100%;
             max-width: 100%;
             margin: 0;
-            padding: 24px; /* Added padding for internal spacing */
+            padding: 24px;
             box-sizing: border-box;
             color: var(--text-main);
         }
@@ -57,7 +57,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         #manage-revenues-section .page-header h1 {
@@ -92,29 +92,31 @@
             background-color: var(--primary-hover);
         }
 
-        /* Calendar Header */
-        #manage-revenues-section .calendar-container {
+        /* --- CALENDAR WIDGET (Matching the Image) --- */
+        #manage-revenues-section .calendar-widget {
             border: 1px solid var(--border-color);
             border-radius: 0.5rem;
             margin-bottom: 1.5rem;
-            background: transparent;
+            background: #fff;
             overflow: hidden;
         }
 
-        #manage-revenues-section .calendar-top {
+        /* Top Header Row (Centered Title, Arrows on Far Ends) */
+        #manage-revenues-section .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 0.75rem 1rem;
             border-bottom: 1px solid var(--border-color);
         }
 
         #manage-revenues-section .calendar-title {
             font-weight: 600;
+            font-size: 1rem;
             color: var(--text-main);
         }
 
-        #manage-revenues-section .calendar-nav-btn {
+        #manage-revenues-section .cal-nav-btn {
             background: none;
             border: 1px solid var(--border-color);
             border-radius: 50%;
@@ -126,23 +128,45 @@
             cursor: pointer;
             color: var(--text-muted);
             transition: all 0.2s;
+            font-size: 0.875rem;
         }
 
-        #manage-revenues-section .calendar-nav-btn:hover {
+        #manage-revenues-section .cal-nav-btn:hover {
             background: #f3f4f6;
             color: var(--text-main);
         }
 
-        #manage-revenues-section .calendar-days {
+        /* Months Row */
+        #manage-revenues-section .calendar-months {
             display: flex;
-            overflow-x: auto;
+            width: 100%;
+            align-items: stretch;
         }
 
-        #manage-revenues-section .day-cell {
+        #manage-revenues-section .month-nav-cell {
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid var(--border-color);
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: background 0.2s;
+        }
+        
+        #manage-revenues-section .month-nav-cell:last-child {
+            border-right: none;
+            border-left: 1px solid var(--border-color);
+        }
+
+        #manage-revenues-section .month-nav-cell:hover {
+            background: #f9fafb;
+        }
+
+        #manage-revenues-section .month-cell {
             flex: 1;
-            min-width: 60px;
-            padding: 0.75rem 0;
             text-align: center;
+            padding: 0.5rem 0;
             border-right: 1px solid var(--border-color);
             cursor: pointer;
             transition: background 0.2s;
@@ -151,32 +175,31 @@
             gap: 0.25rem;
         }
 
-        #manage-revenues-section .day-cell:last-child {
+        #manage-revenues-section .month-cell:last-child {
             border-right: none;
         }
 
-        #manage-revenues-section .day-cell:hover {
-            background: #f3f4f6;
+        #manage-revenues-section .month-cell:hover {
+            background: #f9fafb;
         }
 
-        #manage-revenues-section .day-name {
+        #manage-revenues-section .month-name {
             font-size: 0.75rem;
             color: var(--text-muted);
-            text-transform: uppercase;
         }
 
-        #manage-revenues-section .day-number {
+        #manage-revenues-section .month-number {
             font-size: 1rem;
             font-weight: 600;
             color: var(--text-main);
         }
 
-        #manage-revenues-section .day-cell.active {
+        #manage-revenues-section .month-cell.active {
             background: var(--primary);
         }
 
-        #manage-revenues-section .day-cell.active .day-name,
-        #manage-revenues-section .day-cell.active .day-number {
+        #manage-revenues-section .month-cell.active .month-name,
+        #manage-revenues-section .month-cell.active .month-number {
             color: white;
         }
 
@@ -193,9 +216,9 @@
 
         /* Toolbar */
         #manage-revenues-section .toolbar {
-            padding: 1rem;
+            padding: 0.75rem;
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             align-items: center;
             flex-wrap: wrap;
             background: transparent;
@@ -205,22 +228,22 @@
             display: flex;
             flex: 1;
             min-width: 250px;
-            max-width: 520px;
+            max-width: 450px;
             gap: 0.5rem;
         }
 
         #manage-revenues-section .search-input-wrapper {
             position: relative;
-            flex: 0 1 280px;
+            flex: 0 1 240px;
             min-width: 0;
         }
 
         #manage-revenues-section .search-input-wrapper input {
             width: 100%;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.75rem;
             border: 1px solid var(--border-color);
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             outline: none;
             background: #ffffff;
         }
@@ -233,11 +256,12 @@
             background-color: var(--primary);
             color: white;
             border: 1px solid var(--primary);
-            padding: 0 1rem;
+            padding: 0 0.75rem;
             border-radius: 0.375rem;
             cursor: pointer;
             font-weight: 500;
             white-space: nowrap;
+            font-size: 0.85rem;
         }
 
         #manage-revenues-section .btn-search:hover {
@@ -248,7 +272,7 @@
             background-color: #ffffff;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 0 1rem;
+            padding: 0 0.75rem;
             border-radius: 0.375rem;
             cursor: pointer;
             font-weight: 500;
@@ -256,6 +280,7 @@
             display: flex;
             align-items: center;
             transition: all 0.2s;
+            font-size: 0.85rem;
         }
 
         #manage-revenues-section .btn-clear:hover {
@@ -268,9 +293,9 @@
             background-color: #ffffff;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.75rem;
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -283,10 +308,10 @@
         }
 
         #manage-revenues-section .toolbar select {
-            padding: 0.5rem;
+            padding: 0.4rem;
             border: 1px solid var(--border-color);
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             outline: none;
             background: #ffffff;
             cursor: pointer;
@@ -295,17 +320,17 @@
         /* Tabs */
         #manage-revenues-section .tabs {
             display: flex;
-            padding: 0 1rem;
+            padding: 0 0.75rem;
             border-bottom: 1px solid var(--border-color);
             border-top: 1px solid var(--border-color);
-            gap: 1.5rem;
+            gap: 1.25rem;
             overflow-x: auto;
             background: transparent;
         }
 
         #manage-revenues-section .tab {
-            padding: 1rem 0;
-            font-size: 0.875rem;
+            padding: 0.75rem 0;
+            font-size: 0.85rem;
             font-weight: 500;
             color: var(--text-muted);
             cursor: pointer;
@@ -325,16 +350,16 @@
             background: #f3f4f6;
             padding: 0.1rem 0.4rem;
             border-radius: 999px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
         }
 
         #manage-revenues-section .tab.active .tab-count {
-            background: var(--blue-light);
+            background: var(--green-light);
             color: var(--primary);
         }
 
-        /* Table */
+        /* Table - Shortened */
         #manage-revenues-section .table-container {
             overflow-x: auto;
             width: 100%;
@@ -351,8 +376,8 @@
 
         #manage-revenues-section th {
             background-color: transparent;
-            padding: 0.75rem 1rem;
-            font-size: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-muted);
             border-bottom: 1px solid var(--border-color);
@@ -360,9 +385,9 @@
         }
 
         #manage-revenues-section td {
-            padding: 1rem;
+            padding: 0.5rem 0.75rem;
             border-bottom: 1px solid var(--border-color);
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             vertical-align: middle;
             background: transparent;
         }
@@ -373,9 +398,9 @@
 
         #manage-revenues-section .badge-id {
             display: inline-block;
-            padding: 0.25rem 0.5rem;
+            padding: 0.2rem 0.4rem;
             border-radius: 0.25rem;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
             background: var(--blue-light);
             color: var(--blue-text);
@@ -389,13 +414,14 @@
             align-items: center;
             gap: 0.5rem;
             white-space: nowrap;
+            font-size: 0.8rem;
         }
 
         #manage-revenues-section .category-badge {
             display: inline-block;
-            padding: 0.25rem 0.5rem;
+            padding: 0.2rem 0.4rem;
             border-radius: 0.25rem;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
             border: 1px solid;
             white-space: nowrap;
@@ -407,25 +433,25 @@
         #manage-revenues-section .coa-cell {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.2rem;
         }
-        #manage-revenues-section .coa-main { color: var(--text-main); font-weight: 500; font-size: 0.8125rem; white-space: nowrap; }
+        #manage-revenues-section .coa-main { color: var(--text-main); font-weight: 500; font-size: 0.75rem; white-space: nowrap; }
         #manage-revenues-section .coa-sub {
             color: var(--blue-text);
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             background: var(--blue-light);
-            padding: 0.1rem 0.4rem;
+            padding: 0.1rem 0.3rem;
             border-radius: 0.25rem;
             width: fit-content;
             white-space: nowrap;
         }
 
-        #manage-revenues-section .amount { font-weight: 600; color: var(--text-main); white-space: nowrap; }
+        #manage-revenues-section .amount { font-weight: 600; color: var(--text-main); white-space: nowrap; font-size: 0.85rem; }
 
         #manage-revenues-section .status-badge {
-            padding: 0.25rem 0.6rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 999px;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: 500;
             border: 1px solid;
             display: inline-flex;
@@ -440,18 +466,18 @@
         #manage-revenues-section .approved-by {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
         #manage-revenues-section .avatar {
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             background: var(--blue-light);
             color: var(--blue-text);
             border-radius: 0.375rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.8rem;
             flex-shrink: 0;
         }
         #manage-revenues-section .approver-info {
@@ -459,30 +485,90 @@
             flex-direction: column;
             gap: 0.1rem;
         }
-        #manage-revenues-section .approver-name { font-size: 0.8125rem; font-weight: 500; white-space: nowrap; }
-        #manage-revenues-section .approver-email { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+        #manage-revenues-section .approver-name { font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
+        #manage-revenues-section .approver-email { font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; }
 
-        #manage-revenues-section .actions {
-            display: flex;
-            gap: 0.5rem;
+        /* 3-Dots Action Menu */
+        #manage-revenues-section .action-menu {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            width: 100%;
         }
 
-        #manage-revenues-section .action-btn {
-            background: none;
+        #manage-revenues-section .action-menu-btn {
+            background: transparent;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
             color: var(--text-muted);
-            transition: color 0.2s;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        #manage-revenues-section .action-btn.blue:hover { color: var(--blue-text); }
-        #manage-revenues-section .action-btn.green:hover { color: var(--green-text); }
-        #manage-revenues-section .action-btn.orange:hover { color: var(--orange-text); }
-        #manage-revenues-section .action-btn.red:hover { color: var(--red-text); }
+
+        #manage-revenues-section .action-menu-btn:hover {
+            background: #f3f4f6;
+            color: var(--text-main);
+        }
+
+        #manage-revenues-section .action-menu-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        #manage-revenues-section .action-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 20;
+            min-width: 140px;
+            padding: 4px 0;
+        }
+
+        #manage-revenues-section .action-dropdown.show {
+            display: block;
+        }
+
+        #manage-revenues-section .action-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            color: #334155;
+            cursor: pointer;
+            white-space: nowrap;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        #manage-revenues-section .action-dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        #manage-revenues-section .action-dropdown-item.delete {
+            color: var(--red-text);
+        }
+
+        #manage-revenues-section .action-dropdown-item.delete:hover {
+            background: #fef2f2;
+        }
 
         /* Pagination */
         #manage-revenues-section .pagination {
-            padding: 1rem;
+            padding: 0.75rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -499,14 +585,14 @@
         }
 
         #manage-revenues-section .page-btn {
-            padding: 0.4rem 0.75rem;
+            padding: 0.3rem 0.6rem;
             border: 1px solid var(--border-color);
             background: #ffffff;
             border-radius: 0.375rem;
             cursor: pointer;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             transition: all 0.2s;
-            min-width: 36px;
+            min-width: 32px;
             text-align: center;
             color: var(--text-main);
         }
@@ -533,14 +619,16 @@
         <button class="btn-add" id="addRevenueBtn">+</button>
     </div>
 
-    <!-- Calendar Header -->
-    <div class="calendar-container">
-        <div class="calendar-top">
-            <button class="calendar-nav-btn" id="prevMonth">‹</button>
+    <!-- Calendar Widget (Matches Image) -->
+    <div class="calendar-widget">
+        <div class="calendar-header">
+            <button class="cal-nav-btn" id="prevYear">‹</button>
             <div class="calendar-title" id="calendarMonthYear">Nov 2026</div>
-            <button class="calendar-nav-btn" id="nextMonth">›</button>
+            <button class="cal-nav-btn" id="nextYear">›</button>
         </div>
-        <div class="calendar-days" id="calendarDays"></div>
+        <div class="calendar-months" id="calendarMonths">
+            <!-- Injected via JS -->
+        </div>
     </div>
 
     <!-- Main Container -->
@@ -580,7 +668,7 @@
                         <th>Amount ↑↓</th>
                         <th>Status ↑↓</th>
                         <th>Approved By</th>
-                        <th>Actions</th>
+                        <th></th> <!-- Removed "Actions" text -->
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -588,7 +676,7 @@
         </div>
 
         <div class="pagination">
-            <div class="pageInfo" id="pageInfo" style="font-size: 0.875rem; color: var(--text-muted);"></div>
+            <div class="pageInfo" id="pageInfo" style="font-size: 0.8rem; color: var(--text-muted);"></div>
             <div class="page-numbers" id="pageNumbers"></div>
         </div>
     </div>
@@ -634,7 +722,7 @@
                 perPage: 10,
                 searchQuery: "",
                 currentTab: "all",
-                currentDate: new Date(2026, 10, 11)
+                currentDate: new Date(2026, 10, 11) // Nov 2026
             };
 
             const tableBody = section.querySelector('#tableBody');
@@ -645,8 +733,7 @@
             const searchBtn = section.querySelector('#searchBtn');
             const clearBtn = section.querySelector('#clearBtn');
             const statusTabs = section.querySelector('#statusTabs');
-            const calendarDays = section.querySelector('#calendarDays');
-            const calendarMonthYear = section.querySelector('#calendarMonthYear');
+            const calendarMonths = section.querySelector('#calendarMonths');
 
             function formatCurrency(amount) {
                 return '$' + Number(amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -658,31 +745,51 @@
             }
 
             function renderCalendar() {
-                const year = state.currentDate.getFullYear();
-                const month = state.currentDate.getMonth();
                 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const currentYear = state.currentDate.getFullYear();
+                const currentMonth = state.currentDate.getMonth();
+                
+                section.querySelector('#calendarMonthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+                calendarMonths.innerHTML = '';
 
-                calendarMonthYear.textContent = `${monthNames[month]} ${year}`;
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                calendarDays.innerHTML = '';
+                // Left Arrow
+                const leftArrow = document.createElement('div');
+                leftArrow.className = 'month-nav-cell';
+                leftArrow.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>`;
+                leftArrow.onclick = () => {
+                    state.currentDate.setMonth(state.currentDate.getMonth() - 1);
+                    renderCalendar();
+                };
+                calendarMonths.appendChild(leftArrow);
 
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const dayCell = document.createElement('div');
-                    dayCell.className = 'day-cell';
-                    if (i === state.currentDate.getDate()) dayCell.classList.add('active');
+                // 12 Months
+                for (let i = 0; i < 12; i++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'month-cell';
+                    if (i === currentMonth) cell.classList.add('active');
 
-                    dayCell.innerHTML = `
-                        <div class="day-name">${monthNames[month]}</div>
-                        <div class="day-number">${String(i).padStart(2, '0')}</div>
+                    cell.innerHTML = `
+                        <div class="month-name">${monthNames[i]}</div>
+                        <div class="month-number">${String(i + 1).padStart(2, '0')}</div>
                     `;
 
-                    dayCell.onclick = () => {
-                        state.currentDate.setDate(i);
+                    cell.onclick = () => {
+                        state.currentDate.setMonth(i);
                         renderCalendar();
                     };
 
-                    calendarDays.appendChild(dayCell);
+                    calendarMonths.appendChild(cell);
                 }
+
+                // Right Arrow
+                const rightArrow = document.createElement('div');
+                rightArrow.className = 'month-nav-cell';
+                rightArrow.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+                rightArrow.onclick = () => {
+                    state.currentDate.setMonth(state.currentDate.getMonth() + 1);
+                    renderCalendar();
+                };
+                calendarMonths.appendChild(rightArrow);
             }
 
             function applyFilters() {
@@ -727,7 +834,7 @@
                 tableBody.innerHTML = '';
 
                 if (state.filteredData.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 3rem; color: var(--text-muted);">No revenues found matching your criteria.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 2rem; color: var(--text-muted);">No revenues found matching your criteria.</td></tr>`;
                     return;
                 }
 
@@ -752,22 +859,23 @@
                         `;
                     }
 
-                    let actionsHtml = '';
+                    // Build 3-dots menu items based on status
+                    let menuItems = '';
                     if (item.status === 'Draft') {
-                        actionsHtml = `
-                            <button class="action-btn green" title="Approve" onclick="alert('Approved ${item.id}')">✓</button>
-                            <button class="action-btn blue" title="Edit" onclick="alert('Editing ${item.id}')">👁️</button>
-                            <button class="action-btn blue" title="Post" onclick="alert('Posted ${item.id}')">📝</button>
-                            <button class="action-btn red" title="Delete" onclick="alert('Deleted ${item.id}')">🗑️</button>
+                        menuItems = `
+                            <button class="action-dropdown-item" onclick="handleAction('approve', '${item.id}')">Approve</button>
+                            <button class="action-dropdown-item" onclick="handleAction('edit', '${item.id}')">Edit</button>
+                            <button class="action-dropdown-item" onclick="handleAction('post', '${item.id}')">Post</button>
+                            <button class="action-dropdown-item delete" onclick="handleAction('delete', '${item.id}')">Delete</button>
                         `;
                     } else if (item.status === 'Approved') {
-                        actionsHtml = `
-                            <button class="action-btn orange" title="Post" onclick="alert('Posted to Journal: ${item.id}')">◉</button>
-                            <button class="action-btn blue" title="View" onclick="alert('Viewing ${item.id}')">👁️</button>
+                        menuItems = `
+                            <button class="action-dropdown-item" onclick="handleAction('post', '${item.id}')">Post</button>
+                            <button class="action-dropdown-item" onclick="handleAction('view', '${item.id}')">View</button>
                         `;
                     } else {
-                        actionsHtml = `
-                            <button class="action-btn green" title="View" onclick="alert('Viewing ${item.id}')">👁️</button>
+                        menuItems = `
+                            <button class="action-dropdown-item" onclick="handleAction('view', '${item.id}')">View</button>
                         `;
                     }
 
@@ -784,7 +892,16 @@
                         <td class="amount">${formatCurrency(item.amount)}</td>
                         <td><span class="status-badge ${statusClass}">${item.status}</span></td>
                         <td>${approvedByHtml}</td>
-                        <td><div class="actions">${actionsHtml}</div></td>
+                        <td>
+                            <div class="action-menu">
+                                <button class="action-menu-btn" onclick="toggleMenu(this)">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                                </button>
+                                <div class="action-dropdown">
+                                    ${menuItems}
+                                </div>
+                            </div>
+                        </td>
                     `;
                     tableBody.appendChild(tr);
                 });
@@ -846,15 +963,44 @@
                 pageNumbers.appendChild(nextBtn);
             }
 
-            section.querySelector('#prevMonth').addEventListener('click', () => {
-                state.currentDate.setMonth(state.currentDate.getMonth() - 1);
-                state.currentDate.setDate(1);
+            // Global Action Handlers
+            window.toggleMenu = function(btn) {
+                const dropdowns = document.querySelectorAll('.action-dropdown');
+                dropdowns.forEach(d => {
+                    if (d !== btn.nextElementSibling) d.classList.remove('show');
+                });
+                btn.nextElementSibling.classList.toggle('show');
+            };
+
+            window.handleAction = function(action, id) {
+                // Close dropdown
+                document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+
+                // Simulate action
+                if (action === 'approve') console.log(`Approved ${id}`);
+                else if (action === 'edit') console.log(`Editing ${id}`);
+                else if (action === 'post') console.log(`Posted ${id}`);
+                else if (action === 'delete') {
+                    if (confirm(`Delete ${id}?`)) console.log(`Deleted ${id}`);
+                }
+                else if (action === 'view') console.log(`Viewing ${id}`);
+            };
+
+            // Close menus on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.action-menu')) {
+                    document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+                }
+            });
+
+            // Year navigation
+            section.querySelector('#prevYear').addEventListener('click', () => {
+                state.currentDate.setFullYear(state.currentDate.getFullYear() - 1);
                 renderCalendar();
             });
 
-            section.querySelector('#nextMonth').addEventListener('click', () => {
-                state.currentDate.setMonth(state.currentDate.getMonth() + 1);
-                state.currentDate.setDate(1);
+            section.querySelector('#nextYear').addEventListener('click', () => {
+                state.currentDate.setFullYear(state.currentDate.getFullYear() + 1);
                 renderCalendar();
             });
 
