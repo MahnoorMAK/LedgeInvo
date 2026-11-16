@@ -11,6 +11,21 @@
     #app > main {
         background-color: #ffffff !important;
         padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Target every possible container that might have padding */
+    html, body, #app, main, .main, .app-main, .main-content, .content, .content-wrapper, 
+    .page-wrapper, .app-content, .container, .container-fluid, .page-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
     }
 </style>
 
@@ -40,10 +55,9 @@
             background-color: #ffffff;
             color: var(--text-main);
             
-            /* Fit exactly inside the layout's content area */
             width: 100%;
             margin: 0;
-            padding: 2rem; /* Standard padding for content */
+            padding: 2rem;
             display: block;
             box-sizing: border-box;
         }
@@ -401,28 +415,93 @@
         #manage-customer-payments .status-cleared { background: var(--badge-bg-cleared); color: var(--badge-text-cleared); }
         #manage-customer-payments .status-cancelled { background: #fee2e2; color: #b91c1c; }
 
-        #manage-customer-payments .actions-cell {
-            display: flex;
-            gap: 0.5rem;
+        /* 3-Dots Action Menu */
+        #manage-customer-payments .action-menu {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            width: 100%;
         }
 
-        #manage-customer-payments .action-btn {
-            background: none;
+        #manage-customer-payments .action-menu-btn {
+            background: transparent;
             border: none;
             cursor: pointer;
             color: var(--text-muted);
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4px;
-            border-radius: 4px;
-            transition: all 0.2s;
         }
 
-        #manage-customer-payments .action-btn:hover { background: var(--border); }
-        #manage-customer-payments .action-btn.approve:hover { color: var(--primary); }
-        #manage-customer-payments .action-btn.reject:hover { color: var(--danger); }
-        #manage-customer-payments .action-btn.view:hover { color: var(--badge-text-blue); }
+        #manage-customer-payments .action-menu-btn:hover {
+            background: #f3f4f6;
+            color: var(--text-main);
+        }
+
+        #manage-customer-payments .action-menu-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        #manage-customer-payments .action-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 20;
+            min-width: 140px;
+            padding: 4px 0;
+        }
+
+        #manage-customer-payments .action-dropdown.show {
+            display: block;
+        }
+
+        #manage-customer-payments .action-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            color: #334155;
+            cursor: pointer;
+            white-space: nowrap;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        #manage-customer-payments .action-dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        #manage-customer-payments .action-dropdown-item.delete {
+            color: var(--danger);
+        }
+
+        #manage-customer-payments .action-dropdown-item.delete:hover {
+            background: #fef2f2;
+        }
+
+        #manage-customer-payments .action-dropdown-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
         #manage-customer-payments .empty-state {
             text-align: center;
@@ -536,7 +615,7 @@
                         <th>Amount</th>
                         <th>Account</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th></th> <!-- Removed Actions text -->
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -711,10 +790,30 @@
                 if (payment.status === 'Cleared') statusClass = 'status-cleared';
                 if (payment.status === 'Cancelled') statusClass = 'status-cancelled';
 
-                const actionButtons = payment.status === 'Pending'
-                    ? `<button class="action-btn approve" title="Approve" onclick="handleAction('approve', '${payment.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></button>
-                       <button class="action-btn reject" title="Reject" onclick="handleAction('reject', '${payment.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></button>`
-                    : '';
+                // Build 3-dots menu items based on status
+                let menuItems = '';
+                if (payment.status === 'Pending') {
+                    menuItems = `
+                        <button class="action-dropdown-item" onclick="handleAction('approve', '${payment.id}')">
+                            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            Approve
+                        </button>
+                        <button class="action-dropdown-item" onclick="handleAction('reject', '${payment.id}')">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            Reject
+                        </button>
+                    `;
+                }
+                menuItems += `
+                    <button class="action-dropdown-item" onclick="handleAction('view', '${payment.id}')">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        View
+                    </button>
+                    <button class="action-dropdown-item delete" onclick="handleAction('delete', '${payment.id}')">
+                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                        Delete
+                    </button>
+                `;
 
                 tr.innerHTML = `
                     <td><span class="id-badge">${payment.id}</span></td>
@@ -737,10 +836,13 @@
                     <td><span class="bank-account-badge">${payment.account}</span></td>
                     <td><span class="status-badge ${statusClass}">${payment.status}</span></td>
                     <td>
-                        <div class="actions-cell">
-                            ${actionButtons}
-                            <button class="action-btn view" title="View" onclick="handleAction('view', '${payment.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
-                            <button class="action-btn" title="Delete" onclick="handleAction('delete', '${payment.id}')" style="color: var(--danger)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+                        <div class="action-menu">
+                            <button class="action-menu-btn" onclick="toggleMenu(this)">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                            </button>
+                            <div class="action-dropdown">
+                                ${menuItems}
+                            </div>
                         </div>
                     </td>
                 `;
@@ -795,7 +897,19 @@
             renderTable();
         }
 
-        function handleAction(action, id) {
+        // Global Action Handlers
+        window.toggleMenu = function(btn) {
+            const dropdowns = document.querySelectorAll('.action-dropdown');
+            dropdowns.forEach(d => {
+                if (d !== btn.nextElementSibling) d.classList.remove('show');
+            });
+            btn.nextElementSibling.classList.toggle('show');
+        };
+
+        window.handleAction = function(action, id) {
+            // Close dropdown
+            document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+
             const paymentIndex = payments.findIndex(p => p.id === id);
 
             if (action === 'approve') {
@@ -818,7 +932,14 @@
             else if (action === 'view') {
                 alert(`Viewing details for Payment ID: ${id}`);
             }
-        }
+        };
+
+        // Close menus on outside click
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.action-menu')) {
+                document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+            }
+        });
 
         init();
     </script>
