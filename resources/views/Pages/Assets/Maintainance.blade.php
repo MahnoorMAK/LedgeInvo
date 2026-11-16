@@ -39,7 +39,7 @@
         #mm-app { 
             font-family: system-ui, -apple-system, sans-serif; 
             color: #374151; 
-            background: #ffffff; /* Changed to white */
+            background: #ffffff; 
             padding: 24px; 
             box-sizing: border-box; 
             font-size: 14px; 
@@ -48,17 +48,16 @@
             margin: 0;
             display: block;
             
-            /* Bright Blue Theme Variables */
             --primary: #3b82f6;
             --primary-hover: #2563eb;
             --primary-light: #eff6ff;
+            --danger: #ef4444;
         }
         #mm-app * { box-sizing: border-box; }
         .mm-header { display: flex; justify-content: space-between; margin-bottom: 24px; }
         .mm-header h2 { margin: 0 0 4px 0; font-size: 20px; color: #111; }
         .mm-header p { margin: 0; color: #6b7280; font-size: 13px; }
         
-        /* Changed to Bright Blue */
         .btn-add { background: var(--primary); color: #fff; border: none; border-radius: 6px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .btn-add:hover { background: var(--primary-hover); }
         
@@ -70,7 +69,6 @@
         .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
         .btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
         
-        /* Changed to Bright Blue */
         .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
         .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
         
@@ -78,7 +76,6 @@
         .view-btn { padding: 8px 12px; background: #fff; border: none; cursor: pointer; color: #6b7280; display: flex; }
         .view-btn:first-child { border-right: 1px solid #d1d5db; }
         
-        /* Changed to Bright Blue */
         .view-btn.active { background: var(--primary); color: #fff; }
         
         .select-input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; cursor: pointer; }
@@ -86,7 +83,6 @@
         .tabs { display: flex; gap: 20px; padding: 12px 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; overflow-x: auto; }
         .tab { display: flex; gap: 8px; color: #6b7280; cursor: pointer; white-space: nowrap; }
         
-        /* Changed to Bright Blue */
         .tab.active { color: var(--primary); font-weight: 600; }
 
         .table-wrapper { width: 100%; overflow-x: auto; }
@@ -115,9 +111,18 @@
         .bg-medium { background: #eff6ff; color: #1d4ed8; }
         .bg-low { background: #f0fdf4; color: #166534; }
 
-        .actions { display: flex; gap: 12px; justify-content: flex-end; }
-        .action-btn { background: none; border: none; cursor: pointer; color: #6b7280; padding: 0; }
-        .action-btn:hover { color: #111; }
+        /* 3-Dots Menu */
+        .action-menu { position: relative; display: inline-flex; justify-content: center; width: 100%; }
+        .action-menu-btn { background: transparent; border: none; cursor: pointer; color: #6b7280; padding: 4px; border-radius: 4px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .action-menu-btn:hover { background: #f3f4f6; color: #111; }
+        .action-menu-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .action-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 20; min-width: 140px; padding: 4px 0; }
+        .action-dropdown.show { display: block; }
+        .action-dropdown-item { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; color: #334155; cursor: pointer; white-space: nowrap; width: 100%; background: none; border: none; text-align: left; font-family: inherit; }
+        .action-dropdown-item:hover { background: #f8fafc; }
+        .action-dropdown-item.delete { color: var(--danger); }
+        .action-dropdown-item.delete:hover { background: #fef2f2; }
+        .action-dropdown-item svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         .pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e5e7eb; }
         .page-info { font-size: 13px; color: #6b7280; }
@@ -126,7 +131,6 @@
         .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .page-num { padding: 6px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; }
         
-        /* Changed to Bright Blue */
         .page-num.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     </style>
 
@@ -176,7 +180,7 @@
                         <th data-sort="status">Status ↕</th>
                         <th data-sort="priority">Priority ↕</th>
                         <th data-sort="cost">Cost ↕</th>
-                        <th style="text-align: right;">Actions</th>
+                        <th style="text-align: center;"></th>
                     </tr>
                 </thead>
                 <tbody id="table-body"></tbody>
@@ -198,7 +202,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // --- 1. Deterministic PRNG (Mulberry32) ---
-            // Same seed → same output on every page refresh.
             function seededRandom(seed) {
                 return function() {
                     seed |= 0;
@@ -269,6 +272,28 @@
                 });
             };
 
+            // 3-Dots Menu Builder
+            const actionMenu = (id) => `
+                <div class="action-menu">
+                    <button class="action-menu-btn" onclick="toggleMenu(this)">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                    <div class="action-dropdown">
+                        <button class="action-dropdown-item" onclick="viewMaintenance('${id}')">
+                            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            View
+                        </button>
+                        <button class="action-dropdown-item" onclick="editMaintenance('${id}')">
+                            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit
+                        </button>
+                        <button class="action-dropdown-item delete" onclick="deleteMaintenance('${id}')">
+                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            Delete
+                        </button>
+                    </div>
+                </div>`;
+
             // --- 6. Core Render Logic ---
             const render = () => {
                 state.filtered = state.data.filter(d => 
@@ -300,7 +325,7 @@
                             <td><span class="${getBadgeClass('status', d.status)}">${d.status}</span></td>
                             <td><span class="${getBadgeClass('priority', d.priority)}">${d.priority}</span></td>
                             <td>$${d.cost.toFixed(2)}</td>
-                            <td><div class="actions"><button class="action-btn">👁️</button><button class="action-btn">✏️</button><button class="action-btn">🗑️</button></div></td>
+                            <td>${actionMenu(d.id)}</td>
                         </tr>`).join('') || `<tr><td colspan="7" style="text-align:center;">No data</td></tr>`;
                 } else {
                     els.list.style.display = 'none'; els.grid.style.display = 'grid';
@@ -328,6 +353,41 @@
 
             // --- 7. Event Listeners ---
             window.goToPage = (n) => { state.page = n; render(); };
+
+            // Global Action Handlers
+            window.toggleMenu = function(btn) {
+                const dropdowns = document.querySelectorAll('.action-dropdown');
+                dropdowns.forEach(d => {
+                    if (d !== btn.nextElementSibling) d.classList.remove('show');
+                });
+                btn.nextElementSibling.classList.toggle('show');
+            };
+
+            window.viewMaintenance = (id) => {
+                document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+                console.log(`Viewing maintenance ${id}`);
+            };
+            
+            window.editMaintenance = (id) => {
+                document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+                console.log(`Editing maintenance ${id}`);
+            };
+            
+            window.deleteMaintenance = (id) => {
+                document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+                if (confirm(`Delete maintenance record ${id}?`)) {
+                    state.data = state.data.filter(d => d.id !== id);
+                    updateCounts();
+                    render();
+                }
+            };
+
+            // Close menus on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.action-menu')) {
+                    document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('show'));
+                }
+            });
 
             document.getElementById('search-btn').onclick = () => { state.query = els.search.value.toLowerCase(); state.page = 1; render(); };
             els.search.onkeyup = (e) => { if(e.key === 'Enter') document.getElementById('search-btn').click(); };
