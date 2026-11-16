@@ -133,9 +133,6 @@
 .pr-page-btn:hover:not(.active):not(:disabled){background:#e0f2fe;color:#0284c7;border-color:#7dd3fc}
 .pr-page-btn.active{background:#0ea5e9;color:#fff;border-color:#0ea5e9;box-shadow:0 2px 4px rgba(14,165,233,.3)}
 .pr-page-btn:disabled{opacity:.5;cursor:not-allowed;background:#f1f5f9}
-#prevPageBtn,#nextPageBtn{background:#e0f2fe;color:#0284c7;border-color:#bae6fd;font-weight:600}
-#prevPageBtn:hover:not(:disabled),#nextPageBtn:hover:not(:disabled){background:#bae6fd;color:#0369a1;border-color:#7dd3fc}
-#prevPageBtn:disabled,#nextPageBtn:disabled{background:#f1f5f9;color:#94a3b8;border-color:#e2e8f0}
 </style>
 
 <div class="pr-header">
