@@ -10,15 +10,18 @@
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        background-color: #ffffff !important; /* Forces background to white */
+        background-color: #ffffff !important;
     }
 </style>
 
 <section id="manage-revenues-section">
     <style>
         #manage-revenues-section {
-            --primary: #10b981; /* Emerald Green from image */
-            --primary-hover: #059669;
+            /* Changed to Bright Blue Theme */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-light: #eff6ff;
+            
             --border-color: #e5e7eb;
             --text-main: #111827;
             --text-muted: #6b7280;
@@ -92,7 +95,7 @@
             background-color: var(--primary-hover);
         }
 
-        /* --- CALENDAR WIDGET (Matching the Image) --- */
+        /* --- CALENDAR WIDGET --- */
         #manage-revenues-section .calendar-widget {
             border: 1px solid var(--border-color);
             border-radius: 0.5rem;
@@ -101,7 +104,6 @@
             overflow: hidden;
         }
 
-        /* Top Header Row (Centered Title, Arrows on Far Ends) */
         #manage-revenues-section .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -136,7 +138,6 @@
             color: var(--text-main);
         }
 
-        /* Months Row */
         #manage-revenues-section .calendar-months {
             display: flex;
             width: 100%;
@@ -250,6 +251,7 @@
 
         #manage-revenues-section .search-input-wrapper input:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
         }
 
         #manage-revenues-section .btn-search {
@@ -266,6 +268,7 @@
 
         #manage-revenues-section .btn-search:hover {
             background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
         }
 
         #manage-revenues-section .btn-clear {
@@ -284,8 +287,8 @@
         }
 
         #manage-revenues-section .btn-clear:hover {
-            background-color: var(--blue-light);
-            color: var(--blue-text);
+            background-color: var(--primary-light);
+            color: var(--primary);
             border-color: #bfdbfe;
         }
 
@@ -355,7 +358,7 @@
         }
 
         #manage-revenues-section .tab.active .tab-count {
-            background: var(--green-light);
+            background: var(--primary-light);
             color: var(--primary);
         }
 
@@ -566,6 +569,16 @@
             background: #fef2f2;
         }
 
+        #manage-revenues-section .action-dropdown-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         /* Pagination */
         #manage-revenues-section .pagination {
             padding: 0.75rem;
@@ -619,7 +632,7 @@
         <button class="btn-add" id="addRevenueBtn">+</button>
     </div>
 
-    <!-- Calendar Widget (Matches Image) -->
+    <!-- Calendar Widget -->
     <div class="calendar-widget">
         <div class="calendar-header">
             <button class="cal-nav-btn" id="prevYear">‹</button>
@@ -668,7 +681,7 @@
                         <th>Amount ↑↓</th>
                         <th>Status ↑↓</th>
                         <th>Approved By</th>
-                        <th></th> <!-- Removed "Actions" text -->
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -722,7 +735,7 @@
                 perPage: 10,
                 searchQuery: "",
                 currentTab: "all",
-                currentDate: new Date(2026, 10, 11) // Nov 2026
+                currentDate: new Date(2026, 10, 11)
             };
 
             const tableBody = section.querySelector('#tableBody');
@@ -859,23 +872,44 @@
                         `;
                     }
 
-                    // Build 3-dots menu items based on status
+                    // Build 3-dots menu items based on status WITH ICONS
                     let menuItems = '';
                     if (item.status === 'Draft') {
                         menuItems = `
-                            <button class="action-dropdown-item" onclick="handleAction('approve', '${item.id}')">Approve</button>
-                            <button class="action-dropdown-item" onclick="handleAction('edit', '${item.id}')">Edit</button>
-                            <button class="action-dropdown-item" onclick="handleAction('post', '${item.id}')">Post</button>
-                            <button class="action-dropdown-item delete" onclick="handleAction('delete', '${item.id}')">Delete</button>
+                            <button class="action-dropdown-item" onclick="handleAction('approve', '${item.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Approve
+                            </button>
+                            <button class="action-dropdown-item" onclick="handleAction('edit', '${item.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                Edit
+                            </button>
+                            <button class="action-dropdown-item" onclick="handleAction('post', '${item.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+                                Post
+                            </button>
+                            <button class="action-dropdown-item delete" onclick="handleAction('delete', '${item.id}')">
+                                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                Delete
+                            </button>
                         `;
                     } else if (item.status === 'Approved') {
                         menuItems = `
-                            <button class="action-dropdown-item" onclick="handleAction('post', '${item.id}')">Post</button>
-                            <button class="action-dropdown-item" onclick="handleAction('view', '${item.id}')">View</button>
+                            <button class="action-dropdown-item" onclick="handleAction('post', '${item.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+                                Post
+                            </button>
+                            <button class="action-dropdown-item" onclick="handleAction('view', '${item.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                View
+                            </button>
                         `;
                     } else {
                         menuItems = `
-                            <button class="action-dropdown-item" onclick="handleAction('view', '${item.id}')">View</button>
+                            <button class="action-dropdown-item" onclick="handleAction('view', '${item.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                View
+                            </button>
                         `;
                     }
 
