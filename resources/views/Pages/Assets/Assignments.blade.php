@@ -90,19 +90,22 @@
 .as-badge-fair{background:#fffbeb;color:#b45309}
 .as-badge-poor{background:#fef2f2;color:#b91c1c}
 
-/* Dropdown FIX - Absolute positioning removed in favor of Fixed */
+/* Action Menu Fix */
 .as-action-menu{position:relative;display:inline-block}
 .as-action-trigger{background:none;border:none;cursor:pointer;color:#6b7280;padding:6px;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:0.2s}
 .as-action-trigger:hover{background:#f3f4f6;color:#111}
 
+/* FIXED: Dropdown is now absolute and positions relative to the parent container */
 .as-dropdown{
     display:none;
-    position:fixed; /* FIXED: Ensures no clipping by table overflow */
+    position:absolute; 
+    right:0; 
+    top:100%; 
     background:#fff;
     border:1px solid #e5e7eb;
     border-radius:8px;
     box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    z-index:99999;
+    z-index:100;
     min-width:150px;
     padding:6px 0;
     flex-direction:column;
@@ -226,36 +229,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return `<div style="background:#eff6ff; width:40px; height:40px; border-radius:6px; display:flex; justify-content:center; align-items:center; flex-shrink:0;">${svgs[type] || svgs.laptop}</div>`;
     };
 
-    // Dynamically calculate the position so it never cuts off
     window.toggleMenu = function(btn) {
         const isShowing = btn.nextElementSibling.classList.contains('show');
         document.querySelectorAll('.as-dropdown').forEach(m => m.classList.remove('show'));
-        
-        if (!isShowing) {
-            const dropdown = btn.nextElementSibling;
-            const rect = btn.getBoundingClientRect();
-            
-            // Align vertically with the button
-            dropdown.style.top = rect.top + 'px';
-            
-            // Check if there's enough space on the right side of the screen
-            const spaceRight = window.innerWidth - rect.right;
-            const menuWidth = 160;
-            
-            if (spaceRight < menuWidth) {
-                // If not enough space on right, open to the LEFT (like your screenshot)
-                dropdown.style.left = 'auto';
-                dropdown.style.right = (window.innerWidth - rect.left) + 'px';
-            } else {
-                // Otherwise open to the RIGHT
-                dropdown.style.right = 'auto';
-                dropdown.style.left = rect.left + 'px';
-            }
-            
-            dropdown.classList.add('show');
-        }
+        if (!isShowing) btn.nextElementSibling.classList.add('show');
     };
-    
     document.addEventListener('click', e => {
         if (!e.target.closest('.as-action-menu')) document.querySelectorAll('.as-dropdown').forEach(m => m.classList.remove('show'));
     });
