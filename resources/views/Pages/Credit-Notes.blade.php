@@ -34,6 +34,7 @@
             --primary-hover: #2563eb;
             --badge-bg-blue: #eff6ff;
             --badge-text-blue: #1d4ed8;
+            --danger: #ef4444;
         }
         #credit-notes-app * { box-sizing: border-box; }
         
@@ -118,6 +119,94 @@
         .cn-company-info { display: flex; flex-direction: column; gap: 0; }
         .cn-company-name { font-weight: 500; color: #111; font-size: 13px; }
         .cn-company-email { font-size: 11px; color: #6b7280; }
+
+        /* 3-Dots Action Menu */
+        .cn-action-menu {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .cn-action-menu-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cn-action-menu-btn:hover {
+            background: #f3f4f6;
+            color: #111;
+        }
+
+        .cn-action-menu-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .cn-action-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 20;
+            min-width: 140px;
+            padding: 4px 0;
+        }
+
+        .cn-action-dropdown.show {
+            display: block;
+        }
+
+        .cn-action-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            color: #334155;
+            cursor: pointer;
+            white-space: nowrap;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        .cn-action-dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        .cn-action-dropdown-item.delete {
+            color: var(--danger);
+        }
+
+        .cn-action-dropdown-item.delete:hover {
+            background: #fef2f2;
+        }
+
+        .cn-action-dropdown-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
         /* Pagination Area */
         .cn-pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e5e7eb; background: #fff; }
@@ -212,6 +301,7 @@
                         <th>Balance ↕</th>
                         <th>Status ↕</th>
                         <th>Approved By</th>
+                        <th></th> <!-- Added Actions column -->
                     </tr>
                 </thead>
                 <tbody id="cn-table-body">
@@ -288,7 +378,6 @@
                 `;
 
                 for (let i = 0; i < 12; i++) {
-                    // Simulating the days shown in the image (01, 02, 03...) for demonstration
                     const dayNum = String(i + 1).padStart(2, '0'); 
                     const isActive = i === currentMonth ? 'active' : '';
                     container.innerHTML += `
@@ -376,7 +465,7 @@
 
                 tableBody.innerHTML = '';
                 if (paginatedData.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 24px; color: #6b7280;">No records found.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 24px; color: #6b7280;">No records found.</td></tr>`;
                 } else {
                     paginatedData.forEach(row => {
                         const statusClass = `cn-status-${row.status.toLowerCase()}`;
@@ -392,6 +481,35 @@
                                 </div>
                             </div>
                         `;
+
+                        // Build 3-dots menu items based on status
+                        let menuItems = `
+                            <button class="cn-action-dropdown-item" onclick="handleAction('view', '${row.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                View
+                            </button>
+                        `;
+                        
+                        if (row.status === 'Draft') {
+                            menuItems = `
+                                <button class="cn-action-dropdown-item" onclick="handleAction('approve', '${row.id}')">
+                                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                    Approve
+                                </button>
+                            ` + menuItems + `
+                                <button class="cn-action-dropdown-item delete" onclick="handleAction('delete', '${row.id}')">
+                                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                    Delete
+                                </button>
+                            `;
+                        } else if (row.status === 'Approved') {
+                            menuItems += `
+                                <button class="cn-action-dropdown-item delete" onclick="handleAction('delete', '${row.id}')">
+                                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                    Delete
+                                </button>
+                            `;
+                        }
 
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
@@ -416,6 +534,16 @@
                             <td><span class="${balanceColor}">${formatMoney(row.balance)}</span></td>
                             <td><span class="cn-status-badge ${statusClass}">${row.status}</span></td>
                             <td>${approvedHtml}</td>
+                            <td>
+                                <div class="cn-action-menu">
+                                    <button class="cn-action-menu-btn" onclick="toggleMenu(this)">
+                                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                                    </button>
+                                    <div class="cn-action-dropdown">
+                                        ${menuItems}
+                                    </div>
+                                </div>
+                            </td>
                         `;
                         tableBody.appendChild(tr);
                     });
@@ -433,6 +561,45 @@
                     pageNumbers.appendChild(btn);
                 }
             };
+
+            // Global Action Handlers
+            window.toggleMenu = function(btn) {
+                const dropdowns = document.querySelectorAll('.cn-action-dropdown');
+                dropdowns.forEach(d => {
+                    if (d !== btn.nextElementSibling) d.classList.remove('show');
+                });
+                btn.nextElementSibling.classList.toggle('show');
+            };
+
+            window.handleAction = function(action, id) {
+                // Close dropdown
+                document.querySelectorAll('.cn-action-dropdown').forEach(d => d.classList.remove('show'));
+
+                const itemIndex = state.data.findIndex(d => d.id === id);
+                if (itemIndex === -1) return;
+
+                if (action === 'approve') {
+                    state.data[itemIndex].status = 'Approved';
+                    state.data[itemIndex].approvedBy = 'Admin';
+                    updateCounts();
+                    applyFilters();
+                } else if (action === 'delete') {
+                    if (confirm(`Are you sure you want to delete credit note ${id}?`)) {
+                        state.data.splice(itemIndex, 1);
+                        updateCounts();
+                        applyFilters();
+                    }
+                } else if (action === 'view') {
+                    alert(`Viewing details for Credit Note ID: ${id}`);
+                }
+            };
+
+            // Close menus on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.cn-action-menu')) {
+                    document.querySelectorAll('.cn-action-dropdown').forEach(d => d.classList.remove('show'));
+                }
+            });
 
             // Event Listeners
             document.getElementById('cn-search-btn').addEventListener('click', () => {
@@ -478,7 +645,6 @@
             });
 
             document.querySelectorAll('th').forEach((th, index) => {
-                // Only add sorting to headers with specific text or just all for simplicity
                 if (th.textContent.includes('↕')) {
                     th.addEventListener('click', () => {
                         const cols = ['id', 'returnId', 'name', 'date', 'total', 'balance', 'status', 'approvedBy'];
