@@ -83,44 +83,50 @@
       .ct-table-wrapper { width: 100%; overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 8px; }
       .ct-table { width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left; }
       
-      /* Adjusted Widths to prevent overlap */
-      .ct-table th:nth-child(1) { width: 18%; } /* User */
+      .ct-table th:nth-child(1) { width: 17%; } /* User */
       .ct-table th:nth-child(2) { width: 12%; } /* Code */
-      .ct-table th:nth-child(3) { width: 16%; } /* Company */
-      .ct-table th:nth-child(4) { width: 16%; } /* Contact */
-      .ct-table th:nth-child(5) { width: 22%; } /* Email - wider */
+      .ct-table th:nth-child(3) { width: 15%; } /* Company */
+      .ct-table th:nth-child(4) { width: 14%; } /* Contact */
+      .ct-table th:nth-child(5) { width: 20%; } /* Email */
       .ct-table th:nth-child(6) { width: 12%; } /* Tax */
-      .ct-table th:nth-child(7) { width: 4%; }  /* Actions */
+      .ct-table th:nth-child(7) { width: 10%; } /* Actions */
 
-      .ct-table th, .ct-table td { padding: 16px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+      .ct-table th, .ct-table td { padding: 12px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
       
-      /* Crucial fix for overlapping text */
-      .ct-table td { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .ct-table td { white-space: nowrap; overflow: visible; text-overflow: clip; font-size: 12.5px; }
+      .ct-table td .ct-text, .ct-table td .ct-email { overflow: hidden; text-overflow: ellipsis; }
+      .ct-table td:last-child { overflow: visible; }
 
-      .ct-table th { background: #f8fafc; font-size: 13px; font-weight: 600; color: #4b5563; border-bottom: 1px solid #e2e8f0; }
+      .ct-table th { background: #f8fafc; font-size: 12px; font-weight: 600; color: #4b5563; border-bottom: 1px solid #e2e8f0; }
       .ct-table tbody tr:hover { background: #f8fafc; }
       
-      .ct-user-cell { display: flex; align-items: center; gap: 12px; }
-      .ct-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid #e2e8f0; flex-shrink: 0; }
-      .ct-user-name { font-weight: 500; color: #111827; overflow: hidden; text-overflow: ellipsis; }
-      .ct-user-code { font-size: 12px; color: #6b7280; display: none; }
-      .ct-badge-code { background: #eff6ff; color: #1d4ed8; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid #bfdbfe; white-space: nowrap; }
-      .ct-text { color: #374151; overflow: hidden; text-overflow: ellipsis; display: block; }
-      .ct-email { color: #3b82f6; overflow: hidden; text-overflow: ellipsis; display: block; }
+      .ct-user-cell { display: flex; align-items: center; gap: 10px; }
+      .ct-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid #e2e8f0; flex-shrink: 0; }
+      .ct-user-name { font-weight: 500; font-size: 12.5px; color: #111827; overflow: hidden; text-overflow: ellipsis; }
+      .ct-user-code { font-size: 11px; color: #6b7280; display: none; }
+      .ct-badge-code { background: #eff6ff; color: #1d4ed8; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; border: 1px solid #bfdbfe; white-space: nowrap; display: inline-block; }
+      .ct-text { color: #374151; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; display: block; }
+      .ct-email { color: #3b82f6; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; display: block; }
 
+      /* ===== 3-dot dropdown with action items ===== */
       .ct-action-menu { position: relative; display: inline-flex; justify-content: center; width: 100%; }
-      .ct-action-btn { background: transparent; border: none; cursor: pointer; color: #64748b; padding: 6px; }
-      .ct-action-btn svg { width: 18px; height: 18px; fill: currentColor; }
-      .ct-action-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,.1); z-index: 20; min-width: 160px; padding: 4px 0; }
+      .ct-action-btn { background: transparent; border: none; cursor: pointer; color: #64748b; padding: 6px; border-radius: 4px; transition: background .15s; }
+      .ct-action-btn:hover { background: #f1f5f9; color: #0f172a; }
+      .ct-action-btn svg { width: 18px; height: 18px; fill: currentColor; display: block; }
+      .ct-action-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 8px 16px rgba(0,0,0,.12); z-index: 999; min-width: 170px; padding: 6px 0; margin-top: 4px; }
       .ct-action-dropdown.show { display: block; }
-      .ct-action-item { display: flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: 13px; color: #334155; cursor: pointer; white-space: nowrap; }
+      .ct-action-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; white-space: nowrap; transition: background .1s; text-decoration: none; }
+      .ct-action-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
       .ct-action-item:hover { background: #f8fafc; }
-      .ct-action-item svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+      /* ===== CHANGED: only Delete keeps its red color, no left border on any item ===== */
+      .ct-action-item.delete { color: #dc2626; }
+      .ct-action-item.delete:hover { background: #fef2f2; }
+      /* ===== END CHANGED ===== */
 
       .ct-grid-container { display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
       .ct-grid-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
       .ct-grid-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
-      .ct-grid-body { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+      .ct-grid-body { display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; }
       .ct-grid-row { display: flex; justify-content: space-between; gap: 10px; }
       .ct-grid-label { color: #6b7280; flex-shrink: 0; }
       .ct-grid-value { font-weight: 500; color: #111827; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -212,8 +218,29 @@
         var page = 1;
         var tbody = document.getElementById('tableBody');
         var grid = document.getElementById('gridContainer');
-        
-        var menu = '<div class="ct-action-menu"><button class="ct-action-btn" onclick="toggleMenu(this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="ct-action-dropdown"><a class="ct-action-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> View Reports</a><a class="ct-action-item"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View</a><a class="ct-action-item"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit</a></div></div>';
+
+        /* ===== 3-dot menu with action items (color classes kept only for delete) ===== */
+        function buildMenu(code) {
+          return '<div class="ct-action-menu">' +
+            '<button class="ct-action-btn" onclick="toggleMenu(this)" title="Actions">' +
+              '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>' +
+            '</button>' +
+            '<div class="ct-action-dropdown">' +
+              '<a class="ct-action-item" data-action="report" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> View Reports' +
+              '</a>' +
+              '<a class="ct-action-item" data-action="view" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View' +
+              '</a>' +
+              '<a class="ct-action-item" data-action="edit" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit' +
+              '</a>' +
+              '<a class="ct-action-item delete" data-action="delete" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> Delete' +
+              '</a>' +
+            '</div>' +
+          '</div>';
+        }
 
         function render() {
           var total = currentData.length;
@@ -234,7 +261,6 @@
             for (var j = 0; j < data.length; j++) {
               var r = data[j];
               
-              // Fixed HTML to use .ct-text and .ct-email classes for proper truncation
               tHtml += '<tr>' +
                 '<td><div class="ct-user-cell"><img src="' + r.avatar + '" class="ct-avatar"><span class="ct-user-name">' + r.name + '</span></div></td>' +
                 '<td><span class="ct-badge-code">' + r.code + '</span></td>' +
@@ -242,10 +268,10 @@
                 '<td><span class="ct-text" title="' + r.contact + '">' + r.contact + '</span></td>' +
                 '<td><span class="ct-email" title="' + r.email + '">' + r.email + '</span></td>' +
                 '<td><span class="ct-text" title="' + r.tax + '">' + r.tax + '</span></td>' +
-                '<td>' + menu + '</td>' +
+                '<td>' + buildMenu(r.code) + '</td>' +
               '</tr>';
               
-              gHtml += '<div class="ct-grid-card"><div class="ct-grid-header"><div class="ct-user-cell"><img src="' + r.avatar + '" class="ct-avatar"><div><span class="ct-user-name">' + r.name + '</span><br><span class="ct-user-code">' + r.code + '</span></div></div>' + menu + '</div><div class="ct-grid-body"><div class="ct-grid-row"><span class="ct-grid-label">Company</span><span class="ct-grid-value" title="' + r.company + '">' + r.company + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Contact</span><span class="ct-grid-value" title="' + r.contact + '">' + r.contact + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Email</span><span class="ct-grid-value" style="color:#3b82f6" title="' + r.email + '">' + r.email + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Tax</span><span class="ct-grid-value">' + r.tax + '</span></div></div></div>';
+              gHtml += '<div class="ct-grid-card"><div class="ct-grid-header"><div class="ct-user-cell"><img src="' + r.avatar + '" class="ct-avatar"><div><span class="ct-user-name">' + r.name + '</span><br><span class="ct-user-code" style="display:inline;font-size:11px;color:#6b7280;">' + r.code + '</span></div></div>' + buildMenu(r.code) + '</div><div class="ct-grid-body"><div class="ct-grid-row"><span class="ct-grid-label">Company</span><span class="ct-grid-value" title="' + r.company + '">' + r.company + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Contact</span><span class="ct-grid-value" title="' + r.contact + '">' + r.contact + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Email</span><span class="ct-grid-value" style="color:#3b82f6" title="' + r.email + '">' + r.email + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Tax</span><span class="ct-grid-value">' + r.tax + '</span></div></div></div>';
             }
             tbody.innerHTML = tHtml;
             grid.innerHTML = gHtml;
@@ -286,7 +312,43 @@
           btn.nextElementSibling.classList.toggle('show');
         };
 
+        /* ===== real handler for the four dropdown actions ===== */
+        window.handleAction = function(action, code) {
+          var drops = document.querySelectorAll('.ct-action-dropdown');
+          for (var i = 0; i < drops.length; i++) drops[i].classList.remove('show');
+
+          var customer = null;
+          for (var j = 0; j < allData.length; j++) {
+            if (allData[j].code === code) { customer = allData[j]; break; }
+          }
+          var name = customer ? customer.name : 'Customer';
+
+          if (action === 'report') {
+            alert('📊 View Reports for ' + name + ' (' + code + ')');
+            // window.location.href = '/reports/' + code;
+          } else if (action === 'view') {
+            alert('👁️ View ' + name + ' (' + code + ')');
+            // window.location.href = '/customer/' + code;
+          } else if (action === 'edit') {
+            alert('✏️ Edit ' + name + ' (' + code + ')');
+            // window.location.href = '/edit-customer/' + code;
+          } else if (action === 'delete') {
+            if (confirm('Delete ' + name + ' (' + code + ')?')) {
+              allData = allData.filter(function(r) { return r.code !== code; });
+              applyFilter();
+            }
+          }
+        };
+
         document.addEventListener('click', function(e) {
+          var item = e.target.closest('.ct-action-item');
+          if (item) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.handleAction(item.getAttribute('data-action'), item.getAttribute('data-code'));
+            return;
+          }
+
           if (!e.target.closest('.ct-action-menu')) {
             var drops = document.querySelectorAll('.ct-action-dropdown');
             for (var i = 0; i < drops.length; i++) drops[i].classList.remove('show');
@@ -296,7 +358,6 @@
         document.getElementById('searchBtn').onclick = applyFilter;
         document.getElementById('searchInput').onkeyup = function(e) { if (e.key === 'Enter') applyFilter(); };
 
-        // Clear button: instantly clears the search bar and resets results
         document.getElementById('clearBtn').onclick = function() {
           document.getElementById('searchInput').value = '';
           applyFilter();
