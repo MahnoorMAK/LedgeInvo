@@ -94,15 +94,15 @@
 .ma-action-trigger:hover{background:#f3f4f6;color:#111}
 .ma-dropdown{display:none;position:absolute;right:0;top:100%;background:#fff;border:1px solid #e5e7eb;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:100;min-width:140px;padding:6px 0;flex-direction:column}
 .ma-dropdown.show{display:flex}
-.ma-dropdown-btn{background:none;border:none;padding:10px 16px;text-align:left;font-size:14px;font-weight:500;cursor:pointer;width:100%;display:flex;align-items:center;gap:10px;transition:0.2s;font-family:inherit}
-.ma-dropdown-btn:hover{background:#f9fafb}
-.ma-dropdown-btn.view{color:#3b82f6}
-.ma-dropdown-btn.view:hover{background:#eff6ff}
-.ma-dropdown-btn.edit{color:#f59e0b}
-.ma-dropdown-btn.edit:hover{background:#fffbeb}
+
+/* Dropdown Items - No colors except delete */
+.ma-dropdown-btn{background:none;border:none;padding:10px 16px;text-align:left;font-size:14px;font-weight:500;cursor:pointer;width:100%;display:flex;align-items:center;gap:10px;transition:0.2s;font-family:inherit;color:#334155}
+.ma-dropdown-btn:hover{background:#f8fafc}
+.ma-dropdown-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+
+/* Only delete gets a color */
 .ma-dropdown-btn.delete{color:#ef4444}
 .ma-dropdown-btn.delete:hover{background:#fef2f2}
-.ma-dropdown-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
 /* Pagination matching the screenshot */
 .ma-pagination{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;margin-top:24px;border:1px solid #e5e7eb;border-radius:8px;background:#fff}
@@ -259,13 +259,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!e.target.closest('.ma-action-menu')) document.querySelectorAll('.ma-dropdown').forEach(m => m.classList.remove('show'));
     });
 
+    // Updated Action Menu with Icons (No colors except delete)
     const actionMenu = id => `
         <div class="ma-action-menu">
             <button class="ma-action-trigger" onclick="toggleMenu(this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
             <div class="ma-dropdown">
-                <button class="ma-dropdown-btn view" onclick="viewAsset('${id}')">View</button>
-                <button class="ma-dropdown-btn edit" onclick="editAsset('${id}')">Edit</button>
-                <button class="ma-dropdown-btn delete" onclick="deleteAsset('${id}')">Delete</button>
+                <button class="ma-dropdown-btn" onclick="viewAsset('${id}')">
+                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    View
+                </button>
+                <button class="ma-dropdown-btn" onclick="editAsset('${id}')">
+                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    Edit
+                </button>
+                <button class="ma-dropdown-btn delete" onclick="deleteAsset('${id}')">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    Delete
+                </button>
             </div>
         </div>`;
 
