@@ -1,4 +1,4 @@
-@extends('layout.dashboard')
+@extends('Layout.dashboard')
 
 @section('title', 'Customer-Management')
 

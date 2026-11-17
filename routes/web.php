@@ -29,6 +29,13 @@ Route::get('/Warehouse', function () {return view('Pages.Purchase.Warehouse');})
 Route::get('/Vendors', function () {return view('Pages.Accounting.Vendors');})->name('Vendors');
 Route::get('/Expense', function () {return view('Pages.Accounting.Expense');})->name('Expense');
 
+// ==========================================
+// CUSTOMERS ROUTE (NEW ADDED)
+// ==========================================
+Route::get('/accounting/customers', function () {
+    return view('Pages.Accounting.Customers');
+})->name('accounting.customers');
+
 
 Route::post('/register', function (\Illuminate\Http\Request $request) {
     $data = $request->validate([
@@ -50,3 +57,61 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
     auth()->login($user);
     return redirect('/')->with('success', 'Welcome to Apexbooks!');
 })->name('register.post');
+
+
+// ==========================================
+// MILESTONES
+// ==========================================
+Route::get('/Goal/milestone', function () {
+    return view('Pages.Goal.milestone');
+})->name('milestone');
+
+
+// ==========================================
+// CATEGORIES (NEW ADDED)
+// ==========================================
+Route::get('/Goal/category', function () {
+    return view('Pages.Goal.category.index');
+})->name('category.index');
+
+
+// ==========================================
+// TRACKING SYSTEM
+// ==========================================
+// 1. Main Tracking Page
+Route::get('/Goal/tracking', function () {
+    return view('Pages.Goal.tracking');
+})->name('tracking.index');
+
+// 2. Create Tracking Page
+Route::get('/Goal/createtracking', function () {
+    return view('Pages.Goal.createtracking');
+})->name('createtracking');
+
+// 3. Store Tracking Data
+Route::post('/Goal/createtracking', function (Illuminate\Http\Request $request) {
+    return redirect()->route('tracking.index')->with('success', 'Tracking created successfully!');
+})->name('tracking.store');
+
+// 4. Budget Periods
+Route::get('/budget-periods', function () {
+    return view('pages.budget-periods.index');
+})->name('budget-periods.index');
+
+// ==========================================
+// BUDGET PERIODS
+// ==========================================
+// 1. Main Page
+Route::get('/budget-periods', function () {
+    return view('pages.budgetperiods.index');
+})->name('budget-periods.index');
+
+// 2. Create Page
+Route::get('/budget-periods/create', function () {
+    return view('pages.budgetperiods.create');
+})->name('budget-periods.create');
+
+// 3. Store Data
+Route::post('/budgetperiods/store', function (Illuminate\Http\Request $request) {
+    return redirect()->route('budgetperiods.index')->with('success', 'Budget Period created successfully!');
+})->name('budgetperiods.store');

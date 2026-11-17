@@ -154,10 +154,10 @@
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
                 <li class="sub-item {{ request()->is('goal/goals') ? 'active' : '' }}"><a href="{{ url('/goal/goals') }}">Goals</a></li>
-                <li class="sub-item {{ request()->is('goal/milestones') ? 'active' : '' }}"><a href="{{ url('/goal/milestones') }}">Milestones</a></li>
-                <li class="sub-item {{ request()->is('goal/contributions') ? 'active' : '' }}"><a href="{{ url('/goal/contributions') }}">Contributions</a></li>
-                <li class="sub-item {{ request()->is('goal/tracking') ? 'active' : '' }}"><a href="{{ url('/goal/tracking') }}">Tracking</a></li>
-                <li class="sub-item {{ request()->is('goal/category') ? 'active' : '' }}"><a href="{{ url('/goal/category') }}">Category</a></li>
+                <li class="sub-item {{ request()->is('Goal/milestone') ? 'active' : '' }}"><a href="{{ url('/Goal/milestone') }}">Milestones</a></li>
+                <li class="sub-item {{ request()->is('Goal/contributions') ? 'active' : '' }}"><a href="{{ url('/Goal/contributions') }}">Contributions</a></li>
+                <li class="sub-item {{ request()->is('Goal/tracking') ? 'active' : '' }}"><a href="{{ url('/Goal/tracking') }}">Tracking</a></li>
+                <li class="sub-item {{ request()->is('Goal/category') ? 'active' : '' }}"><a href="{{ url('/Goal/category') }}">Category</a></li>
             </ul>
         </li>
 
