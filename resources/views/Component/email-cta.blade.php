@@ -30,7 +30,7 @@
 
             <p class="eml-cta__desc">
                 Stop drowning in receipts, invoices, and statements. 
-                Apexbooks automatically routes your financial emails into a 
+                LedgeInvo automatically routes your financial emails into a 
                 beautifully organized, searchable dashboard.
             </p>
            
