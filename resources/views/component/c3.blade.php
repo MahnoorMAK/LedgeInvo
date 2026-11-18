@@ -1,768 +1,892 @@
-{{-- resources/views/component/why-us.blade.php --}}
+{{-- resources/views/component/prac2.blade.php --}}
+<section class="prac2-hero">
 
-<section class="why-us">
-    <style>
-        .why-us *,
-        .why-us *::before,
-        .why-us *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    /* ============================================================
+       SCOPED RESET
+    ============================================================ */
+    .prac2-hero *,
+    .prac2-hero *::before,
+    .prac2-hero *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .why-us {
-            position: relative;
-            width: 100%;
-            background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
-            padding: 6rem 2rem;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            color: #0f2547;
-            overflow: hidden;
-        }
+    /* ============================================================
+       ROOT SECTION
+    ============================================================ */
+    .prac2-hero {
+      position: relative;
+      width: 100%;
+      height: 92vh;
+      min-height: 680px;
+      max-height: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f1f5f9 45%, #e2e8f0 100%);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      overflow: visible;
+      isolation: isolate;
+    }
 
-        .why-us::before,
-        .why-us::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.55;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .why-us::before {
-            width: 460px;
-            height: 460px;
-            background: radial-gradient(circle, #cfe1ff, transparent 70%);
-            top: -120px;
-            left: -120px;
-        }
-        .why-us::after {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #dbe9ff, transparent 70%);
-            bottom: -140px;
-            right: -140px;
-        }
+    /* ============================================================
+       3D STAGE
+    ============================================================ */
+    .prac2-hero .prac2-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1600px;
+      height: 100%;
+      margin: 0 auto;
+      perspective: 1800px;
+      perspective-origin: 50% 50%;
+    }
 
-        .why-us__inner {
-            position: relative;
-            z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+    /* ============================================================
+       FLOATING SLIDER CARD
+    ============================================================ */
+    .prac2-hero .prac2-float-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1200px;
+      height: 660px;
+      margin-left: -600px;
+      margin-top: -330px;
+      border-radius: 32px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      box-shadow:
+        0 60px 120px -30px rgba(15, 23, 42, 0.35),
+        0 0 0 1px rgba(148, 163, 184, 0.22),
+        0 0 100px rgba(79, 70, 229, 0.10);
+      animation: prac2FloatCard 6s ease-in-out infinite;
+      will-change: transform;
+      z-index: 5;
+    }
 
-        /* ============================================================
-           HEADING
-        ============================================================ */
-        .why-us__head {
-            text-align: center;
-            max-width: 660px;
-            margin: 0 auto 4rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .why-us__head.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes prac2FloatCard {
+      0%   { transform: translateY(0)     rotateX(0deg)    rotateY(0deg)   rotateZ(0deg); }
+      25%  { transform: translateY(-20px) rotateX(2deg)    rotateY(-3deg)  rotateZ(0.8deg); }
+      50%  { transform: translateY(-10px) rotateX(-1.5deg) rotateY(4deg)   rotateZ(-1deg); }
+      75%  { transform: translateY(-24px) rotateX(3deg)    rotateY(1.5deg) rotateZ(1.5deg); }
+      100% { transform: translateY(0)     rotateX(0deg)    rotateY(0deg)   rotateZ(0deg); }
+    }
 
-        .why-us__badge {
-            display: inline-block;
-            padding: 0.4rem 0.95rem;
-            background: rgba(31, 74, 140, 0.08);
-            border: 1px solid rgba(31, 74, 140, 0.22);
-            border-radius: 40px;
-            color: #1f4a8c;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.9px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
+    /* ============================================================
+       SLIDER TRACK
+    ============================================================ */
+    .prac2-hero .prac2-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
 
-        .why-us__head h2 {
-            font-size: clamp(1.8rem, 3.6vw, 2.5rem);
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.8px;
-            color: #0b1f3d;
-            margin-bottom: 0.9rem;
-        }
+    /* ============================================================
+       SLIDE
+    ============================================================ */
+    .prac2-hero .prac2-slide {
+      position: relative;
+      min-width: 100%;
+      height: 100%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
 
-        .why-us__head h2 span {
-            background: linear-gradient(135deg, #1f4a8c, #3a7bf0, #6aa8ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .prac2-hero .prac2-slide img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.1);
+      transition: transform 1.2s ease;
+      filter: saturate(0.9) contrast(1.02) brightness(1.05);
+    }
 
-        .why-us__head p {
-            font-size: 1.02rem;
-            line-height: 1.6;
-            color: #52678a;
-        }
+    .prac2-hero .prac2-slide.active img { transform: scale(1); }
 
-        .why-us__accent {
-            width: 120px;
-            height: 3px;
-            margin: 1.6rem auto 0;
-            border-radius: 3px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                #3a7bf0 30%,
-                #6aa8ff 50%,
-                #3a7bf0 70%,
-                transparent 100%
-            );
-            background-size: 200% 100%;
-            animation: whyAccentFlow 3s linear infinite;
-        }
+    .prac2-hero .prac2-slide .prac2-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15, 23, 42, 0.78) 0%,
+        rgba(15, 23, 42, 0.35) 45%,
+        rgba(15, 23, 42, 0.05) 100%
+      );
+      z-index: 2;
+    }
 
-        @keyframes whyAccentFlow {
-            0%   { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+    /* ============================================================
+       CAPTION
+    ============================================================ */
+    .prac2-hero .prac2-slide-caption {
+      position: absolute;
+      bottom: 56px;
+      left: 56px;
+      z-index: 15;
+      color: #fff;
+      max-width: 60%;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
 
-        /* ============================================================
-           TIMELINE
-        ============================================================ */
-        .why-timeline {
-            position: relative;
-            padding: 1rem 0;
-            z-index: 1;
-        }
+    .prac2-hero .prac2-slide-caption .prac2-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(79, 70, 229, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 7px 18px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
 
-        /* Grey base line — runs BEHIND the circles */
-        .why-timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            background: linear-gradient(
-                180deg,
-                transparent 0%,
-                #c8daf8 6%,
-                #c8daf8 94%,
-                transparent 100%
-            );
-            z-index: 1;
-        }
+    .prac2-hero .prac2-slide-caption .prac2-caption-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
 
-        /* Blue progress line — runs BEHIND the circles */
-        .why-timeline__progress {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3px;
-            height: 0;
-            background: linear-gradient(180deg, #3a7bf0, #6aa8ff);
-            border-radius: 3px;
-            box-shadow: 0 0 16px rgba(58, 123, 240, 0.6);
-            transition: height 0.4s ease-out;
-            z-index: 1;
-        }
+    .prac2-hero .prac2-slide-caption .prac2-caption-text {
+      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+      color: #e2e8f0;
+      font-weight: 400;
+      line-height: 1.55;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    }
 
-        /* ============================================================
-           TIMELINE ITEM — TEXT ⇄ IMAGE PARALLEL
-        ============================================================ */
-        .why-tl-item {
-            position: relative;
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            gap: 0;
-            margin-bottom: 5rem;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-            z-index: 2;              /* ⬅ above the line */
-        }
+    /* ============================================================
+       ORBIT RINGS — 16 rings at different speeds + directions
+    ============================================================ */
+    .prac2-hero .prac2-orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      z-index: 3;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
 
-        .why-tl-item:last-child { margin-bottom: 0; }
+    .prac2-hero .prac2-orbit-1  { animation: prac2Orbit 22s linear infinite; }
+    .prac2-hero .prac2-orbit-2  { animation: prac2Orbit 30s linear infinite reverse; }
+    .prac2-hero .prac2-orbit-3  { animation: prac2Orbit 38s linear infinite; }
+    .prac2-hero .prac2-orbit-4  { animation: prac2Orbit 26s linear infinite reverse; }
+    .prac2-hero .prac2-orbit-5  { animation: prac2Orbit 34s linear infinite; }
+    .prac2-hero .prac2-orbit-6  { animation: prac2Orbit 28s linear infinite reverse; }
+    .prac2-hero .prac2-orbit-7  { animation: prac2Orbit 40s linear infinite; }
+    .prac2-hero .prac2-orbit-8  { animation: prac2Orbit 32s linear infinite reverse; }
+    .prac2-hero .prac2-orbit-9  { animation: prac2Orbit 36s linear infinite; }
+    .prac2-hero .prac2-orbit-10 { animation: prac2Orbit 24s linear infinite reverse; }
+    .prac2-hero .prac2-orbit-11 { animation: prac2Orbit 42s linear infinite; }
+    .prac2-hero .prac2-orbit-12 { animation: prac2Orbit 27s linear infinite reverse; }
+    .prac2-hero .prac2-orbit-13 { animation: prac2Orbit 45s linear infinite; }
+    .prac2-hero .prac2-orbit-14 { animation: prac2Orbit 29s linear infinite reverse; }
+    .prac2-hero .prac2-orbit-15 { animation: prac2Orbit 33s linear infinite; }
+    .prac2-hero .prac2-orbit-16 { animation: prac2Orbit 25s linear infinite reverse; }
 
-        .why-tl-item.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes prac2Orbit {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
 
-        /* ---------- Two parallel slots ---------- */
-        .why-tl-content,
-        .why-tl-image {
-            width: calc(50% - 40px);
-            flex: 0 0 calc(50% - 40px);
-            display: flex;
-            flex-direction: column;
-        }
+    /* ============================================================
+       FLOATING ICON CHIP
+    ============================================================ */
+    .prac2-hero .prac2-float-obj {
+      position: absolute;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow:
+        0 20px 40px -10px rgba(15, 23, 42, 0.18),
+        0 0 0 1px rgba(148, 163, 184, 0.3),
+        0 0 40px rgba(79, 70, 229, 0.08);
+      animation: prac2FloatObj 5s ease-in-out infinite;
+      will-change: transform;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .why-tl-content {
-            justify-content: flex-start;
-        }
+    .prac2-hero .prac2-float-obj:hover {
+      transform: scale(1.08);
+      box-shadow:
+        0 28px 50px -12px rgba(15, 23, 42, 0.28),
+        0 0 0 1px rgba(79, 70, 229, 0.35),
+        0 0 60px rgba(79, 70, 229, 0.18);
+    }
 
-        /* ---------- ODD rows: text LEFT, image RIGHT ---------- */
-        .why-tl-item:nth-child(odd) .why-tl-content {
-            order: 1;
-            text-align: right;
-            padding-right: 2.5rem;
-            align-items: flex-end;
-        }
-        .why-tl-item:nth-child(odd) .why-tl-image {
-            order: 3;
-            padding-left: 2.5rem;
-        }
-        .why-tl-item:nth-child(odd) .why-tl-tags {
-            justify-content: flex-end;
-        }
+    .prac2-hero .prac2-icon-obj {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #ffffff, #f1f5f9);
+      color: #4f46e5;
+    }
 
-        /* ---------- EVEN rows: image LEFT, text RIGHT ---------- */
-        .why-tl-item:nth-child(even) .why-tl-content {
-            order: 3;
-            text-align: left;
-            padding-left: 2.5rem;
-            align-items: flex-start;
-        }
-        .why-tl-item:nth-child(even) .why-tl-image {
-            order: 1;
-            padding-right: 2.5rem;
-        }
-        .why-tl-item:nth-child(even) .why-tl-tags {
-            justify-content: flex-start;
-        }
+    .prac2-hero .prac2-icon-obj svg {
+      width: 48%;
+      height: 48%;
+      stroke: #4f46e5;
+      stroke-width: 1.6;
+      fill: none;
+    }
 
-        /* ============================================================
-           CENTER DOT — perfect circle, sits ON TOP of the line
-        ============================================================ */
-        .why-tl-dot {
-            order: 2;
-            flex: 0 0 80px;
-            width: 58px;
-            height: 58px;
-            min-width: 58px;
-            min-height: 58px;
-            max-width: 58px;
-            max-height: 58px;
-            aspect-ratio: 1 / 1;
-            margin: 0 auto;
-            border-radius: 50%;
-            background: #ffffff;         /* solid white — hides line behind */
-            border: 3px solid #3a7bf0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #1f4a8c;
-            box-shadow:
-                0 0 0 8px rgba(58, 123, 240, 0.10),
-                0 8px 20px -6px rgba(31, 74, 140, 0.35);
-            position: relative;
-            z-index: 3;
-            align-self: center;
-            box-sizing: border-box;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    @keyframes prac2FloatObj {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-14px) scale(1.03); }
+    }
 
-        .why-tl-dot svg {
-            width: 24px;
-            height: 24px;
-            flex: 0 0 auto;
-            position: relative;
-            z-index: 4;
-        }
+    /* ============================================================
+       ICON POSITIONS — 16 icons around the card
+       Card occupies roughly ±600px horizontal, ±330px vertical
+    ============================================================ */
 
-        .why-tl-dot::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 50%;
-            border: 2px solid rgba(58, 123, 240, 0.5);
-            animation: whyDotPulse 2.6s ease-out infinite;
-            pointer-events: none;
-            z-index: 2;
-        }
+    /* ---- Ring 1 (inner ring, close to card) ---- */
+    .prac2-hero .prac2-obj-1  { width:  96px; height:  96px; top: -400px; left:  420px; animation-delay: 0s;    border-radius: 22px; }
+    .prac2-hero .prac2-obj-2  { width:  80px; height:  80px; top:  360px; left:  440px; animation-delay: 1.2s;  border-radius: 22px; }
+    .prac2-hero .prac2-obj-3  { width:  88px; height:  88px; top:  340px; left: -460px; animation-delay: 0.6s;  border-radius: 22px; }
+    .prac2-hero .prac2-obj-4  { width: 104px; height: 104px; top: -380px; left: -440px; animation-delay: 2s;    border-radius: 22px; }
 
-        @keyframes whyDotPulse {
-            0%   { transform: scale(1);    opacity: 0.8; }
-            70%  { transform: scale(1.55); opacity: 0;   }
-            100% { transform: scale(1.55); opacity: 0;   }
-        }
+    /* ---- Ring 2 (mid ring) ---- */
+    .prac2-hero .prac2-obj-5  { width:  92px; height:  92px; top: -460px; left:   80px; animation-delay: 0.4s;  border-radius: 50%; }
+    .prac2-hero .prac2-obj-6  { width:  76px; height:  76px; top:  460px; left:  -80px; animation-delay: 1.6s;  border-radius: 50%; }
+    .prac2-hero .prac2-obj-7  { width: 100px; height: 100px; top: -440px; left:  260px; animation-delay: 2.4s;  border-radius: 22px; }
+    .prac2-hero .prac2-obj-8  { width:  82px; height:  82px; top:  430px; left: -260px; animation-delay: 0.9s;  border-radius: 22px; }
 
-        .why-tl-item:hover .why-tl-dot {
-            transform: scale(1.08);
-            box-shadow:
-                0 0 0 12px rgba(58, 123, 240, 0.15),
-                0 12px 26px -6px rgba(31, 74, 140, 0.5);
-        }
+    /* ---- Ring 3 (outer ring, further from card) ---- */
+    .prac2-hero .prac2-obj-9  { width:  84px; height:  84px; top: -520px; left: -180px; animation-delay: 1.8s;  border-radius: 22px; }
+    .prac2-hero .prac2-obj-10 { width:  72px; height:  72px; top:  520px; left:  180px; animation-delay: 0.3s;  border-radius: 50%; }
+    .prac2-hero .prac2-obj-11 { width:  90px; height:  90px; top: -540px; left:  380px; animation-delay: 2.1s;  border-radius: 22px; }
+    .prac2-hero .prac2-obj-12 { width:  78px; height:  78px; top:  540px; left: -380px; animation-delay: 1.4s;  border-radius: 22px; }
 
-        /* ---------- Text content ---------- */
-        .why-tl-content h3 {
-            font-size: clamp(1.2rem, 2vw, 1.4rem);
-            font-weight: 800;
-            color: #0b1f3d;
-            margin-bottom: 0.6rem;
-            letter-spacing: -0.4px;
-            line-height: 1.3;
-        }
+    /* ---- Ring 4 (corner satellites) ---- */
+    .prac2-hero .prac2-obj-13 { width:  70px; height:  70px; top: -480px; left: -560px; animation-delay: 0.7s;  border-radius: 50%; }
+    .prac2-hero .prac2-obj-14 { width:  68px; height:  68px; top:  480px; left:  560px; animation-delay: 2.2s;  border-radius: 50%; }
+    .prac2-hero .prac2-obj-15 { width:  86px; height:  86px; top: -560px; left:  520px; animation-delay: 1.1s;  border-radius: 22px; }
+    .prac2-hero .prac2-obj-16 { width:  74px; height:  74px; top:  560px; left: -520px; animation-delay: 2.7s;  border-radius: 22px; }
 
-        .why-tl-content p {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: #52678a;
-            margin-bottom: 0.9rem;
-        }
+    /* ============================================================
+       HERO TITLE
+    ============================================================ */
+    .prac2-hero .prac2-hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #0f172a;
+      z-index: 10;
+      pointer-events: none;
+      width: 100%;
+      padding: 0 20px;
+      animation: prac2FloatText 4s ease-in-out infinite;
+    }
 
-        .why-tl-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-        }
+    @keyframes prac2FloatText {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50%      { transform: translate(-50%, -50%) translateY(-10px); }
+    }
 
-        .why-tl-tag {
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 0.3rem 0.7rem;
-            border-radius: 40px;
-            background: rgba(58, 123, 240, 0.10);
-            color: #1f4a8c;
-            border: 1px solid rgba(58, 123, 240, 0.22);
-            letter-spacing: 0.3px;
-        }
+    .prac2-hero .prac2-hero-content .prac2-title {
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      font-weight: 800;
+      letter-spacing: 8px;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      text-shadow:
+        0 2px 20px rgba(15, 23, 42, 0.6),
+        0 8px 40px rgba(0, 0, 0, 0.35);
+    }
 
-        /* ---------- Image — stretches to match text height ---------- */
-        .why-tl-image {
-            position: relative;
-            min-height: 260px;
-        }
+    .prac2-hero .prac2-hero-content .prac2-subtitle {
+      font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+      font-weight: 500;
+      letter-spacing: 8px;
+      opacity: 0.9;
+      max-width: 680px;
+      margin: 0 auto;
+      color: #ffffff;
+      text-transform: uppercase;
+      text-shadow: 0 2px 12px rgba(15, 23, 42, 0.5);
+    }
 
-        .why-tl-image img {
-            width: 100%;
-            height: 100%;
-            min-height: 260px;
-            object-fit: cover;
-            display: block;
-            border-radius: 20px;
-            box-shadow:
-                0 25px 50px -20px rgba(31, 74, 140, 0.4),
-                0 0 0 1px rgba(180, 205, 240, 0.5);
-            transition: transform 0.5s ease;
-        }
+    /* ============================================================
+       DOTS
+    ============================================================ */
+    .prac2-hero .prac2-slider-nav {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 20;
+    }
 
-        .why-tl-item:hover .why-tl-image img {
-            transform: scale(1.04);
-        }
+    .prac2-hero .prac2-nav-dot {
+      width: 48px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.45);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .why-tl-image::before {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, #3a7bf0, #6aa8ff);
-            z-index: -1;
-            box-shadow: 0 12px 24px -8px rgba(58, 123, 240, 0.6);
-            bottom: -14px;
-        }
+    .prac2-hero .prac2-nav-dot::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
 
-        .why-tl-item:nth-child(odd) .why-tl-image::before {
-            right: -14px;
-        }
-        .why-tl-item:nth-child(even) .why-tl-image::before {
-            left: -14px;
-        }
+    .prac2-hero .prac2-nav-dot.active::after { transform: scaleX(1); }
+    .prac2-hero .prac2-nav-dot:hover { background: rgba(255, 255, 255, 0.75); }
 
-        .why-tl-image::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 26px;
-            right: 26px;
-            height: 20px;
-            background: radial-gradient(ellipse, rgba(58, 123, 240, 0.35), transparent 70%);
-            filter: blur(12px);
-            z-index: -2;
-        }
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
 
-        /* ============================================================
-           STATS STRIP
-        ============================================================ */
-        .why-us__stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 5rem;
-            padding: 2.5rem 2rem;
-            border-radius: 24px;
-            background: #ffffff;
-            border: 1px solid #e0ebfb;
-            box-shadow: 0 20px 40px -22px rgba(31, 74, 140, 0.3);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .why-us__stats.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* 1400px */
+    @media (max-width: 1400px) {
+      .prac2-hero .prac2-float-card {
+        width: 1100px;
+        height: 620px;
+        margin-left: -550px;
+        margin-top: -310px;
+      }
+      .prac2-hero .prac2-obj-1  { top: -380px; left:  400px; }
+      .prac2-hero .prac2-obj-2  { top:  340px; left:  420px; }
+      .prac2-hero .prac2-obj-3  { top:  320px; left: -440px; }
+      .prac2-hero .prac2-obj-4  { top: -360px; left: -420px; }
+      .prac2-hero .prac2-obj-5  { top: -440px; left:   70px; }
+      .prac2-hero .prac2-obj-6  { top:  440px; left:  -70px; }
+      .prac2-hero .prac2-obj-7  { top: -420px; left:  240px; }
+      .prac2-hero .prac2-obj-8  { top:  410px; left: -240px; }
+      .prac2-hero .prac2-obj-9  { top: -490px; left: -160px; }
+      .prac2-hero .prac2-obj-10 { top:  490px; left:  160px; }
+      .prac2-hero .prac2-obj-11 { top: -500px; left:  360px; }
+      .prac2-hero .prac2-obj-12 { top:  500px; left: -360px; }
+      .prac2-hero .prac2-obj-13 { top: -440px; left: -520px; }
+      .prac2-hero .prac2-obj-14 { top:  440px; left:  520px; }
+      .prac2-hero .prac2-obj-15 { top: -510px; left:  480px; }
+      .prac2-hero .prac2-obj-16 { top:  510px; left: -480px; }
+    }
 
-        .why-stat { text-align: center; }
+    /* 1200px */
+    @media (max-width: 1200px) {
+      .prac2-hero .prac2-float-card {
+        width: 92vw;
+        height: 56vh;
+        margin-left: -46vw;
+        margin-top: -28vh;
+        border-radius: 26px;
+      }
+      .prac2-hero .prac2-float-obj { transform: scale(0.85); }
+      .prac2-hero .prac2-obj-1  { top: -340px; left:  360px; }
+      .prac2-hero .prac2-obj-2  { top:  300px; left:  380px; }
+      .prac2-hero .prac2-obj-3  { top:  280px; left: -400px; }
+      .prac2-hero .prac2-obj-4  { top: -320px; left: -380px; }
+      .prac2-hero .prac2-obj-5  { top: -400px; left:   60px; }
+      .prac2-hero .prac2-obj-6  { top:  400px; left:  -60px; }
+      .prac2-hero .prac2-obj-7  { top: -380px; left:  220px; }
+      .prac2-hero .prac2-obj-8  { top:  370px; left: -220px; }
+      .prac2-hero .prac2-obj-9  { top: -440px; left: -140px; }
+      .prac2-hero .prac2-obj-10 { top:  440px; left:  140px; }
+      .prac2-hero .prac2-obj-11 { top: -450px; left:  320px; }
+      .prac2-hero .prac2-obj-12 { top:  450px; left: -320px; }
+      .prac2-hero .prac2-obj-13 { top: -400px; left: -460px; }
+      .prac2-hero .prac2-obj-14 { top:  400px; left:  460px; }
+      .prac2-hero .prac2-obj-15 { top: -460px; left:  420px; }
+      .prac2-hero .prac2-obj-16 { top:  460px; left: -420px; }
+    }
 
-        .why-stat__value {
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
-            font-weight: 800;
-            color: #1f4a8c;
-            letter-spacing: -0.6px;
-            line-height: 1.1;
-            margin-bottom: 0.4rem;
-        }
+    /* 900px — hide the outer rings so it doesn't get cluttered */
+    @media (max-width: 900px) {
+      .prac2-hero {
+        height: 82vh;
+        min-height: 580px;
+      }
+      .prac2-hero .prac2-float-card {
+        width: 88vw;
+        height: 52vh;
+        margin-left: -44vw;
+        margin-top: -26vh;
+      }
+      .prac2-hero .prac2-float-obj { transform: scale(0.72); }
 
-        .why-stat__label {
-            font-size: 0.78rem;
-            color: #7a92b8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
+      .prac2-hero .prac2-orbit-9,
+      .prac2-hero .prac2-orbit-10,
+      .prac2-hero .prac2-orbit-11,
+      .prac2-hero .prac2-orbit-12,
+      .prac2-hero .prac2-orbit-13,
+      .prac2-hero .prac2-orbit-14,
+      .prac2-hero .prac2-orbit-15,
+      .prac2-hero .prac2-orbit-16 {
+        display: none;
+      }
 
-        /* ============================================================
-           RESPONSIVE — stack on mobile
-        ============================================================ */
-        @media (max-width: 900px) {
-            .why-timeline::before,
-            .why-timeline__progress { left: 24px; }
+      .prac2-hero .prac2-obj-1 { top: -260px; left:  220px; }
+      .prac2-hero .prac2-obj-2 { top:  240px; left:  240px; }
+      .prac2-hero .prac2-obj-3 { top:  220px; left: -230px; }
+      .prac2-hero .prac2-obj-4 { top: -240px; left: -220px; }
+      .prac2-hero .prac2-obj-5 { top: -300px; left:   50px; }
+      .prac2-hero .prac2-obj-6 { top:  280px; left:  -40px; }
+      .prac2-hero .prac2-obj-7 { top: -300px; left:  120px; }
+      .prac2-hero .prac2-obj-8 { top:  300px; left: -140px; }
 
-            .why-tl-item {
-                display: grid;
-                grid-template-columns: 48px 1fr;
-                gap: 1.5rem;
-                margin-bottom: 3.5rem;
-            }
+      .prac2-hero .prac2-slide-caption { left: 28px; bottom: 36px; }
+    }
 
-            .why-tl-item:nth-child(odd) .why-tl-content,
-            .why-tl-item:nth-child(even) .why-tl-content {
-                order: 0;
-                grid-column: 2;
-                text-align: left;
-                padding: 0;
-                width: 100%;
-                flex: none;
-                align-items: flex-start;
-            }
+    /* 600px — keep only the inner ring */
+    @media (max-width: 600px) {
+      .prac2-hero {
+        height: 74vh;
+        min-height: 500px;
+      }
+      .prac2-hero .prac2-float-card {
+        width: 90vw;
+        height: 44vh;
+        margin-left: -45vw;
+        margin-top: -22vh;
+        border-radius: 20px;
+      }
+      .prac2-hero .prac2-float-obj { transform: scale(0.6); }
 
-            .why-tl-item:nth-child(odd) .why-tl-image,
-            .why-tl-item:nth-child(even) .why-tl-image {
-                order: 0;
-                grid-column: 2;
-                padding: 0;
-                width: 100%;
-                flex: none;
-                margin-top: 0.5rem;
-            }
+      .prac2-hero .prac2-orbit-5,
+      .prac2-hero .prac2-orbit-6,
+      .prac2-hero .prac2-orbit-7,
+      .prac2-hero .prac2-orbit-8 {
+        display: none;
+      }
 
-            .why-tl-item:nth-child(odd) .why-tl-image img,
-            .why-tl-item:nth-child(even) .why-tl-image img {
-                max-width: 100%;
-                height: 220px;
-                min-height: 220px;
-            }
+      .prac2-hero .prac2-hero-content .prac2-title { letter-spacing: 4px; }
+      .prac2-hero .prac2-hero-content .prac2-subtitle { letter-spacing: 4px; }
 
-            .why-tl-dot {
-                order: 0;
-                grid-column: 1;
-                grid-row: 1 / span 2;
-                justify-self: start;
-                align-self: start;
-                width: 48px;
-                height: 48px;
-                min-width: 48px;
-                min-height: 48px;
-                max-width: 48px;
-                max-height: 48px;
-                flex: none;
-                margin: 0;
-                aspect-ratio: 1 / 1;
-            }
+      .prac2-hero .prac2-slide-caption {
+        left: 20px;
+        bottom: 28px;
+        max-width: 80%;
+      }
+    }
+  </style>
 
-            .why-tl-item:nth-child(odd) .why-tl-tags,
-            .why-tl-item:nth-child(even) .why-tl-tags {
-                justify-content: flex-start;
-            }
+  <!-- ============================================================
+       HERO STAGE
+  ============================================================ -->
+  <div class="prac2-stage">
 
-            .why-tl-item:nth-child(odd) .why-tl-image::before,
-            .why-tl-item:nth-child(even) .why-tl-image::before {
-                left: -10px;
-                right: auto;
-            }
-        }
+    <!-- ============================================================
+         ORBITING ICONS — 16 total, 4 rings
+    ============================================================ -->
 
-        @media (max-width: 600px) {
-            .why-us {
-                padding: 4rem 1.2rem;
-            }
-            .why-us__stats {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding: 2rem 1.2rem;
-            }
-            .why-tl-image img {
-                height: 200px;
-                min-height: 200px;
-            }
-        }
-    </style>
-
-    <div class="why-us__inner">
-
-        {{-- HEADING --}}
-        <div class="why-us__head" data-animate>
-            <div class="why-us__badge">Why Choose Us?</div>
-            <h2>Built for teams that <span>value their time</span></h2>
-            <p>Here is why thousands of businesses trust our accounting platform every day.</p>
+    <!-- 1 — document / ledger -->
+    <div class="prac2-orbit prac2-orbit-1">
+      <div class="prac2-float-obj prac2-obj-1">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" />
+            <line x1="8" y1="6" x2="16" y2="6" />
+            <line x1="8" y1="10" x2="8" y2="10.01" />
+            <line x1="12" y1="10" x2="12" y2="10.01" />
+            <line x1="16" y1="10" x2="16" y2="10.01" />
+            <line x1="8" y1="14" x2="8" y2="14.01" />
+            <line x1="12" y1="14" x2="12" y2="14.01" />
+            <line x1="16" y1="14" x2="16" y2="14.01" />
+            <line x1="8" y1="18" x2="16" y2="18" />
+          </svg>
         </div>
-
-        {{-- TIMELINE --}}
-        <div class="why-timeline">
-            <div class="why-timeline__progress" data-progress></div>
-
-            {{-- Item 1 — text LEFT, image RIGHT --}}
-            <div class="why-tl-item" data-animate>
-                <div class="why-tl-content">
-                    <h3>Save 20+ Hours Every Week</h3>
-                    <p>
-                        Stop drowning in spreadsheets. Our automation handles data entry,
-                        invoicing, and reconciliation so your team can focus on growth.
-                    </p>
-                    <div class="why-tl-tags">
-                        <span class="why-tl-tag">Auto-categorize</span>
-                        <span class="why-tl-tag">Bank sync</span>
-                    </div>
-                </div>
-                <div class="why-tl-dot">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                    </svg>
-                </div>
-                <div class="why-tl-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop"
-                        alt="Accounting spreadsheet with laptop and charts"
-                        loading="lazy"
-                    >
-                </div>
-            </div>
-
-            {{-- Item 2 — image LEFT, text RIGHT --}}
-            <div class="why-tl-item" data-animate>
-                <div class="why-tl-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop"
-                        alt="Accountant reviewing ledgers and documents"
-                        loading="lazy"
-                    >
-                </div>
-                <div class="why-tl-dot">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z"/>
-                        <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                </div>
-                <div class="why-tl-content">
-                    <h3>Bank Level Security</h3>
-                    <p>
-                        Your financial data is protected by 256-bit encryption, SOC 2
-                        compliance, and daily encrypted backups, every single day.
-                    </p>
-                    <div class="why-tl-tags">
-                        <span class="why-tl-tag">SOC 2</span>
-                        <span class="why-tl-tag">256-bit</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Item 3 — text LEFT, image RIGHT --}}
-            <div class="why-tl-item" data-animate>
-                <div class="why-tl-content">
-                    <h3>Real-Time Insights</h3>
-                    <p>
-                        Live dashboards show exactly how your business is doing — cash flow,
-                        profit margins, runway, and more — updated every second.
-                    </p>
-                    <div class="why-tl-tags">
-                        <span class="why-tl-tag">Live dashboard</span>
-                        <span class="why-tl-tag">P&amp;L reports</span>
-                    </div>
-                </div>
-                <div class="why-tl-dot">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 3v18h18"/>
-                        <path d="M7 14l4-4 4 4 5-5"/>
-                    </svg>
-                </div>
-                <div class="why-tl-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&h=600&fit=crop"
-                        alt="Financial chart and analytics on screen"
-                        loading="lazy"
-                    >
-                </div>
-            </div>
-
-            {{-- Item 4 — image LEFT, text RIGHT --}}
-            <div class="why-tl-item" data-animate>
-                <div class="why-tl-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=600&fit=crop"
-                        alt="Business team discussing financial reports"
-                        loading="lazy"
-                    >
-                </div>
-                <div class="why-tl-dot">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                </div>
-                <div class="why-tl-content">
-                    <h3>Built for Teams</h3>
-                    <p>
-                        Invite your accountants, assign roles, and collaborate on the
-                        same books — live, with full activity history.
-                    </p>
-                    <div class="why-tl-tags">
-                        <span class="why-tl-tag">Multi-user</span>
-                        <span class="why-tl-tag">Role based</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        {{-- STATS STRIP --}}
-        <div class="why-us__stats" data-animate data-stats>
-            <div class="why-stat">
-                <div class="why-stat__value" data-count="50000" data-suffix="+">0</div>
-                <div class="why-stat__label">Active Businesses</div>
-            </div>
-            <div class="why-stat">
-                <div class="why-stat__value" data-count="4.2" data-suffix="B" data-prefix="$" data-decimals="1">0</div>
-                <div class="why-stat__label">Processed Monthly</div>
-            </div>
-            <div class="why-stat">
-                <div class="why-stat__value" data-count="99.9" data-suffix="%" data-decimals="1">0</div>
-                <div class="why-stat__label">Uptime Guaranteed</div>
-            </div>
-        </div>
-
+      </div>
     </div>
 
-    {{-- Inline script --}}
-    <script>
-        (function () {
-            function initWhyUs() {
-                var animatedEls = document.querySelectorAll('.why-us [data-animate]');
-                if (!animatedEls.length) return;
+    <!-- 2 — bar chart -->
+    <div class="prac2-orbit prac2-orbit-2">
+      <div class="prac2-float-obj prac2-obj-2">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6"  y1="20" x2="6"  y2="14" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                if (!('IntersectionObserver' in window)) {
-                    animatedEls.forEach(function (el) { el.classList.add('is-visible'); });
-                    runCounters(document);
-                    return;
-                }
+    <!-- 3 — dollar sign -->
+    <div class="prac2-orbit prac2-orbit-3">
+      <div class="prac2-float-obj prac2-obj-3">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23" />
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                var observer = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
+    <!-- 4 — document with lines -->
+    <div class="prac2-orbit prac2-orbit-4">
+      <div class="prac2-float-obj prac2-obj-4">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                            if (entry.target.hasAttribute('data-stats')) {
-                                runCounters(entry.target);
-                            }
+    <!-- 5 — pie chart -->
+    <div class="prac2-orbit prac2-orbit-5">
+      <div class="prac2-float-obj prac2-obj-5">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+            <path d="M22 12A10 10 0 0 0 12 2v10z" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    threshold: 0.15,
-                    rootMargin: '0px 0px -40px 0px'
-                });
+    <!-- 6 — calculator -->
+    <div class="prac2-orbit prac2-orbit-6">
+      <div class="prac2-float-obj prac2-obj-6">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" />
+            <line x1="8" y1="6" x2="16" y2="6" />
+            <line x1="8" y1="11" x2="8" y2="11.01" />
+            <line x1="12" y1="11" x2="12" y2="11.01" />
+            <line x1="16" y1="11" x2="16" y2="11.01" />
+            <line x1="8" y1="15" x2="8" y2="15.01" />
+            <line x1="12" y1="15" x2="12" y2="15.01" />
+            <line x1="16" y1="15" x2="16" y2="15.01" />
+            <line x1="8" y1="19" x2="16" y2="19" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                animatedEls.forEach(function (el) { observer.observe(el); });
-            }
+    <!-- 7 — trending up -->
+    <div class="prac2-orbit prac2-orbit-7">
+      <div class="prac2-float-obj prac2-obj-7">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+            <polyline points="17 6 23 6 23 12" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-            function initProgress() {
-                var timeline = document.querySelector('.why-timeline');
-                var progress = document.querySelector('[data-progress]');
-                if (!timeline || !progress) return;
+    <!-- 8 — shield / compliance -->
+    <div class="prac2-orbit prac2-orbit-8">
+      <div class="prac2-float-obj prac2-obj-8">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <polyline points="9 12 11 14 15 10" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                function update() {
-                    var rect = timeline.getBoundingClientRect();
-                    var vh = window.innerHeight;
-                    var total = rect.height;
-                    var scrolled = Math.min(Math.max(vh * 0.6 - rect.top, 0), total);
-                    var pct = (scrolled / total) * 100;
-                    progress.style.height = pct + '%';
-                }
+    <!-- 9 — wallet -->
+    <div class="prac2-orbit prac2-orbit-9">
+      <div class="prac2-float-obj prac2-obj-9">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+            <path d="M18 12a2 2 0 0 0 0 4h4v-4z" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                window.addEventListener('scroll', update, { passive: true });
-                window.addEventListener('resize', update);
-                update();
-            }
+    <!-- 10 — credit card -->
+    <div class="prac2-orbit prac2-orbit-10">
+      <div class="prac2-float-obj prac2-obj-10">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+            <line x1="1" y1="10" x2="23" y2="10" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-            function runCounters(scope) {
-                var root = scope || document;
-                var counters = root.querySelectorAll('[data-count]');
+    <!-- 11 — receipt -->
+    <div class="prac2-orbit prac2-orbit-11">
+      <div class="prac2-float-obj prac2-obj-11">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 2v20l2-2 2 2 2-2 2 2 2-2 2 2 2-2 2 2V2l-2 2-2-2-2 2-2-2-2 2-2-2-2 2z" />
+            <line x1="8" y1="8" x2="16" y2="8" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+            <line x1="8" y1="16" x2="13" y2="16" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                counters.forEach(function (el) {
-                    if (el.dataset.done === '1') return;
-                    el.dataset.done = '1';
+    <!-- 12 — coins / stacked -->
+    <div class="prac2-orbit prac2-orbit-12">
+      <div class="prac2-float-obj prac2-obj-12">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="6" rx="8" ry="3" />
+            <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6" />
+            <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                    var target   = parseFloat(el.dataset.count);
-                    var decimals = parseInt(el.dataset.decimals || '0', 10);
-                    var prefix   = el.dataset.prefix || '';
-                    var suffix   = el.dataset.suffix || '';
-                    var duration = 1600;
-                    var start    = performance.now();
+    <!-- 13 — briefcase -->
+    <div class="prac2-orbit prac2-orbit-13">
+      <div class="prac2-float-obj prac2-obj-13">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                    function format(n) {
-                        var str = n.toFixed(decimals);
-                        if (decimals === 0) {
-                            str = str.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                        }
-                        return prefix + str + suffix;
-                    }
+    <!-- 14 — percent -->
+    <div class="prac2-orbit prac2-orbit-14">
+      <div class="prac2-float-obj prac2-obj-14">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="5" x2="5" y2="19" />
+            <circle cx="6.5" cy="6.5" r="2.5" />
+            <circle cx="17.5" cy="17.5" r="2.5" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                    function tick(now) {
-                        var elapsed = now - start;
-                        var progress = Math.min(elapsed / duration, 1);
-                        var eased = 1 - Math.pow(1 - progress, 3);
-                        var current = target * eased;
-                        el.textContent = format(current);
+    <!-- 15 — clipboard / check -->
+    <div class="prac2-orbit prac2-orbit-15">
+      <div class="prac2-float-obj prac2-obj-15">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+            <polyline points="9 13 11 15 15 11" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                        if (progress < 1) {
-                            requestAnimationFrame(tick);
-                        } else {
-                            el.textContent = format(current);
-                        }
-                    }
+    <!-- 16 — globe / network -->
+    <div class="prac2-orbit prac2-orbit-16">
+      <div class="prac2-float-obj prac2-obj-16">
+        <div class="prac2-icon-obj">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-                    requestAnimationFrame(tick);
-                });
-            }
+    <!-- Floating slider card -->
+    <div class="prac2-float-card" id="prac2FloatCard">
+      <div class="prac2-slider" id="prac2Slider">
 
-            function boot() {
-                initWhyUs();
-                initProgress();
-            }
+        <div class="prac2-slide active">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1800&h=1200&fit=crop" alt="Financial planning">
+          <div class="prac2-overlay"></div>
+        </div>
 
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', boot);
-            } else {
-                boot();
-            }
-        })();
-    </script>
+        <div class="prac2-slide">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1800&h=1200&fit=crop" alt="Data analysis">
+          <div class="prac2-overlay"></div>
+        </div>
 
+        <div class="prac2-slide">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1800&h=1200&fit=crop" alt="Business meeting">
+          <div class="prac2-overlay"></div>
+        </div>
+
+        <div class="prac2-slide">
+          <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1800&h=1200&fit=crop" alt="Audit and compliance">
+          <div class="prac2-overlay"></div>
+        </div>
+
+      </div>
+
+      <!-- Caption -->
+      <div class="prac2-slide-caption" id="prac2Caption">
+        <div class="prac2-tag">Planning</div>
+        <div class="prac2-caption-title">Financial Strategy</div>
+        <div class="prac2-caption-text">Build a solid financial roadmap for sustainable growth.</div>
+      </div>
+
+      <!-- Dots -->
+      <div class="prac2-slider-nav" id="prac2NavDots">
+        <div class="prac2-nav-dot active" data-index="0"></div>
+        <div class="prac2-nav-dot" data-index="1"></div>
+        <div class="prac2-nav-dot" data-index="2"></div>
+        <div class="prac2-nav-dot" data-index="3"></div>
+      </div>
+    </div>
+
+    <!-- Hero title -->
+    <div class="prac2-hero-content">
+      <div class="prac2-title">ACCOUNT</div>
+      <div class="prac2-subtitle">Precision · Analysis · Trust</div>
+    </div>
+
+  </div>
 </section>
+
+<script>
+(function () {
+  'use strict';
+
+  if (window.__prac2SliderInitialized) return;
+  window.__prac2SliderInitialized = true;
+
+  var AUTO_DELAY = 3000;
+
+  function initPrac2Slider() {
+    var slider       = document.getElementById('prac2Slider');
+    var slides       = document.querySelectorAll('.prac2-hero .prac2-slide');
+    var navDots      = document.querySelectorAll('.prac2-hero .prac2-nav-dot');
+    var slideCaption = document.getElementById('prac2Caption');
+
+    if (!slider || slides.length === 0) {
+      setTimeout(initPrac2Slider, 100);
+      return;
+    }
+
+    var slideData = [
+      { tag: 'Planning',   title: 'Financial Strategy', text: 'Build a solid financial roadmap for sustainable growth.' },
+      { tag: 'Analysis',   title: 'Data & Insights',    text: 'Turn complex numbers into clear, actionable insights.' },
+      { tag: 'Advisory',   title: 'Client Meetings',    text: 'Collaborate closely to align finances with your goals.' },
+      { tag: 'Compliance', title: 'Audit & Assurance',  text: 'Stay compliant with accurate reporting and audits.' }
+    ];
+
+    var totalSlides  = slides.length;
+    var currentSlide = 0;
+    var autoTimer    = null;
+
+    function goToSlide(index) {
+      currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
+
+      slider.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].classList.toggle('active', i === currentSlide);
+      }
+      for (var j = 0; j < navDots.length; j++) {
+        navDots[j].classList.toggle('active', j === currentSlide);
+      }
+
+      var data = slideData[currentSlide];
+      if (slideCaption && data) {
+        slideCaption.style.opacity   = '0';
+        slideCaption.style.transform = 'translateY(10px)';
+
+        clearTimeout(goToSlide._t);
+        goToSlide._t = setTimeout(function () {
+          var tagEl   = slideCaption.querySelector('.prac2-tag');
+          var titleEl = slideCaption.querySelector('.prac2-caption-title');
+          var textEl  = slideCaption.querySelector('.prac2-caption-text');
+          if (tagEl)   tagEl.textContent   = data.tag;
+          if (titleEl) titleEl.textContent = data.title;
+          if (textEl)  textEl.textContent  = data.text;
+
+          slideCaption.style.opacity   = '1';
+          slideCaption.style.transform = 'translateY(0)';
+        }, 300);
+      }
+    }
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(function () {
+        goToSlide(currentSlide + 1);
+      }, AUTO_DELAY);
+    }
+
+    function stopAuto() {
+      if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+    }
+
+    for (var k = 0; k < navDots.length; k++) {
+      (function (dot) {
+        dot.addEventListener('click', function () {
+          var idx = parseInt(dot.getAttribute('data-index'), 10) || 0;
+          goToSlide(idx);
+          startAuto();
+        });
+      })(navDots[k]);
+    }
+
+    goToSlide(0);
+    startAuto();
+
+    var card = document.getElementById('prac2FloatCard');
+    if (card) {
+      card.addEventListener('mouseenter', stopAuto);
+      card.addEventListener('mouseleave', startAuto);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPrac2Slider);
+  } else {
+    initPrac2Slider();
+  }
+})();
+</script>
