@@ -51,11 +51,7 @@
              TEXT STAGE 1 — Intro
              ============================ --}}
         <div class="svh__act svh__act--intro" data-svh-act="intro">
-            <div class="svh__eyebrow">
-                <span class="svh__eyebrow-dot"></span>
-                <span>Our Services</span>
-                <span class="svh__eyebrow-tag">6 in one platform</span>
-            </div>
+            
 
             <h1 class="svh__title">
                 <span class="svh__title-line">Your entire</span>
@@ -69,7 +65,7 @@
             </p>
 
             <div class="svh__scroll-hint">
-                <span class="svh__scroll-hint-text">Scroll to explore</span>
+                
                 <span class="svh__scroll-hint-arrow">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
