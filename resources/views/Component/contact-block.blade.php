@@ -26,8 +26,8 @@
             <div class="ctb__card-body">
                 <h4>Email Us</h4>
                 <p>For general inquiries and support requests.</p>
-                <a href="mailto:hello@apexbooks.com">
-                    hello@apexbooks.com
+                <a href="mailto:hello@ledgeinvo.com">
+                    hello@ledgeinvo.com
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
