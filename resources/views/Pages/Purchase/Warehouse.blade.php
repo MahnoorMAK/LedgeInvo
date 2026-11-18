@@ -1,6 +1,6 @@
 @extends('Layout.dashboard')
 
-@section('title', 'Manage Warehouses - Apexbooks')
+@section('title', 'Manage Warehouses - LedgeInvo')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/Purchase/Warehouse.css') }}">
