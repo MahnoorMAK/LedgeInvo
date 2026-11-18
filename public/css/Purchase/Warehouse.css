@@ -268,10 +268,10 @@
     /* COLUMN WIDTHS (Total = 100%) */
     .wh-table th:nth-child(1), .wh-table td:nth-child(1) { width: 45%; } /* Name */
     .wh-table th:nth-child(2), .wh-table td:nth-child(2) { width: 35%; } /* Address */
-    .wh-table th:nth-child(3), .wh-table td:nth-child(3) { width: 18%; } /* City */
+    .wh-table th:nth-child(3), .wh-table td:nth-child(3) { width: 20%; } /* City */
     .wh-table th:nth-child(4), .wh-table td:nth-child(4) { width: 15%; } /* Zip Code */
-    .wh-table th:nth-child(5), .wh-table td:nth-child(5) { width: 22%; } /* Phone */
-    .wh-table th:nth-child(6), .wh-table td:nth-child(6) { width: 10%; text-align: center; } /* Status */
+    .wh-table th:nth-child(5), .wh-table td:nth-child(5) { width: 23%; } /* Phone */
+    .wh-table th:nth-child(6), .wh-table td:nth-child(6) { width: 13%; text-align: center; } /* Status */
     .wh-table th:nth-child(7), .wh-table td:nth-child(7) { width: 8%; text-align: right; padding-right: 30px; overflow: visible; } /* Actions */
 
     .wh-table tbody tr:hover {
