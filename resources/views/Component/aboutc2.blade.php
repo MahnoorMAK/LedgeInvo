@@ -99,20 +99,20 @@
             align-items: baseline;
         }
 
-        .stat-card__suffix { font-size: 0.7em; margin-left: 2px; }
+        .stat-card__suffix { font-size: 0.7em; margin-left: 2px; color: #4f46e5; }
 
         .stat-card__title {
             font-family: 'Playfair Display', Georgia, serif;
             font-weight: 500;
             font-size: 1.05rem;
-            color: #1a120e;
+            color: #0f172a;
             margin-bottom: 1.2rem;
         }
 
         .stat-card__desc {
             font-size: 0.88rem;
             line-height: 1.55;
-            color: #6b5d51;
+            color: #475569; /* slate-600 */
             flex: 1;
         }
 
@@ -123,10 +123,15 @@
             padding-top: 1.2rem;
             border-top: 1px solid rgba(79, 70, 229, 0.15);
             font-size: 0.9rem;
-            color: #1a120e;
+            color: #0f172a;
         }
 
-        .stat-card__footer svg { width: 20px; height: 20px; opacity: 0.8; }
+        .stat-card__footer svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+            color: #4f46e5;
+        }
 
         /* Image card */
         .stat-card--image {
@@ -139,6 +144,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            filter: saturate(0.9) contrast(1.02) brightness(1.02);
         }
 
         .stat-card__overlay {
@@ -148,8 +154,8 @@
             align-items: flex-end;
             padding: 1.75rem;
             background: linear-gradient(180deg,
-                rgba(20, 10, 5, 0) 55%,
-                rgba(20, 10, 5, 0.75) 100%);
+                rgba(15, 23, 42, 0) 55%,
+                rgba(15, 23, 42, 0.78) 100%);
         }
 
         .stat-card__caption {
