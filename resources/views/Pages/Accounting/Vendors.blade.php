@@ -1,6 +1,6 @@
 @extends('Layout.dashboard')
 
-@section('title', 'Vendors - Apexbooks')
+@section('title', 'Vendors - LedgeInvo')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/Accounting/Vendors.css') }}">
