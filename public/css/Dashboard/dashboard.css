@@ -135,3 +135,164 @@ body.db-body {
     background-color: var(--bg-color, #F8F9FC); 
     /* REMOVED TRANSITION HERE */
 }
+
+/* ... your existing top code ... */
+
+/* ============================================================
+   NEW ADDITIONS: BREADCRUMBS & LANGUAGE DROPDOWN
+   (Placed at bottom to not interfere with your layout)
+   ============================================================ */
+
+/* Language Dropdown */
+.lang-dropdown {
+    position: relative;
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+    background-color: var(--bg-color);
+    border-color: var(--primary);
+}
+
+.lang-dropdown.open .lang-caret {
+    transform: rotate(180deg);
+}
+
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    list-style: none;
+    padding: 6px;
+    margin: 0;
+    min-width: 140px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: all 0.2s ease;
+}
+
+.lang-dropdown.open .lang-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-menu li {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.lang-menu li:hover {
+    background-color: var(--bg-color);
+}
+
+.lang-menu li.active {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Hide breadcrumbs on mobile */
+@media (max-width: 768px) {
+    .db-breadcrumbs {
+        display: none !important;
+    }
+}
+
+/* Hide breadcrumbs on mobile to prevent overflow */
+@media (max-width: 768px) {
+    .db-breadcrumbs {
+        display: none !important;
+    }
+}
+
+/* ============================================================
+   NAVBAR LAYOUT & BREADCRUMBS (Moved from Inline Styles)
+   ============================================================ */
+
+.nav-left-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.db-logo .site-logo-text {
+    color: var(--text-main);
+}
+
+.nav-divider-slash {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.5;
+}
+
+/* Breadcrumbs Container */
+.db-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Clickable Breadcrumb Links */
+.db-breadcrumbs .crumb-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.db-breadcrumbs .crumb-link:hover {
+    color: var(--primary);
+}
+
+/* Current (Last) Breadcrumb */
+.db-breadcrumbs .crumb-current {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+/* Breadcrumb Arrows */
+.db-breadcrumbs .crumb-separator {
+    font-size: 0.65rem;
+    opacity: 0.5;
+}
+
+/* Language Selector Icon Sizing */
+.lang-caret {
+    font-size: 0.65rem;
+    transition: transform 0.3s ease;
+}
+
+/* Hide breadcrumbs on smaller screens to prevent overflow */
+@media (max-width: 768px) {
+    .db-breadcrumbs {
+        display: none !important;
+    }
+}
