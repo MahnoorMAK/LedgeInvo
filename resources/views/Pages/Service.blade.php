@@ -1,7 +1,7 @@
 {{-- resources/views/Pages/Service.blade.php --}}
 @extends('Layout.app1')
 
-@section('title', 'Our Services - Apexbooks')
+@section('title', 'Our Services - LedgeInvo')
 
 @section('styles')
     {{-- Service page styles --}}
@@ -12,13 +12,16 @@
 @section('content')
 
 
-@include('Component.service-hero')
+<!-- @include('Component.service-hero')-->
+@include('Component.c2')
+
 @include('Component.pricing')
 @include('Component.services-grid')
-@include('Component.Grid')
+@include('Component.FloatingCTA')
+<!-- @include('Component.Grid') -->
 
 
-{{-- ============================================
+<!--{{-- ============================================
      FEATURED SHOWCASE BANNER (3D)
      ============================================ --}}
 <section class="showcase">
@@ -103,7 +106,7 @@
             </p>
         </div>
     </div>
-</section>
+</section>-->
 
 @endsection
 
