@@ -1,6 +1,6 @@
 @extends('Layout.app1')
 
-@section('title', 'LedgeInvo - Financial Clarity for Every Role')
+@section('title', 'LedgeInvo - Accounting & Management System')
 
 @section('styles')
 
@@ -11,9 +11,9 @@
 
     @include('Component.gallery')
 
-
+@include('Component.service-hero')
    {{-- ✅ Hero Slider (full-screen image carousel) --}}
-   @include('Component.cloud-shader-hero')
+  <!-- @include('Component.cloud-shader-hero') -->
 
     {{-- ✅ Hero Section (text, CTA, and abstract dashboard mockup) --}}
 
@@ -23,7 +23,7 @@
     <!-- Main Hero Section -->
     <div class="hero-container">
 
-        <!-- Left Side: Text & CTA -->
+        <!-- Left Side: Text & CTA 
         <div class="hero-text">
             <h1>Financial clarity for <span>every role.</span></h1>
             <p>Streamlined access for companies, vendors, customers &amp; more. Experience a unified platform designed to bring transparency and efficiency to your entire financial ecosystem.</p>
@@ -35,9 +35,9 @@
                 </button>
                 <button class="btn-secondary">Book a demo</button>
             </div>
-        </div>
+        </div>-->
 
-        <!-- Right Side: Abstract Dashboard Mockup -->
+        <!-- Right Side: Abstract Dashboard Mockup -
         <div class="dashboard-mockup">
             <div class="mockup-header">
                 <div class="mockup-title">Financial Overview</div>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
     </div>
 
