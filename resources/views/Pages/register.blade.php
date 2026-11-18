@@ -1,6 +1,6 @@
 @extends('Layout.app')
 
-@section('title', 'Create Account - Apexbooks')
+@section('title', 'Create Account - LedgeInvo')
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/Register.css') }}">
@@ -47,7 +47,7 @@
             </h1>
 
             <p class="auth-left-subtitle">
-                Join thousands of teams using Apexbooks to automate workflows,
+                Join thousands of teams using LedgeInvo to automate workflows,
                 understand their numbers, and grow with confidence.
             </p>
 
@@ -97,11 +97,11 @@
                 <div class="auth-brand-icon">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
                 </div>
-                <span class="auth-brand-name">Apexbooks.</span>
+                <span class="auth-brand-name">LedgeInvo.</span>
             </div>
 
             <h2 class="auth-title">Create your account</h2>
-            <p class="auth-subtitle">Get started with Apexbooks in under a minute.</p>
+            <p class="auth-subtitle">Get started with LedgeInvo in under a minute.</p>
 
             <form action="/register" method="POST" class="auth-form">
                 @csrf
