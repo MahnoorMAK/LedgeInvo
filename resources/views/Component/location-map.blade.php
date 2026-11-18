@@ -35,7 +35,7 @@
             <div class="loc__map">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.122!2d-74.0060!3d40.7128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjEiTiA3NMKwMDAnMjEuNiJX!5e0!3m2!1sen!2sus!4v1700000000000"
-                    title="Apexbooks New York Office"
+                    title="LedgeInvo New York Office"
                     loading="lazy"
                     allowfullscreen
                     referrerpolicy="no-referrer-when-downgrade"
@@ -143,16 +143,16 @@
                     Serving UK &amp; EU clients
                 </p>
                 <div class="loc__branch-meta">
-                    <a href="mailto:uk@apexbooks.com" class="loc__branch-link">
+                    <a href="mailto:uk@ledgeinvo.com" class="loc__branch-link">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="4" width="20" height="16" rx="2"/>
                             <path d="M22 6l-10 7L2 6"/>
                         </svg>
-                        uk@apexbooks.com
+                        uk@ledgeinvo.com
                     </a>
                 </div>
-                <a href="mailto:uk@apexbooks.com" class="loc__branch-directions">
+                <a href="mailto:uk@ledgeinvo.com" class="loc__branch-directions">
                     Contact UK team
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
