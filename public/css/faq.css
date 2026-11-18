@@ -1,11 +1,11 @@
 /* ============================================
-   FAQ SECTION — 3D SHADE (PURPLE) — NO SHAKE
+   FAQ SECTION — Theme Adapted
    ============================================ */
 .ct-faq-section {
     padding: 6rem 2rem;
-    background: linear-gradient(135deg, #faf7f0 0%, #f5ede0 100%);
+    background: var(--bg-color);
     perspective: 1400px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--app-font, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
 }
 
 .ct-faq-container {
@@ -24,7 +24,7 @@
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.3em;
-    color: #a855f7;
+    color: var(--primary);
     text-transform: uppercase;
     margin-bottom: 1rem;
 }
@@ -33,7 +33,7 @@
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 3rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-main);
     line-height: 1.15;
     letter-spacing: -0.02em;
     margin: 0;
@@ -42,7 +42,7 @@
 .ct-section-title em {
     font-style: italic;
     font-weight: 400;
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -56,53 +56,44 @@
 }
 
 /* ============================================
-   FAQ Item — NO TRANSFORM (Sirf shadow lift)
+   FAQ Item
    ============================================ */
 .ct-faq-item {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
     color: #ffffff;
-
-    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 60%, #6d28d9 100%);
-
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
     box-shadow:
-        -6px -6px 16px rgba(255, 255, 255, 0.5),
-        10px 10px 24px rgba(70, 20, 130, 0.5),
-        18px 22px 40px rgba(50, 10, 100, 0.4),
-        inset 0 -4px 8px rgba(60, 15, 110, 0.4),
+        -6px -6px 16px rgba(255, 255, 255, 0.1),
+        10px 10px 24px rgba(0, 0, 0, 0.2),
+        18px 22px 40px rgba(0, 0, 0, 0.15),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.2),
         inset 0 4px 8px rgba(255, 255, 255, 0.15);
-
-    border: 1px solid rgba(192, 132, 252, 0.4);
-
-    /* ✅ Sirf box-shadow transition — koi transform nahi */
+    border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
     transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ct-faq-item:hover {
-    /* ❌ Koi translateY, koi rotateX — NO SHAKE */
     box-shadow:
-        -8px -8px 20px rgba(255, 255, 255, 0.6),
-        14px 14px 32px rgba(70, 20, 130, 0.6),
-        24px 30px 55px rgba(50, 10, 100, 0.5),
-        inset 0 -6px 12px rgba(60, 15, 110, 0.5),
+        -8px -8px 20px rgba(255, 255, 255, 0.15),
+        14px 14px 32px rgba(0, 0, 0, 0.25),
+        24px 30px 55px rgba(0, 0, 0, 0.2),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.3),
         inset 0 6px 12px rgba(255, 255, 255, 0.2),
-        0 0 30px rgba(168, 85, 247, 0.4);
+        0 0 30px color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
 .ct-faq-item.active {
     box-shadow:
-        -8px -8px 22px rgba(255, 255, 255, 0.6),
-        16px 16px 36px rgba(70, 20, 130, 0.65),
-        26px 32px 60px rgba(50, 10, 100, 0.5),
-        inset 0 -6px 12px rgba(60, 15, 110, 0.5),
+        -8px -8px 22px rgba(255, 255, 255, 0.15),
+        16px 16px 36px rgba(0, 0, 0, 0.3),
+        26px 32px 60px rgba(0, 0, 0, 0.2),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.3),
         inset 0 6px 12px rgba(255, 255, 255, 0.2),
-        0 0 50px rgba(168, 85, 247, 0.5);
+        0 0 50px color-mix(in srgb, var(--primary) 50%, transparent);
 }
 
-/* ============================================
-   🟡 GOLDEN TOP LINE — FIXED WIDTH, NO ANIMATION
-   ============================================ */
 .ct-faq-item::before {
     content: "";
     position: absolute;
@@ -111,14 +102,12 @@
     transform: translateX(-50%);
     width: 120px;
     height: 4px;
-    background: linear-gradient(90deg, transparent 0%, #ffd700 20%, #b8860b 80%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, #ffffff 20%, #e2e8f0 80%, transparent 100%);
     border-radius: 0 0 4px 4px;
     z-index: 2;
     pointer-events: none;
-    /* ❌ Koi transition nahi — koi width change nahi */
 }
 
-/* Golden glow (separate element — no resize) */
 .ct-faq-item::after {
     content: "";
     position: absolute;
@@ -127,7 +116,7 @@
     transform: translateX(-50%);
     width: 120px;
     height: 12px;
-    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.5) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
     opacity: 0;
     z-index: 1;
     pointer-events: none;
@@ -156,19 +145,19 @@
     font-weight: 700;
     color: #ffffff;
     text-align: left;
-    transition: color 0.3s ease, padding-left 0.3s ease;
+    transition: padding-left 0.3s ease;
     position: relative;
     z-index: 3;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .ct-faq-question:hover {
-    color: #ffd700;
+    /* Removed color change so text stays white and readable */
     padding-left: 2.2rem;
 }
 
 /* ============================================
-   3D Circle Icon
+   Icon
    ============================================ */
 .ct-faq-icon {
     width: 36px;
@@ -179,42 +168,35 @@
     justify-content: center;
     font-size: 1.4rem;
     font-weight: 300;
-    color: #6d28d9;
+    color: var(--primary);
     flex-shrink: 0;
     line-height: 1;
-
-    background: linear-gradient(145deg, #ffffff 0%, #f3e8ff 100%);
+    background: var(--white);
     box-shadow:
-        -3px -3px 8px rgba(255, 255, 255, 0.9),
-        4px 4px 10px rgba(70, 20, 130, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 1),
-        inset 0 -1px 2px rgba(80, 30, 150, 0.2);
-
-    transition: transform 0.4s ease,
-                background 0.4s ease,
-                box-shadow 0.4s ease,
-                color 0.4s ease;
+        -3px -3px 8px rgba(255, 255, 255, 0.2),
+        4px 4px 10px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
 }
 
 .ct-faq-question:hover .ct-faq-icon {
-    background: linear-gradient(145deg, #ffd700 0%, #b8860b 100%);
-    color: #ffffff;
+    background: var(--bg-color);
+    color: var(--primary);
     box-shadow:
-        -3px -3px 8px rgba(255, 255, 255, 0.9),
-        4px 4px 12px rgba(184, 134, 11, 0.5),
-        0 0 20px rgba(255, 215, 0, 0.7),
-        inset 0 1px 0 rgba(255, 255, 255, 1);
+        -3px -3px 8px rgba(255, 255, 255, 0.2),
+        4px 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .ct-faq-item.active .ct-faq-icon {
     transform: rotate(45deg);
-    background: linear-gradient(145deg, #ffd700 0%, #b8860b 100%);
-    color: #6d28d9;
+    background: var(--bg-color);
+    color: var(--primary);
     box-shadow:
-        -3px -3px 8px rgba(255, 255, 255, 0.9),
-        4px 4px 12px rgba(184, 134, 11, 0.6),
-        0 0 24px rgba(255, 215, 0, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        -3px -3px 8px rgba(255, 255, 255, 0.2),
+        4px 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* ============================================
@@ -232,9 +214,9 @@
     padding: 0 1.9rem 1.75rem;
     margin: 0;
     font-size: 0.98rem;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.75;
-    border-top: 1px dashed rgba(255, 215, 0, 0.4);
+    border-top: 1px dashed rgba(255, 255, 255, 0.3);
     padding-top: 1.25rem;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
