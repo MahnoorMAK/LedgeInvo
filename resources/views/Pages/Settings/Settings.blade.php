@@ -1,6 +1,6 @@
 @extends('Layout.dashboard')
 
-@section('title', 'Settings - Apexbooks')
+@section('title', 'Settings - LedgeInvo')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/Settings/settings.css') }}">
@@ -83,7 +83,7 @@
                     <div class="tab-panel" id="tab-text">
                         <div class="form-group">
                             <label class="label">Title Text</label>
-                            <input type="text" class="text-input" id="titleText" value="Apexbooks">
+                            <input type="text" class="text-input" id="titleText" value="LedgeInvo">
                             <p class="settings-small">Application title displayed in the browser tab</p>
                         </div>
                     </div>
