@@ -1,6 +1,6 @@
 @extends('Layout.dashboard')
 
-@section('title', 'Purchase Invoices - Apexbooks')
+@section('title', 'Purchase Invoices - LedgeInvo')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/Purchase/invoice.css') }}">
