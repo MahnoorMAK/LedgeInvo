@@ -1,4 +1,11 @@
-@include('component.aboutc1')
-@include('component.aboutc2')
-@include('component.aboutc3')
-@include('component.aboutc4')
+@extends('Layout.app1')
+
+@section('title', 'About - LedgeInvo')
+
+@section('content')
+@include('Component.HeroAccounting')
+@include('Component.OverviewMetrics')
+@include('Component.MissionValues')
+@include('Component.TransformingFeatures')
+@include('Component.FloatingCTA')
+@endsection
