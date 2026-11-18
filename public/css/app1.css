@@ -939,3 +939,24 @@
     background: transparent !important; 
     color: #fff !important;
 }
+
+/* Force light background on initial load to prevent page flash */
+html:not([data-theme="dark"]) body {
+    background-color: #F8F9FC !important;
+}
+
+/* Force navbar to always be dark */
+.hdr {
+    background: rgba(10, 6, 18, 0.6) !important;
+}
+
+.hdr.is-scrolled {
+    background: rgba(10, 6, 18, 0.7) !important;
+}
+
+/* Disable all transitions during the initial load */
+.preload * {
+    transition: none !important;
+}
+
+    
