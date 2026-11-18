@@ -82,6 +82,7 @@
 @include('Component.FeaturesGrid')
 @include('Component.ModulesTabs')
 @include('Component.TopClients')
+@include('Component.faqs')
 @include('Component.Slider3D')
 
 @endsection
