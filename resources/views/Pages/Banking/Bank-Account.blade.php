@@ -114,7 +114,7 @@
         #manage-bank-accounts .search-group {
             display: flex;
             gap: 0.5rem;
-            flex: 0 1 360px;
+            flex: 0 1 450px;
             align-items: center;
         }
 
@@ -165,6 +165,26 @@
 
         #manage-bank-accounts .btn-search:hover {
             background-color: var(--primary-hover);
+        }
+
+        #manage-bank-accounts .btn-clear {
+            background-color: #ffffff;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        #manage-bank-accounts .btn-clear:hover {
+            background-color: #f3f4f6;
+            color: var(--badge-blue-text);
+            border-color: #bfdbfe;
         }
 
         #manage-bank-accounts .toolbar-right {
@@ -434,6 +454,7 @@
             }
             #manage-bank-accounts .search-group {
                 max-width: 100%;
+                flex: 1 1 100%;
             }
             #manage-bank-accounts .toolbar-right {
                 justify-content: space-between;
@@ -462,6 +483,7 @@
                     <input type="text" id="searchInput" class="search-input" placeholder="Search Bank Accounts...">
                 </div>
                 <button class="btn-search" onclick="applyFilters()">Search</button>
+                <button class="btn-clear" onclick="clearSearch()">Clear</button>
             </div>
             
             <div class="toolbar-right">
@@ -583,9 +605,10 @@
             renderTable();
         }
 
-        // Clear search (Bonus feature, though not explicitly in the image, it's good UX)
+        // Clear Search Functionality
         function clearSearch() {
             document.getElementById('searchInput').value = '';
+            state.searchQuery = '';
             applyFilters();
         }
 
