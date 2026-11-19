@@ -19,7 +19,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
         #manage-bank-accounts {
-            /* Changed to Bright Blue color combination */
+            /* Bright Blue color combination */
             --primary: #3b82f6; 
             --primary-hover: #2563eb;
             
@@ -213,6 +213,7 @@
             justify-content: center;
             color: var(--text-muted);
             border-right: 1px solid var(--border);
+            transition: all 0.2s;
         }
 
         #manage-bank-accounts .view-btn:last-child {
@@ -283,10 +284,11 @@
             color: var(--primary);
         }
 
-        /* Table */
+        /* --- LIST VIEW STYLES --- */
         #manage-bank-accounts .table-container {
             width: 100%;
             overflow-x: auto;
+            display: block; /* Toggled via JS */
         }
 
         #manage-bank-accounts table {
@@ -322,7 +324,81 @@
             background-color: var(--bg-hover);
         }
 
-        /* Badges */
+        /* --- GRID VIEW STYLES --- */
+        #manage-bank-accounts .grid-container {
+            display: none; /* Toggled via JS */
+            padding: 1.25rem;
+            gap: 1.5rem;
+            /* Forces exactly 2 columns on desktop */
+            grid-template-columns: repeat(2, 1fr); 
+        }
+
+        #manage-bank-accounts .grid-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: box-shadow 0.2s;
+        }
+
+        #manage-bank-accounts .grid-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        #manage-bank-accounts .grid-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #manage-bank-accounts .grid-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        #manage-bank-accounts .grid-card-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        #manage-bank-accounts .grid-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        #manage-bank-accounts .grid-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #manage-bank-accounts .grid-info-label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        #manage-bank-accounts .grid-info-value {
+            font-weight: 500;
+        }
+
+        #manage-bank-accounts .grid-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+
+        /* Badges shared between list & grid */
         #manage-bank-accounts .id-badge {
             background: var(--badge-blue-bg);
             color: var(--badge-blue-text);
@@ -358,7 +434,8 @@
         #manage-bank-accounts .status-inactive { background: var(--badge-red-bg); color: var(--badge-red-text); border-color: #fecaca; }
 
         #manage-bank-accounts .amount {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
         /* Actions */
@@ -446,9 +523,16 @@
             text-align: center;
             padding: 3rem;
             color: var(--text-muted);
+            grid-column: 1 / -1; /* Spans full width in grid */
         }
 
         /* Responsive */
+        @media (max-width: 900px) {
+            #manage-bank-accounts .grid-container {
+                grid-template-columns: 1fr; /* 1 column on smaller screens */
+            }
+        }
+
         @media (max-width: 768px) {
             #manage-bank-accounts .toolbar {
                 flex-direction: column;
@@ -491,10 +575,10 @@
             <div class="toolbar-right">
                 <!-- View Toggles -->
                 <div class="view-toggles">
-                    <button class="view-btn active" title="List View">
+                    <button class="view-btn active" id="btnListView" title="List View" onclick="setView('list')">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
                     </button>
-                    <button class="view-btn" title="Grid View">
+                    <button class="view-btn" id="btnGridView" title="Grid View" onclick="setView('grid')">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                     </button>
                 </div>
@@ -537,8 +621,8 @@
             </button>
         </div>
 
-        <!-- Table -->
-        <div class="table-container">
+        <!-- LIST VIEW CONTAINER -->
+        <div class="table-container" id="listViewContainer">
             <table>
                 <thead>
                     <tr>
@@ -553,6 +637,11 @@
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
+        </div>
+
+        <!-- GRID VIEW CONTAINER -->
+        <div class="grid-container" id="gridViewContainer">
+            <!-- Cards will be injected here via JS -->
         </div>
 
         <!-- Pagination -->
@@ -578,7 +667,8 @@
             currentTab: 'All',
             searchQuery: '',
             currentPage: 1,
-            pageSize: 5
+            pageSize: 5,
+            view: 'list' // 'list' or 'grid'
         };
 
         let filteredData = [...bankAccounts];
@@ -587,6 +677,28 @@
         function init() {
             updateCounts();
             applyFilters();
+        }
+
+        // View Toggling Logic
+        function setView(viewType) {
+            state.view = viewType;
+            
+            // Update button styles
+            document.getElementById('btnListView').classList.remove('active');
+            document.getElementById('btnGridView').classList.remove('active');
+            
+            if (viewType === 'list') {
+                document.getElementById('btnListView').classList.add('active');
+                document.getElementById('listViewContainer').style.display = 'block';
+                document.getElementById('gridViewContainer').style.display = 'none';
+            } else {
+                document.getElementById('btnGridView').classList.add('active');
+                document.getElementById('listViewContainer').style.display = 'none';
+                document.getElementById('gridViewContainer').style.display = 'grid';
+            }
+            
+            // Re-render to apply the correct template
+            renderTable();
         }
 
         // Apply Search & Tab Filters
@@ -639,13 +751,17 @@
             document.getElementById('countLoan').innerText = counts.Loan;
         }
 
-        // Render Table
+        // Render Table (Handles both List and Grid)
         function renderTable() {
             const tbody = document.getElementById('tableBody');
+            const gridContainer = document.getElementById('gridViewContainer');
+            
             tbody.innerHTML = '';
+            gridContainer.innerHTML = '';
 
             if (filteredData.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No bank accounts found matching your criteria.</td></tr>`;
+                gridContainer.innerHTML = `<div class="empty-state">No bank accounts found matching your criteria.</div>`;
                 updatePaginationUI(0);
                 return;
             }
@@ -657,35 +773,69 @@
             const endIndex = Math.min(startIndex + state.pageSize, filteredData.length);
             const pageData = filteredData.slice(startIndex, endIndex);
 
+            // Helper to generate action buttons HTML
+            const getActionsHTML = (id) => `
+                <div class="actions-cell">
+                    <button class="action-btn view" title="View" onclick="handleAction('view', '${id}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="action-btn edit" title="Edit" onclick="handleAction('edit', '${id}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="action-btn delete" title="Delete" onclick="handleAction('delete', '${id}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                </div>
+            `;
+
             pageData.forEach(account => {
-                const tr = document.createElement('tr');
-                
-                // Map classes for badges
                 const typeClass = `type-${account.type.toLowerCase()}`;
                 const statusClass = account.status === 'Active' ? 'status-active' : 'status-inactive';
+                const formattedBalance = `$${account.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
-                tr.innerHTML = `
-                    <td><span class="id-badge">${account.id}</span></td>
-                    <td>${account.name}</td>
-                    <td>${account.bank}</td>
-                    <td><span class="type-badge ${typeClass}">${account.type}</span></td>
-                    <td class="amount">$${account.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                    <td><span class="status-badge ${statusClass}">${account.status}</span></td>
-                    <td>
-                        <div class="actions-cell">
-                            <button class="action-btn view" title="View" onclick="handleAction('view', '${account.id}')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                            </button>
-                            <button class="action-btn edit" title="Edit" onclick="handleAction('edit', '${account.id}')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                            </button>
-                            <button class="action-btn delete" title="Delete" onclick="handleAction('delete', '${account.id}')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                            </button>
+                // 1. Build List View Row
+                if (state.view === 'list') {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><span class="id-badge">${account.id}</span></td>
+                        <td>${account.name}</td>
+                        <td>${account.bank}</td>
+                        <td><span class="type-badge ${typeClass}">${account.type}</span></td>
+                        <td class="amount">${formattedBalance}</td>
+                        <td><span class="status-badge ${statusClass}">${account.status}</span></td>
+                        <td>${getActionsHTML(account.id)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                } 
+                // 2. Build Grid View Card
+                else {
+                    const card = document.createElement('div');
+                    card.className = 'grid-card';
+                    card.innerHTML = `
+                        <div class="grid-card-header">
+                            <div>
+                                <div class="grid-card-title">${account.name}</div>
+                                <div class="grid-card-subtitle">${account.bank} &bull; <span class="id-badge">${account.id}</span></div>
+                            </div>
+                            <span class="status-badge ${statusClass}">${account.status}</span>
                         </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                        <div class="grid-card-body">
+                            <div class="grid-info-row">
+                                <span class="grid-info-label">Account Type</span>
+                                <span class="type-badge ${typeClass}">${account.type}</span>
+                            </div>
+                            <div class="grid-info-row">
+                                <span class="grid-info-label">Current Balance</span>
+                                <span class="amount">${formattedBalance}</span>
+                            </div>
+                        </div>
+                        <div class="grid-card-footer">
+                            <span class="grid-info-label">Actions</span>
+                            ${getActionsHTML(account.id)}
+                        </div>
+                    `;
+                    gridContainer.appendChild(card);
+                }
             });
 
             updatePaginationUI(totalPages);
@@ -758,9 +908,7 @@
             } 
             else if (action === 'delete') {
                 if (confirm(`Are you sure you want to delete the account ending in ${id.slice(-4)}?`)) {
-                    // Remove from data array
                     bankAccounts = bankAccounts.filter(a => a.id !== id);
-                    // Refresh UI
                     updateCounts();
                     applyFilters();
                 }
