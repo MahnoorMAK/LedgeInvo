@@ -19,8 +19,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
         #manage-bank-accounts {
-            --primary: #10b981; /* Green matching the image */
-            --primary-hover: #059669;
+            /* Changed to Bright Blue color combination */
+            --primary: #3b82f6; 
+            --primary-hover: #2563eb;
+            
             --border: #e5e7eb;
             --text-main: #111827;
             --text-muted: #6b7280;
@@ -182,7 +184,7 @@
         }
 
         #manage-bank-accounts .btn-clear:hover {
-            background-color: #f3f4f6;
+            background-color: var(--badge-blue-bg);
             color: var(--badge-blue-text);
             border-color: #bfdbfe;
         }
@@ -277,7 +279,7 @@
         }
 
         #manage-bank-accounts .tab.active .tab-count {
-            background: var(--badge-green-bg);
+            background: var(--badge-blue-bg);
             color: var(--primary);
         }
 
