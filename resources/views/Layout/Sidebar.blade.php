@@ -58,9 +58,9 @@
             </ul>
         </li>
 
-        <li class="menu-item {{ request()->is('contract*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('Contract*') ? 'active' : '' }}">
             <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
-            <a href="{{ url('/contract') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Contract</a>
+            <a href="{{ url('/Contract') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Contract</a>
         </li>
 
         <!-- ================= PURCHASE & INVENTORY ================= -->
@@ -72,9 +72,9 @@
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
                 <li class="sub-item {{ request()->is('purchase-invoice') ? 'active' : '' }}"><a href="{{ url('/purchase-invoice') }}">Purchase Invoice</a></li>
-                <li class="sub-item {{ request()->is('purchase-returns') ? 'active' : '' }}"><a href="{{ url('/purchase-returns') }}">Purchase Returns</a></li>
+                <li class="sub-item {{ request()->is('Purchase-Returns') ? 'active' : '' }}"><a href="{{ url('/Purchase-Returns') }}">Purchase Returns</a></li>
                 <li class="sub-item {{ request()->is('Warehouse') ? 'active' : '' }}"><a href="{{ url('/Warehouse') }}">Warehouses</a></li>
-                <li class="sub-item {{ request()->is('transfers') ? 'active' : '' }}"><a href="{{ url('/transfers') }}">Transfers</a></li>
+                <li class="sub-item {{ request()->is('Transfers') ? 'active' : '' }}"><a href="{{ url('/Transfers') }}">Transfers</a></li>
             </ul>
         </li>
 
@@ -83,7 +83,7 @@
             Product & Service 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('items') ? 'active' : '' }}"><a href="{{ url('/items') }}">Items</a></li>
+                <li class="sub-item {{ request()->is('Items') ? 'active' : '' }}"><a href="{{ url('/Items') }}">Items</a></li>
             </ul>
         </li>
  
@@ -95,9 +95,9 @@
             Accounting 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('accounting/customers') ? 'active' : '' }}"><a href="{{ url('/accounting/customers') }}">Customers</a></li>
+                <li class="sub-item {{ request()->is('Customers') ? 'active' : '' }}"><a href="{{ url('/Customers') }}">Customers</a></li>
                 <li class="sub-item {{ request()->is('Vendors') ? 'active' : '' }}"><a href="{{ url('/Vendors') }}">Vendors</a></li>
-                <li class="sub-item {{ request()->is('accounting/revenue') ? 'active' : '' }}"><a href="{{ url('/accounting/revenue') }}">Revenue</a></li>
+                <li class="sub-item {{ request()->is('Revenue') ? 'active' : '' }}"><a href="{{ url('/Revenue') }}">Revenue</a></li>
                 <li class="sub-item {{ request()->is('Expense') ? 'active' : '' }}"><a href="{{ url('/Expense') }}">Expense</a></li>
             </ul>
         </li>
@@ -107,40 +107,40 @@
             Banking 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('banking/accounts') ? 'active' : '' }}"><a href="{{ url('/banking/accounts') }}">Bank Accounts</a></li>
+                <li class="sub-item {{ request()->is('Banking/Bank-Account') ? 'active' : '' }}"><a href="{{ url('Bank-Account') }}">Bank Accounts</a></li>
                 <li class="sub-item {{ request()->is('banking/transactions') ? 'active' : '' }}"><a href="{{ url('/banking/transactions') }}">Bank Transactions</a></li>
                 <li class="sub-item {{ request()->is('banking/transfers') ? 'active' : '' }}"><a href="{{ url('/banking/transfers') }}">Bank Transfers</a></li>
             </ul>
         </li>
 
-        <li class="menu-item {{ request()->is('customer-payments*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('Customer-Payments*') ? 'active' : '' }}">
             <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <a href="{{ url('/customer-payments') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Customer Payments</a>
+            <a href="{{ url('/Customer-Payments') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Customer Payments</a>
         </li>
         
-        <li class="menu-item {{ request()->is('vendor-payments*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('Vendor-Payments*') ? 'active' : '' }}">
             <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-            <a href="{{ url('/vendor-payments') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Vendor Payments</a>
+            <a href="{{ url('/Vendor-Payments') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Vendor Payments</a>
         </li>
 
-        <li class="menu-item {{ request()->is('debit-notes*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('Debit-Notes*') ? 'active' : '' }}">
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            <a href="{{ url('/debit-notes') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Debit Notes</a>
+            <a href="{{ url('/Debit-Notes') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Debit Notes</a>
         </li>
 
-        <li class="menu-item {{ request()->is('credit-notes*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('Credit-Notes*') ? 'active' : '' }}">
             <svg viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"></path><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="12" y2="16"></line></svg>
-            <a href="{{ url('/credit-notes') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Credit Notes</a>
+            <a href="{{ url('/Credit-Notes') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Credit Notes</a>
         </li>
 
-        <li class="menu-item {{ request()->is('reports*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('Reports*') ? 'active' : '' }}">
             <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-            <a href="{{ url('/reports') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Reports</a>
+            <a href="{{ url('/Reports') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Reports</a>
         </li>
 
-        <li class="menu-item {{ request()->is('chart-of-accounts*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('Chart-Of-Accounts*') ? 'active' : '' }}">
             <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            <a href="{{ url('/chart-of-accounts') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Chart Of Accounts</a>
+            <a href="{{ url('/Chart-Of-Accounts') }}" style="color: inherit; text-decoration: none; width: 100%; display: block;">Chart Of Accounts</a>
         </li>
 
         <li class="menu-item {{ request()->is('system-setup*') ? 'active' : '' }}">
@@ -153,9 +153,9 @@
             Goal 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('goal/goals') ? 'active' : '' }}"><a href="{{ url('/goal/goals') }}">Goals</a></li>
+                <li class="sub-item {{ request()->is('Goals') ? 'active' : '' }}"><a href="{{ url('/Goals') }}">Goals</a></li>
                 <li class="sub-item {{ request()->is('goal/milestones') ? 'active' : '' }}"><a href="{{ url('/goal/milestones') }}">Milestones</a></li>
-                <li class="sub-item {{ request()->is('goal/contributions') ? 'active' : '' }}"><a href="{{ url('/goal/contributions') }}">Contributions</a></li>
+                <li class="sub-item {{ request()->is('Contributions') ? 'active' : '' }}"><a href="{{ url('/Contributions') }}">Contributions</a></li>
                 <li class="sub-item {{ request()->is('goal/tracking') ? 'active' : '' }}"><a href="{{ url('/goal/tracking') }}">Tracking</a></li>
                 <li class="sub-item {{ request()->is('goal/category') ? 'active' : '' }}"><a href="{{ url('/goal/category') }}">Category</a></li>
             </ul>
@@ -178,11 +178,11 @@
             Double Entry 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('double-entry/ledger') ? 'active' : '' }}"><a href="{{ url('/double-entry/ledger') }}">Ledger Summary</a></li>
-                <li class="sub-item {{ request()->is('double-entry/trial-balance') ? 'active' : '' }}"><a href="{{ url('/double-entry/trial-balance') }}">Trial Balance</a></li>
+                <li class="sub-item {{ request()->is('Ledger-Summary') ? 'active' : '' }}"><a href="{{ url('/Ledger-Summary') }}">Ledger Summary</a></li>
+                <li class="sub-item {{ request()->is('Trial-Balance') ? 'active' : '' }}"><a href="{{ url('/Trial-Balance') }}">Trial Balance</a></li>
                 <li class="sub-item {{ request()->is('double-entry/balance-sheets') ? 'active' : '' }}"><a href="{{ url('/double-entry/balance-sheets') }}">Balance Sheets</a></li>
                 <li class="sub-item {{ request()->is('double-entry/profit-loss') ? 'active' : '' }}"><a href="{{ url('/double-entry/profit-loss') }}">Profit & Loss</a></li>
-                <li class="sub-item {{ request()->is('double-entry/reports') ? 'active' : '' }}"><a href="{{ url('/double-entry/reports') }}">Reports</a></li>
+                <li class="sub-item {{ request()->is('Report') ? 'active' : '' }}"><a href="{{ url('/Report') }}">Reports</a></li>
             </ul>
         </li>
 
@@ -191,12 +191,12 @@
             Assets 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('assets/list') ? 'active' : '' }}"><a href="{{ url('/assets/list') }}">Assets</a></li>
-                <li class="sub-item {{ request()->is('assets/assignments') ? 'active' : '' }}"><a href="{{ url('/assets/assignments') }}">Assignments</a></li>
-                <li class="sub-item {{ request()->is('assets/locations') ? 'active' : '' }}"><a href="{{ url('/assets/locations') }}">Locations</a></li>
-                <li class="sub-item {{ request()->is('assets/maintenance') ? 'active' : '' }}"><a href="{{ url('/assets/maintenance') }}">Maintenance</a></li>
-                <li class="sub-item {{ request()->is('assets/depreciation') ? 'active' : '' }}"><a href="{{ url('/assets/depreciation') }}">Depreciation</a></li>
-                <li class="sub-item {{ request()->is('assets/category') ? 'active' : '' }}"><a href="{{ url('/assets/category') }}">Category</a></li>
+                <li class="sub-item {{ request()->is('Asset') ? 'active' : '' }}"><a href="{{ url('/Asset') }}">Assets</a></li>
+                <li class="sub-item {{ request()->is('Assignments') ? 'active' : '' }}"><a href="{{ url('/Assignments') }}">Assignments</a></li>
+                <li class="sub-item {{ request()->is('Locations') ? 'active' : '' }}"><a href="{{ url('/Locations') }}">Locations</a></li>
+                <li class="sub-item {{ request()->is('Maintainance') ? 'active' : '' }}"><a href="{{ url('/Maintainance') }}">Maintenance</a></li>
+                <li class="sub-item {{ request()->is('Assets/depreciation') ? 'active' : '' }}"><a href="{{ url('/Assets/depreciation') }}">Depreciation</a></li>
+                <li class="sub-item {{ request()->is('Assets/category') ? 'active' : '' }}"><a href="{{ url('/Assets/category') }}">Category</a></li>
             </ul>
         </li>
 
@@ -209,8 +209,8 @@
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
                 <li class="sub-item {{ request()->is('cms/landing') ? 'active' : '' }}"><a href="{{ url('/cms/landing') }}">Landing Page</a></li>
-                <li class="sub-item {{ request()->is('cms/custom') ? 'active' : '' }}"><a href="{{ url('/cms/custom') }}">Custom Pages</a></li>
-                <li class="sub-item {{ request()->is('cms/newsletter') ? 'active' : '' }}"><a href="{{ url('/cms/newsletter') }}">Newsletter Subscribers</a></li>
+                <li class="sub-item {{ request()->is('Custom-Pages') ? 'active' : '' }}"><a href="{{ url('/Custom-Pages') }}">Custom Pages</a></li>
+                <li class="sub-item {{ request()->is('Newsletter-Subscribers') ? 'active' : '' }}"><a href="{{ url('/Newsletter-Subscribers') }}">Newsletter Subscribers</a></li>
             </ul>
         </li>
 
@@ -238,7 +238,7 @@
             User Management 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('users/roles') ? 'active' : '' }}"><a href="{{ url('/users/roles') }}">Roles</a></li>
+                <li class="sub-item {{ request()->is('Roles') ? 'active' : '' }}"><a href="{{ url('/Roles') }}">Roles</a></li>
                 <li class="sub-item {{ request()->is('users/list') ? 'active' : '' }}"><a href="{{ url('/users/list') }}">Users</a></li>
             </ul>
         </li>
