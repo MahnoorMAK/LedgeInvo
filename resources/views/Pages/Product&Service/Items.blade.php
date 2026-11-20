@@ -2,7 +2,6 @@
 @section('title', 'Item - LedgeInvo')
 
 @section('content')
-<!-- Added style block to force the parent wrapper to remove left/right padding and margin -->
 <style>
     /* Aggressively remove padding and margins from common parent layouts */
     body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
@@ -15,8 +14,6 @@
 
 <section class="pts">
 <style>
-/* 1. Changed margin to 0 to remove the 40px top/bottom space */
-/* 2. Changed max-width to 100% to fill the space instead of centering with a gap */
 .pts{
     font-family:system-ui,sans-serif;
     background:#fff;
@@ -24,8 +21,8 @@
     border-radius:12px;
     box-shadow:0 1px 3px rgba(0,0,0,.05);
     border:1px solid #e2e8f0;
-    max-width:100%; /* Changed from 1300px to 100% */
-    margin:0; /* Changed from 40px auto to 0 */
+    max-width:100%; 
+    margin:0; 
     color:#0f172a;
     box-sizing:border-box;
 }
@@ -182,33 +179,36 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const mk = (n,i,img,sku,type,cat,cc,sp,pp,unit,qty) => ({name:n,img,sku,type,cat,catColor:cc,sp,pp,unit,qty});
+  // 1. ADDED `id` AS THE FIRST PARAMETER TO THE MOCK FUNCTION
+  const mk = (id, n, img, sku, type, cat, cc, sp, pp, unit, qty) => ({id, name:n, img, sku, type, cat, catColor:cc, sp, pp, unit, qty});
+  
+  // 2. ADDED UNIQUE IDs TO EVERY ITEM
   const allData = [
-    mk("Plant Pot",1,"https://cdn-icons-png.flaticon.com/512/2829/2829610.png","HOME-PROD-012","Product","Home & Garden","orange","24.99","12.00","Pot",34),
-    mk("Raspberry",2,"https://cdn-icons-png.flaticon.com/512/2909/2909761.png","FRUIT-PROD-023","Product","Fruits & Vegetables","purple","6.99","4.00","Basket",159),
-    mk("Laptop",3,"https://cdn-icons-png.flaticon.com/512/1813/1813813.png","ELEC-PROD-001","Product","Electronics & Technology","orange","899.99","650.00","Piece",24),
-    mk("Football",4,"https://cdn-icons-png.flaticon.com/512/53/53283.png","SPORT-PROD-015","Product","Sports & Fitness","green","39.99","22.00","Ball",272),
-    mk("Laptop Battery",5,"https://cdn-icons-png.flaticon.com/512/3126/3126571.png","ELEC-PART-004","Part","Electronics & Technology","orange","89.99","45.00","Piece",221),
-    mk("Desk Chair",6,"https://cdn-icons-png.flaticon.com/512/3081/3081559.png","FURN-PROD-008","Product","Office Furniture","blue","149.50","90.00","Piece",45),
-    mk("Coffee Beans",7,"https://cdn-icons-png.flaticon.com/512/704/704851.png","FOOD-PROD-026","Product","Beverages","green","18.50","10.00","Pack",112),
-    mk("Monitor",8,"https://cdn-icons-png.flaticon.com/512/2917/2917995.png","ELEC-PROD-115","Product","Electronics & Technology","orange","299.00","210.00","Piece",67),
-    mk("Wireless Mouse",9,"https://cdn-icons-png.flaticon.com/512/2917/2917995.png","ELEC-PROD-120","Product","Electronics & Technology","orange","29.99","15.00","Piece",340),
-    mk("Notebook",10,"https://cdn-icons-png.flaticon.com/512/3145/3145736.png","STAT-PROD-055","Product","Office Supplies","blue","4.99","2.50","Pack",500),
-    mk("Water Bottle",11,"https://cdn-icons-png.flaticon.com/512/2447/2447774.png","HOME-PROD-040","Product","Home & Garden","orange","15.99","8.00","Piece",88),
-    mk("Printer",12,"https://cdn-icons-png.flaticon.com/512/3031/3031121.png","ELEC-PROD-202","Product","Electronics & Technology","orange","199.99","140.00","Piece",15),
-    mk("Headphones",13,"https://cdn-icons-png.flaticon.com/512/724/724765.png","ELEC-PROD-310","Product","Electronics & Technology","orange","79.99","45.00","Piece",95),
-    mk("Keyboard",14,"https://cdn-icons-png.flaticon.com/512/2917/2917995.png","ELEC-PROD-121","Product","Electronics & Technology","orange","49.99","25.00","Piece",130),
-    mk("Apple",15,"https://cdn-icons-png.flaticon.com/512/415/415733.png","FRUIT-PROD-022","Product","Fruits & Vegetables","purple","1.99","0.50","Basket",400),
-    mk("Banana",16,"https://cdn-icons-png.flaticon.com/512/1093/1093255.png","FRUIT-PROD-024","Product","Fruits & Vegetables","purple","2.99","1.00","Basket",300),
-    mk("Office Desk",17,"https://cdn-icons-png.flaticon.com/512/3081/3081559.png","FURN-PROD-012","Product","Office Furniture","blue","250.00","180.00","Piece",12),
-    mk("Webcam",18,"https://cdn-icons-png.flaticon.com/512/2917/2917995.png","ELEC-PROD-130","Product","Electronics & Technology","orange","69.99","40.00","Piece",55),
-    mk("Microphone",19,"https://cdn-icons-png.flaticon.com/512/2917/2917995.png","ELEC-PROD-135","Product","Electronics & Technology","orange","129.99","85.00","Piece",30),
-    mk("Docking Station",20,"https://cdn-icons-png.flaticon.com/512/2917/2917995.png","ELEC-PROD-140","Product","Electronics & Technology","orange","179.99","120.00","Piece",20),
-    mk("Smartphone",21,"https://cdn-icons-png.flaticon.com/512/15/15874.png","ELEC-PROD-500","Product","Electronics & Technology","orange","699.99","550.00","Piece",18),
-    mk("Tablet",22,"https://cdn-icons-png.flaticon.com/512/15/15874.png","ELEC-PROD-501","Product","Electronics & Technology","orange","399.99","300.00","Piece",25),
-    mk("USB Cable",23,"https://cdn-icons-png.flaticon.com/512/2917/2917995.png","ELEC-PROD-150","Product","Electronics & Technology","orange","9.99","3.00","Piece",600),
-    mk("Stapler",24,"https://cdn-icons-png.flaticon.com/512/3145/3145736.png","STAT-PROD-060","Product","Office Supplies","blue","12.99","6.00","Piece",80),
-    mk("Whiteboard",25,"https://cdn-icons-png.flaticon.com/512/3145/3145736.png","STAT-PROD-065","Product","Office Supplies","blue","45.00","25.00","Piece",15)
+    mk(1, "Plant Pot", "https://cdn-icons-png.flaticon.com/512/2829/2829610.png", "HOME-PROD-012", "Product", "Home & Garden", "orange", "24.99", "12.00", "Pot", 34),
+    mk(2, "Raspberry", "https://cdn-icons-png.flaticon.com/512/2909/2909761.png", "FRUIT-PROD-023", "Product", "Fruits & Vegetables", "purple", "6.99", "4.00", "Basket", 159),
+    mk(3, "Laptop", "https://cdn-icons-png.flaticon.com/512/1813/1813813.png", "ELEC-PROD-001", "Product", "Electronics & Technology", "orange", "899.99", "650.00", "Piece", 24),
+    mk(4, "Football", "https://cdn-icons-png.flaticon.com/512/53/53283.png", "SPORT-PROD-015", "Product", "Sports & Fitness", "green", "39.99", "22.00", "Ball", 272),
+    mk(5, "Laptop Battery", "https://cdn-icons-png.flaticon.com/512/3126/3126571.png", "ELEC-PART-004", "Part", "Electronics & Technology", "orange", "89.99", "45.00", "Piece", 221),
+    mk(6, "Desk Chair", "https://cdn-icons-png.flaticon.com/512/3081/3081559.png", "FURN-PROD-008", "Product", "Office Furniture", "blue", "149.50", "90.00", "Piece", 45),
+    mk(7, "Coffee Beans", "https://cdn-icons-png.flaticon.com/512/704/704851.png", "FOOD-PROD-026", "Product", "Beverages", "green", "18.50", "10.00", "Pack", 112),
+    mk(8, "Monitor", "https://cdn-icons-png.flaticon.com/512/2917/2917995.png", "ELEC-PROD-115", "Product", "Electronics & Technology", "orange", "299.00", "210.00", "Piece", 67),
+    mk(9, "Wireless Mouse", "https://cdn-icons-png.flaticon.com/512/2917/2917995.png", "ELEC-PROD-120", "Product", "Electronics & Technology", "orange", "29.99", "15.00", "Piece", 340),
+    mk(10, "Notebook", "https://cdn-icons-png.flaticon.com/512/3145/3145736.png", "STAT-PROD-055", "Product", "Office Supplies", "blue", "4.99", "2.50", "Pack", 500),
+    mk(11, "Water Bottle", "https://cdn-icons-png.flaticon.com/512/2447/2447774.png", "HOME-PROD-040", "Product", "Home & Garden", "orange", "15.99", "8.00", "Piece", 88),
+    mk(12, "Printer", "https://cdn-icons-png.flaticon.com/512/3031/3031121.png", "ELEC-PROD-202", "Product", "Electronics & Technology", "orange", "199.99", "140.00", "Piece", 15),
+    mk(13, "Headphones", "https://cdn-icons-png.flaticon.com/512/724/724765.png", "ELEC-PROD-310", "Product", "Electronics & Technology", "orange", "79.99", "45.00", "Piece", 95),
+    mk(14, "Keyboard", "https://cdn-icons-png.flaticon.com/512/2917/2917995.png", "ELEC-PROD-121", "Product", "Electronics & Technology", "orange", "49.99", "25.00", "Piece", 130),
+    mk(15, "Apple", "https://cdn-icons-png.flaticon.com/512/415/415733.png", "FRUIT-PROD-022", "Product", "Fruits & Vegetables", "purple", "1.99", "0.50", "Basket", 400),
+    mk(16, "Banana", "https://cdn-icons-png.flaticon.com/512/1093/1093255.png", "FRUIT-PROD-024", "Product", "Fruits & Vegetables", "purple", "2.99", "1.00", "Basket", 300),
+    mk(17, "Office Desk", "https://cdn-icons-png.flaticon.com/512/3081/3081559.png", "FURN-PROD-012", "Product", "Office Furniture", "blue", "250.00", "180.00", "Piece", 12),
+    mk(18, "Webcam", "https://cdn-icons-png.flaticon.com/512/2917/2917995.png", "ELEC-PROD-130", "Product", "Electronics & Technology", "orange", "69.99", "40.00", "Piece", 55),
+    mk(19, "Microphone", "https://cdn-icons-png.flaticon.com/512/2917/2917995.png", "ELEC-PROD-135", "Product", "Electronics & Technology", "orange", "129.99", "85.00", "Piece", 30),
+    mk(20, "Docking Station", "https://cdn-icons-png.flaticon.com/512/2917/2917995.png", "ELEC-PROD-140", "Product", "Electronics & Technology", "orange", "179.99", "120.00", "Piece", 20),
+    mk(21, "Smartphone", "https://cdn-icons-png.flaticon.com/512/15/15874.png", "ELEC-PROD-500", "Product", "Electronics & Technology", "orange", "699.99", "550.00", "Piece", 18),
+    mk(22, "Tablet", "https://cdn-icons-png.flaticon.com/512/15/15874.png", "ELEC-PROD-501", "Product", "Electronics & Technology", "orange", "399.99", "300.00", "Piece", 25),
+    mk(23, "USB Cable", "https://cdn-icons-png.flaticon.com/512/2917/2917995.png", "ELEC-PROD-150", "Product", "Electronics & Technology", "orange", "9.99", "3.00", "Piece", 600),
+    mk(24, "Stapler", "https://cdn-icons-png.flaticon.com/512/3145/3145736.png", "STAT-PROD-060", "Product", "Office Supplies", "blue", "12.99", "6.00", "Piece", 80),
+    mk(25, "Whiteboard", "https://cdn-icons-png.flaticon.com/512/3145/3145736.png", "STAT-PROD-065", "Product", "Office Supplies", "blue", "45.00", "25.00", "Piece", 15)
   ];
 
   const $ = id => document.getElementById(id);
@@ -218,22 +218,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let data = [...allData], perPage = 10, page = 1, sortCol = 'name', asc = true;
 
-  const menu = () => `<div class="pts-menu"><button class="pts-mbtn" onclick="toggleMenu(this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg></button><div class="pts-drop"><a><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View</a><a><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit</a><a class="delete"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</a></div></div>`;
+  // 3. DEFINE THE ROUTE URL TEMPLATE
+  const itemViewUrlTemplate = "{{ route('Item-view', ['id' => '__ID__']) }}";
+
+  // 4. UPDATE THE MENU FUNCTION TO ACCEPT ID AND ADD REDIRECT LOGIC TO VIEW
+  const menu = (id) => `<div class="pts-menu">
+    <button class="pts-mbtn" onclick="toggleMenu(this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+    </button>
+    <div class="pts-drop">
+      <a onclick="window.location.href='${itemViewUrlTemplate.replace('__ID__', id)}'">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View
+      </a>
+      <a>
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit
+      </a>
+      <a class="delete">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete
+      </a>
+    </div>
+  </div>`;
 
   const render = () => {
     const total = data.length, pages = Math.ceil(total/perPage) || 1;
     page = Math.min(Math.max(page, 1), pages);
     const start = (page-1)*perPage, end = Math.min(start+perPage, total), rows = data.slice(start, end);
 
+    // 5. PASS THE ID TO THE MENU FUNCTION
     $('tableBody').innerHTML = rows.length ? rows.map(r => `<tr>
       <td><div class="pts-prod"><div class="pts-img"><img src="${r.img}" alt="${r.name}"></div><div class="pts-pinfo"><span class="pts-pname">${r.name}</span><span class="pts-psku">${r.sku}</span></div></div></td>
       <td><span class="pts-sp">$${r.sp}</span></td><td><span class="pts-pp">$${r.pp}</span></td>
       <td><span class="pts-badge pts-bcat ${r.catColor}">${r.cat}</span></td><td>${r.unit}</td><td>${r.qty}</td>
-      <td><span class="pts-badge pts-btype">${r.type}</span></td><td>${menu()}</td></tr>`).join('')
+      <td><span class="pts-badge pts-btype">${r.type}</span></td><td>${menu(r.id)}</td></tr>`).join('')
       : `<tr><td colspan="8" style="text-align:center;padding:24px;color:#6b7280">No products found.</td></tr>`;
 
+    // 5. PASS THE ID TO THE MENU FUNCTION HERE TOO
     $('gridContainer').innerHTML = rows.map(r => `<div class="pts-card">
-      <div class="pts-card-head"><div class="pts-prod"><div class="pts-img"><img src="${r.img}" alt="${r.name}"></div><div class="pts-pinfo"><span class="pts-pname">${r.name}</span><span class="pts-psku">${r.sku}</span></div></div>${menu()}</div>
+      <div class="pts-card-head"><div class="pts-prod"><div class="pts-img"><img src="${r.img}" alt="${r.name}"></div><div class="pts-pinfo"><span class="pts-pname">${r.name}</span><span class="pts-psku">${r.sku}</span></div></div>${menu(r.id)}</div>
       <div class="pts-card-body">
         <div><span class="lbl">Sale Price</span><span class="val pts-sp">$${r.sp}</span></div>
         <div><span class="lbl">Purchase Price</span><span class="val pts-pp">$${r.pp}</span></div>
