@@ -1,0 +1,111 @@
+/* public/css/sidebar.css */
+
+.sidebar-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; 
+    padding: 0 15px 20px 15px; 
+    background-color: var(--white, #ffffff);
+    
+    /* FORCE GPU LAYER & ISOLATION */
+    transform: translateZ(0);
+    will-change: background-color;
+    contain: strict; 
+    
+    /* Removed the transition to stop the lag */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color, #e2e8f0) transparent;
+}
+
+/* Custom scrollbar */
+.sidebar-container::-webkit-scrollbar { width: 6px; }
+.sidebar-container::-webkit-scrollbar-track { background: transparent; }
+.sidebar-container::-webkit-scrollbar-thumb {
+    background: var(--border-color, #e2e8f0);
+    border-radius: 10px;
+}
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted, #64748b);
+}
+
+/* ============================================================
+   STICKY SEARCH BAR
+   ============================================================ */
+.sidebar-search-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 999; 
+    background-color: var(--white, #ffffff); 
+    padding-top: 20px; 
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    
+    transform: translateZ(0);
+    will-change: background-color;
+    
+    /* Removed the transition to stop the lag */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Shadow when scrolled */
+.sidebar-container.is-scrolled .sidebar-search-wrapper {
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    box-shadow: 0 4px 12px -5px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-search-box {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 8px;
+    background-color: var(--bg-color, #f8f9fc);
+    font-size: 14px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main, #1e293b);
+    transition: border-color 0.2s, background-color 0.3s, color 0.3s;
+}
+
+.sidebar-search-box:focus {
+    border-color: var(--primary);
+}
+
+.sidebar-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 32px; /* Adjusted to center inside the new padding */
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted, #64748b);
+}
+
+.sidebar-menu-list {
+    list-style: none;
+    padding: 0;
+    padding-bottom: 20px;
+    margin: 0;
+}
+
+/* ... Rest of your menu list styles remain exactly the same ... */
+.sidebar-menu-list .title { font-size: 13px; font-weight: 600; color: var(--text-muted, #64748b); padding: 5px 10px 10px 10px; text-transform: capitalize; font-family: 'Inter', sans-serif; }
+.sidebar-menu-list li.menu-item { padding: 10px 15px; color: var(--text-main, #1e293b); font-size: 14px; border-radius: 8px; margin-bottom: 2px; cursor: pointer; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; transition: 0.2s; font-weight: 500; font-family: 'Inter', sans-serif; }
+.sidebar-menu-list li.menu-item > svg:not(.arrow-chevron) { width: 18px; height: 18px; stroke: var(--text-muted, #64748b); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
+.sidebar-menu-list li.menu-item:hover { background-color: var(--bg-color, #F8F9FC); color: var(--primary); }
+.sidebar-menu-list li.menu-item:hover > svg:not(.arrow-chevron) { stroke: var(--primary); }
+.sidebar-menu-list li.menu-item.active { background-color: var(--primary-light); color: var(--primary); font-weight: 600; }
+.sidebar-menu-list li.menu-item.active > svg:not(.arrow-chevron) { stroke: var(--primary); }
+.arrow-chevron { margin-left: auto; width: 16px; height: 16px; color: var(--text-muted, #94a3b8); transition: transform 0.3s ease; }
+.sidebar-menu-list li.active .arrow-chevron { color: var(--primary); }
+.sidebar-menu-list li.has-submenu.open .arrow-chevron { transform: rotate(180deg); }
+.sidebar-menu-list .submenu { display: none; list-style: none; width: 100%; margin-top: 8px; padding-left: 30px; flex-direction: column; gap: 4px; }
+.sidebar-menu-list li.has-submenu.open .submenu { display: flex; animation: slideDown 0.3s ease forwards; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+.sidebar-menu-list li.sub-item { padding: 8px 10px; font-size: 13px; color: var(--text-muted, #64748b); font-weight: 500; border-radius: 6px; cursor: pointer; transition: 0.2s; position: relative; display: flex; align-items: center; }
+.sidebar-menu-list li.sub-item::before { content: ""; position: absolute; left: -12px; top: 0; height: 100%; width: 2px; background-color: var(--border-color, #e2e8f0); }
+.sidebar-menu-list li.sub-item:hover { color: var(--primary); background-color: var(--primary-light); }
+.sidebar-menu-list li.sub-item:hover::before { background-color: var(--primary); }
+.sidebar-menu-list li.sub-item.active { background-color: var(--primary-light); }
+.sidebar-menu-list li.sub-item.active::before { background-color: var(--primary); }
+.sidebar-menu-list li.sub-item.active a { color: var(--primary); font-weight: 600; }
+.sidebar-menu-list li.menu-item > a, .sidebar-menu-list li.sub-item > a { color: inherit; text-decoration: none; flex: 1; display: block; }

@@ -1,133 +1,118 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Dropdowns Working (10 per page, etc. + Filter Panel Toggle)
-    const dropdowns = document.querySelectorAll(".custom-dropdown");
-    const filterPanel = document.getElementById("filterPanel");
-
-    dropdowns.forEach((dropdown) => {
-        const btn = dropdown.querySelector(".drop-btn");
-        if (btn) {
-            btn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                // Close other dropdowns
-                dropdowns.forEach((d) => {
-                    if (d !== dropdown) {
-                        d.classList.remove("show");
-                        if (d.id === "filterDropdown" && filterPanel) {
-                            filterPanel.classList.remove("show");
-                        }
-                    }
-                });
-
-                // Toggle current
-                if (dropdown.id === "filterDropdown") {
-                    if (filterPanel) filterPanel.classList.toggle("show");
-                } else {
-                    dropdown.classList.toggle("show");
-                }
-            });
-        }
-    });
-
-    // Close dropdowns when clicking outside
-    window.addEventListener("click", (e) => {
-        dropdowns.forEach((d) => d.classList.remove("show"));
-        if (filterPanel) {
-            filterPanel.classList.remove("show");
-        }
-    });
-
-    // Stop closing when clicking inside filter panel
-    if (filterPanel) {
-        filterPanel.addEventListener("click", (e) => {
-            e.stopPropagation();
+    
+    // 1. Initialize Calendar
+    if (typeof flatpickr !== 'undefined') {
+        flatpickr("#dateRangePicker", {
+            dateFormat: "Y-m-d", altInput: true, altFormat: "F j, Y", disableMobile: true, position: "above", monthSelectorType: "static", showMonths: 1
         });
     }
 
-    // 2. Tabs Working
-    const tabs = document.querySelectorAll(".tab");
-    const rows = document.querySelectorAll(".row-item");
-    const searchInput = document.querySelector(".search-box input");
-    const searchBtn = document.querySelector(".btn-search");
-
-    let currentTabTarget = "all";
-
-    function filterData() {
-        const searchTerm = searchInput
-            ? searchInput.value.toLowerCase().trim()
-            : "";
-
-        rows.forEach((row) => {
-            const status = row.getAttribute("data-status");
+    // 2. Search Functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        document.querySelectorAll('.row-item').forEach(row => {
             const rowText = row.textContent.toLowerCase();
-
-            const matchesTab =
-                currentTabTarget === "all" || currentTabTarget === status;
-            const matchesSearch = rowText.includes(searchTerm);
-
-            if (matchesTab && matchesSearch) {
-                row.classList.remove("hide");
-                row.style.animation = "fadeIn 0.3s ease";
-            } else {
-                row.classList.add("hide");
-            }
+            row.style.display = rowText.includes(searchTerm) ? '' : 'none';
         });
     }
+    if (searchBtn) searchBtn.addEventListener('click', (e) => { e.preventDefault(); performSearch(); });
+    if (searchInput) searchInput.addEventListener('keyup', () => performSearch());
 
-    tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-            tabs.forEach((t) => t.classList.remove("active"));
-            tab.classList.add("active");
-            currentTabTarget = tab.getAttribute("data-target");
-            filterData();
+    // 3. Dropdowns & Filters
+    const dropdowns = document.querySelectorAll('.custom-dropdown');
+    const filterPanel = document.getElementById('filterPanel');
+    const toggleFilterBtn = document.getElementById('toggleFilterBtn');
+
+    dropdowns.forEach(dropdown => {
+        const btn = dropdown.querySelector('.drop-btn');
+        if(btn) btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdowns.forEach(d => { if(d !== dropdown) d.classList.remove('show'); });
+            dropdown.classList.toggle('show');
         });
     });
 
-    if (searchBtn) {
-        searchBtn.addEventListener("click", (e) => {
+    if (toggleFilterBtn) {
+        toggleFilterBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            filterData();
+            filterPanel.classList.toggle('show');
         });
     }
 
-    if (searchInput) {
-        searchInput.addEventListener("keyup", (e) => {
-            if (e.key === "Enter") filterData();
-            else filterData();
+    window.addEventListener('click', () => { dropdowns.forEach(d => d.classList.remove('show')); });
+
+    // 4. Custom Status Dropdown in Filter
+    const statusFilterDropdown = document.getElementById('statusFilterDropdown');
+    const statusOptions = statusFilterDropdown ? statusFilterDropdown.querySelectorAll('.custom-modal-option') : [];
+    const selectedStatusFilter = document.getElementById('selectedStatusFilter');
+
+    if (statusFilterDropdown) {
+        const trigger = statusFilterDropdown.querySelector('.custom-modal-trigger');
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            statusFilterDropdown.classList.toggle('open');
+        });
+        statusOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                statusOptions.forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedStatusFilter.textContent = option.textContent;
+                statusFilterDropdown.classList.remove('open');
+            });
+        });
+        document.addEventListener('click', (e) => {
+            if (!statusFilterDropdown.contains(e.target)) statusFilterDropdown.classList.remove('open');
         });
     }
 
-    // 3. FILTER APPLY & CLEAR WORKING
-    const applyBtn = document.querySelector(".btn-apply");
-    const clearBtn = document.querySelector(".btn-clear");
+    // 5. Apply & Clear Filters
+    const applyFilterBtn = document.getElementById('applyFilterBtn');
+    const clearFilterBtn = document.getElementById('clearFilterBtn');
 
-    if (applyBtn) {
-        applyBtn.addEventListener("click", () => {
-            filterPanel.classList.remove("show");
-            // Aap yahan apna custom filter logic laga sakti hain
+    if (applyFilterBtn) {
+        applyFilterBtn.addEventListener('click', () => {
+            const selectedOpt = statusFilterDropdown.querySelector('.custom-modal-option.selected');
+            const filterVal = selectedOpt ? selectedOpt.getAttribute('data-value') : 'all';
+            document.querySelectorAll('.row-item').forEach(row => {
+                const rowStatus = row.getAttribute('data-status');
+                if (filterVal === 'all' || rowStatus === filterVal) row.style.display = '';
+                else row.style.display = 'none';
+            });
+            filterPanel.classList.remove('show');
+        });
+    }
+    if (clearFilterBtn) {
+        clearFilterBtn.addEventListener('click', () => {
+            selectedStatusFilter.textContent = 'All Status';
+            statusOptions.forEach(o => o.classList.remove('selected'));
+            document.querySelectorAll('.row-item').forEach(row => row.style.display = '');
         });
     }
 
-    if (clearBtn) {
-        clearBtn.addEventListener("click", () => {
-            document.getElementById("filterYear").value = "";
-            document.getElementById("filterDate").value = "";
-        });
-    }
-
-    // 4. Action Icons Click
-    const actionIcons = document.querySelectorAll(".action-icon");
-    actionIcons.forEach((icon) => {
-        icon.addEventListener("click", function () {
-            if (this.classList.contains("fa-xmark")) {
-                if (confirm("Are you sure you want to close this period?")) {
-                    this.closest("tr").style.display = "none";
-                }
-            }
+    // 6. Tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.getAttribute('data-target');
+            document.querySelectorAll('.row-item').forEach(row => {
+                const status = row.getAttribute('data-status');
+                if (target === 'all' || target === status) row.style.display = '';
+                else row.style.display = 'none';
+            });
         });
     });
-});
 
-// CSS Animation for fade in
-const style = document.createElement("style");
-style.innerHTML = `@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }`;
-document.head.appendChild(style);
+    // 7. Action Icons (Delete)
+    document.addEventListener('click', function(e) {
+        if(e.target.classList.contains('fa-xmark') && e.target.classList.contains('action-icon')) {
+            if(confirm('Are you sure you want to close/delete this period?')) {
+                e.target.closest('tr').remove();
+            }
+        }
+    });
+
+});

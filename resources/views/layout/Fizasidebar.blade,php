@@ -1,5 +1,7 @@
 {{-- resources/views/Layout/Sidebar.blade.php --}}
 
+<link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+
 <div class="sidebar-container">
  
     <!-- Search Bar with Icon -->
@@ -71,7 +73,7 @@
             <ul class="submenu">
                 <li class="sub-item {{ request()->is('purchase-invoice') ? 'active' : '' }}"><a href="{{ url('/purchase-invoice') }}">Purchase Invoice</a></li>
                 <li class="sub-item {{ request()->is('purchase-returns') ? 'active' : '' }}"><a href="{{ url('/purchase-returns') }}">Purchase Returns</a></li>
-                <li class="sub-item {{ request()->is('Warehouse') ? 'active' : '' }}"><a href="{{ url('/Warehouse') }}">Warehouses</a></li>
+                <li class="sub-item {{ request()->is('warehouses') ? 'active' : '' }}"><a href="{{ url('/warehouses') }}">Warehouses</a></li>
                 <li class="sub-item {{ request()->is('transfers') ? 'active' : '' }}"><a href="{{ url('/transfers') }}">Transfers</a></li>
             </ul>
         </li>
@@ -82,9 +84,10 @@
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
                 <li class="sub-item {{ request()->is('items') ? 'active' : '' }}"><a href="{{ url('/items') }}">Items</a></li>
+                <li class="sub-item {{ request()->is('system-setup') ? 'active' : '' }}"><a href="{{ url('/system-setup') }}">System Setup</a></li>
             </ul>
         </li>
- 
+
         <!-- ================= ACCOUNTING & FINANCE ================= -->
         <li class="title">Accounting & Finance</li>
         
@@ -154,8 +157,8 @@
                 <li class="sub-item {{ request()->is('goal/goals') ? 'active' : '' }}"><a href="{{ url('/goal/goals') }}">Goals</a></li>
                 <li class="sub-item {{ request()->is('goal/milestones') ? 'active' : '' }}"><a href="{{ url('/goal/milestones') }}">Milestones</a></li>
                 <li class="sub-item {{ request()->is('goal/contributions') ? 'active' : '' }}"><a href="{{ url('/goal/contributions') }}">Contributions</a></li>
-                <li class="sub-item {{ request()->is('tracking') ? 'active' : '' }}"><a href="{{ url('/tracking') }}">Tracking</a></li>
-                <li class="sub-item {{ request()->is('categories') ? 'active' : '' }}"><a href="{{ url('/categories') }}">Category</a></li>
+                <li class="sub-item {{ request()->is('goal/tracking') ? 'active' : '' }}"><a href="{{ url('/goal/tracking') }}">Tracking</a></li>
+                <li class="sub-item {{ request()->is('goal/category') ? 'active' : '' }}"><a href="{{ url('/goal/category') }}">Category</a></li>
             </ul>
         </li>
 
@@ -164,8 +167,8 @@
             Budget Planner 
             <svg class="arrow-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             <ul class="submenu">
-                <li class="sub-item {{ request()->is('budget-periods') ? 'active' : '' }}"><a href="{{ url('/budget-periods') }}">Budget Periods</a></li>
-                <li class="sub-item {{ request()->is('budgets') ? 'active' : '' }}"><a href="{{ url('/budgets') }}">Budget</a></li>
+                <li class="sub-item {{ request()->is('budget/periods') ? 'active' : '' }}"><a href="{{ url('/budget/periods') }}">Budget Periods</a></li>
+                <li class="sub-item {{ request()->is('budget/budget') ? 'active' : '' }}"><a href="{{ url('/budget/budget') }}">Budget</a></li>
                 <li class="sub-item {{ request()->is('budget/allocations') ? 'active' : '' }}"><a href="{{ url('/budget/allocations') }}">Budget Allocations</a></li>
                 <li class="sub-item {{ request()->is('budget/monitoring') ? 'active' : '' }}"><a href="{{ url('/budget/monitoring') }}">Budget Monitoring</a></li>
             </ul>

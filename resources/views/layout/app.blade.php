@@ -71,7 +71,7 @@
         
         <!-- SIDEBAR INCLUDE -->
         <aside class="sidebar-area">
-            @include('Layout.Sidebar')
+            @include('Layout.Fizasidebar')
         </aside>
 
         <!-- RIGHT SIDE (Navbar + Content) -->

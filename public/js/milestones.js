@@ -1,116 +1,223 @@
-// public/js/milestones.js
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", () => {
     
-    // ====== TOGGLE FILTERS PANEL ======
-    const toggleFilterBtn = document.getElementById('toggle-filter-btn');
-    const filtersPanel = document.getElementById('filters-panel');
-    toggleFilterBtn.addEventListener('click', function() {
-        filtersPanel.classList.toggle('show');
+    // ==========================================
+    // 1. INITIALIZE FLATPICKR CALENDAR (Custom Static Dropdown)
+    // ==========================================
+    if (typeof flatpickr !== 'undefined') {
+        flatpickr("#dueDate", { 
+            dateFormat: "Y-m-d", 
+            altInput: true, 
+            altFormat: "F j, Y", 
+            disableMobile: true, 
+            position: "above",
+            static: false,
+            showMonths: 1,
+            monthSelectorType: "static" // Yeh custom dropdown banata hai
+        });
+    }
+
+    // ==========================================
+    // 2. NORMAL DROPDOWNS & FILTER PANEL
+    // ==========================================
+    const dropdowns = document.querySelectorAll('.custom-dropdown');
+    const filterPanel = document.getElementById('filterPanel');
+    const toggleFilterBtn = document.getElementById('toggleFilterBtn');
+
+    dropdowns.forEach(dropdown => {
+        const btn = dropdown.querySelector('.drop-btn');
+        if(btn) btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdowns.forEach(d => { if(d !== dropdown) d.classList.remove('show'); });
+            dropdown.classList.toggle('show');
+        });
     });
 
-    // ====== CUSTOM FILTER DROPDOWN (Goal) ======
-    window.toggleFilterDropdown = function(id) {
-        const dd = document.getElementById(id);
-        const menu = dd.querySelector('.custom-dropdown-menu');
-        document.querySelectorAll('.ag-filter-select-wrapper').forEach(el => {
-            if(el !== dd) el.querySelector('.custom-dropdown-menu').style.display = 'none';
+    if (toggleFilterBtn) {
+        toggleFilterBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            filterPanel.classList.toggle('show');
         });
-        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
 
-    window.selectFilterItem = function(ddId, element) {
-        const dd = document.getElementById(ddId);
-        const textSpan = dd.querySelector('.ag-filter-select span');
-        textSpan.innerText = element.innerText;
-        textSpan.style.color = '#0f172a';
-        textSpan.style.fontWeight = '600';
-        dd.querySelector('.custom-dropdown-menu').style.display = 'none';
-    }
+    window.addEventListener('click', (e) => {
+        dropdowns.forEach(d => d.classList.remove('show'));
+    });
 
-    // ====== CUSTOM DATE RANGE PICKER ======
-    const dateRangeState = { step: 1, start: null, end: null };
-    let currentMonth = new Date().getMonth();
-    let currentYear = new Date().getFullYear();
-
-    window.toggleDateRangePicker = function(id) {
-        const wrapper = document.getElementById(id);
-        const popup = wrapper.querySelector('.custom-calendar-popup');
-        document.querySelectorAll('.custom-calendar-popup').forEach(el => {
-            if(el !== popup) el.classList.remove('open');
+    // ==========================================
+    // 3. FILTER CUSTOM DROPDOWN
+    // ==========================================
+    const filterDropdown = document.getElementById('filterStatusDropdown');
+    const filterOptions = filterDropdown ? filterDropdown.querySelectorAll('.custom-modal-option') : [];
+    const selectedFilterStatus = document.getElementById('selectedFilterStatus');
+    
+    if (filterDropdown) {
+        const trigger = filterDropdown.querySelector('.custom-modal-trigger');
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            filterDropdown.classList.toggle('open');
         });
-        popup.classList.toggle('open');
-        if(popup.classList.contains('open')) renderDateRangeCalendar();
+
+        filterOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                filterOptions.forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedFilterStatus.textContent = option.textContent;
+                filterDropdown.classList.remove('open');
+            });
+        });
     }
 
-    window.changeMonth = function(calId, direction) {
-        currentMonth += direction;
-        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-        renderDateRangeCalendar();
-    }
+    // Apply / Clear Filters
+    const applyFilterBtn = document.getElementById('applyFilterBtn');
+    const clearFilterBtn = document.getElementById('clearFilterBtn');
 
-    function renderDateRangeCalendar() {
-        const popup = document.getElementById('cal-range');
-        const grid = popup.querySelector('.cal-days-grid');
-        const monthLabel = popup.querySelector('.month-year');
-        const dateText = document.getElementById('date-range-text');
+    if (applyFilterBtn) {
+        applyFilterBtn.addEventListener('click', () => {
+            const selectedOpt = filterDropdown.querySelector('.custom-modal-option.selected');
+            const filterVal = selectedOpt ? selectedOpt.getAttribute('data-value') : 'all';
 
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        monthLabel.innerText = `${monthNames[currentMonth]} ${currentYear}`;
-
-        grid.innerHTML = `<div class="cal-day-name">Su</div><div class="cal-day-name">Mo</div><div class="cal-day-name">Tu</div><div class="cal-day-name">We</div><div class="cal-day-name">Th</div><div class="cal-day-name">Fr</div><div class="cal-day-name">Sa</div>`;
-
-        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-        for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="cal-day filler"></div>`;
-
-        for (let i = 1; i <= daysInMonth; i++) {
-            const dayDiv = document.createElement('div');
-            dayDiv.className = 'cal-day';
-            dayDiv.innerText = i;
-            
-            // Highlight logic
-            if (dateRangeState.start && dateRangeState.start.day === i && dateRangeState.start.month === currentMonth && dateRangeState.start.year === currentYear) {
-                dayDiv.classList.add('selected-start');
-            }
-            if (dateRangeState.end && dateRangeState.end.day === i && dateRangeState.end.month === currentMonth && dateRangeState.end.year === currentYear) {
-                dayDiv.classList.add('selected-end');
-            }
-            if (dateRangeState.start && dateRangeState.end) {
-                const curDate = new Date(currentYear, currentMonth, i);
-                const startDate = new Date(dateRangeState.start.year, dateRangeState.start.month, dateRangeState.start.day);
-                const endDate = new Date(dateRangeState.end.year, dateRangeState.end.month, dateRangeState.end.day);
-                if (curDate > startDate && curDate < endDate) dayDiv.classList.add('in-range');
-            }
-
-            dayDiv.onclick = function() {
-                if (dateRangeState.step === 1) {
-                    dateRangeState.start = { day: i, month: currentMonth, year: currentYear };
-                    dateRangeState.end = null;
-                    dateRangeState.step = 2;
-                    dateText.innerText = `From: ${String(currentMonth+1).padStart(2,'0')}/${String(i).padStart(2,'0')}/${currentYear}`;
+            document.querySelectorAll('.row-item').forEach(row => {
+                const rowStatus = row.getAttribute('data-status');
+                if (filterVal === 'all' || rowStatus === filterVal) {
+                    row.style.display = '';
                 } else {
-                    dateRangeState.end = { day: i, month: currentMonth, year: currentYear };
-                    dateRangeState.step = 1;
-                    dateText.innerText = `${dateText.innerText.replace('From: ', '')} To: ${String(currentMonth+1).padStart(2,'0')}/${String(i).padStart(2,'0')}/${currentYear}`;
-                    document.getElementById('cal-range').classList.remove('open');
+                    row.style.display = 'none';
                 }
-                renderDateRangeCalendar();
-            };
-            grid.appendChild(dayDiv);
-        }
+            });
+            filterPanel.classList.remove('show');
+        });
     }
 
-    // Close on outside click
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.ag-filter-select-wrapper')) {
-            document.querySelectorAll('.ag-filter-select-wrapper .custom-dropdown-menu').forEach(m => m.style.display = 'none');
-        }
-        if (!e.target.closest('.ag-date-range-wrapper')) {
-            document.querySelectorAll('.custom-calendar-popup').forEach(p => p.classList.remove('open'));
+    if (clearFilterBtn) {
+        clearFilterBtn.addEventListener('click', () => {
+            selectedFilterStatus.textContent = 'Filter by Status';
+            filterOptions.forEach(o => o.classList.remove('selected'));
+            document.querySelectorAll('.row-item').forEach(row => row.style.display = '');
+        });
+    }
+
+    // ==========================================
+    // 4. TABS
+    // ==========================================
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.getAttribute('data-target');
+            document.querySelectorAll('.row-item').forEach(row => {
+                const type = row.getAttribute('data-type');
+                if (target === 'all' || target === type) row.style.display = '';
+                else row.style.display = 'none';
+            });
+        });
+    });
+
+    // ==========================================
+    // 5. CUSTOM MODAL DROPDOWNS (Goal & Status)
+    // ==========================================
+    function initModalDropdown(dropdownId, textId, hiddenInputId) {
+        const dropdown = document.getElementById(dropdownId);
+        if (!dropdown) return;
+        const trigger = dropdown.querySelector('.custom-modal-trigger');
+        const options = dropdown.querySelectorAll('.custom-modal-option');
+        const selectedText = document.getElementById(textId);
+        const hiddenInput = document.getElementById(hiddenInputId);
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelectorAll('.custom-modal-dropdown').forEach(d => { if(d !== dropdown) d.classList.remove('open'); });
+            dropdown.classList.toggle('open');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                selectedText.textContent = option.textContent;
+                hiddenInput.value = option.getAttribute('data-value');
+                dropdown.classList.remove('open');
+            });
+        });
+    }
+    initModalDropdown('goalDropdown', 'selectedGoalText', 'milestoneGoal');
+    initModalDropdown('statusDropdown', 'selectedStatusText', 'milestoneStatus');
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.custom-modal-dropdown')) {
+            document.querySelectorAll('.custom-modal-dropdown').forEach(d => d.classList.remove('open'));
         }
     });
 
+    // ==========================================
+    // 6. CREATE MILESTONE MODAL
+    // ==========================================
+    const modal = document.getElementById('createMilestoneModal');
+    const openBtn = document.getElementById('openCreateModalBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelModalBtn');
+    const form = document.getElementById('createMilestoneForm');
+    const tableBody = document.getElementById('table-body');
+
+    if (openBtn) openBtn.addEventListener('click', () => { if(modal) modal.classList.add('show'); });
+    function closeModal() { if(modal) { modal.classList.remove('show'); if(form) form.reset(); } }
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('milestoneName').value;
+            const goal = document.getElementById('milestoneGoal').value;
+            const date = document.getElementById('dueDate').value;
+            const status = document.getElementById('milestoneStatus').value;
+
+            if(!goal || !status) { alert('Please select Goal and Status'); return; }
+
+            let type = status.toLowerCase().replace(' ', '');
+            let statusClass = type === 'completed' ? 'status-completed' : (type === 'inprogress' ? 'status-inprogress' : 'status-pending');
+
+            const newRow = document.createElement('tr');
+            newRow.className = 'row-item';
+            newRow.setAttribute('data-status', status);
+            newRow.setAttribute('data-type', type);
+
+            newRow.innerHTML = `
+                <td><div class="milestone-name">${name}</div><span class="badge-sub text-muted">M-00${Math.floor(Math.random() * 9) + 1}</span></td>
+                <td><span class="goal-badge">${goal}</span></td>
+                <td><span class="date-text"><i class="fa-regular fa-calendar"></i> ${date}</span></td>
+                <td><span class="status-badge ${statusClass}">${status}</span></td>
+                <td>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 0%;"></div></div>
+                    <span class="progress-text">0%</span>
+                </td>
+                <td class="actions"><i class="fa-regular fa-trash-can action-icon"></i></td>
+            `;
+            if(tableBody) tableBody.insertBefore(newRow, tableBody.firstChild);
+            closeModal();
+        });
+    }
+
+    // ==========================================
+    // 7. SEARCH
+    // ==========================================
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        document.querySelectorAll('.row-item').forEach(row => {
+            const rowText = row.textContent.toLowerCase();
+            row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+        });
+    }
+    if (searchBtn) searchBtn.addEventListener('click', (e) => { e.preventDefault(); performSearch(); });
+    if (searchInput) searchInput.addEventListener('keyup', () => performSearch());
+
+    // ==========================================
+    // 8. DELETE ACTION
+    // ==========================================
+    document.addEventListener('click', function(e) {
+        if(e.target.classList.contains('fa-trash-can')) {
+            if(confirm('Are you sure you want to delete this milestone?')) e.target.closest('tr').remove();
+        }
+    });
 });
