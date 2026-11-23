@@ -1,4 +1,4 @@
-@extends('Layout.dashboard')
+@extends('Layout.fizadashboard')
 
 @section('title', 'Manage Milestones')
 @section('page-name', 'Milestones')
