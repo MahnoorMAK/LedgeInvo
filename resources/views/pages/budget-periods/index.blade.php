@@ -11,15 +11,20 @@
 
 @section('content')
 
+    <!-- Page Title with Link -->
     <div class="page-title">
         <div>
             <h1>Budget Periods</h1>
             <p>Manage and configure budget periods, financial years, and approval workflows.</p>
         </div>
-        <button class="btn-add" id="openCreateModalBtn"><i class="fa-solid fa-plus"></i></button>
+        <!-- + BUTTON NOW LINKS TO NEW PAGE -->
+        <a href="{{ route('budget-periods.create') }}" class="btn-add" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
+            <i class="fa-solid fa-plus"></i>
+        </a>
     </div>
 
     <div class="table-container">
+        <!-- Filters Top Bar -->
         <div class="table-header-filters">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -40,6 +45,7 @@
             </div>
         </div>
 
+        <!-- Filter Panel -->
         <div class="new-filter-panel" id="filterPanel">
             <div class="filter-row">
                 <div class="filter-group">
@@ -72,6 +78,7 @@
             </div>
         </div>
 
+        <!-- Tabs -->
         <div class="tabs">
             <div class="tab active" data-target="all"><i class="fa-solid fa-border-all"></i> All <span class="badge">5</span></div>
             <div class="tab" data-target="draft"><i class="fa-regular fa-file"></i> Draft <span class="badge">0</span></div>
@@ -80,6 +87,7 @@
             <div class="tab" data-target="closed"><i class="fa-solid fa-xmark"></i> Closed <span class="badge">0</span></div>
         </div>
 
+        <!-- Table -->
         <div class="table-responsive">
             <table id="budgetPeriodTable">
                 <thead>
@@ -94,6 +102,7 @@
                     </tr>
                 </thead>
                 <tbody id="table-body">
+                    <!-- Aapke purane rows yahan aayenge -->
                     <tr class="row-item" data-status="active" data-year="2024">
                         <td><div class="period-name">Q1 2024 Budget</div></td>
                         <td><span class="year-badge">2024</span></td>
@@ -122,53 +131,8 @@
                         </td>
                         <td class="actions"><i class="fa-solid fa-xmark action-icon"></i></td>
                     </tr>
-                    <tr class="row-item" data-status="active" data-year="2024">
-                        <td><div class="period-name">Q3 2024 Budget</div></td>
-                        <td><span class="year-badge">2024</span></td>
-                        <td><div class="date-text"><i class="fa-regular fa-calendar"></i> 2024-06-30</div></td>
-                        <td><div class="date-text"><i class="fa-regular fa-calendar"></i> 2024-09-29</div></td>
-                        <td><span class="status-badge status-active">Active</span></td>
-                        <td>
-                            <div class="user-info">
-                                <div class="avatar"><img src="https://i.pravatar.cc/100?t=15" alt="User"></div>
-                                <div class="user-text"><h5>Global Solutions Ltd</h5><p>sales@globalsol.com</p></div>
-                            </div>
-                        </td>
-                        <td class="actions"><i class="fa-solid fa-xmark action-icon"></i></td>
-                    </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="createPeriodModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Create Budget Period</h2>
-                <button class="close-modal" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form id="createPeriodForm">
-                <div class="form-group">
-                    <label>Period Name <span>*</span></label>
-                    <input type="text" id="periodName" placeholder="Enter Period Name" required>
-                </div>
-                <div class="form-group">
-                    <label>Financial Year <span>*</span></label>
-                    <input type="text" id="financialYear" placeholder="Enter Financial Year" required>
-                </div>
-                <div class="form-group">
-                    <label>Start Date <span>*</span></label>
-                    <input type="text" id="startDate" placeholder="Select Start Date" required>
-                </div>
-                <div class="form-group">
-                    <label>End Date <span>*</span></label>
-                    <input type="text" id="endDate" placeholder="Select End Date" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" id="cancelModalBtn">Cancel</button>
-                    <button type="submit" class="btn-save">Create</button>
-                </div>
-            </form>
         </div>
     </div>
 
