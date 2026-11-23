@@ -1,232 +1,138 @@
-/* =========================================
-   SALES RETURNS — PREMIUM STYLES
-   ========================================= */
-
-/* Warehouse Badges */
-.warehouse-badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
-}
-.wh-green { background-color: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-.wh-purple { background-color: #f5f3ff; color: #5b21b6; border: 1px solid #ddd6fe; }
-.wh-blue { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
-
-/* Item Quantity */
-.item-qty {
-    color: #64748b;
-    font-size: 12px;
-    margin-left: 5px;
+:root {
+    --ag-purple: #7c3aed;
+    --ag-purple-hover: #6d28d9;
+    --ag-purple-light: #f5f3ff;
+    --ag-purple-border: #d8b4fe;
+    --ag-bg: #f8fafc;
+    --ag-border: #e2e8f0;
+    --ag-text-main: #0f172a;
+    --ag-text-muted: #64748b;
 }
 
-/* Status Badges */
-.status-badge {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-    text-align: center;
-    white-space: nowrap;
-}
-.status-paid { background: #ecfdf5; color: #10b981; }
-.status-draft { background: #f1f5f9; color: #64748b; }
-.status-posted { background: #eff6ff; color: #3b82f6; }
-
-/* Action Buttons */
-.action-btns {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-.action-btns button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-.action-btns button:hover {
-    transform: scale(1.1);
-}
-.action-btns button.text-red:hover {
-    background-color: #fef2f2;
+body { 
+    margin: 0; padding: 0; background-color: var(--ag-bg); font-family: 'Inter', sans-serif; 
 }
 
-/* Button Colors */
-.text-green { color: #10b981; }
-.text-red { color: #ef4444; }
-.text-muted { color: #cbd5e1; }
-.text-blue { color: #3b82f6; }
-
-/* =========================================
-   SEARCH BOX & ICON FIX
-   ========================================= */
-.search-box { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    position: relative; 
+.ag-page-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 100vh;
 }
 
-.search-box .s-icon { 
-    position: absolute; 
-    left: 12px; 
-    width: 16px !important; 
-    height: 16px !important; 
-    stroke: #94a3b8;
-    fill: none;
+/* Header */
+.ag-top-header {
+    display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;
 }
+.ag-breadcrumb { color: var(--ag-text-muted); font-size: 13px; margin-bottom: 8px; }
+.ag-title { margin: 0; font-size: 24px; font-weight: 600; }
+.ag-subtitle { margin: 8px 0 0 0; color: var(--ag-text-muted); font-size: 14px; }
 
-.search-box input { 
-    padding: 10px 10px 10px 38px; 
-    border: 1px solid #cbd5e1; 
-    border-radius: 6px; 
-    outline: none; 
-    width: 250px; 
-    font-size: 14px; 
+.ag-btn-outline {
+    background: #fff; border: 1px solid #cbd5e1; color: #475569; padding: 10px 20px;
+    border-radius: 8px; font-weight: 500; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px; font-size: 14px; transition: 0.2s;
 }
+.ag-btn-outline:hover { background: #f1f5f9; border-color: #94a3b8; }
 
-.search-box input:focus { 
-    border-color: #7C3AED; 
+/* Layout */
+.ag-layout { display: flex; gap: 30px; align-items: flex-start; }
+.ag-col-left { flex: 1; min-width: 0; }
+.ag-col-right { width: 340px; flex-shrink: 0; }
+
+.ag-card {
+    background: #ffffff; border: 1px solid var(--ag-border); border-radius: 12px;
+    padding: 30px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
 }
-
-/* =========================================
-   MODAL (POPUP) STYLES
-   ========================================= */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+.ag-card-header {
+    display: flex; align-items: center; border-bottom: 1px solid var(--ag-border);
+    padding-bottom: 20px; margin-bottom: 25px; justify-content: space-between;
 }
+.ag-card-header-left { display: flex; align-items: center; gap: 12px; }
 
-.modal-overlay.show {
-    display: flex;
-    opacity: 1;
-}
-
-.modal-box {
-    background: #ffffff;
-    width: 100%;
-    max-width: 500px;
-    border-radius: 16px;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-    overflow: hidden;
-}
-
-.modal-overlay.show .modal-box {
-    transform: translateY(0);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-header h2 {
+/* Icon Box */
+.ag-icon-box {
+    width: 40px; height: 40px; background: var(--ag-purple-light); color: var(--ag-purple);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     font-size: 18px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0;
+}
+.ag-card-title { margin: 0; font-size: 16px; font-weight: 600; }
+
+/* =========================================
+   Form Grid (Spacing Fix)
+   ========================================= */
+.ag-form-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 25px 20px; /* Yahan row aur column ke darmiyan space barha diya hai */
+}
+.form-group { margin: 0; } /* Purane margin hata diye taake double na ho */
+.ag-label { display: block; margin-bottom: 10px; color: #334155; font-size: 13px; font-weight: 600; }
+.ag-label span { color: #ef4444; }
+
+/* 3D Inputs */
+.ag-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--ag-purple-border); border-radius: 8px;
+    outline: none; font-size: 14px; color: #1e293b; transition: all 0.3s ease; 
+    background: var(--ag-purple-light); box-sizing: border-box;
+    box-shadow: inset 0 2px 4px 0 rgba(139, 92, 246, 0.05); font-family: 'Inter', sans-serif;
+}
+.ag-input:focus { 
+    border-color: var(--ag-purple); background: #fff;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15), inset 0 2px 4px 0 rgba(139, 92, 246, 0.05); 
 }
 
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #94a3b8;
-    cursor: pointer;
-    transition: color 0.2s;
+/* =========================================
+   Dropdown (Position & Styling Fix)
+   ========================================= */
+.custom-dropdown { position: relative; width: 100%; user-select: none; }
+.custom-dropdown-trigger {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--ag-purple-border); border-radius: 8px;
+    background: var(--ag-purple-light); color: #64748b; font-size: 14px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; transition: all 0.25s ease;
+    box-shadow: inset 0 2px 4px 0 rgba(139, 92, 246, 0.05); box-sizing: border-box;
+}
+.custom-dropdown-trigger i { font-size: 14px; color: var(--ag-purple); transition: transform 0.3s; }
+.custom-dropdown.open .custom-dropdown-trigger { border-color: var(--ag-purple); background: #fff; }
+.custom-dropdown.open .custom-dropdown-trigger i { transform: rotate(180deg); }
+
+/* Dropdown Menu (Z-index aur positioning fix) */
+.custom-dropdown-menu {
+    position: absolute; top: calc(100% + 6px); left: 0; width: 100%;
+    background: #fff; border: 1px solid var(--ag-purple-border); border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.15); z-index: 999;
+    display: none; overflow: hidden; padding: 5px 0; box-sizing: border-box;
+}
+.custom-dropdown.open .custom-dropdown-menu { display: block; }
+.custom-dropdown-item { padding: 12px 16px; font-size: 14px; color: #334155; cursor: pointer; transition: all 0.2s; }
+.custom-dropdown-item:hover { background-color: var(--ag-purple-light); color: var(--ag-purple); font-weight: 600; padding-left: 22px; }
+
+/* =========================================
+   Summary & Side Cards
+   ========================================= */
+.ag-summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; color: #475569; font-size: 14px; }
+.ag-summary-total { 
+    display: flex; justify-content: space-between; margin-top: 20px; padding-top: 20px; 
+    border-top: 1px solid var(--ag-border); font-size: 18px; font-weight: 700; color: var(--ag-text-main); 
 }
 
-.close-btn:hover { color: #ef4444; }
-
-.modal-body {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+/* Buttons */
+.btn-create-return {
+    width: 100%; background: var(--ag-purple); color: white; border: none; padding: 14px;
+    border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); transition: all 0.3s; margin-bottom: 12px;
 }
+.btn-create-return:hover { background: var(--ag-purple-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5); }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.btn-cancel-return {
+    display: block; width: 100%; text-align: center; background: #fff; color: #475569;
+    border: 1px solid #cbd5e1; padding: 14px; border-radius: 8px; font-size: 15px;
+    font-weight: 500; text-decoration: none; transition: all 0.3s; box-sizing: border-box;
 }
+.btn-cancel-return:hover { background: #f1f5f9; border-color: #94a3b8; }
 
-.input-group label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #475569;
-}
-
-.input-group input, 
-.input-group select {
-    padding: 10px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    outline: none;
-    font-size: 14px;
-    color: #334155;
-    font-family: 'Inter', sans-serif;
-}
-
-.input-group input:focus, 
-.input-group select:focus {
-    border-color: #7C3AED;
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-}
-
-.modal-footer {
-    padding: 16px 24px;
-    border-top: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    background: #f8fafc;
-}
-
-.btn-cancel {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    color: #475569;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-cancel:hover { background: #f1f5f9; }
-
-.btn-save {
-    background: #7C3AED;
-    border: none;
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-save:hover { background: #6D28D9; }
+/* Flatpickr Override */
+.flatpickr-calendar { background: #ffffff !important; border-radius: 12px !important; box-shadow: 0 10px 30px rgba(124, 58, 237, 0.25) !important; border: 1px solid #e9d5ff !important; width: 280px !important; z-index: 99999 !important; }
+.flatpickr-day.today { border-color: var(--ag-purple) !important; color: var(--ag-purple) !important; }
+.flatpickr-day.selected { background: var(--ag-purple) !important; color: white !important; border: none !important; }
+.flatpickr-day:hover { background: #f3e8ff !important; color: var(--ag-purple) !important; }
