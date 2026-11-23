@@ -1,25 +1,50 @@
-<nav class="navbar">
-    <div class="nav-container">
-        
-        <!-- Logo -->
-        <a href="/" class="nav-logo">
-            <span class="logo-icon">⚙️</span>
-            LedgeInvo
-        </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Dashboard - Apexbooks')</title>
 
-        <!-- Links -->
-        <ul class="nav-links">
-            <li><a href="/" class="active">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        <!-- Buttons -->
-        <div class="nav-actions">
-            <a href="#" class="btn-login">Log in</a>
-            <a href="#" class="btn-primary">Get Started</a>
-        </div>
+    {{-- Theme script --}}
+    <script>
+    (function() {
+        var t = localStorage.getItem('apexbooks-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+    </script>
+
+    {{-- Dashboard Specific CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Dashboard/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+
+    @yield('styles')
+</head>
+<body class="db-body" >
+
+    <!-- ====== DASHBOARD MAIN WRAPPER ====== -->
+    <div class="db-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="db-sidebar">
+            @include('Layout.Fizasidebar')
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="db-main">
+            @yield('content')
+        </main>
 
     </div>
-</nav>
+    
+    {{-- Load theme.js FIRST so it runs before other scripts --}}
+    <script src="{{ asset('js/theme.js') }}"></script>
+
+    {{-- Sidebar JS --}}
+    <script src="{{ asset('js/sidebar.js') }}"></script>
+    @yield('scripts')
+</body>
+</html>
