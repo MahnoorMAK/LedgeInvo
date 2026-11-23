@@ -1,5 +1,5 @@
 <!-- resources/views/pages/account-types/index.blade.php -->
-@extends('layout.app') 
+@extends('layout.Fizasidebar') 
 
 @section('content')
 <style>
