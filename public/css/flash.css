@@ -1,0 +1,293 @@
+/* ============================================================
+   FLASH SCREEN (Cinematic, Logo, Sequence)
+   ============================================================ */
+
+/* 1. Overlay Base */
+#apex-flash-screen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999 !important;
+    
+    background: linear-gradient(135deg, 
+        color-mix(in srgb, var(--primary) 40%, #0d0b12) 0%, 
+        #0d0b12 60%, 
+        color-mix(in srgb, var(--primary-light) 20%, #0d0b12) 100%
+    ) !important;
+    
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    opacity: 1;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s ease;
+}
+
+/* 2. Central Light Burst */
+#apex-flash-screen::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 50vh;
+    background: radial-gradient(ellipse, var(--primary-light) 0%, transparent 70%);
+    opacity: 0.3;
+    filter: blur(100px);
+    animation: pulseGlow 4s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes pulseGlow {
+    0% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.9); }
+    100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* 3. Fade out state */
+#apex-flash-screen.is-finished {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* 4. Content Wrapper */
+#apex-flash-screen .flash-content-wrapper {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* 5. The Logo - Round Frame */
+#apex-flash-screen .flash-logo {
+    width: 420px;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(1); 
+    transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-bottom: -20px;
+    
+    /* The Round Frame */
+    border-radius: 50%;
+    /* A thin border using the theme color, plus a glowing shadow */
+    border: 4px solid var(--primary); 
+    box-shadow: 0 0 60px var(--primary-light), inset 0 0 20px rgba(0,0,0,0.2);
+    overflow: hidden; /* Ensures the image corners are cut off by the circle */
+    background: #ffffff; /* Background behind the image */
+}
+
+#apex-flash-screen .flash-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Changed to cover to fill the circle completely */
+    display: block;
+    /* No need for border-radius here since the parent has overflow: hidden */
+}
+
+/* 6. The Brand Name - Reduced Size */
+/* 6. The Brand Name - Reduced Size */
+#apex-flash-screen .flash-brand-name {
+    font-family: var(--app-font, 'Inter', sans-serif);
+    font-size: 0.75rem; /* Reduced from 1rem */
+    font-weight: 600; /* Slightly lighter weight so it doesn't look too bulky */
+    line-height: 1; /* Reduces the height */
+    color: #ffffff;
+    letter-spacing: 0.15em; /* Slightly more spacing for a cleaner look */
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    margin-bottom: 30px; /* Reduced margin to bring letters closer */
+    margin-top: -10px; /* Pulls it slightly closer to the logo */
+}
+
+/* 7. The Row (Letters) */
+#apex-flash-screen .flash-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5vw;
+    height: 20vh;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+/* 8. The Items - Initial State */
+#apex-flash-screen .flash-item {
+    position: relative;
+    height: 100%;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: scale(0.6) translateY(20px);
+    filter: blur(10px);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 1s ease, 
+                filter 1s ease;
+}
+
+/* 9. Animation Sequence */
+
+/* Step 1: Fade in logo */
+#apex-flash-screen.is-animating .flash-logo {
+    opacity: 1;
+}
+
+/* Step 2: After 2.5s, shrink logo slightly and reveal text */
+#apex-flash-screen.is-animating.is-text-visible .flash-logo {
+    transform: scale(0.75); 
+}
+#apex-flash-screen.is-animating.is-text-visible .flash-brand-name {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Step 3: After another second, reveal letters */
+#apex-flash-screen.is-animating.is-letters-visible .flash-row {
+    opacity: 1;
+}
+
+/* Finally, animate letters L -> O */
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(1) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 0.1s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(2) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 0.25s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(3) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 0.40s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(4) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 0.55s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(5) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 0.70s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(6) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 0.85s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(7) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 1.00s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(8) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 1.15s; }
+#apex-flash-screen.is-animating.is-letters-visible .flash-item:nth-child(9) { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); transition-delay: 1.30s; }
+
+/* 10. The Mask Container */
+#apex-flash-screen .flash-clip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center center;
+    mask-position: center center;
+    -webkit-mask-size: contain; 
+    mask-size: contain;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6));
+}
+
+#apex-flash-screen .flash-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: brightness(0.95) saturate(1.2) contrast(1.1);
+}
+
+/* 11. Widths */
+#apex-flash-screen .flash-item:nth-child(1) { width: 4.5vw; }
+#apex-flash-screen .flash-item:nth-child(2) { width: 4.0vw; }
+#apex-flash-screen .flash-item:nth-child(3) { width: 5.0vw; }
+#apex-flash-screen .flash-item:nth-child(4) { width: 5.3vw; }
+#apex-flash-screen .flash-item:nth-child(5) { width: 4.0vw; }
+#apex-flash-screen .flash-item:nth-child(6) { width: 1.8vw; }
+#apex-flash-screen .flash-item:nth-child(7) { width: 5.0vw; }
+#apex-flash-screen .flash-item:nth-child(8) { width: 5.0vw; }
+#apex-flash-screen .flash-item:nth-child(9) { width: 5.3vw; }
+
+/* 12. Letter Masks */
+#apex-flash-screen .flash-item:nth-child(1) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 92 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>L</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 92 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>L</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(2) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 82 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>E</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 82 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>E</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(3) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>D</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>D</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(4) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>G</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>G</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(5) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 82 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>E</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 82 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>E</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(6) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>I</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>I</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(7) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>N</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>N</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(8) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>V</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>V</text></svg>"); }
+#apex-flash-screen .flash-item:nth-child(9) .flash-clip { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 115 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>O</text></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 115 130'><text x='0' y='110' font-family='Inter' font-size='140' font-weight='800' fill='black'>O</text></svg>"); }
+
+/* ============================================================
+   GLOWING SPARKS (Lens Flare Effect)
+   ============================================================ */
+#apex-flash-screen .flash-sparkles {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    perspective: 1000px;
+}
+
+#apex-flash-screen .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatSpark 8s infinite ease-in-out alternate;
+    transform-style: preserve-3d;
+    /* The core bright glow */
+    box-shadow: 0 0 10px #fff, 0 0 20px var(--primary-light);
+}
+
+/* The long, thin streaks of light */
+#apex-flash-screen .sparkle::before,
+#apex-flash-screen .sparkle::after {
+    content: '';
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--primary-light), #fff, var(--primary-light), transparent);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+}
+
+/* Horizontal streak */
+#apex-flash-screen .sparkle::before {
+    width: 60px;
+    height: 2px;
+}
+
+/* Vertical streak */
+#apex-flash-screen .sparkle::after {
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(180deg, transparent, var(--primary-light), #fff, var(--primary-light), transparent);
+}
+
+/* Individual Spark Positions & Delays */
+#apex-flash-screen .s1 { top: 20%; left: 15%; animation-delay: 0s; transform: scale(1); }
+#apex-flash-screen .s2 { top: 30%; right: 20%; animation-delay: 1.5s; transform: scale(1.5); }
+#apex-flash-screen .s3 { bottom: 25%; left: 25%; animation-delay: 3s; transform: scale(0.8); }
+#apex-flash-screen .s4 { bottom: 15%; right: 15%; animation-delay: 4.5s; transform: scale(1.2); }
+#apex-flash-screen .s5 { top: 50%; left: 8%; animation-delay: 2s; transform: scale(0.6); }
+#apex-flash-screen .s6 { top: 45%; right: 8%; animation-delay: 5s; transform: scale(1.8); }
+
+/* The 3D Rotation & Floating Animation */
+@keyframes floatSpark {
+    0% { 
+        transform: translateY(0) rotateY(0deg) rotateX(0deg) scale(0.5); 
+        opacity: 0; 
+    }
+    20% { 
+        opacity: 1; 
+        transform: translateY(-10px) rotateY(180deg) rotateX(90deg) scale(1); 
+    }
+    80% { 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateY(-50px) rotateY(360deg) rotateX(360deg) scale(1.5); 
+        opacity: 0; 
+    }
+}

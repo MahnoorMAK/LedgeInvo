@@ -1,0 +1,351 @@
+/* ============================================================
+   LEDGEINVO — MISSION + VALUES
+   ============================================================ */
+.mv-section {
+    position: relative;
+    width: 100%;
+    padding: 120px 64px 100px;
+    background: var(--bg-color); /* Dynamic Background */
+}
+
+/* ============================================================
+   MISSION BLOCK — portrait + text
+   ============================================================ */
+.mv-mission {
+    max-width: 1280px;
+    margin: 0 auto 120px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/* ---------- Portrait photo ---------- */
+.mv-photo {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-60px);
+    transition:
+        opacity 2.2s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mv-mission.is-visible .mv-photo {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mv-photo-frame {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    /* Dynamic Shadow */
+    box-shadow:
+        0 4px 12px var(--shadow-color),
+        0 40px 80px -30px var(--shadow-color);
+}
+
+.mv-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mv-photo-frame:hover img {
+    transform: scale(1.04);
+}
+
+.mv-photo::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: 40px;
+    bottom: 40px;
+    border-radius: 24px;
+    /* Dynamic Border Accent */
+    border: 1.5px solid var(--border-color);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ---------- Text side ---------- */
+.mv-text {
+    /* Text container is always visible — words reveal individually */
+    opacity: 1;
+    transform: none;
+}
+
+.mv-eyebrow {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted); /* Dynamic Text */
+    margin-bottom: 24px;
+}
+
+.mv-title {
+    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif !important;
+    font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--text-main); /* Dynamic Text */
+    margin: 0 0 28px;
+}
+
+/* ---------- Word highlight (gray → dark on scroll) ---------- */
+.mv-word {
+    display: inline-block;
+    color: var(--text-muted); /* Dynamic Inactive Color */
+    transition: color 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: color;
+}
+
+.mv-word.is-active {
+    color: var(--text-main); /* Dynamic Active Color */
+}
+
+.mv-desc {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+    max-width: 520px;
+}
+
+.mv-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary); /* Dynamic Theme Color */
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color 0.3s ease, gap 0.3s ease;
+}
+
+.mv-link:hover {
+    border-bottom-color: var(--primary);
+    gap: 14px;
+}
+
+.mv-link svg {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mv-link:hover svg {
+    transform: translateX(3px);
+}
+
+/* ============================================================
+   CORE VALUES — 4-column row with vertical dividers
+   ============================================================ */
+.mv-values {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding-top: 0;
+}
+
+.mv-value {
+    position: relative;
+    padding: 40px 36px 40px 0;
+    /* Vertical divider on the right of each column except the last */
+    border-right: 1px solid var(--border-color);
+
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Add left padding to all columns except the first */
+.mv-value:not(:first-child) {
+    padding-left: 36px;
+}
+
+/* Remove divider from the last column */
+.mv-value:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+/* Stagger each value — one by one */
+.mv-values.is-visible .mv-value:nth-child(1) { transition-delay: 0.2s; }
+.mv-values.is-visible .mv-value:nth-child(2) { transition-delay: 1.1s; }
+.mv-values.is-visible .mv-value:nth-child(3) { transition-delay: 2.0s; }
+.mv-values.is-visible .mv-value:nth-child(4) { transition-delay: 2.9s; }
+
+.mv-values.is-visible .mv-value {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Number — bracketed like [ 01 ] */
+.mv-value-number {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 96px;
+    /* Wide gap between number and title, like Zeneth */
+}
+
+/* Serif title — matches the Zeneth look */
+.mv-value-title {
+    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif !important;
+    font-size: 1.65rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    line-height: 1.2;
+    margin: 0 0 20px;
+}
+
+.mv-value-desc {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.925rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 240px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+    .mv-section { padding: 100px 40px 80px; }
+    .mv-mission { gap: 56px; margin-bottom: 100px; }
+
+    .mv-value { padding: 32px 24px 32px 0; }
+    .mv-value:not(:first-child) { padding-left: 24px; }
+    .mv-value-number { margin-bottom: 64px; }
+    .mv-value-title { font-size: 1.45rem; }
+}
+
+@media (max-width: 900px) {
+    .mv-section { padding: 80px 32px 64px; }
+
+    .mv-mission {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        margin-bottom: 80px;
+    }
+
+    .mv-photo-frame {
+        aspect-ratio: 5 / 4;
+    }
+
+    .mv-photo-frame img {
+        object-position: center 30%;
+    }
+
+    .mv-photo::before {
+        top: -14px;
+        left: -14px;
+        right: 28px;
+        bottom: 28px;
+    }
+
+    /* Values switch to 2x2 grid with dividers */
+    .mv-values {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .mv-value {
+        padding: 32px 28px 32px 0;
+        border-right: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .mv-value:not(:first-child) {
+        padding-left: 28px;
+    }
+
+    /* Remove right border on even columns */
+    .mv-value:nth-child(2n) {
+        border-right: none;
+        padding-right: 0;
+    }
+
+    /* Remove left padding on odd columns (except first) */
+    .mv-value:nth-child(odd):not(:first-child) {
+        padding-left: 0;
+    }
+
+    /* Remove bottom border on last row */
+    .mv-value:nth-last-child(-n+2) {
+        border-bottom: none;
+    }
+
+    .mv-value-number { margin-bottom: 48px; }
+    .mv-value-title { font-size: 1.35rem; }
+}
+
+@media (max-width: 560px) {
+    .mv-section { padding: 64px 20px 48px; }
+    .mv-mission { gap: 40px; margin-bottom: 64px; }
+
+    .mv-eyebrow { font-size: 0.7rem; margin-bottom: 20px; }
+    .mv-title { font-size: 1.6rem; margin-bottom: 22px; }
+    .mv-desc { font-size: 1rem; margin-bottom: 28px; }
+
+    .mv-photo::before { display: none; }
+
+    /* Single column values, no dividers */
+    .mv-values {
+        grid-template-columns: 1fr;
+    }
+
+    .mv-value {
+        padding: 32px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .mv-value:not(:first-child) {
+        padding-left: 0;
+    }
+
+    .mv-value:last-child {
+        border-bottom: none;
+    }
+
+    .mv-value-number { margin-bottom: 40px; }
+    .mv-value-title { font-size: 1.25rem; }
+    .mv-value-desc { font-size: 0.9rem; max-width: 100%; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .mv-photo,
+    .mv-text,
+    .mv-value,
+    .mv-photo-frame img,
+    .mv-word {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    .mv-word {
+        color: var(--text-main) !important;
+    }
+}

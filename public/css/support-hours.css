@@ -1,0 +1,620 @@
+/* ============================================
+   SUPPORT HOURS & RESPONSE TIMES
+   Professional 3D reveal · Light + Dark theme aware
+   VERY SLOW text appearance on cards
+   ============================================ */
+
+.sup {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 100px 32px 120px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    perspective: 1600px;
+    
+    /* FIX: Prevents the horizontal scrollbar caused by the 3D scatter */
+    overflow-x: hidden;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.sup__head {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 64px;
+}
+
+.sup__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--primary-light); /* Dynamic Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    color: var(--primary); /* Dynamic Text */
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+.sup__eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+    animation: supDot 2.2s ease-in-out infinite;
+}
+
+@keyframes supDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.7); }
+}
+
+.sup__title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--text-main); /* Dynamic Text */
+    margin: 0 0 18px;
+}
+
+.sup__title-accent {
+    /* Dynamic Gradient Text */
+    background: linear-gradient(115deg, var(--primary-light) 0%, var(--primary) 50%, var(--primary-hover) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.sup__subtitle {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    margin: 0;
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+.sup__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    transform-style: preserve-3d;
+}
+
+/* ============================================
+   CARD — 3D Scatter Reveal
+   ============================================ */
+.sup__card {
+    position: relative;
+    padding: 32px;
+    border-radius: 20px;
+    background: var(--white); /* Dynamic Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    box-shadow:
+        0 4px 12px var(--shadow-color),
+        0 20px 40px -20px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: center center;
+    will-change: transform, opacity, filter;
+    backface-visibility: hidden;
+
+    /* --- Scattered initial state --- */
+    opacity: 0;
+    filter: blur(8px);
+    transition:
+        opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.3s ease;
+}
+
+/* Card 1: Flies in from Bottom-Left */
+.sup__card:nth-child(1) {
+    transform: translateY(80px) translateX(-60px) rotateZ(-4deg) rotateX(-10deg) scale(0.9);
+}
+
+/* Card 2: Flies in from Bottom-Right */
+.sup__card:nth-child(2) {
+    transform: translateY(80px) translateX(60px) rotateZ(4deg) rotateX(-10deg) scale(0.9);
+}
+
+/* Card 3: Flies in from Top-Left */
+.sup__card:nth-child(3) {
+    transform: translateY(-60px) translateX(-60px) rotateZ(3deg) rotateX(10deg) scale(0.9);
+}
+
+/* Card 4: Flies in from Top-Right */
+.sup__card:nth-child(4) {
+    transform: translateY(-60px) translateX(60px) rotateZ(-3deg) rotateX(10deg) scale(0.9);
+}
+
+/* --- Settled State --- */
+.sup__card.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) translateX(0) rotateZ(0) rotateX(0) scale(1);
+}
+
+/* Hover interaction */
+.sup__card.is-visible:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow:
+        0 8px 20px var(--shadow-color),
+        0 32px 60px -24px var(--shadow-color);
+    border-color: var(--primary); /* Dynamic Border Hover */
+    transition:
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s ease,
+        border-color 0.3s ease;
+}
+
+.sup__card--urgent {
+    /* Dynamic Featured Background */
+    background: linear-gradient(180deg, var(--primary-light) 0%, var(--white) 40%);
+    border-color: var(--primary);
+}
+
+.sup__card--urgent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    /* Dynamic Top Accent Line */
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-hover) 100%);
+    box-shadow: 0 0 12px var(--primary);
+}
+
+/* ============================================
+   CONTENT STAGGER — VERY SLOW
+   ============================================ */
+.sup__card-icon,
+.sup__card-title,
+.sup__card-desc,
+.sup__hours,
+.sup__resp,
+.sup__holidays,
+.sup__tz,
+.sup__urgent-btn,
+.sup__urgent-note {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 2.4s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 2.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Per-element delays ---------- */
+.sup__card.is-visible .sup__card-icon  { opacity: 1; transform: translateY(0); transition-delay: 0.8s;  }
+.sup__card.is-visible .sup__card-title { opacity: 1; transform: translateY(0); transition-delay: 1.3s;  }
+.sup__card.is-visible .sup__card-desc  { opacity: 1; transform: translateY(0); transition-delay: 1.8s;  }
+.sup__card.is-visible .sup__hours      { opacity: 1; transform: translateY(0); transition-delay: 2.3s;  }
+.sup__card.is-visible .sup__tz         { opacity: 1; transform: translateY(0); transition-delay: 3.2s;  }
+
+.sup__card.is-visible .sup__resp       { opacity: 1; transform: translateY(0); transition-delay: 2.3s;  }
+
+.sup__card.is-visible .sup__holidays   { opacity: 1; transform: translateY(0); transition-delay: 2.3s;  }
+
+.sup__card.is-visible .sup__urgent-btn { opacity: 1; transform: translateY(0); transition-delay: 2.3s;  }
+.sup__card.is-visible .sup__urgent-note{ opacity: 1; transform: translateY(0); transition-delay: 3.2s;  }
+
+/* ============================================
+   CARD ICON
+   ============================================ */
+.sup__card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+    box-shadow:
+        0 8px 18px var(--shadow-color),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition:
+        opacity 2.4s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sup__card-icon::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 50%;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+    pointer-events: none;
+}
+
+.sup__card-icon svg { position: relative; z-index: 1; }
+
+/* Semantic Icon Colors (Kept as-is for UX meaning) */
+.sup__card-icon--clock    { background: linear-gradient(135deg, #8E7AC7 0%, #7E6BB5 100%); }
+.sup__card-icon--bolt     { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
+.sup__card-icon--calendar { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+.sup__card-icon--shield   { background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%); }
+
+.sup__card.is-visible:hover .sup__card-icon {
+    transform: translateY(0) scale(1.1) rotate(-6deg);
+}
+
+/* ============================================
+   CARD CONTENT
+   ============================================ */
+.sup__card-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+}
+
+.sup__card-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 22px;
+}
+
+/* ---------- Business hours list ---------- */
+.sup__hours {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sup__hours li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
+    font-size: 0.9rem;
+}
+
+.sup__hours li:last-child { border-bottom: none; }
+
+.sup__hours-day {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.sup__hours-time {
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.sup__hours-closed .sup__hours-time {
+    color: #EF4444;
+    font-weight: 500;
+}
+
+.sup__tz {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 0.775rem;
+    font-weight: 500;
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.sup__tz svg { flex-shrink: 0; opacity: 0.85; }
+.sup__tz strong { font-weight: 700; }
+
+/* ---------- Response times ---------- */
+.sup__resp {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sup__resp li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--bg-color);
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.sup__resp li:hover {
+    background: var(--primary-light);
+    transform: translateX(6px);
+}
+
+.sup__resp-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Semantic Status Colors */
+.sup__resp-dot--green  { background: #10B981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.7); }
+.sup__resp-dot--blue   { background: #3B82F6; box-shadow: 0 0 8px rgba(59, 130, 246, 0.7); }
+.sup__resp-dot--amber  { background: #F59E0B; box-shadow: 0 0 8px rgba(245, 158, 11, 0.7); }
+.sup__resp-dot--purple { background: #A855F7; box-shadow: 0 0 8px rgba(168, 85, 247, 0.7); }
+
+.sup__resp-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-main);
+    flex: 1;
+}
+
+.sup__resp-time {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+}
+
+/* ---------- Holidays list ---------- */
+.sup__holidays {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sup__holidays li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--border-color);
+    font-size: 0.875rem;
+}
+
+.sup__holidays li:last-child { border-bottom: none; }
+
+.sup__holiday-date {
+    flex-shrink: 0;
+    min-width: 76px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+}
+
+.sup__holiday-name {
+    color: var(--text-muted);
+}
+
+/* ---------- Urgent CTA ---------- */
+.sup__urgent-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    /* Dynamic Gradient Button */
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+    color: #fff;
+    text-decoration: none;
+    overflow: hidden;
+    isolation: isolate;
+    box-shadow:
+        0 10px 24px -10px var(--shadow-color),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s ease,
+                opacity 2.4s cubic-bezier(0.22, 1, 0.36, 1);
+    margin-bottom: 16px;
+}
+
+.sup__urgent-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 16px 32px -12px var(--shadow-color),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.sup__urgent-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 3;
+}
+
+.sup__urgent-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+    z-index: 3;
+}
+
+.sup__urgent-label strong {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.sup__urgent-label small {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+.sup__urgent-flash {
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(100deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 70%,
+        transparent 100%);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    z-index: 2;
+    animation: supFlash 3.5s ease-in-out infinite;
+}
+
+@keyframes supFlash {
+    0%        { left: -120%; }
+    45%, 100% { left: 140%; }
+}
+
+.sup__urgent-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    color: #92400E;
+    font-size: 0.775rem;
+    line-height: 1.55;
+}
+
+.sup__urgent-note svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #D97706;
+}
+
+/* ============================================
+   REVEAL — header
+   ============================================ */
+[data-sup-reveal] {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(4px);
+    transition:
+        opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-sup-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* ============================================
+   DARK THEME SPECIFIC FIXES (Only for Semantic Colors)
+   ============================================ */
+[data-theme="dark"] .sup__holiday-date {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34D399;
+}
+
+[data-theme="dark"] .sup__urgent-note {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FCD34D;
+}
+
+[data-theme="dark"] .sup__urgent-note svg { color: #FBBF24; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .sup { padding: 80px 24px 100px; }
+    .sup__grid { grid-template-columns: 1fr; gap: 18px; }
+    .sup__card { padding: 26px 24px; }
+    .sup__head { margin-bottom: 48px; }
+    
+    /* On mobile, simplify the 3D scatter to avoid horizontal overflow */
+    .sup__card:nth-child(1) { transform: translateY(40px) scale(0.95); }
+    .sup__card:nth-child(2) { transform: translateY(40px) scale(0.95); }
+    .sup__card:nth-child(3) { transform: translateY(40px) scale(0.95); }
+    .sup__card:nth-child(4) { transform: translateY(40px) scale(0.95); }
+}
+
+@media (max-width: 480px) {
+    .sup__card { padding: 22px 20px; }
+
+    .sup__hours li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+    }
+
+    .sup__holidays li { align-items: flex-start; }
+    .sup__holiday-date { min-width: 60px; font-size: 0.7rem; }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .sup__eyebrow-dot,
+    .sup__urgent-flash {
+        animation: none !important;
+    }
+
+    [data-sup-reveal],
+    .sup__card,
+    .sup__card-icon,
+    .sup__card-title,
+    .sup__card-desc,
+    .sup__hours,
+    .sup__resp,
+    .sup__holidays,
+    .sup__tz,
+    .sup__urgent-btn,
+    .sup__urgent-note {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+    }
+
+    .sup__card.is-visible:hover,
+    .sup__resp li:hover,
+    .sup__urgent-btn:hover {
+        transform: none;
+    }
+}

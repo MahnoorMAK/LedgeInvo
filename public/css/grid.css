@@ -1,0 +1,305 @@
+/* ============================================
+   GRID COMPONENT — continuous marquee + cards
+   Light + Dark theme aware
+   Prominent hover with dimming siblings
+   ============================================ */
+
+.grid-section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+
+    background: var(--bg-color); /* Dynamic Theme Background */
+    color: var(--text-main);     /* Dynamic Text */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: background 0.4s ease, color 0.4s ease;
+    overflow: hidden;
+}
+
+/* ============================================
+   HEADER (optional)
+   ============================================ */
+.grid-header {
+    max-width: 720px;
+    margin: 0 auto 56px;
+    padding: 0 24px;
+    text-align: center;
+}
+
+.grid-header__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--primary); /* Dynamic Theme Color */
+    margin-bottom: 16px;
+}
+
+.grid-header__title {
+    font-family: 'Playfair Display', 'Georgia', serif !important;
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text-main); /* Dynamic Text */
+    margin: 0;
+}
+
+/* ============================================
+   TRACK WRAPPER — mask for edge fade
+   ============================================ */
+.grid-track-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    /* Fade cards near the edges */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+}
+
+/* ============================================
+   TRACK — driven by JS
+   ============================================ */
+.grid-track {
+    display: flex;
+    align-items: stretch;
+    gap: 24px;
+    padding: 20px 8vw;
+    width: max-content;
+    will-change: transform;
+}
+
+/* ============================================
+   CARD — base
+   ============================================ */
+.grid-card {
+    position: relative;
+    flex-shrink: 0;
+    width: 360px;
+    background: var(--white); /* Dynamic Card Background */
+    border: 1px solid var(--border-color); /* Dynamic Border */
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    transform-origin: center center;
+    z-index: 1;
+
+    /* Dynamic Shadow */
+    box-shadow:
+        0 1px 2px var(--shadow-color),
+        0 12px 32px -20px var(--shadow-color);
+
+    transition:
+        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.3s ease,
+        opacity 0.4s ease,
+        filter 0.4s ease;
+}
+
+/* ============================================
+   PROMINENT HOVER — dim siblings, lift hovered
+   ============================================ */
+
+/* When the track has a hovered card, dim every other card */
+.grid-track.has-hover .grid-card:not(.is-hovered) {
+    opacity: 0.55;
+    filter: saturate(0.85) blur(1px);
+    transform: scale(0.97);
+}
+
+/* Make the hovered card really pop */
+.grid-card.is-hovered {
+    transform: translateY(-14px) scale(1.06);
+    z-index: 10;
+    border-color: var(--primary); /* Dynamic Border Hover */
+    box-shadow:
+        0 4px 8px var(--shadow-color),
+        0 40px 80px -25px var(--shadow-color),
+        0 0 0 1px var(--primary);
+}
+
+/* ---------- Media / image ---------- */
+.grid-card__media {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: var(--bg-secondary); /* Dynamic Fallback */
+}
+
+.grid-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grid-card.is-hovered .grid-card__media img {
+    transform: scale(1.06);
+}
+
+/* ---------- Body ---------- */
+.grid-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 28px 32px;
+    flex: 1;
+}
+
+.grid-card__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--primary); /* Dynamic Theme Color */
+    margin-bottom: 12px;
+}
+
+.grid-card__title {
+    font-family: 'Playfair Display', 'Georgia', serif !important;
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-main); /* Dynamic Text */
+    margin: 0 0 12px;
+}
+
+.grid-card__desc {
+    font-size: 0.925rem;
+    line-height: 1.65;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    margin: 0 0 24px;
+    flex: 1;
+}
+
+/* ---------- Link ---------- */
+.grid-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--primary); /* Dynamic Theme Color */
+    text-decoration: none;
+    transition: gap 0.3s ease, color 0.3s ease;
+}
+
+.grid-card__link:hover {
+    gap: 14px;
+    color: var(--primary-hover);
+}
+
+.grid-card__link svg {
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.grid-card__link:hover svg {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .grid-section {
+        padding: 64px 0 72px;
+    }
+
+    .grid-track-wrap {
+        -webkit-mask-image: none;
+        mask-image: none;
+        overflow: visible;
+    }
+
+    .grid-track {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 20px;
+        width: 100%;
+        transform: none !important;
+    }
+
+    .grid-card {
+        width: 100%;
+    }
+
+    /* Disable the prominent hover dimming on mobile */
+    .grid-track.has-hover .grid-card:not(.is-hovered) {
+        opacity: 1;
+        filter: none;
+        transform: none;
+    }
+
+    .grid-card.is-hovered {
+        transform: none;
+        box-shadow:
+            0 1px 2px var(--shadow-color),
+            0 12px 32px -20px var(--shadow-color);
+        border-color: var(--border-color);
+    }
+}
+
+@media (max-width: 560px) {
+    .grid-header {
+        margin-bottom: 40px;
+    }
+
+    .grid-track {
+        gap: 16px;
+        padding: 0 16px;
+    }
+
+    .grid-card__media {
+        height: 180px;
+    }
+
+    .grid-card__body {
+        padding: 24px 22px 28px;
+    }
+
+    .grid-card__title {
+        font-size: 1.2rem;
+    }
+
+    .grid-card__desc {
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .grid-track {
+        transition: none !important;
+    }
+
+    .grid-card,
+    .grid-card__media img {
+        transition: none !important;
+    }
+
+    .grid-card.is-hovered {
+        transform: none;
+    }
+}

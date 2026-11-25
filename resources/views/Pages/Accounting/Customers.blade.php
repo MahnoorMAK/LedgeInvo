@@ -1,0 +1,395 @@
+@extends('layout.dashboard')
+
+@section('title', 'Customer-Management')
+
+@section('content')
+<!-- Added background-color: #ffffff to force the page background to white -->
+<style>
+    /* Aggressively remove padding/margins AND set background to white */
+    body, html, body main, .main-content, .content-wrapper, #app, #app > main, .app-content, .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background-color: #ffffff !important; /* Forces the background to white */
+    }
+</style>
+
+<!-- ============================================================
+     MANAGE CUSTOMERS PAGE (OVERLAP FIXED)
+     ============================================================ -->
+<div class="page-wrapper">
+  
+  <div class="page-header">
+    <div>
+      <h1>Manage Customers</h1>
+      <p>Manage your customers, view details and perform actions.</p>
+    </div>
+    <button class="btn-create" onclick="window.location.href='/create-customer'">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> 
+      Create Customer
+    </button>
+  </div>
+
+  <section class="ct-section">
+    <style>
+      /* Changed max-width to 100% and margin to 0 to remove side gaps */
+      .page-wrapper { 
+        max-width: 100%; 
+        margin: 0; 
+        font-family: system-ui, -apple-system, sans-serif; 
+        color: #0f172a; 
+        padding: 24px; /* Kept padding for internal spacing */
+        box-sizing: border-box;
+        background-color: #ffffff; /* Ensures the wrapper itself is white */
+      }
+      .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+      .page-header h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; color: #111827; }
+      .page-header p { font-size: 14px; color: #6b7280; }
+      .btn-create { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; }
+      .btn-create svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+      .ct-section { background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.05); border: 1px solid #e2e8f0; }
+      .ct-section * { box-sizing: border-box; margin: 0; padding: 0; }
+      
+      .ct-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+      .ct-search-group { display: flex; gap: 10px; flex: 1; max-width: 500px; position: relative; }
+      .ct-search-group svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: #9ca3af; fill: none; stroke-width: 2; }
+      .ct-search-input { width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
+      .ct-btn-search { padding: 10px 20px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+      .ct-btn-clear { padding: 10px 20px; background: #fff; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+      .ct-btn-clear:hover { background: #f1f5f9; }
+      
+      .ct-controls { display: flex; align-items: center; gap: 16px; }
+      .ct-view-toggles { display: flex; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; }
+      .ct-view-btn { background: transparent; border: none; padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #64748b; }
+      .ct-view-btn:first-child { border-right: 1px solid #cbd5e1; }
+      .ct-view-btn.active { background: #bfdbfe; color: #1e40af; }
+      .ct-view-btn svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
+      .ct-per-page { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
+      .ct-btn-filter { padding: 8px 16px; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+      .ct-filter-panel { display: none; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; margin-bottom: 20px; }
+      .ct-filter-panel.show { display: block; }
+      .ct-filter-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+      .ct-filter-item { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 8px; }
+      .ct-filter-label { font-size: 13px; font-weight: 600; color: #475569; }
+      .ct-filter-input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
+      .ct-filter-actions { display: flex; gap: 10px; margin-left: auto; margin-top: 10px; }
+      .ct-btn-apply { padding: 10px 24px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; }
+      .ct-btn-cancel { padding: 10px 24px; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 500; cursor: pointer; }
+
+      /* Table - Overlap fixed */
+      .ct-table-wrapper { width: 100%; overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 8px; }
+      .ct-table { width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left; }
+      
+      .ct-table th:nth-child(1) { width: 17%; } /* User */
+      .ct-table th:nth-child(2) { width: 12%; } /* Code */
+      .ct-table th:nth-child(3) { width: 15%; } /* Company */
+      .ct-table th:nth-child(4) { width: 14%; } /* Contact */
+      .ct-table th:nth-child(5) { width: 20%; } /* Email */
+      .ct-table th:nth-child(6) { width: 12%; } /* Tax */
+      .ct-table th:nth-child(7) { width: 10%; } /* Actions */
+
+      .ct-table th, .ct-table td { padding: 12px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+      
+      .ct-table td { white-space: nowrap; overflow: visible; text-overflow: clip; font-size: 12.5px; }
+      .ct-table td .ct-text, .ct-table td .ct-email { overflow: hidden; text-overflow: ellipsis; }
+      .ct-table td:last-child { overflow: visible; }
+
+      .ct-table th { background: #f8fafc; font-size: 12px; font-weight: 600; color: #4b5563; border-bottom: 1px solid #e2e8f0; }
+      .ct-table tbody tr:hover { background: #f8fafc; }
+      
+      .ct-user-cell { display: flex; align-items: center; gap: 10px; }
+      .ct-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid #e2e8f0; flex-shrink: 0; }
+      .ct-user-name { font-weight: 500; font-size: 12.5px; color: #111827; overflow: hidden; text-overflow: ellipsis; }
+      .ct-user-code { font-size: 11px; color: #6b7280; display: none; }
+      .ct-badge-code { background: #eff6ff; color: #1d4ed8; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; border: 1px solid #bfdbfe; white-space: nowrap; display: inline-block; }
+      .ct-text { color: #374151; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; display: block; }
+      .ct-email { color: #3b82f6; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; display: block; }
+
+      /* ===== 3-dot dropdown with action items ===== */
+      .ct-action-menu { position: relative; display: inline-flex; justify-content: center; width: 100%; }
+      .ct-action-btn { background: transparent; border: none; cursor: pointer; color: #64748b; padding: 6px; border-radius: 4px; transition: background .15s; }
+      .ct-action-btn:hover { background: #f1f5f9; color: #0f172a; }
+      .ct-action-btn svg { width: 18px; height: 18px; fill: currentColor; display: block; }
+      .ct-action-dropdown { display: none; position: absolute; right: 0; top: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 8px 16px rgba(0,0,0,.12); z-index: 999; min-width: 170px; padding: 6px 0; margin-top: 4px; }
+      .ct-action-dropdown.show { display: block; }
+      .ct-action-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; white-space: nowrap; transition: background .1s; text-decoration: none; }
+      .ct-action-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+      .ct-action-item:hover { background: #f8fafc; }
+      /* ===== CHANGED: only Delete keeps its red color, no left border on any item ===== */
+      .ct-action-item.delete { color: #dc2626; }
+      .ct-action-item.delete:hover { background: #fef2f2; }
+      /* ===== END CHANGED ===== */
+
+      .ct-grid-container { display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+      .ct-grid-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+      .ct-grid-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
+      .ct-grid-body { display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; }
+      .ct-grid-row { display: flex; justify-content: space-between; gap: 10px; }
+      .ct-grid-label { color: #6b7280; flex-shrink: 0; }
+      .ct-grid-value { font-weight: 500; color: #111827; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+      .ct-data-container.view-list .ct-table-wrapper { display: block; } .ct-data-container.view-list .ct-grid-container { display: none; }
+      .ct-data-container.view-grid .ct-table-wrapper { display: none; } .ct-data-container.view-grid .ct-grid-container { display: grid; }
+      .ct-pagination { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-top: 10px; border-top: 1px solid #e2e8f0; flex-wrap: wrap; gap: 16px; }
+      .ct-page-info { font-size: 14px; color: #64748b; }
+      .ct-page-controls { display: flex; gap: 6px; }
+      .ct-page-btn, .ct-page-num { padding: 8px 14px; border: 1px solid #e2e8f0; background: #fff; border-radius: 6px; font-size: 14px; font-weight: 500; color: #475569; cursor: pointer; }
+      .ct-page-num.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+      .ct-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+
+    <div class="ct-topbar">
+      <div class="ct-search-group">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="ct-search-input" id="searchInput" placeholder="Search customers...">
+        <button class="ct-btn-search" id="searchBtn">Search</button>
+        <button class="ct-btn-clear" id="clearBtn">Clear</button>
+      </div>
+      <div class="ct-controls">
+        <div class="ct-view-toggles">
+          <button class="ct-view-btn active" id="listViewBtn"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
+          <button class="ct-view-btn" id="gridViewBtn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></button>
+        </div>
+        <select class="ct-per-page" id="perPageSelect"><option value="10">10 per page</option><option value="25">25 per page</option><option value="50">50 per page</option><option value="100">100 per page</option></select>
+        <button class="ct-btn-filter" id="filterToggleBtn"><svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filters</button>
+      </div>
+    </div>
+
+    <div class="ct-filter-panel" id="filterPanel">
+      <div class="ct-filter-row">
+        <div class="ct-filter-item"><label class="ct-filter-label">Customer Code</label><input type="text" class="ct-filter-input" id="filterCode" placeholder="Filter by customer code"></div>
+        <div class="ct-filter-item"><label class="ct-filter-label">Company Name</label><input type="text" class="ct-filter-input" id="filterCompany" placeholder="Filter by company name"></div>
+        <div class="ct-filter-item"><label class="ct-filter-label">Tax Number</label><input type="text" class="ct-filter-input" id="filterTax" placeholder="Filter by tax number"></div>
+        <div class="ct-filter-actions"><button class="ct-btn-apply" id="applyFilterBtn">Apply</button><button class="ct-btn-cancel" id="cancelFilterBtn">Cancel</button></div>
+      </div>
+    </div>
+
+    <div class="ct-data-container view-list" id="dataContainer">
+      <div class="ct-table-wrapper">
+        <table class="ct-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Customer Code</th>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Email</th>
+              <th>Tax Number</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div class="ct-grid-container" id="gridContainer"></div>
+    </div>
+
+    <div class="ct-pagination">
+      <div class="ct-page-info" id="pageInfo">Showing 0 of 0 results</div>
+      <div class="ct-page-controls" id="pageControls"></div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var fNames = ["John","Jane","Michael","Emily","David","Sarah","James","Emma","William","Olivia"];
+        var lNames = ["Doe","Smith","Johnson","Brown","Jones","Garcia","Miller","Davis","Rodriguez","Martinez"];
+        var comps = ["Acme Corp","Globex","Initech","Umbrella Corp","Stark Industries","Wayne Enterprises","Wonka Industries","Soylent Corp","Massive Dynamic","Cyberdyne Systems"];
+        
+        var allData = [];
+        for (var i = 0; i < 100; i++) {
+          var f = fNames[i % 10], l = lNames[i % 10], c = comps[i % 10] + " " + (Math.floor(i/10)+1);
+          var gen = (i % 2 === 0) ? "men" : "women";
+          allData.push({
+            name: f + " " + l, 
+            code: "CUS-" + String(i+1).padStart(4,'0'), 
+            company: c, 
+            contact: f + " " + l,
+            email: f.toLowerCase() + "." + l.toLowerCase() + "@" + c.split(' ')[0].toLowerCase() + ".com",
+            tax: "TAX-" + (Math.floor(Math.random()*900000)+100000),
+            avatar: "https://randomuser.me/api/portraits/" + gen + "/" + ((i%90)+1) + ".jpg"
+          });
+        }
+
+        var currentData = allData.slice();
+        var perPage = 10;
+        var page = 1;
+        var tbody = document.getElementById('tableBody');
+        var grid = document.getElementById('gridContainer');
+
+        /* ===== 3-dot menu with action items (color classes kept only for delete) ===== */
+        function buildMenu(code) {
+          return '<div class="ct-action-menu">' +
+            '<button class="ct-action-btn" onclick="toggleMenu(this)" title="Actions">' +
+              '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>' +
+            '</button>' +
+            '<div class="ct-action-dropdown">' +
+              '<a class="ct-action-item" data-action="report" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> View Reports' +
+              '</a>' +
+              '<a class="ct-action-item" data-action="view" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View' +
+              '</a>' +
+              '<a class="ct-action-item" data-action="edit" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit' +
+              '</a>' +
+              '<a class="ct-action-item delete" data-action="delete" data-code="' + code + '">' +
+                '<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> Delete' +
+              '</a>' +
+            '</div>' +
+          '</div>';
+        }
+
+        function render() {
+          var total = currentData.length;
+          var totalP = Math.ceil(total / perPage) || 1;
+          if (page > totalP) page = totalP;
+          if (page < 1) page = 1;
+          
+          var start = (page - 1) * perPage;
+          var end = Math.min(start + perPage, total);
+          var data = currentData.slice(start, end);
+
+          if (data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px">No customers found.</td></tr>';
+            grid.innerHTML = '';
+          } else {
+            var tHtml = '';
+            var gHtml = '';
+            for (var j = 0; j < data.length; j++) {
+              var r = data[j];
+              
+              tHtml += '<tr>' +
+                '<td><div class="ct-user-cell"><img src="' + r.avatar + '" class="ct-avatar"><span class="ct-user-name">' + r.name + '</span></div></td>' +
+                '<td><span class="ct-badge-code">' + r.code + '</span></td>' +
+                '<td><span class="ct-text" title="' + r.company + '">' + r.company + '</span></td>' +
+                '<td><span class="ct-text" title="' + r.contact + '">' + r.contact + '</span></td>' +
+                '<td><span class="ct-email" title="' + r.email + '">' + r.email + '</span></td>' +
+                '<td><span class="ct-text" title="' + r.tax + '">' + r.tax + '</span></td>' +
+                '<td>' + buildMenu(r.code) + '</td>' +
+              '</tr>';
+              
+              gHtml += '<div class="ct-grid-card"><div class="ct-grid-header"><div class="ct-user-cell"><img src="' + r.avatar + '" class="ct-avatar"><div><span class="ct-user-name">' + r.name + '</span><br><span class="ct-user-code" style="display:inline;font-size:11px;color:#6b7280;">' + r.code + '</span></div></div>' + buildMenu(r.code) + '</div><div class="ct-grid-body"><div class="ct-grid-row"><span class="ct-grid-label">Company</span><span class="ct-grid-value" title="' + r.company + '">' + r.company + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Contact</span><span class="ct-grid-value" title="' + r.contact + '">' + r.contact + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Email</span><span class="ct-grid-value" style="color:#3b82f6" title="' + r.email + '">' + r.email + '</span></div><div class="ct-grid-row"><span class="ct-grid-label">Tax</span><span class="ct-grid-value">' + r.tax + '</span></div></div></div>';
+            }
+            tbody.innerHTML = tHtml;
+            grid.innerHTML = gHtml;
+          }
+
+          document.getElementById('pageInfo').textContent = 'Showing ' + (total === 0 ? 0 : start + 1) + ' to ' + end + ' of ' + total + ' results (Page ' + page + ' of ' + totalP + ')';
+          
+          var ctrl = '<button class="ct-page-btn" onclick="changePage(' + (page - 1) + ')" ' + (page === 1 ? 'disabled' : '') + '>Previous</button>';
+          for (var k = 1; k <= totalP; k++) {
+            ctrl += '<button class="ct-page-num ' + (k === page ? 'active' : '') + '" onclick="changePage(' + k + ')">' + k + '</button>';
+          }
+          ctrl += '<button class="ct-page-btn" onclick="changePage(' + (page + 1) + ')" ' + (page === totalP ? 'disabled' : '') + '>Next</button>';
+          document.getElementById('pageControls').innerHTML = ctrl;
+        }
+
+        function applyFilter() {
+          var q = document.getElementById('searchInput').value.toLowerCase();
+          var c = document.getElementById('filterCode').value.toLowerCase();
+          var n = document.getElementById('filterCompany').value.toLowerCase();
+          var t = document.getElementById('filterTax').value.toLowerCase();
+
+          currentData = allData.filter(function(r) {
+            return (r.name.toLowerCase().indexOf(q) !== -1 || r.code.toLowerCase().indexOf(q) !== -1 || r.email.toLowerCase().indexOf(q) !== -1) &&
+                   (!c || r.code.toLowerCase().indexOf(c) !== -1) && 
+                   (!n || r.company.toLowerCase().indexOf(n) !== -1) && 
+                   (!t || r.tax.toLowerCase().indexOf(t) !== -1);
+          });
+          page = 1;
+          render();
+        }
+
+        window.changePage = function(p) { page = p; render(); };
+        window.toggleMenu = function(btn) {
+          var drops = document.querySelectorAll('.ct-action-dropdown');
+          for (var i = 0; i < drops.length; i++) {
+            if (drops[i] !== btn.nextElementSibling) drops[i].classList.remove('show');
+          }
+          btn.nextElementSibling.classList.toggle('show');
+        };
+
+        /* ===== real handler for the four dropdown actions ===== */
+        window.handleAction = function(action, code) {
+          var drops = document.querySelectorAll('.ct-action-dropdown');
+          for (var i = 0; i < drops.length; i++) drops[i].classList.remove('show');
+
+          var customer = null;
+          for (var j = 0; j < allData.length; j++) {
+            if (allData[j].code === code) { customer = allData[j]; break; }
+          }
+          var name = customer ? customer.name : 'Customer';
+
+          if (action === 'report') {
+            alert('📊 View Reports for ' + name + ' (' + code + ')');
+            // window.location.href = '/reports/' + code;
+          } else if (action === 'view') {
+            alert('👁️ View ' + name + ' (' + code + ')');
+            // window.location.href = '/customer/' + code;
+          } else if (action === 'edit') {
+            alert('✏️ Edit ' + name + ' (' + code + ')');
+            // window.location.href = '/edit-customer/' + code;
+          } else if (action === 'delete') {
+            if (confirm('Delete ' + name + ' (' + code + ')?')) {
+              allData = allData.filter(function(r) { return r.code !== code; });
+              applyFilter();
+            }
+          }
+        };
+
+        document.addEventListener('click', function(e) {
+          var item = e.target.closest('.ct-action-item');
+          if (item) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.handleAction(item.getAttribute('data-action'), item.getAttribute('data-code'));
+            return;
+          }
+
+          if (!e.target.closest('.ct-action-menu')) {
+            var drops = document.querySelectorAll('.ct-action-dropdown');
+            for (var i = 0; i < drops.length; i++) drops[i].classList.remove('show');
+          }
+        });
+
+        document.getElementById('searchBtn').onclick = applyFilter;
+        document.getElementById('searchInput').onkeyup = function(e) { if (e.key === 'Enter') applyFilter(); };
+
+        document.getElementById('clearBtn').onclick = function() {
+          document.getElementById('searchInput').value = '';
+          applyFilter();
+          document.getElementById('searchInput').focus();
+        };
+
+        document.getElementById('perPageSelect').onchange = function(e) { perPage = parseInt(e.target.value); page = 1; render(); };
+        
+        document.getElementById('filterToggleBtn').onclick = function() { document.getElementById('filterPanel').classList.toggle('show'); };
+        document.getElementById('applyFilterBtn').onclick = function() { applyFilter(); document.getElementById('filterPanel').classList.remove('show'); };
+        document.getElementById('cancelFilterBtn').onclick = function() {
+          document.getElementById('filterCode').value = '';
+          document.getElementById('filterCompany').value = '';
+          document.getElementById('filterTax').value = '';
+          applyFilter();
+          document.getElementById('filterPanel').classList.remove('show');
+        };
+        
+        document.getElementById('listViewBtn').onclick = function() {
+          document.getElementById('listViewBtn').classList.add('active');
+          document.getElementById('gridViewBtn').classList.remove('active');
+          document.getElementById('dataContainer').className = 'ct-data-container view-list';
+        };
+        document.getElementById('gridViewBtn').onclick = function() {
+          document.getElementById('gridViewBtn').classList.add('active');
+          document.getElementById('listViewBtn').classList.remove('active');
+          document.getElementById('dataContainer').className = 'ct-data-container view-grid';
+        };
+
+        applyFilter();
+      });
+    </script>
+  </section>
+</div>
+@endsection

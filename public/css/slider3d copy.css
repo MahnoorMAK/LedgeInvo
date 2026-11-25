@@ -1,0 +1,366 @@
+/* ============================================================
+   3D COVERFLOW SLIDER — scroll-triggered entrance + animations
+   ============================================================ */
+
+.coverflow {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 20px 0;
+    perspective: 1600px;
+    overflow: hidden;
+    /* Hidden by default — JS will reveal on scroll */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* When JS adds this class, the slider fades + slides up into place */
+.coverflow.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Ambient glow behind the active slide */
+.coverflow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 720px;
+    height: 520px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(126, 107, 181, 0.28) 0%, transparent 65%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease 0.4s;
+}
+
+.coverflow.is-visible::before {
+    opacity: 1;
+    animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 0.9; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.coverflow-stage {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    transform-style: preserve-3d;
+    z-index: 1;
+}
+
+/* ============================================================
+   SLIDES — start hidden, animate in when .is-visible is added
+   ============================================================ */
+.coverflow-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 620px;
+    height: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    box-shadow:
+        0 30px 60px -20px rgba(30, 24, 48, 0.45),
+        0 0 0 1px rgba(126, 107, 181, 0.08);
+    will-change: transform, opacity, filter;
+    backface-visibility: hidden;
+    cursor: pointer;
+
+    /* Initial state — scattered & invisible */
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotateY(0deg) translateZ(-800px);
+    transition:
+        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 1.2s ease,
+        box-shadow 0.6s ease;
+}
+
+/* Stagger each slide's entrance */
+.coverflow-item:nth-child(1) { transition-delay: 0.05s; }
+.coverflow-item:nth-child(2) { transition-delay: 0.15s; }
+.coverflow-item:nth-child(3) { transition-delay: 0.25s; }
+.coverflow-item:nth-child(4) { transition-delay: 0.35s; }
+.coverflow-item:nth-child(5) { transition-delay: 0.45s; }
+
+.coverflow-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    transform: scale(1.05);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===== STATES (only apply once .coverflow is .is-visible) ===== */
+
+.coverflow.is-visible .coverflow-item.is-active {
+    transform: translate(-50%, -50%) translateZ(0) scale(1);
+    opacity: 1;
+    filter: brightness(1) saturate(1.05);
+    z-index: 10;
+    cursor: default;
+    animation: activeFloat 6s ease-in-out infinite;
+    box-shadow:
+        0 40px 80px -25px rgba(126, 107, 181, 0.55),
+        0 0 0 1px rgba(126, 107, 181, 0.15);
+}
+
+.coverflow.is-visible .coverflow-item.is-active img {
+    transform: scale(1.08);
+    animation: kenBurns 10s ease-in-out infinite alternate;
+}
+
+.coverflow.is-visible .coverflow-item.is-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 70%
+    );
+    transform: translateX(-100%);
+    animation: shimmer 4s ease-in-out 1s infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes activeFloat {
+    0%, 100% { margin-top: 0; }
+    50%      { margin-top: -10px; }
+}
+
+@keyframes kenBurns {
+    0%   { transform: scale(1.08) translate(0, 0); }
+    100% { transform: scale(1.16) translate(-8px, -6px); }
+}
+
+@keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    60%  { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+}
+
+.coverflow.is-visible .coverflow-item.is-prev {
+    transform: translate(-50%, -50%) translateX(-55%) translateZ(-180px) rotateY(35deg) scale(0.82);
+    opacity: 0.85;
+    filter: brightness(0.72) saturate(0.9);
+    z-index: 9;
+}
+
+.coverflow.is-visible .coverflow-item.is-next {
+    transform: translate(-50%, -50%) translateX(55%) translateZ(-180px) rotateY(-35deg) scale(0.82);
+    opacity: 0.85;
+    filter: brightness(0.72) saturate(0.9);
+    z-index: 9;
+}
+
+.coverflow.is-visible .coverflow-item.is-prev:hover,
+.coverflow.is-visible .coverflow-item.is-next:hover {
+    transform: translate(-50%, -50%) translateX(55%) translateZ(-120px) rotateY(-30deg) scale(0.88);
+    filter: brightness(0.95) saturate(1.05);
+    opacity: 0.95;
+}
+
+.coverflow.is-visible .coverflow-item.is-prev:hover {
+    transform: translate(-50%, -50%) translateX(-55%) translateZ(-120px) rotateY(30deg) scale(0.88);
+}
+
+.coverflow.is-visible .coverflow-item.is-prev-far {
+    transform: translate(-50%, -50%) translateX(-95%) translateZ(-360px) rotateY(45deg) scale(0.62);
+    opacity: 0.4;
+    filter: brightness(0.5) saturate(0.7);
+    z-index: 8;
+}
+
+.coverflow.is-visible .coverflow-item.is-next-far {
+    transform: translate(-50%, -50%) translateX(95%) translateZ(-360px) rotateY(-45deg) scale(0.62);
+    opacity: 0.4;
+    filter: brightness(0.5) saturate(0.7);
+    z-index: 8;
+}
+
+.coverflow.is-visible .coverflow-item.is-hidden {
+    transform: translate(-50%, -50%) translateZ(-600px) scale(0.4);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ===== Navigation arrows (also slide in on reveal) ===== */
+.coverflow-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) scale(0.5);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    color: #1E293B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    box-shadow: 0 12px 28px rgba(30, 24, 48, 0.25);
+    opacity: 0;
+    transition:
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s,
+        opacity 0.7s ease 0.6s,
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.3s ease;
+}
+
+.coverflow.is-visible .coverflow-nav {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+}
+
+.coverflow-nav:hover {
+    background: #7E6BB5;
+    color: #ffffff;
+    box-shadow: 0 16px 36px rgba(126, 107, 181, 0.5);
+}
+
+.coverflow-nav:active {
+    transform: translateY(-50%) scale(0.96);
+}
+
+.coverflow-nav svg {
+    transition: transform 0.3s ease;
+}
+
+.coverflow-nav:hover svg {
+    transform: scale(1.2);
+}
+
+.coverflow-prev { left: 32px; }
+.coverflow-next { right: 32px; }
+
+/* ===== Dots (fade in slightly later) ===== */
+.coverflow-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.7s ease 0.8s, transform 0.7s ease 0.8s;
+}
+
+.coverflow.is-visible .coverflow-dots {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.coverflow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(126, 107, 181, 0.35);
+    cursor: pointer;
+    padding: 0;
+    transition:
+        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.coverflow-dot:hover {
+    background: rgba(126, 107, 181, 0.7);
+    transform: scale(1.35);
+}
+
+.coverflow-dot.is-active {
+    background: #7E6BB5;
+    width: 26px;
+    border-radius: 4px;
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(126, 107, 181, 0.5); }
+    50%      { box-shadow: 0 0 0 6px rgba(126, 107, 181, 0); }
+}
+
+/* ===== Dark mode ===== */
+[data-theme="dark"] .coverflow::before {
+    background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.35) 0%, transparent 65%);
+}
+
+[data-theme="dark"] .coverflow.is-visible .coverflow-item.is-active {
+    box-shadow:
+        0 40px 80px -25px rgba(139, 92, 246, 0.55),
+        0 0 0 1px rgba(167, 139, 250, 0.25);
+}
+
+[data-theme="dark"] .coverflow-nav {
+    background: #1e1e1e;
+    color: #f9fafb;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .coverflow-nav:hover {
+    background: #a78bfa;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .coverflow-dot {
+    background: rgba(167, 139, 250, 0.3);
+}
+
+[data-theme="dark"] .coverflow-dot.is-active {
+    background: #a78bfa;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+    .coverflow-stage { height: 320px; }
+    .coverflow-item { width: 460px; height: 300px; }
+    .coverflow-prev { left: 12px; }
+    .coverflow-next { right: 12px; }
+}
+
+@media (max-width: 560px) {
+    .coverflow-stage { height: 240px; }
+    .coverflow-item { width: 320px; height: 210px; }
+    .coverflow-nav { width: 40px; height: 40px; }
+    .coverflow-prev { left: 8px; }
+    .coverflow-next { right: 8px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .coverflow,
+    .coverflow-item,
+    .coverflow-item img,
+    .coverflow-dots,
+    .coverflow-nav,
+    .coverflow::before,
+    .coverflow-item.is-active::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .coverflow { opacity: 1; transform: none; }
+    .coverflow-item { opacity: 1; }
+    .coverflow-nav { opacity: 1; transform: translateY(-50%) scale(1); }
+    .coverflow-dots { opacity: 1; transform: none; }
+}

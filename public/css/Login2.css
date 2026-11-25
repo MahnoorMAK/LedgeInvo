@@ -1,0 +1,132 @@
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ============================================
+   FORM CARD
+   ============================================ */
+.form-card {
+    background: var(--white); /* Dynamic Background */
+    box-shadow: 0 25px 50px -12px var(--shadow-color),
+                0 0 0 1px var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    transform: translateY(-24px) scale(0.85);
+    color: var(--primary); /* Dynamic Theme Color */
+    font-weight: 600;
+}
+.input-group input:focus {
+    border-bottom-color: var(--primary);
+}
+
+/* ============================================
+   FLOATING ELEMENTS
+   ============================================ */
+.scene-container {
+    perspective: 1200px;
+    overflow: hidden;
+}
+.float-element {
+    position: absolute;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+    /* Dynamic Glass Effect */
+    background: color-mix(in srgb, var(--white) 70%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px var(--shadow-color),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes drift-1 {
+    0% { transform: translate3d(0, 0, -100px) rotateX(10deg) rotateY(-15deg) rotateZ(-5deg); }
+    50% { transform: translate3d(40px, -40px, 50px) rotateX(-5deg) rotateY(10deg) rotateZ(5deg); }
+    100% { transform: translate3d(0, 0, -100px) rotateX(10deg) rotateY(-15deg) rotateZ(-5deg); }
+}
+@keyframes drift-2 {
+    0% { transform: translate3d(0, 0, 50px) rotateX(-10deg) rotateY(15deg) rotateZ(8deg); }
+    50% { transform: translate3d(-50px, 30px, -80px) rotateX(5deg) rotateY(-10deg) rotateZ(-4deg); }
+    100% { transform: translate3d(0, 0, 50px) rotateX(-10deg) rotateY(15deg) rotateZ(8deg); }
+}
+@keyframes drift-3 {
+    0% { transform: translate3d(0, 0, -50px) rotateX(5deg) rotateY(-5deg) rotateZ(-10deg); }
+    50% { transform: translate3d(30px, 50px, 80px) rotateX(-15deg) rotateY(15deg) rotateZ(5deg); }
+    100% { transform: translate3d(0, 0, -50px) rotateX(5deg) rotateY(-5deg) rotateZ(-10deg); }
+}
+@keyframes drift-4 {
+    0% { transform: translate3d(0, 0, 0px) rotateX(-5deg) rotateY(5deg) rotateZ(12deg); }
+    50% { transform: translate3d(-40px, -30px, -60px) rotateX(10deg) rotateY(-15deg) rotateZ(-6deg); }
+    100% { transform: translate3d(0, 0, 0px) rotateX(-5deg) rotateY(5deg) rotateZ(12deg); }
+}
+
+.animate-drift-1 { animation: drift-1 18s ease-in-out infinite; }
+.animate-drift-2 { animation: drift-2 22s ease-in-out infinite; }
+.animate-drift-3 { animation: drift-3 20s ease-in-out infinite; }
+.animate-drift-4 { animation: drift-4 25s ease-in-out infinite; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   DARK MODE OVERRIDES (For specific Tailwind classes)
+   ============================================ */
+
+/* 1. Force text inside floating cards to be visible */
+[data-theme="dark"] .float-element .text-slate-700,
+[data-theme="dark"] .float-element .text-slate-500,
+[data-theme="dark"] .float-element .text-slate-400 {
+    color: var(--text-muted) !important;
+}
+
+/* 2. Fake content bars inside the invoice card */
+[data-theme="dark"] .float-element .bg-slate-200 {
+    background-color: var(--border-color) !important;
+}
+
+/* 3. Border lines inside the floating cards */
+[data-theme="dark"] .float-element .border-slate-100 {
+    border-color: var(--border-color) !important;
+}
+
+/* 4. Dark Inputs */
+[data-theme="dark"] .input-group input {
+    color: var(--text-main);
+    border-bottom-color: var(--border-color);
+}
+
+/* 5. Dark background for the entire page overlay gradient */
+[data-theme="dark"] .scene-container .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, #0a0a0a, #121212, #1a1520) !important;
+}
+
+/* 6. Subtle background overlays */
+[data-theme="dark"] .scene-container .bg-white\/40 {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+[data-theme="dark"] .scene-container .bg-brand-purple\/10 {
+    background-color: color-mix(in srgb, var(--primary) 15%, transparent) !important;
+}
+
+body { height: auto !important; overflow-y: auto !important; }

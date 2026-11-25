@@ -1,0 +1,319 @@
+/* ============================================================
+   LEDGEINVO — HERO SECTION
+   ============================================================ */
+.ah-hero {
+    position: relative;
+    width: 100%;
+    min-height: 92vh;
+    overflow: hidden;
+    isolation: isolate;
+    background: #0d0b12; /* Kept dark for cinematic image */
+    display: flex;
+    align-items: flex-end;
+}
+
+/* ---------- Background image ---------- */
+.ah-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.ah-hero-bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    transform: scale(1.05);
+    animation: heroZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes heroZoom {
+    0%   { transform: scale(1.05); }
+    100% { transform: scale(1.15); }
+}
+
+/* Dark overlay with a subtle theme tint */
+.ah-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(15, 12, 25, 0.35) 0%,
+            rgba(15, 12, 25, 0.55) 45%,
+            rgba(15, 12, 25, 0.85) 100%
+        ),
+        linear-gradient(
+            100deg,
+            color-mix(in srgb, var(--primary) 15%, transparent) 0%,
+            transparent 60%,
+            color-mix(in srgb, var(--primary) 10%, transparent) 100%
+        );
+}
+
+/* Fine grain texture for premium feel */
+.ah-hero-grain {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* Bottom fade for section transition */
+.ah-hero-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 160px;
+    /* Dynamic Fade using global background color */
+    background: linear-gradient(to top, var(--bg-color), transparent);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* ---------- Content ---------- */
+.ah-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 96px 96px;
+    will-change: transform;
+}
+
+.ah-hero-inner {
+    max-width: 1100px;
+}
+
+/* ---------- Eyebrow ---------- */
+.ah-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    /* Dynamic Light Text for dark background */
+    color: var(--primary-light);
+    margin-bottom: 36px;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ah-hero-eyebrow-line {
+    display: inline-block;
+    width: 44px;
+    height: 1px;
+    background: var(--primary-light);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.ah-hero.is-loaded .ah-hero-eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ah-hero.is-loaded .ah-hero-eyebrow-line {
+    transform: scaleX(1);
+}
+
+/* ---------- Headline ---------- */
+.ah-hero-title {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: #ffffff; /* Kept white for contrast against dark image */
+    margin: 0 0 48px;
+    max-width: 1000px;
+
+    /* Reveal word effect */
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+        transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.ah-hero.is-loaded .ah-hero-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Italicized "stronger" for editorial feel */
+.ah-hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    /* FIX: Keeps the text bright and readable while still hinting at the theme color */
+    color: color-mix(in srgb, var(--primary-light) 50%, #ffffff);
+    /* Adds a subtle glow using the theme color */
+    text-shadow: 0 0 20px var(--primary-light);
+}
+
+/* ---------- Social proof pill ---------- */
+.ah-hero-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 22px 10px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s,
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s;
+}
+
+.ah-hero.is-loaded .ah-hero-social {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Avatar stack */
+.ah-avatars {
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+}
+
+.ah-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #1a1520;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    margin-left: -10px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ah-avatar:hover {
+    transform: translateY(-4px) scale(1.08);
+    z-index: 2;
+}
+
+/* Dynamic Avatar Gradients */
+.ah-avatar-1 { background: linear-gradient(135deg, var(--primary-light), var(--primary)); }
+.ah-avatar-2 { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); }
+.ah-avatar-3 { background: linear-gradient(135deg, #e05a8e, #a83d68); }
+.ah-avatar-4 { background: linear-gradient(135deg, #5ac9a8, #3a9d80); }
+.ah-avatar-more {
+    background: linear-gradient(135deg, #2a2344, #1a1520);
+    font-size: 10px;
+    letter-spacing: -0.02em;
+}
+
+/* Social proof text */
+.ah-hero-social-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding-right: 4px;
+}
+
+.ah-hero-social-count {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1;
+}
+
+.ah-hero-social-label {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-top: 3px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+    .ah-hero-content { padding: 0 56px 72px; }
+    .ah-hero-title { font-size: clamp(2.25rem, 6vw, 4rem); }
+}
+
+@media (max-width: 900px) {
+    .ah-hero {
+        min-height: 85vh;
+    }
+    .ah-hero-content { padding: 0 32px 56px; }
+    .ah-hero-title { margin-bottom: 36px; }
+}
+
+@media (max-width: 560px) {
+    .ah-hero {
+        min-height: 78vh;
+    }
+    .ah-hero-content { padding: 0 20px 40px; }
+    .ah-hero-eyebrow {
+        font-size: 0.7rem;
+        margin-bottom: 24px;
+        gap: 10px;
+    }
+    .ah-hero-eyebrow-line { width: 28px; }
+    .ah-hero-title {
+        font-size: 2rem;
+        margin-bottom: 28px;
+    }
+    .ah-hero-social {
+        padding: 8px 16px 8px 10px;
+        gap: 12px;
+    }
+    .ah-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 9.5px;
+        margin-left: -8px;
+    }
+    .ah-hero-social-count { font-size: 0.82rem; }
+    .ah-hero-social-label { font-size: 0.65rem; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .ah-hero-bg img { animation: none; }
+    .ah-hero-eyebrow,
+    .ah-hero-eyebrow-line,
+    .ah-hero-title,
+    .ah-hero-social {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

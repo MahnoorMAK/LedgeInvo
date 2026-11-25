@@ -1,0 +1,137 @@
+/* public/css/dashboard.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* We removed the hardcoded #F8F9FC !important here. 
+   The theme variables handle the color now. */
+body.db-body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color, #F8F9FC); 
+    color: var(--text-main, #1E293B);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* REMOVED TRANSITION HERE */
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.db-nav {
+    background-color: var(--white, #ffffff);
+    border-bottom: 1px solid var(--border-color, #E2E8F0);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 70px;
+    width: 100%;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.db-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 24px;
+}
+
+.db-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-main, #1E293B);
+    text-decoration: none;
+}
+
+.db-logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.db-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.db-btn-back {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted, #64748B);
+    text-decoration: none;
+}
+
+.db-btn-back:hover {
+    color: var(--primary);
+}
+
+.db-btn-logout {
+    background-color: var(--primary);
+    color: #ffffff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.db-btn-logout:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); 
+}
+
+/* ============================================================
+   LAYOUT WRAPPER
+   ============================================================ */
+.db-layout {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    align-items: flex-start; 
+    background-color: var(--bg-color, #F8F9FC); 
+    /* REMOVED TRANSITION HERE */
+}
+
+/* public/css/dashboard.css */
+
+/* public/css/dashboard.css */
+
+.db-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: var(--white, #ffffff);
+    border-right: 1px solid var(--border-color, #E2E8F0);
+    position: sticky;
+    top: 70px; 
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    
+    /* GPU ISOLATION */
+    contain: strict;
+    transform: translateZ(0);
+    /* REMOVED TRANSITION HERE */
+}
+
+.db-main {
+    flex-grow: 1;
+    min-width: 0;
+    padding: 32px;
+    min-height: calc(100vh - 70px);
+    background-color: var(--bg-color, #F8F9FC); 
+    /* REMOVED TRANSITION HERE */
+}

@@ -1,0 +1,393 @@
+/* public/css/hero.css */
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.apex-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    background: var(--bg-color); /* Uses theme background */
+    overflow: hidden;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+/* ============================================================
+   LEFT — TEXT
+   ============================================================ */
+.apex-hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 80px 80px 96px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Badge */
+.apex-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--primary-light); /* Dynamic Light Theme Color */
+    color: var(--primary);            /* Dynamic Primary Color */
+    border: 1px solid var(--primary); /* Dynamic Border */
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px;
+    align-self: flex-start;
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10B981; /* Success green */
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.2); }
+}
+
+/* Title */
+.apex-hero-title {
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--text-main); /* Dynamic Text Color */
+    margin-bottom: 24px;
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.apex-hero-title .accent {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 50%, var(--primary-hover) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Subtitle */
+.apex-hero-subtitle {
+    font-size: 1.075rem;
+    line-height: 1.7;
+    color: var(--text-muted); /* Dynamic Muted Text */
+    max-width: 520px;
+    margin-bottom: 40px;
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+/* Buttons */
+.apex-hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.apex-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 26px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+    color: #ffffff; /* Keep white for contrast on primary button */
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.apex-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.3);
+}
+
+.apex-btn-primary svg {
+    transition: transform 0.3s ease;
+}
+
+.apex-btn-primary:hover svg {
+    transform: translateX(4px);
+}
+
+.apex-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 26px;
+    background: transparent;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.apex-btn-ghost:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Stats */
+.apex-hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-color);
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border-color);
+}
+
+.stat-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+@keyframes heroFadeUp {
+    0%   { opacity: 0; transform: translateY(24px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   RIGHT — SLIDER
+   ============================================================ */
+.apex-hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 96px 80px 40px;
+    overflow: hidden;
+}
+
+/* Framed stack behind the slider */
+.apex-frame-stack {
+    position: absolute;
+    inset: 80px 96px 80px 40px;
+    pointer-events: none;
+}
+
+.frame {
+    position: absolute;
+    border-radius: 24px;
+    border: 1.5px solid var(--primary);
+    background: transparent;
+    opacity: 0.35;
+}
+
+.frame-behind-2 { opacity: 0.2; }
+.frame-behind-3 { opacity: 0.1; }
+
+.frame-behind-1 {
+    inset: 0;
+    transform: translate(20px, 20px) rotate(3deg);
+    animation: frameDrift1 12s ease-in-out infinite;
+}
+
+.frame-behind-2 {
+    inset: 0;
+    transform: translate(40px, 40px) rotate(6deg);
+    animation: frameDrift2 14s ease-in-out infinite;
+}
+
+.frame-behind-3 {
+    inset: 0;
+    transform: translate(60px, 60px) rotate(9deg);
+    animation: frameDrift3 16s ease-in-out infinite;
+}
+
+@keyframes frameDrift1 {
+    0%, 100% { transform: translate(20px, 20px) rotate(3deg); }
+    50%      { transform: translate(14px, 14px) rotate(1.5deg); }
+}
+
+@keyframes frameDrift2 {
+    0%, 100% { transform: translate(40px, 40px) rotate(6deg); }
+    50%      { transform: translate(30px, 30px) rotate(3.5deg); }
+}
+
+@keyframes frameDrift3 {
+    0%, 100% { transform: translate(60px, 60px) rotate(9deg); }
+    50%      { transform: translate(48px, 48px) rotate(6deg); }
+}
+
+/* Slider container */
+.apex-slider {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    aspect-ratio: 4 / 5;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--border-color);
+    animation: sliderFloat 8s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes sliderFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+}
+
+/* Track holds all slides */
+.slider-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Individual slide */
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1s ease-in-out, transform 6s ease-out;
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Caption */
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 32px 28px;
+    background: linear-gradient(to top, rgba(15, 12, 25, 0.9) 0%, rgba(15, 12, 25, 0.6) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transform: translateY(8px);
+    opacity: 0;
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+}
+
+.slide.active .slide-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide-caption-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+}
+
+.slide-caption-sub {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Progress dots */
+.slider-dots {
+    position: absolute;
+    bottom: 28px;
+    right: 28px;
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.dot:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.dot.active {
+    background: #ffffff;
+    width: 26px;
+    border-radius: 4px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+    .apex-hero-text { padding: 60px 40px; }
+    .apex-hero-visual { padding: 60px 40px 60px 20px; }
+    .apex-frame-stack { inset: 60px 40px 60px 20px; }
+}
+
+@media (max-width: 900px) {
+    .apex-hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .apex-hero-text {
+        padding: 60px 24px 40px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .apex-hero-badge { align-self: center; }
+    .apex-hero-subtitle { margin-left: auto; margin-right: auto; }
+    .apex-hero-actions { justify-content: center; }
+    .apex-hero-stats { justify-content: center; flex-wrap: wrap; }
+    .stat-divider { display: none; }
+
+    .apex-hero-visual {
+        padding: 40px 24px 60px;
+    }
+
+    .apex-frame-stack { display: none; }
+
+    .apex-slider {
+        max-width: 420px;
+        aspect-ratio: 4 / 5;
+        margin: 0 auto;
+    }
+}

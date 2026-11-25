@@ -1,0 +1,118 @@
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-color); /* Dynamic Background */
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color); /* Dynamic Border */
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ============================================
+   GLASS PANEL
+   ============================================ */
+.glass-panel {
+    /* Dynamic Glass Effect */
+    background: color-mix(in srgb, var(--white) 95%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 25px 50px -12px var(--shadow-color);
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES (For Tailwind specific classes)
+   ============================================ */
+
+/* 1. Text inside the glass panel needs to be visible */
+[data-theme="dark"] .glass-panel .text-slate-800,
+[data-theme="dark"] .glass-panel .text-slate-500,
+[data-theme="dark"] .glass-panel .text-slate-600 {
+    color: #e2e8f0 !important;
+}
+
+/* 2. The "Ledger" tag inside the glass panel */
+[data-theme="dark"] .glass-panel .bg-slate-100 {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-main) !important;
+}
+
+/* ============================================
+   RIGHT PANEL (Bypasses Tailwind)
+   ============================================ */
+
+.right-panel-bg {
+    /* Dynamic Background and Text */
+    background-color: var(--bg-color); 
+    color: var(--text-main); 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Force all text inside the right panel to use theme text colors */
+.right-panel-bg h1,
+.right-panel-bg h2,
+.right-panel-bg h3,
+.right-panel-bg p,
+.right-panel-bg span,
+.right-panel-bg label,
+.right-panel-bg a {
+    color: var(--text-main);
+}
+
+/* Keep the muted text a soft gray */
+.right-panel-bg p,
+.right-panel-bg .text-slate-500,
+.right-panel-bg .text-slate-600 {
+    color: var(--text-muted) !important;
+}
+
+/* Dynamic divider line for "Or continue with" */
+.right-panel-bg .border-slate-200 {
+    border-color: var(--border-color) !important;
+}
+
+/* Dynamic background for the divider text */
+.right-panel-bg .bg-slate-50 {
+    background-color: var(--bg-color) !important;
+}
+
+/* Buttons for Google/Microsoft */
+.right-panel-bg .bg-white {
+    background-color: var(--white) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Keep button text visible */
+.right-panel-bg .bg-white span,
+.right-panel-bg .bg-white i:not(.text-red-500):not(.text-blue-500) {
+    color: var(--text-main) !important;
+}
+
+/* For the icons inside the social buttons to remain recognizable */
+[data-theme="dark"] button:has(.fa-google), 
+[data-theme="dark"] button:has(.fa-microsoft) { 
+    color: var(--text-main) !important; 
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+body { 
+    height: auto !important; 
+    overflow-y: auto !important; 
+}
+
+.animate-float-delayed { 
+    animation-delay: -1.5s !important; 
+}

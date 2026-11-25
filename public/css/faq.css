@@ -1,0 +1,272 @@
+/* ============================================
+   FAQ SECTION — 3D SHADE (PURPLE) — NO SHAKE
+   ============================================ */
+.ct-faq-section {
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, #faf7f0 0%, #f5ede0 100%);
+    perspective: 1400px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.ct-faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+.ct-faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.ct-section-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: #a855f7;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.ct-section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.ct-section-title em {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---------- FAQ List ---------- */
+.ct-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ============================================
+   FAQ Item — NO TRANSFORM (Sirf shadow lift)
+   ============================================ */
+.ct-faq-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    color: #ffffff;
+
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 60%, #6d28d9 100%);
+
+    box-shadow:
+        -6px -6px 16px rgba(255, 255, 255, 0.5),
+        10px 10px 24px rgba(70, 20, 130, 0.5),
+        18px 22px 40px rgba(50, 10, 100, 0.4),
+        inset 0 -4px 8px rgba(60, 15, 110, 0.4),
+        inset 0 4px 8px rgba(255, 255, 255, 0.15);
+
+    border: 1px solid rgba(192, 132, 252, 0.4);
+
+    /* ✅ Sirf box-shadow transition — koi transform nahi */
+    transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ct-faq-item:hover {
+    /* ❌ Koi translateY, koi rotateX — NO SHAKE */
+    box-shadow:
+        -8px -8px 20px rgba(255, 255, 255, 0.6),
+        14px 14px 32px rgba(70, 20, 130, 0.6),
+        24px 30px 55px rgba(50, 10, 100, 0.5),
+        inset 0 -6px 12px rgba(60, 15, 110, 0.5),
+        inset 0 6px 12px rgba(255, 255, 255, 0.2),
+        0 0 30px rgba(168, 85, 247, 0.4);
+}
+
+.ct-faq-item.active {
+    box-shadow:
+        -8px -8px 22px rgba(255, 255, 255, 0.6),
+        16px 16px 36px rgba(70, 20, 130, 0.65),
+        26px 32px 60px rgba(50, 10, 100, 0.5),
+        inset 0 -6px 12px rgba(60, 15, 110, 0.5),
+        inset 0 6px 12px rgba(255, 255, 255, 0.2),
+        0 0 50px rgba(168, 85, 247, 0.5);
+}
+
+/* ============================================
+   🟡 GOLDEN TOP LINE — FIXED WIDTH, NO ANIMATION
+   ============================================ */
+.ct-faq-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, #ffd700 20%, #b8860b 80%, transparent 100%);
+    border-radius: 0 0 4px 4px;
+    z-index: 2;
+    pointer-events: none;
+    /* ❌ Koi transition nahi — koi width change nahi */
+}
+
+/* Golden glow (separate element — no resize) */
+.ct-faq-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 12px;
+    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.5) 0%, transparent 70%);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.ct-faq-item:hover::after {
+    opacity: 1;
+}
+
+/* ============================================
+   Question Button
+   ============================================ */
+.ct-faq-question {
+    width: 100%;
+    padding: 1.65rem 1.9rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: left;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    position: relative;
+    z-index: 3;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.ct-faq-question:hover {
+    color: #ffd700;
+    padding-left: 2.2rem;
+}
+
+/* ============================================
+   3D Circle Icon
+   ============================================ */
+.ct-faq-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #6d28d9;
+    flex-shrink: 0;
+    line-height: 1;
+
+    background: linear-gradient(145deg, #ffffff 0%, #f3e8ff 100%);
+    box-shadow:
+        -3px -3px 8px rgba(255, 255, 255, 0.9),
+        4px 4px 10px rgba(70, 20, 130, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -1px 2px rgba(80, 30, 150, 0.2);
+
+    transition: transform 0.4s ease,
+                background 0.4s ease,
+                box-shadow 0.4s ease,
+                color 0.4s ease;
+}
+
+.ct-faq-question:hover .ct-faq-icon {
+    background: linear-gradient(145deg, #ffd700 0%, #b8860b 100%);
+    color: #ffffff;
+    box-shadow:
+        -3px -3px 8px rgba(255, 255, 255, 0.9),
+        4px 4px 12px rgba(184, 134, 11, 0.5),
+        0 0 20px rgba(255, 215, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.ct-faq-item.active .ct-faq-icon {
+    transform: rotate(45deg);
+    background: linear-gradient(145deg, #ffd700 0%, #b8860b 100%);
+    color: #6d28d9;
+    box-shadow:
+        -3px -3px 8px rgba(255, 255, 255, 0.9),
+        4px 4px 12px rgba(184, 134, 11, 0.6),
+        0 0 24px rgba(255, 215, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   Answer
+   ============================================ */
+.ct-faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    z-index: 3;
+}
+
+.ct-faq-answer p {
+    padding: 0 1.9rem 1.75rem;
+    margin: 0;
+    font-size: 0.98rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.75;
+    border-top: 1px dashed rgba(255, 215, 0, 0.4);
+    padding-top: 1.25rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 600px) {
+    .ct-faq-section {
+        padding: 4rem 1.25rem;
+    }
+
+    .ct-faq-list { gap: 1.1rem; }
+
+    .ct-section-title { font-size: 1.75rem; }
+    .ct-section-label { font-size: 0.7rem; }
+
+    .ct-faq-question {
+        padding: 1.35rem 1.25rem;
+        font-size: 0.98rem;
+    }
+
+    .ct-faq-question:hover { padding-left: 1.5rem; }
+
+    .ct-faq-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+
+    .ct-faq-answer p {
+        padding: 1rem 1.25rem 1.35rem;
+        font-size: 0.92rem;
+    }
+}
