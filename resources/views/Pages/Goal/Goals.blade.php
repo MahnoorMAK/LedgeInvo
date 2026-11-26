@@ -58,10 +58,10 @@
 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             width: 100%;
-            max-width: 100%; /* Changed from 1200px to 100% */
-            margin: 0; /* Removed auto centering */
+            max-width: 100%;
+            margin: 0;
             padding: 2rem;
-            background: #ffffff; /* Changed from #f9fafb to #ffffff */
+            background: #ffffff;
             box-sizing: border-box;
             display: block;
         }
@@ -379,6 +379,53 @@
         #manage-goals-section .status-badge.active { background: #eff6ff; color: #3b82f6; border-color: #bfdbfe; }
         #manage-goals-section .status-badge.completed { background: #ecfdf5; color: #10b981; border-color: #a7f3d0; }
 
+        /* Action Buttons */
+        #manage-goals-section .actions-cell {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #manage-goals-section .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #manage-goals-section .action-btn:hover {
+            background: #f3f4f6;
+        }
+
+        #manage-goals-section .action-btn.approve { color: #10b981; }
+        #manage-goals-section .action-btn.approve:hover { background: #ecfdf5; }
+        
+        #manage-goals-section .action-btn.view { color: #10b981; }
+        #manage-goals-section .action-btn.view:hover { background: #ecfdf5; }
+        
+        #manage-goals-section .action-btn.edit { color: #3b82f6; }
+        #manage-goals-section .action-btn.edit:hover { background: #eff6ff; }
+        
+        #manage-goals-section .action-btn.delete { color: #ef4444; }
+        #manage-goals-section .action-btn.delete:hover { background: #fef2f2; }
+
+        #manage-goals-section .action-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         #manage-goals-section .pagination {
             padding: 1rem;
             display: flex;
@@ -507,6 +554,7 @@
                         <th>Target Date</th>
                         <th>Priority</th>
                         <th>Status</th>
+                        <th style="text-align: center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="tableBody"></tbody>
@@ -653,7 +701,7 @@
                 tableBody.innerHTML = '';
 
                 if (state.filteredData.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 2rem; color: #6b7280;">No goals found matching your criteria.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding: 2rem; color: #6b7280;">No goals found matching your criteria.</td></tr>`;
                     return;
                 }
 
@@ -670,6 +718,41 @@
 
                     const tagClass = item.category === 'Financial' ? 'blue' : (item.category === 'Marketing' ? 'pink' : 'purple');
                     const typeTagClass = item.type === 'Savings' ? 'pink' : (item.type === 'Expense Reduction' ? 'orange' : 'purple');
+
+                    // Build Action Buttons based on status
+                    let actionButtons = '';
+
+                    // Approve button (only for Draft)
+                    if (item.status === 'Draft') {
+                        actionButtons += `
+                            <button class="action-btn approve" onclick="handleAction('approve', ${item.id})" title="Approve">
+                                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </button>
+                        `;
+                    }
+
+                    // View button (always)
+                    actionButtons += `
+                        <button class="action-btn view" onclick="handleAction('view', ${item.id})" title="View">
+                            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    `;
+
+                    // Edit button (only if NOT Active)
+                    if (item.status !== 'Active') {
+                        actionButtons += `
+                            <button class="action-btn edit" onclick="handleAction('edit', ${item.id})" title="Edit">
+                                <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                        `;
+                    }
+
+                    // Delete button (always)
+                    actionButtons += `
+                        <button class="action-btn delete" onclick="handleAction('delete', ${item.id})" title="Delete">
+                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                        </button>
+                    `;
 
                     tr.innerHTML = `
                         <td>
@@ -703,6 +786,11 @@
                         </td>
                         <td><span class="tag" style="background: transparent; border: 1px solid #e5e7eb; color: ${item.priority === 'Critical' ? '#ef4444' : (item.priority === 'High' ? '#ea580c' : '#6b7280')}">${item.priority}</span></td>
                         <td><span class="status-badge ${item.status.toLowerCase()}">${item.status}</span></td>
+                        <td>
+                            <div class="actions-cell">
+                                ${actionButtons}
+                            </div>
+                        </td>
                     `;
                     tableBody.appendChild(tr);
                 });
@@ -753,7 +841,27 @@
                 pageNumbers.appendChild(nextBtn);
             }
 
-            // --- 7. Filtering ---
+            // --- 7. Global Action Handlers ---
+            window.handleAction = function(action, id) {
+                const itemIndex = state.data.findIndex(g => g.id == id);
+                if (itemIndex === -1) return;
+
+                if (action === 'approve') {
+                    state.data[itemIndex].status = 'Active';
+                    updateUI();
+                } else if (action === 'view') {
+                    alert(`Viewing Goal: ${state.data[itemIndex].title}`);
+                } else if (action === 'edit') {
+                    alert(`Editing Goal: ${state.data[itemIndex].title}`);
+                } else if (action === 'delete') {
+                    if (confirm(`Are you sure you want to delete goal: ${state.data[itemIndex].title}?`)) {
+                        state.data.splice(itemIndex, 1);
+                        updateUI();
+                    }
+                }
+            };
+
+            // --- 8. Filtering ---
             function applyFilters() {
                 const query = state.searchQuery;
                 state.filteredData = state.data.filter(item => {
@@ -772,7 +880,7 @@
                 updateUI();
             }
 
-            // --- 8. Event Listeners ---
+            // --- 9. Event Listeners ---
             function performSearch() {
                 state.searchQuery = searchInput.value.toLowerCase();
                 applyFilters();
@@ -785,10 +893,10 @@
 
             // Clear Button Logic
             clearBtn.addEventListener('click', () => {
-                searchInput.value = ''; // Clear input instantly
-                state.searchQuery = ''; // Reset search state
-                applyFilters(); // Re-render everything with cleared filters
-                searchInput.focus(); // Optional: put cursor back in input
+                searchInput.value = '';
+                state.searchQuery = '';
+                applyFilters();
+                searchInput.focus();
             });
 
             perPageSelect.addEventListener('change', (e) => {
@@ -806,7 +914,7 @@
                 });
             });
 
-            // --- 9. Initialization ---
+            // --- 10. Initialization ---
             updateUI();
         })();
     </script>

@@ -215,7 +215,7 @@
             overflow: hidden;
         }
 
-        /* Toolbar */
+        /* Toolbar - Updated to align items left */
         #manage-revenues-section .toolbar {
             padding: 0.75rem;
             display: flex;
@@ -646,6 +646,7 @@
 
     <!-- Main Container -->
     <div class="main-container">
+        <!-- Toolbar - Updated to move per page and filter to the left -->
         <div class="toolbar">
             <div class="search-box">
                 <div class="search-input-wrapper">
@@ -654,13 +655,17 @@
                 <button class="btn-search" id="searchBtn">Search</button>
                 <button class="btn-clear" id="clearBtn" title="Clear search">Clear</button>
             </div>
-            <select id="perPageSelect">
-                <option value="10">10 per page</option>
-                <option value="5">5 per page</option>
-                <option value="25">25 per page</option>
-                <option value="50">50 per page</option>
-            </select>
-            <button class="btn-outline" id="filterBtn">Filters</button>
+            
+            <!-- Per Page and Filter moved here -->
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <select id="perPageSelect">
+                    <option value="10">10 per page</option>
+                    <option value="5">5 per page</option>
+                    <option value="25">25 per page</option>
+                    <option value="50">50 per page</option>
+                </select>
+                <button class="btn-outline" id="filterBtn">Filters</button>
+            </div>
         </div>
 
         <div class="tabs" id="statusTabs">
