@@ -1,0 +1,231 @@
+/* === PURCHASE RETURN - PURPLE 3D BLINKING THEME === */
+:root {
+  --purple-main: #7c3aed;
+  --purple-light: #a78bfa;
+  --purple-dark: #5b21b6;
+  --purple-bg: #f8f6fc;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+}
+
+/* Note: body tag ko hata diya hai taake aapka Laravel Layout / Sidebar disturb na ho */
+
+.pr-container {
+  background-color: var(--purple-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-main);
+  padding: 20px;
+  border-radius: 12px;
+  margin: -20px 0 0 0; /* TOP FIX: Top ki extra purple space khatam karne ke liye */
+}
+
+/* Page Header */
+.page-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.page-header h1 {
+  font-size: 24px;
+  color: var(--purple-dark);
+  margin: 0 0 5px 0;
+  font-weight: 700;
+}
+.page-header p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Layout Grid */
+.page-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap; /* Mobile responsive ke liye */
+}
+.main-content { 
+  flex: 2; 
+  min-width: 300px; 
+}
+.side-content { 
+  flex: 1; 
+  min-width: 280px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+}
+
+/* === 3D BLINKING CARDS === */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  /* 3D Shadow + Blink Animation */
+  box-shadow: 
+    0 10px 20px rgba(124, 58, 237, 0.1),
+    0 0 0 1px rgba(167, 139, 250, 0.1);
+  transition: all 0.4s ease;
+  animation: purpleBlink 3s infinite alternate;
+  margin-bottom: 20px;
+}
+
+@keyframes purpleBlink {
+  0% { box-shadow: 0 10px 20px rgba(124, 58, 237, 0.1), 0 0 0 1px rgba(167, 139, 250, 0.1); }
+  100% { box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4), 0 0 25px rgba(167, 139, 250, 0.5); }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+}
+.card-header h2 {
+  font-size: 16px;
+  margin: 0;
+  color: var(--purple-dark);
+  font-weight: 600;
+}
+.icon-box {
+  background: #ede9fe;
+  color: var(--purple-main);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+}
+
+    /* === FIXED PROFESSIONAL FORM LAYOUT (FLEXBOX) === */
+        /* === FIXED PROFESSIONAL FORM LAYOUT (1 COLUMN) === */
+    .form-row { 
+      display: flex; 
+      flex-direction: column; /* Ek ke neeche ek box */
+      gap: 20px; /* Har box ke darmiyan saaf distance */
+      width: 100%;
+    }
+    
+    .form-group { 
+      width: 100%; /* Full width taake koi box squeeze na ho */
+      margin-bottom: 0; 
+      position: relative; 
+    }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--purple-dark);
+  margin-bottom: 8px;
+}
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-main);
+  background-color: #fafafa;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.3s;
+}
+.form-control:focus {
+  border-color: var(--purple-main);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+  background-color: #fff;
+}
+
+/* Dropdown Highlight when clicked */
+select.form-control option:checked {
+  background-color: var(--purple-main) !important;
+  color: white;
+}
+
+/* Summary & Notes */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.summary-row.total {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 16px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--border-color);
+}
+.text-purple {
+  color: var(--purple-main);
+  font-weight: 700;
+}
+.notes-area {
+  width: 100%;
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* === 3D BLINKING BUTTON === */
+.btn-create {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--purple-main), var(--purple-light));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  box-shadow: 0 5px 0 var(--purple-dark), 0 10px 15px rgba(124,58,237,0.3);
+  transition: all 0.1s;
+  animation: btnBlink 2s infinite alternate;
+}
+@keyframes btnBlink {
+  0% { box-shadow: 0 5px 0 var(--purple-dark), 0 10px 15px rgba(124,58,237,0.3); }
+  100% { box-shadow: 0 5px 0 var(--purple-dark), 0 0 25px rgba(167,139,250,0.8); }
+}
+.btn-create:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 var(--purple-dark);
+}
+
+.btn-cancel {
+  width: 100%;
+  padding: 12px;
+  background: #fff;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-cancel:hover {
+  background: #f3f4f6;
+  color: var(--text-main);
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-main);
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.btn-back:hover { 
+  background: #f9fafb; 
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.1);
+}
